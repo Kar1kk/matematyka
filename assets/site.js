@@ -18,7 +18,7 @@
   dodaj("link", { rel: "icon", type: "image/png", href: new URL("assets/ikony/ikona-192.png", korzen).href });
   dodaj("meta", { name: "theme-color", content: "#111111" });
   if ("serviceWorker" in navigator && location.protocol !== "file:")
-    addEventListener("load", () => navigator.serviceWorker.register(new URL("sw.js", korzen).href).catch(() => {}));
+    addEventListener("load", () => navigator.serviceWorker.register(new URL("sw.js", korzen).href, { updateViaCache: "none" }).catch(() => {}));
 })();
 
 // Makra KaTeX: polskie oznaczenia
