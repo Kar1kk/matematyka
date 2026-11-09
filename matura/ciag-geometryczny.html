@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciąg geometryczny</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Ciąg geometryczny</h1>
+  <p class="lead">Co krok mnożysz przez tę samą liczbę $q$. Arytmetyczny rośnie liniowo (jak odsetki proste), geometryczny wykładniczo (jak procent składany), a dla ujemnego $q$ skacze z jednej strony osi na drugą.</p>
+  <p class="wymagania">VI.4, VI.6, VI.7, I.8 (procent składany)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definicja i wzory</h2>
+  <div class="definicja"><b>Definicja</b> Ciąg $(a_n)$ jest <b>geometryczny</b>, gdy istnieje liczba $q$ (<b>iloraz</b>) taka, że $a_{n+1}=a_n\cdot q$ dla każdego $n$. Gdy wyrazy są niezerowe: $\frac{a_{n+1}}{a_n}=q$ jest stałe.</div>
+  <div class="wzor">
+    <div class="tytul">$n$-ty wyraz <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$a_n=a_1\cdot q^{n-1}$$
+    <dl><dt>$q&gt;1$</dt><dd>przy $a_1&gt;0$ rosnący, przy $a_1&lt;0$ malejący</dd>
+        <dt>$0&lt;q&lt;1$</dt><dd>przy $a_1&gt;0$ malejący, przy $a_1&lt;0$ rosnący; wyrazy dążą do $0$</dd>
+        <dt>$q&lt;0$</dt><dd>znaki na przemian: <b>nie jest monotoniczny</b> (gdy $a_1\neq0$)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Suma $n$ początkowych wyrazów <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$S_n=a_1\cdot\frac{1-q^n}{1-q},\quad q\neq1$$
+    $$S_n=n\cdot a_1,\quad q=1$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Średnia geometryczna sąsiadów <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$a_n^2=a_{n-1}\cdot a_{n+1}$$
+    <dl><dt>$x,y,z$</dt><dd>niezerowe tworzą (w tej kolejności) ciąg geometryczny $\iff y^2=xz$</dd></dl>
+  </div>
+  <div class="uwaga">Bez założenia „niezerowe” warunek $y^2=xz$ zawodzi: $0, 0, 5$ go spełnia, a ciągiem geometrycznym nie jest (z $0$ nie zrobisz $5$ mnożeniem).</div>
+
+  <div class="twierdzenie"><b>Twierdzenie</b> W ciągu geometrycznym $a_n=a_1q^{n-1}$, a dla $q\neq1$: $S_n=a_1\cdot\frac{1-q^n}{1-q}$.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p><b>Wzór na $a_n$.</b> $a_2=a_1q$, $a_3=a_2q=a_1q^2$, … każdy krok dokłada jeden czynnik $q$. Od $a_1$ do $a_n$ jest $n-1$ kroków, więc $a_n=a_1q^{n-1}$ (formalnie: indukcja względem $n$).</p>
+      <p><b>Wzór na $S_n$ (metoda $S_n-qS_n$).</b> Pomnóż sumę przez $q$. Ponieważ $a_kq=a_{k+1}$, każdy wyraz przesuwa się o jedno miejsce:</p>
+      $$\begin{aligned}S_n&amp;=a_1+a_2+\ldots+a_n\\ qS_n&amp;=a_2+\ldots+a_n+a_nq\end{aligned}$$
+      <p>Po odjęciu skraca się wszystko oprócz $a_1$ z góry i $a_nq=a_1q^n$ z dołu:</p>
+      $$S_n-qS_n=a_1-a_1q^n$$
+      $$S_n(1-q)=a_1(1-q^n)$$
+      <p>Dla $q\neq1$ dzielimy przez $1-q$ i dostajemy wzór. Dla $q=1$ wszystkie wyrazy są równe $a_1$, więc $S_n=na_1$.</p>
+    </div></details></div>
+
+  <div class="wzor">
+    <div class="tytul">Procent składany <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$K_n=K_0\left(1+\frac{p}{100}\right)^n$$
+    $$K=K_0\left(1+\frac{p}{100\,m}\right)^{m\cdot n}$$
+    <dl><dt>$K_0$</dt><dd>kapitał początkowy, $p$ – oprocentowanie roczne w %, $n$ – liczba lat</dd>
+        <dt>$m$</dt><dd>liczba kapitalizacji w roku (kwartalna: $m=4$, miesięczna: $m=12$)</dd>
+        <dt>sens</dt><dd>stany konta po kolejnych okresach tworzą ciąg geometryczny o ilorazie $q=1+\frac{p}{100m}$</dd></dl>
+  </div>
+
+  <h2 id="iloraz">2. Jak zachowują się wyrazy</h2>
+  <div class="demo">
+    <p class="opis">Zmieniaj $q$ i patrz na kształt: $|q|&gt;1$ „wybucha”, $|q|&lt;1$ gaśnie do $0$, $q&lt;0$ skacze na przemian nad i pod osią. Puste kółka na brzegu = wyraz poza wykresem.</p>
+    <canvas id="gq-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="gq-a1" min="-3" max="3" step="0.5" value="1"> <span id="gq-a1-v"></span></label>
+      <label>$q$ <input type="range" id="gq-q" min="-2" max="2" step="0.1" value="1.5"> <span id="gq-q-v"></span></label>
+    </div>
+    <div class="wynik" id="gq-wynik"></div>
+  </div>
+
+  <h2 id="lokata">3. Lokata: procent składany kontra prosty</h2>
+  <div class="demo">
+    <p class="opis">Niebieskie: kapitał z procentem składanym (ciąg geometryczny). Zielone: odsetki proste, liczone zawsze od $K_0$ (ciąg arytmetyczny, prosta). Zwiększ $p$ i liczbę lat: przewaga składanego rośnie coraz szybciej.</p>
+    <canvas id="lo-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$K_0$ (zł) <input type="range" id="lo-k" min="1000" max="10000" step="1000" value="5000"> <span id="lo-k-v"></span></label>
+      <label>$p$ (%) <input type="range" id="lo-p" min="1" max="12" step="1" value="6"> <span id="lo-p-v"></span></label>
+      <label>lata <input type="range" id="lo-n" min="1" max="30" step="1" value="20"> <span id="lo-n-v"></span></label>
+      <label>kapitalizacja <select id="lo-m">
+        <option value="1">roczna</option>
+        <option value="4">kwartalna</option>
+        <option value="12">miesięczna</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="lo-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>W ciągu geometrycznym $a_3=12$ i $a_6=-96$. Oblicz $S_7$.</p>
+    <ol>
+      <li>$a_6=a_3q^3$, więc $q^3=-8$ i $q=-2$.</li>
+      <li>$a_1=\frac{a_3}{q^2}=\frac{12}{4}=3$.</li>
+      <li>$S_7=3\cdot\frac{1-(-2)^7}{1-(-2)}=3\cdot\frac{129}{3}=129$.</li>
+    </ol>
+    <p class="odp">$S_7=129$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">W ciągu geometrycznym $a_2=6$ i $a_5=48$. Oblicz $S_6$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $q^3=\frac{48}{6}=8$, $q=2$, $a_1=3$. $S_6=3\cdot\frac{1-2^6}{1-2}=3\cdot63$. <b>$S_6=189$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; -1"><span class="poziom">średnie</span>
+      <div class="tresc">Liczby $x-1$, $x+3$, $5x+3$ tworzą (w tej kolejności) ciąg geometryczny. Wyznacz $x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $(x+3)^2=(x-1)(5x+3)$, czyli $x^2+6x+9=5x^2-2x-3$, $x^2-2x-3=0$, $x\in\{-1,3\}$.
+        Sprawdzenie (wyrazy niezerowe): $x=3$: $2,6,18$ ($q=3$); $x=-1$: $-2,2,-2$ ($q=-1$). <b>$x=3$ lub $x=-1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wpłacono $5000$ zł na lokatę $4\%$ w skali roku z kapitalizacją kwartalną. Ile będzie na lokacie po $2$ latach (pomiń podatek)?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kwartalnie $\frac{4\%}{4}=1\%$, $8$ kwartałów: $K=5000\cdot1{,}01^8\approx5414{,}28$. <b>$\approx 5414{,}28$ zł</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Ile początkowych wyrazów ciągu $1, 2, 4, 8, \ldots$ trzeba dodać, by suma przekroczyła $1000$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $S_n=\frac{1-2^n}{1-2}=2^n-1&gt;1000 \iff 2^n&gt;1001$. $2^9=512$, $2^{10}=1024$. <b>$n=10$</b> (wtedy $S_{10}=1023$).
+      </div></details></li>
+    <li class="zadanie" data-odp="1; 2; 4" data-odp-opis="te trzy liczby"><span class="poziom">maturalne</span>
+      <div class="tresc">Trzy liczby tworzą ciąg geometryczny. Ich suma wynosi $7$, a iloczyn $8$. Wyznacz te liczby.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Liczby $\frac{b}{q}, b, bq$. Iloczyn $b^3=8$, więc $b=2$. Suma: $\frac2q+2+2q=7$, czyli $2q^2-5q+2=0$, $q\in\{2,\frac12\}$.
+        <b>$1, 2, 4$ lub $4, 2, 1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Trzy liczby o sumie $15$ tworzą ciąg arytmetyczny. Jeśli do nich dodamy odpowiednio $1$, $4$ i $19$, otrzymamy ciąg geometryczny. Wyznacz te liczby.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Liczby $5-r, 5, 5+r$ (suma $15$). Po dodaniu: $6-r,\ 9,\ 24+r$, więc $81=(6-r)(24+r)$, czyli $r^2+18r-63=0$, $r\in\{3,-21\}$.
+        Sprawdzenie: $r=3$: $2,5,8 \to 3,9,27$; $r=-21$: $26,5,-16 \to 27,9,3$. <b>$2,5,8$ lub $26,5,-16$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>$q$ z dwóch wyrazów</b>: $a_m=a_kq^{m-k}$. Przy parzystym $m-k$ są <b>dwa</b> rozwiązania $q=\pm\ldots$ (np. $q^2=4$). Rozpatrz oba.</li>
+    <li><b>Wzór na $S_n$</b> tylko dla $q\neq1$. Jeśli $q$ zależy od parametru, przypadek $q=1$ rozpatrz osobno.</li>
+    <li><b>Trzy liczby</b>: $\frac bq, b, bq$ (gdy dany iloczyn) albo warunek $y^2=xz$. Zawsze sprawdź, czy wyrazy są niezerowe.</li>
+    <li><b>Lokaty</b>: $p\%$ rocznie przy kapitalizacji $m$ razy w roku daje $\frac{p}{m}\%$ na okres i $mn$ okresów. Wynik w złotych zaokrąglij do groszy dopiero na końcu.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const rown = (x, m = 2) => (Math.abs(Math.round(x * 10 ** m) / 10 ** m - x) < 1e-9 ? "=" : "\\approx ") + ladnaTex(x, m);
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  // --- 2. Zachowanie wyrazów ---
+  const YM = 9;
+  const w1 = new Wykres($("gq-plot"), { xmin: -0.5, xmax: 10.8, ymin: -YM, ymax: YM, krokY: 2 });
+  function rysujGq() {
+    const a1 = +$("gq-a1").value, q = Math.round(+$("gq-q").value * 10) / 10, N = 10;
+    $("gq-a1-v").textContent = ladna(a1); $("gq-q-v").textContent = ladna(q);
+    const a = n => a1 * q ** (n - 1);
+    const kl = y => Math.max(-YM + 0.3, Math.min(YM - 0.3, y));
+    w1.rysuj(g => {
+      for (let n = 1; n < N; n++) g.odcinek(n, kl(a(n)), n + 1, kl(a(n + 1)), 3);
+      for (let n = 1; n <= N; n++) {
+        const y = a(n), poza = Math.abs(y) > YM - 0.3;
+        g.punkt(n, kl(y), n <= 3 ? `a${"₀₁₂₃"[n]}` : "", poza ? 2 : 1, { pusty: poza });
+      }
+    });
+    let opis;
+    if (q === 0) opis = "a_1, 0, 0, \\ldots";
+    else if (q === 1) opis = "\\text{stały}";
+    else if (q === -1) opis = "\\text{na przemian } \\pm a_1";
+    else if (q < 0) opis = Math.abs(q) < 1 ? "\\text{znaki na przemian, } |a_n|\\to0" : "\\text{znaki na przemian, } |a_n|\\text{ rośnie}";
+    else opis = (q > 1) === (a1 > 0) ? "\\text{rosnący}" : "\\text{malejący}";
+    if (q > 0 && q < 1) opis += ",\\ a_n\\to0";
+    if (a1 === 0) opis = "\\text{same zera}";
+    tex("gq-wynik", `a_n=${ladnaTex(a1)}\\cdot(${ladnaTex(q)})^{n-1},\\ \\ a_{10}${rown(a(10), 3)}\\ \\Rightarrow\\ ${opis}`);
+  }
+  ["gq-a1", "gq-q"].forEach(id => $(id).addEventListener("input", rysujGq));
+  rysujGq();
+
+  // --- 3. Lokata ---
+  const w2 = new Wykres($("lo-plot"), { xmin: -1, xmax: 21, ymin: -1, ymax: 20 });
+  function rysujLo() {
+    const K0 = +$("lo-k").value, p = +$("lo-p").value, N = +$("lo-n").value, m = +$("lo-m").value;
+    $("lo-k-v").textContent = K0; $("lo-p-v").textContent = p; $("lo-n-v").textContent = N;
+    const zl = x => x / 1000; // oś Y w tysiącach zł
+    const skl = t => K0 * (1 + p / (100 * m)) ** (m * t), pros = t => K0 * (1 + p * t / 100);
+    const top = zl(skl(N));
+    Object.assign(w2.z0, { xmin: -N * 0.06, xmax: N * 1.08, krokX: ladnyKrok(N), ymin: -top * 0.06, ymax: top * 1.12, krokY: ladnyKrok(top) });
+    w2.rysuj(g => {
+      g.funkcja(t => zl(pros(t)), 3, { od: 0, do: N });
+      g.funkcja(t => zl(skl(t)), 1, { przerywana: true, od: 0, do: N });
+      const co = Math.max(1, Math.round(N / 15));
+      for (let n = 0; n <= N; n += co) { g.punkt(n, zl(pros(n)), "", 3, { r: 3.5 }); g.punkt(n, zl(skl(n)), "", 1, { r: 3.5 }); }
+      g.odcinek(N, zl(pros(N)), N, zl(skl(N)), 2, false);
+      g.tekst(g.z.xmin, g.z.ymax, " tys. zł", 4, { dy: 16 });
+    });
+    const Kn = skl(N), Pn = pros(N);
+    const zlote = x => ladnaTex(x).replace(/\B(?=(\d{3})+(?!\d))/g, "\\,");
+    tex("lo-wynik", `K_{${N}}=${K0}\\cdot\\left(1+\\tfrac{${p}}{${100 * m}}\\right)^{${m * N}}\\approx${zlote(Kn)}\\text{ zł},\\ \\text{prosty: } ${zlote(Pn)}\\text{ zł}`);
+  }
+  ["lo-k", "lo-p", "lo-n", "lo-m"].forEach(id => $(id).addEventListener("input", rysujLo));
+  rysujLo();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Symbol Newtona w zadaniach kombinatorycznych</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Symbol Newtona w zadaniach kombinatorycznych</h1>
+  <p class="lead">$\binom nk$ to liczba sposobów wyboru $k$ elementów z $n$. Prawie każdą jego własność udowodnisz bez rachunków: <b>policz to samo na dwa sposoby</b>.</p>
+  <p class="wymagania">XI.R.2, II.R.4, II.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wlasnosci">1. Definicja i własności</h2>
+  <div class="wzor">
+    <div class="tytul">Symbol Newtona <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\binom nk=\frac{n!}{k!\,(n-k)!}$$
+    $$\binom nk=\frac{n(n-1)\cdot\ldots\cdot(n-k+1)}{k!}$$
+    <dl><dt>$0\le k\le n$</dt><dd>liczby całkowite. Drugi wzór <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> jest wygodny do liczenia: $k$ czynników w liczniku i w mianowniku</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>własność <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></th><th>dlaczego, „na palcach”</th></tr>
+    <tr><td>$\binom n0=\binom nn=1$</td><td>zbiór pusty / cały zbiór: jeden sposób</td></tr>
+    <tr><td>$\binom n1=\binom n{n-1}=n$</td><td>wybór jednego = wybór jednego do pominięcia</td></tr>
+    <tr><td>$\binom nk=\binom n{n-k}$</td><td>wybrać $k$ do zabrania = wybrać $n-k$ do zostawienia</td></tr>
+    <tr><td>$\binom nk+\binom n{k+1}=\binom{n+1}{k+1}$</td><td>trójkąt Pascala (dowód niżej)</td></tr>
+  </table>
+  <p>Przyda się też <span class="cke nie" title="Tego wzoru nie ma w karcie CKE – trzeba go pamiętać lub wyprowadzić">poza kartą CKE</span>: $\binom n0+\binom n1+\ldots+\binom nn=2^n$, bo to liczba wszystkich podzbiorów (zadanie 6).</p>
+
+  <h2 id="pascal">2. Trójkąt Pascala</h2>
+  <div class="twierdzenie"><b>Twierdzenie</b> Jeśli $0&lt;k&lt;n$, to
+    $$\binom nk=\binom{n-1}{k-1}+\binom{n-1}{k}$$
+    To ta sama równość co w tablicach, tylko z $n-1$ w miejscu $n$ i $k-1$ w miejscu $k$.
+    <details class="rozwin"><summary>Dowód kombinatoryczny (wymagany na maturze)</summary><div>
+      <p>Weź zbiór $n$ osób i wyróżnij w nim jedną osobę, nazwijmy ją $X$. Policzmy $k$-osobowe podzbiory dwoma sposobami.</p>
+      <ul>
+        <li>Wszystkich jest $\binom nk$ (definicja).</li>
+        <li>Podziel je na dwie <b>rozłączne</b> grupy:
+          <br>zawierające $X$: pozostałe $k-1$ osób dobierasz spośród $n-1$, czyli $\binom{n-1}{k-1}$ sposobów;
+          <br>niezawierające $X$: wszystkie $k$ osób bierzesz spośród $n-1$, czyli $\binom{n-1}{k}$ sposobów.</li>
+      </ul>
+      <p>Każdy podzbiór jest w dokładnie jednej grupie, więc z reguły dodawania $\binom nk=\binom{n-1}{k-1}+\binom{n-1}{k}$. Założenie $0&lt;k&lt;n$ gwarantuje, że oba symbole po prawej mają sens ($0\le k-1$ i $k\le n-1$). $\blacksquare$</p>
+    </div></details>
+  </div>
+  <p>Dlatego w trójkącie Pascala każda liczba jest sumą dwóch liczb nad nią, a na brzegach są jedynki. Wiersz $n$ to $\binom n0,\binom n1,\ldots,\binom nn$.</p>
+  <div class="demo">
+    <p class="opis">Kliknij liczbę w trójkącie (albo ustaw suwaki). Czerwona = $\binom nk$, niebieskie = dwie liczby nad nią. Przycisk ▶ buduje trójkąt wiersz po wierszu.</p>
+    <canvas id="pa-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="pa-n" min="2" max="10" step="1" value="6"> <span id="pa-n-v"></span></label>
+      <label>$k$ <input type="range" id="pa-k" min="1" max="5" step="1" value="2"> <span id="pa-k-v"></span></label>
+      <button id="pa-start">▶ Buduj</button>
+    </div>
+    <div class="wynik" id="pa-wynik"></div>
+  </div>
+
+  <h2 id="dwumian">3. Dwumian Newtona</h2>
+  <div class="twierdzenie"><b>Wzór dwumianowy Newtona</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> Dla $n\ge 1$ i dowolnych $a,b\in\R$:
+    $$(a+b)^n=\sum_{k=0}^{n}\binom nk a^{n-k}b^k$$
+    czyli $\binom n0a^n+\binom n1a^{n-1}b+\ldots+\binom nn b^n$. Podstawiając $-b$ w miejsce $b$, dostajesz wzór na $(a-b)^n$ <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>: znaki na przemian, $(-1)^k\binom nk a^{n-k}b^k$.
+    <details class="rozwin"><summary>Dowód kombinatoryczny (wymagany na maturze)</summary><div>
+      <p>$(a+b)^n=\underbrace{(a+b)(a+b)\cdots(a+b)}_{n\text{ nawiasów}}$. Wymnażając, z każdego nawiasu bierzesz $a$ albo $b$ i mnożysz wybrane litery. Każdy z $2^n$ takich wyborów daje jeden składnik.</p>
+      <p>Składnik $a^{n-k}b^k$ powstaje dokładnie wtedy, gdy $b$ wzięto z $k$ nawiasów, a $a$ z pozostałych $n-k$. Taki wybór jest wyznaczony przez <b>zbiór</b> $k$ nawiasów, z których bierzesz $b$, a takich zbiorów jest $\binom nk$. Po zredukowaniu wyrazów podobnych współczynnik przy $a^{n-k}b^k$ wynosi więc $\binom nk$. $\blacksquare$</p>
+      <p>(Można też indukcyjnie: $(a+b)^{n+1}=(a+b)^n(a+b)$, a współczynniki dodają się jak w trójkącie Pascala.)</p>
+    </div></details>
+  </div>
+  <div class="demo">
+    <p class="opis">Ustaw $n$ i $k$, kliknij ▶. Animacja przechodzi przez wszystkie wybory $k$ nawiasów, z których bierzesz $b$ (czerwone). Każdy wybór daje jedno $a^{n-k}b^k$, więc słupek rośnie do $\binom nk$. Słupki to wiersz $n$ trójkąta Pascala.</p>
+    <canvas id="dw-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="dw-n" min="1" max="6" step="1" value="4"> <span id="dw-n-v"></span></label>
+      <label>$k$ <input type="range" id="dw-k" min="0" max="4" step="1" value="2"> <span id="dw-k-v"></span></label>
+      <button id="dw-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="dw-wynik"></div>
+  </div>
+
+  <h2 id="podzielnosc">4. Wzory na $a^n\pm b^n$ i podzielność</h2>
+  <div class="twierdzenie"><b>Twierdzenie</b> Dla $n\ge 1$ <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>:
+    $$\begin{aligned}a^n-b^n=(a-b)(&amp;a^{n-1}+a^{n-2}b\\&amp;+\ldots+b^{n-1})\end{aligned}$$
+    Dla <b>nieparzystych</b> $n$ (nie ma w tablicach, poza $n=3$):
+    $$\begin{aligned}a^n+b^n=(a+b)(&amp;a^{n-1}-a^{n-2}b\\&amp;+\ldots+b^{n-1})\end{aligned}$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Wymnóż prawą stronę pierwszego wzoru. $a$ razy nawias daje $a^n+a^{n-1}b+\ldots+ab^{n-1}$, a $-b$ razy nawias daje $-a^{n-1}b-\ldots-ab^{n-1}-b^n$. Wszystkie środkowe wyrazy się redukują (suma „teleskopowa”), zostaje $a^n-b^n$.</p>
+      <p>Drugi wzór: podstaw $-b$ w miejsce $b$. Dla nieparzystego $n$ jest $(-b)^n=-b^n$, więc lewa strona to $a^n+b^n$, a w nawiasie znaki zaczynają się przemieniać. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Wniosek</b> Dla liczb całkowitych $a\ne b$ i $n\ge 1$: $\;(a-b)\mid(a^n-b^n)$.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p><b>Sposób 1.</b> Z pierwszego wzoru $a^n-b^n=(a-b)\cdot m$, gdzie $m=a^{n-1}+\ldots+b^{n-1}$ jest liczbą całkowitą (sumą iloczynów liczb całkowitych).</p>
+      <p><b>Sposób 2 (z dwumianu).</b> Niech $d=a-b$. Wtedy $a^n=(b+d)^n=b^n+\binom n1b^{n-1}d+\ldots+d^n$, więc</p>
+      $$a^n-b^n=d\cdot\Big(\tbinom n1 b^{n-1}+\ldots+d^{n-1}\Big)$$
+      <p>a nawias jest liczbą całkowitą. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <p>Przykłady: $5\mid 7^n-2^n$; $\;3\mid 2^{100}-1$, bo $2^{100}-1=4^{50}-1^{50}$ i $4-1=3$. Z drugiego wzoru: dla nieparzystych $n$ jest $(a+b)\mid(a^n+b^n)$, np. $9\mid 4^{7}+5^{7}$.</p>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiń $(x-2)^4$.</p>
+    <ol>
+      <li>Wiersz $4$ trójkąta Pascala: $1,\,4,\,6,\,4,\,1$.</li>
+      <li>$a=x$, $b=-2$: potęgi $b$ to $1,\,-2,\,4,\,-8,\,16$.</li>
+      <li>Mnożysz parami: $1\cdot x^4$, $4\cdot(-2)x^3$, $6\cdot 4x^2$, $4\cdot(-8)x$, $1\cdot 16$.</li>
+    </ol>
+    <p class="odp">$x^4-8x^3+24x^2-32x+16$</p>
+  </div>
+  <div class="przyklad">
+    <p>Ile jest najkrótszych dróg po liniach kratki z punktu $(0,0)$ do $(5,3)$ (kroki: w prawo lub w górę)?</p>
+    <ol>
+      <li>Każda droga ma $8$ kroków: $5$ w prawo i $3$ w górę.</li>
+      <li>Droga jest wyznaczona przez <b>zbiór</b> numerów kroków „w górę”: $\binom83=\frac{8\cdot7\cdot6}{6}$.</li>
+    </ol>
+    <p class="odp">$56$ dróg</p>
+    <p>To znowu trójkąt Pascala: do każdego punktu dochodzisz z lewej albo z dołu, więc liczby dróg się dodają.</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="330"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\binom{10}{3}+\binom{10}{4}$ i porównaj z $\binom{11}{4}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\binom{10}3=\frac{10\cdot9\cdot8}{6}=120$, $\binom{10}4=\binom{10}{3}\cdot\frac74=210$. Suma $330$ i z własności Pascala to $\binom{11}{4}=\frac{11\cdot10\cdot9\cdot8}{24}=330$. <b>$330$, równe</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="80"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz współczynnik przy $x^3$ w rozwinięciu $(2x-1)^5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wyraz z $x^3$: $\binom53(2x)^3(-1)^2=10\cdot 8x^3$. <b>$80$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10"><span class="poziom">średnie</span>
+      <div class="tresc">Wielokąt wypukły ma $35$ przekątnych. Ile ma boków?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Odcinków łączących $n$ wierzchołków jest $\binom n2$, z czego $n$ to boki: $\binom n2-n=\frac{n(n-3)}{2}=35$. Stąd $n^2-3n-70=0$, $n=10$ (drugi pierwiastek $-7$ odrzucasz). <b>$10$ boków</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="160"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz wyraz niezależny od $x$ w rozwinięciu $\left(x+\frac2x\right)^6$, $x\ne 0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wyraz ogólny: $\binom6k x^{6-k}\left(\frac2x\right)^k=\binom6k2^k x^{6-2k}$. Niezależny od $x$: $6-2k=0$, $k=3$. $\binom63\cdot 8=20\cdot8$. <b>$160$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że liczba $11^{10}-1$ jest podzielna przez $100$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $11^{10}=(1+10)^{10}=1+\binom{10}{1}\cdot10+\binom{10}{2}\cdot10^2+\ldots+10^{10}$.
+        Zatem $11^{10}-1=100+\binom{10}{2}10^2+\ldots+10^{10}$: pierwszy składnik to $10\cdot10=100$, a każdy następny zawiera $10^k$ z $k\ge2$. <b>Każdy składnik dzieli się przez $100$, więc cała suma też.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że $\binom n0+\binom n1+\ldots+\binom nn=2^n$ dla $n\ge1$. Podaj dwa uzasadnienia.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        <b>Kombinatorycznie:</b> lewa strona to liczba podzbiorów zbioru $n$-elementowego, pogrupowanych według liczby elementów. Z reguły mnożenia podzbiorów jest $2^n$ (każdy element: należy albo nie).
+        <b>Z dwumianu:</b> podstaw $a=b=1$: $2^n=(1+1)^n=\sum_k\binom nk$. <b>Teza zachodzi.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Dowody kombinatoryczne</b>: nazwij zbiór, który liczysz, i powiedz, na jakie <b>rozłączne</b> części go dzielisz. Bez tego dowód nie jest pełny.</li>
+    <li><b>Wyraz ogólny</b> $\binom nk a^{n-k}b^k$ zapisz jawnie, potem porównuj wykładniki. Uważaj na znak, gdy $b$ jest ujemne.</li>
+    <li>W rozwinięciu $(a+b)^n$ jest $n+1$ wyrazów, nie $n$.</li>
+    <li>Podzielność typu $11^{10}-1$, $7^n-2^n$: rozpisz dwumian albo użyj $(a-b)\mid(a^n-b^n)$ i powołaj się na to wprost.</li>
+    <li>Równania z $\binom n2$, $\binom n3$: zamień na wielomian, odrzuć rozwiązania, które nie są liczbami naturalnymi $\ge k$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const C = (n, k) => { let r = 1; for (let i = 0; i < k; i++) r = r * (n - i) / (i + 1); return Math.round(r); };
+  const zakres = { xmin: 0, xmax: 1, ymin: 0, ymax: 1, siatka: false, osie: false };
+
+  // --- 2. Trójkąt Pascala ---
+  const N = 10;
+  const w1 = new Wykres($("pa-plot"), zakres);
+  let uklad = null, stop1 = null;
+  function pascal(t) {
+    const n = +$("pa-n").value;
+    $("pa-k").max = n - 1;
+    let k = +$("pa-k").value;
+    if (k > n - 1) { k = n - 1; $("pa-k").value = k; }
+    $("pa-n-v").textContent = n; $("pa-k-v").textContent = k;
+    const wiersze = t * (N + 1);
+    w1.rysuj(g => {
+      const X = p => g.wx(p), Y = p => g.wy(p);
+      const cw = Math.min(56, (g.w - 8) / (N + 1)), rh = (g.h - 12) / (N + 1), sr = g.w / 2;
+      uklad = { cw, rh, sr, gora: 6 };
+      const pole = (i, j) => [sr + (j - i / 2) * cw, 6 + i * rh];
+      const rozm = cw >= 40 ? 14 : 11;
+      for (let i = 0; i <= N; i++) {
+        if (i >= wiersze) break;
+        for (let j = 0; j <= i; j++) {
+          const [x, y] = pole(i, j);
+          let nr = "--muted", wyp = 0.04;
+          if (i === n && j === k) { nr = 2; wyp = 0.3; }
+          else if (i === n - 1 && (j === k - 1 || j === k)) { nr = 1; wyp = 0.25; }
+          g.prostokat(X(x - cw / 2 + 2), Y(y + rh - 3), (cw - 4) / g.w, (rh - 4) / g.h, nr, { wypelnij: wyp, grubosc: 1 });
+          g.tekst(X(x), Y(y + rh / 2), String(C(i, j)), typeof nr === "number" ? nr : "--text", { wyrownanie: "center", dy: rozm / 3, rozmiar: rozm, gruby: typeof nr === "number" });
+        }
+      }
+      if (wiersze > n + 0.5) {
+        const [xc, yc] = pole(n, k);
+        [k - 1, k].forEach(j => { const [x, y] = pole(n - 1, j); g.strzalka(X(x), Y(y + rh - 4), X(xc + (x - xc) * 0.25), Y(yc + 4), 1); });
+      }
+    });
+    const a = C(n - 1, k - 1), b = C(n - 1, k);
+    tex("pa-wynik", `\\binom{${n - 1}}{${k - 1}}+\\binom{${n - 1}}{${k}}=${a}+${b}=${a + b}=\\binom{${n}}{${k}}`);
+  }
+  $("pa-plot").addEventListener("click", e => {
+    if (!uklad) return;
+    const r = $("pa-plot").getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+    const i = Math.floor((py - uklad.gora) / uklad.rh), j = Math.round((px - uklad.sr) / uklad.cw + i / 2);
+    if (i >= 2 && i <= N && j >= 1 && j <= i - 1) {
+      if (stop1) stop1();
+      $("pa-n").value = i; $("pa-k").max = i - 1; $("pa-k").value = j;
+      pascal(1);
+    }
+  });
+  $("pa-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(4000, pascal); });
+  ["pa-n", "pa-k"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); pascal(1); }));
+  pascal(1);
+
+  // --- 3. Dwumian: wybory nawiasów ---
+  const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+  const pot = (lit, e) => e === 0 ? "" : e === 1 ? lit : lit + String(e).split("").map(c => SUP[c]).join("");
+  const wyraz = (n, j) => (pot("a", n - j) + pot("b", j)) || "1";
+  function podzbiory(n, k) {
+    const wyn = [];
+    (function bud(start, pref) {
+      if (pref.length === k) { wyn.push(pref); return; }
+      for (let i = start; i < n; i++) bud(i + 1, [...pref, i]);
+    })(0, []);
+    return wyn;
+  }
+  const w2 = new Wykres($("dw-plot"), zakres);
+  let stop2 = null;
+  function dwumian(t) {
+    const n = +$("dw-n").value;
+    $("dw-k").max = n;
+    let k = +$("dw-k").value;
+    if (k > n) { k = n; $("dw-k").value = k; }
+    $("dw-n-v").textContent = n; $("dw-k-v").textContent = k;
+    const wyb = podzbiory(n, k), ile = wyb.length;
+    const nr = Math.min(ile - 1, Math.floor(t * ile)), S = wyb[nr], zliczone = t >= 1 ? ile : nr + 1;
+    w2.rysuj(g => {
+      const X = p => g.wx(p), Y = p => g.wy(p);
+      const bw = Math.min(110, (g.w - 16) / n), f = Math.max(12, Math.min(18, bw / 5)), x0 = (g.w - n * bw) / 2;
+      for (let i = 0; i < n; i++) {
+        const cx = x0 + (i + 0.5) * bw, y = 30, b = S.includes(i);
+        g.tekst(X(cx - 0.4 * bw), Y(y), "(", "--muted", { wyrownanie: "center", rozmiar: f + 4, dy: 6 });
+        g.tekst(X(cx - 0.2 * bw), Y(y), "a", b ? "--muted" : 1, { wyrownanie: "center", rozmiar: f, dy: 5, gruby: !b });
+        g.tekst(X(cx), Y(y), "+", "--muted", { wyrownanie: "center", rozmiar: f, dy: 5 });
+        g.tekst(X(cx + 0.2 * bw), Y(y), "b", b ? 2 : "--muted", { wyrownanie: "center", rozmiar: f, dy: 5, gruby: b });
+        g.tekst(X(cx + 0.4 * bw), Y(y), ")", "--muted", { wyrownanie: "center", rozmiar: f + 4, dy: 6 });
+        g.punkt(X(cx + (b ? 0.2 : -0.2) * bw), Y(y), "", b ? 2 : 1, { r: f * 0.8, pusty: true });
+        g.tekst(X(cx + (b ? 0.2 : -0.2) * bw), Y(y), b ? "b" : "a", b ? 2 : 1, { wyrownanie: "center", rozmiar: f, dy: 5, gruby: true });
+      }
+      const slowo = Array.from({ length: n }, (_, i) => S.includes(i) ? "b" : "a").join("·");
+      g.tekst(X(g.w / 2), Y(72), slowo + " = " + wyraz(n, k), "--text", { wyrownanie: "center", rozmiar: 15, gruby: true });
+      g.tekst(X(g.w / 2), Y(94), "wybór " + zliczone + " z " + ile, "--muted", { wyrownanie: "center", rozmiar: 12 });
+      // słupki: wiersz n trójkąta Pascala
+      const gora = 118, dol = g.h - 22, maks = C(n, Math.floor(n / 2)), sw = (g.w - 16) / (n + 1);
+      for (let j = 0; j <= n; j++) {
+        const v = C(n, j), hgt = (dol - gora - 18) * v / maks, x = 8 + j * sw + sw * 0.15, s = sw * 0.7;
+        if (j === k) {
+          g.prostokat(X(x), Y(dol), s / g.w, hgt / g.h, 2, { wypelnij: 0.05, przerywana: true, grubosc: 1.5 });
+          const hz = hgt * zliczone / ile;
+          if (hz > 0) g.prostokat(X(x), Y(dol), s / g.w, hz / g.h, 2, { wypelnij: 0.45 });
+        } else g.prostokat(X(x), Y(dol), s / g.w, hgt / g.h, 1, { wypelnij: 0.25 });
+        g.tekst(X(x + s / 2), Y(dol - hgt - 6), j === k ? zliczone + "/" + v : String(v), j === k ? 2 : 1, { wyrownanie: "center", rozmiar: 13, gruby: true });
+        g.tekst(X(x + s / 2), Y(dol + 16), wyraz(n, j), j === k ? 2 : "--muted", { wyrownanie: "center", rozmiar: 12 });
+      }
+    });
+    const czlony = [];
+    for (let j = 0; j <= n; j++) {
+      const c = C(n, j), ea = n - j, eb = j;
+      let s = (c === 1 ? "" : String(c)) + (ea ? "a" + (ea > 1 ? "^{" + ea + "}" : "") : "") + (eb ? "b" + (eb > 1 ? "^{" + eb + "}" : "") : "");
+      if (j === k) s = "\\textcolor{#d2452f}{" + s + "}";
+      czlony.push(s);
+    }
+    tex("dw-wynik", `(a+b)^{${n}}=` + czlony.join("+"));
+  }
+  $("dw-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    const ile = C(+$("dw-n").value, Math.min(+$("dw-k").value, +$("dw-n").value));
+    stop2 = animuj(Math.max(1500, 650 * ile), dwumian);
+  });
+  ["dw-n", "dw-k"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); dwumian(1); }));
+  dwumian(1);
+});
+</script>
+</body>
+</html>

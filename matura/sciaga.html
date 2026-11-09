@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ściąga: wzory spoza karty CKE</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav>› <a href="index.html">Matura rozszerzona</a> › Ściąga</nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Ściąga: wzory spoza karty CKE</h1>
+  <p class="lead">Tego <b>nie ma</b> w karcie „Wybrane wzory matematyczne” (edycja 2023), a na maturze się przydaje. Zapamiętaj albo umiej szybko wyprowadzić. Link przy pozycji prowadzi do tematu.</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="algebra">1. Algebra i liczby</h2>
+  <div class="wzor"><div class="tytul">Suma potęg, n nieparzyste · <a href="symbol-newtona.html">temat</a></div>
+    $$a^n+b^n=(a+b)\,\cdot$$
+    $$(a^{n-1}-a^{n-2}b+\ldots+b^{n-1})$$
+    <dl><dt>uwaga</dt><dd>tylko dla nieparzystych $n$ (podstaw $-b$ w miejsce $b$ we wzorze na $a^n-b^n$, który <b>jest</b> w karcie)</dd></dl></div>
+  <div class="wzor"><div class="tytul">Twierdzenie Bézouta · <a href="dzielenie-wielomianow.html">temat</a></div>
+    $$W(a)=0\iff (x-a)\mid W(x)$$
+    <dl><dt>reszta</dt><dd>z dzielenia przez $x-a$ równa $W(a)$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Viète: wyrażenia symetryczne · <a href="wzory-viete.html">temat</a></div>
+    $$x_1^2+x_2^2=s^2-2p$$
+    $$x_1^3+x_2^3=s^3-3ps$$
+    <dl><dt>$s,\,p$</dt><dd>$s=x_1+x_2$, $p=x_1x_2$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Logarytm, potęga w podstawie · <a href="logarytmy.html">temat</a></div>
+    $$\log_{a^k}b=\tfrac1k\log_a b$$</div>
+
+  <h2 id="procenty">2. Procenty</h2>
+  <div class="wzor"><div class="tytul">Kapitalizacja częstsza niż roczna · <a href="procenty.html">temat</a></div>
+    $$K=K_0\left(1+\tfrac{p}{100m}\right)^{mn}$$</div>
+  <div class="wzor"><div class="tytul">Rata kredytu (wyprowadź) · <a href="procenty.html">temat</a></div>
+    $$R=\frac{Kq^n(q-1)}{q^n-1}$$
+    <dl><dt>$q$</dt><dd>$1+\frac{r}{100}$, $r$ – oprocentowanie za okres</dd></dl></div>
+
+  <h2 id="planimetria">3. Planimetria</h2>
+  <div class="wzor"><div class="tytul">Kwadrat i „ekierki” · <a href="trygonometria-trojkat-prostokatny.html">temat</a></div>
+    $$d=a\sqrt2$$
+    <dl><dt>$45^\circ$</dt><dd>boki $a,\ a,\ a\sqrt2$</dd>
+        <dt>$30^\circ,60^\circ$</dt><dd>boki $a,\ a\sqrt3,\ 2a$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Wielokąt foremny · <a href="czworokaty.html">temat</a></div>
+    $$\text{kąt wewn.}=\tfrac{(n-2)\cdot180^\circ}{n}$$
+    $$\text{przekątnych: }\tfrac{n(n-3)}{2}$$
+    <dl><dt>sześciokąt</dt><dd>6 trójkątów równobocznych, $R=a$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Pole czworokąta opisanego · <a href="czworokaty-okrag.html">temat</a></div>
+    $$P=p\cdot r$$
+    <dl><dt>$p$</dt><dd>połowa obwodu; trapez opisany: $h=2r$</dd></dl></div>
+  <ul>
+    <li>Styczna jest <b>prostopadła do promienia</b> w punkcie styczności · <a href="katy-w-okregu.html">temat</a></li>
+    <li>Środkowe trójkąta dzielą się w stosunku $2:1$ od wierzchołka · <a href="punkty-szczegolne.html">temat</a></li>
+    <li>Środek okręgu wpisanego – przecięcie dwusiecznych; opisanego – symetralnych · <a href="punkty-szczegolne.html">temat</a></li>
+  </ul>
+
+  <h2 id="analityczna">4. Geometria analityczna</h2>
+  <ul>
+    <li>Prosta styczna do okręgu $\iff$ odległość środka od prostej $=r$ · <a href="prosta-i-okrag.html">temat</a></li>
+  </ul>
+
+  <h2 id="stereometria">5. Stereometria</h2>
+  <div class="wzor"><div class="tytul">Sześcian, czworościan foremny · <a href="graniastoslupy.html">temat</a></div>
+    $$d_{\text{sześc.}}=a\sqrt3$$
+    $$H_{\text{czworośc.}}=\tfrac{a\sqrt6}{3}$$
+    <dl><dt>$H$</dt><dd>spodek w środku trójkąta podstawy (<a href="ostroslupy.html">ostrosłupy</a>)</dd></dl></div>
+
+  <h2 id="kombinatoryka">6. Kombinatoryka i prawdopodobieństwo</h2>
+  <div class="wzor"><div class="tytul">Permutacje z powtórzeniami · <a href="permutacje-kombinacje.html">temat</a></div>
+    $$\frac{n!}{k_1!\,k_2!\cdot\ldots\cdot k_s!}$$</div>
+  <div class="wzor"><div class="tytul">Suma symboli Newtona · <a href="symbol-newtona.html">temat</a></div>
+    $$\tbinom n0+\tbinom n1+\ldots+\tbinom nn=2^n$$</div>
+  <div class="wzor"><div class="tytul">Najczęstsza liczba sukcesów · <a href="schemat-bernoulliego.html">temat</a></div>
+    $$k_0=\lfloor (n+1)p\rfloor$$
+    <dl><dt>uwaga</dt><dd>gdy $(n+1)p\in\mathbb Z$, są dwie: $(n+1)p$ i $(n+1)p-1$</dd></dl></div>
+  <ul><li>Reguła mnożenia i dodawania (rozbij na przypadki) · <a href="regula-mnozenia.html">temat</a></li></ul>
+
+  <h2 id="pochodna">7. Pochodna</h2>
+  <ul>
+    <li>$f'\gt 0$ na przedziale $\Rightarrow f$ rosnąca; $f'\lt 0\Rightarrow$ malejąca · <a href="monotonicznosc-ekstrema.html">temat</a></li>
+    <li>Ekstremum w $x_0$: $f'(x_0)=0$ <b>i</b> $f'$ zmienia znak · <a href="monotonicznosc-ekstrema.html">temat</a></li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+</body>
+</html>

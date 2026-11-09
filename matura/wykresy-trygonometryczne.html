@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wykresy i okresowość funkcji trygonometrycznych</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wykresy i okresowość funkcji trygonometrycznych</h1>
+  <p class="lead">Sinusoida to wysokość punktu krążącego po okręgu jednostkowym, rozpisana w czasie. Po pełnym obrocie ($2\pi$) punkt wraca na miejsce, więc wykres się powtarza: to jest okresowość.</p>
+  <p class="wymagania">VII.R.2, VII.R.3, V.12, V.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="okrag-wykres">1. Animacja: z okręgu na wykres</h2>
+  <div class="demo">
+    <p class="opis">Punkt krąży po okręgu; jego wysokość (sinus) przenosi się poziomo na wykres. Przełącz na tangens: wartość czytamy na stycznej $x=1$ do okręgu i też rzutujemy poziomo. Cosinus to odcięta punktu: ten sam zielony odcinek, tylko postawiony pionowo.</p>
+    <canvas id="ow-plot"></canvas>
+    <div class="sterowanie">
+      <button id="ow-start">▶ Odtwórz</button>
+      <label>funkcja <select id="ow-f"><option value="sin">sinus</option><option value="cos">cosinus</option><option value="tg">tangens</option></select></label>
+      <label>$t$ <input type="range" id="ow-t" min="0" max="6.28" step="0.01" value="1"></label>
+    </div>
+    <div class="wynik" id="ow-wynik"></div>
+  </div>
+
+  <h2 id="wlasnosci">2. Własności</h2>
+  <table class="tabela">
+    <tr><th></th><th>$\sin x$</th><th>$\cos x$</th><th>$\tg x$</th></tr>
+    <tr><td>dziedzina</td><td>$\R$</td><td>$\R$</td><td>$x\neq\frac\pi2+k\pi$</td></tr>
+    <tr><td>zbiór wartości</td><td>$\lp-1,1\rp$</td><td>$\lp-1,1\rp$</td><td>$\R$</td></tr>
+    <tr><td>okres podstawowy</td><td>$2\pi$</td><td>$2\pi$</td><td>$\pi$</td></tr>
+    <tr><td>miejsca zerowe</td><td>$k\pi$</td><td>$\frac\pi2+k\pi$</td><td>$k\pi$</td></tr>
+    <tr><td>maksimum $1$ dla</td><td>$\frac\pi2+2k\pi$</td><td>$2k\pi$</td><td>—</td></tr>
+    <tr><td>parzystość</td><td>nieparzysta</td><td>parzysta</td><td>nieparzysta</td></tr>
+  </table>
+  <p>Wszędzie $k\in\Z$. Tangens ma asymptoty pionowe $x=\frac\pi2+k\pi$ (tam $\cos x=0$) i jest rosnący w każdym przedziale $\left(-\frac\pi2+k\pi,\frac\pi2+k\pi\right)$.</p>
+  <div class="definicja"><b>Definicja</b> Funkcja $f$ jest <b>okresowa</b>, jeśli istnieje $T&gt;0$ takie, że dla każdego $x$ z dziedziny $x\pm T$ też należy do dziedziny i $f(x+T)=f(x)$. Najmniejsze takie $T$ (jeśli istnieje) to okres podstawowy.</div>
+  <div class="wzor">
+    <div class="tytul">Okresowość i parzystość</div>
+    $$\sin(x+2k\pi)=\sin x,\quad \cos(x+2k\pi)=\cos x$$
+    $$\tg(x+k\pi)=\tg x$$
+    $$\sin(-x)=-\sin x,\quad \cos(-x)=\cos x$$
+    <dl><dt>skąd</dt><dd>$x+2k\pi$: ten sam punkt okręgu; $-x$: punkt odbity względem osi $Ox$; $x+\pi$: punkt symetryczny względem $O$, więc oba współrzędne zmieniają znak, a ich iloraz nie</dd></dl>
+  </div>
+  <div class="uwaga">$\cos x=\sin\left(x+\frac\pi2\right)$: wykres cosinusa to sinusoida przesunięta o $\frac\pi2$ w <b>lewo</b>. Dla $\sin(kx)$ okres to $\frac{2\pi}{|k|}$, bo $\sin\left(k\left(x+\frac{2\pi}{k}\right)\right)=\sin(kx+2\pi)$.</div>
+
+  <h2 id="przeksztalcenia">3. Przekształcenia wykresów</h2>
+  <p>Z podstawy: przesunięcie $y=f(x-p)+q$ (o wektor $[p,q]$), symetria względem $Ox$: $y=-f(x)$, symetria względem $Oy$: $y=f(-x)$. Suwak $k$ tylko ilustruje, jak zmienia się okres funkcji $\sin(kx)$.</p>
+  <div class="demo">
+    <p class="opis">Przerywany: wykres wyjściowy. Czerwona strzałka to wektor przesunięcia, fioletowy odcinek ma długość jednego okresu. Zauważ: dla sinusa $f(-x)$ daje to samo co $-f(x)$ (nieparzystość), a dla cosinusa $f(-x)$ nic nie zmienia.</p>
+    <canvas id="pr-plot"></canvas>
+    <div class="sterowanie">
+      <label>$f$ <select id="pr-f"><option value="sin">sin x</option><option value="cos">cos x</option><option value="tg">tg x</option></select></label>
+      <label>$p$ <input type="range" id="pr-p" min="-12" max="12" step="1" value="4"> <span id="pr-p-v"></span></label>
+      <label>$q$ <input type="range" id="pr-q" min="-2" max="2" step="0.5" value="1"> <span id="pr-q-v"></span></label>
+      <label>$k$ <input type="range" id="pr-k" min="1" max="3" step="0.5" value="1"> <span id="pr-k-v"></span></label>
+      <label><input type="checkbox" id="pr-m"> $-f(x)$</label>
+      <label><input type="checkbox" id="pr-o"> $f(-x)$</label>
+    </div>
+    <div class="wynik" id="pr-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Naszkicuj $f(x)=\sin\left(x-\frac\pi3\right)+1$, podaj zbiór wartości, okres i miejsca zerowe.</p>
+    <ol>
+      <li>Wykres $y=\sin x$ przesunięty o wektor $\left[\frac\pi3,1\right]$ (ustaw $p=\frac\pi3$, $q=1$ w demo).</li>
+      <li>Przesunięcie nie zmienia okresu: $T=2\pi$. Zbiór wartości: $\lp-1+1,\,1+1\rp=\lp0,2\rp$.</li>
+      <li>$f(x)=0\iff\sin\left(x-\frac\pi3\right)=-1\iff x-\frac\pi3=\frac{3\pi}2+2k\pi$.</li>
+    </ol>
+    <p class="odp">$ZW=\lp0,2\rp$, $T=2\pi$, $x=\frac{11\pi}{6}+2k\pi,\ k\in\Z$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="przedzial: &lt;1; 3&gt;" data-odp-opis="zbiór wartości"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz zbiór wartości funkcji $f(x)=-\cos x+2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $-\cos x\in\lp-1,1\rp$, więc $f(x)\in\lp1,3\rp$. <b>$\lp1,3\rp$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\sin\frac{2026\pi}{3}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{2026\pi}{3}=674\pi+\frac{4\pi}{3}=337\cdot2\pi+\frac{4\pi}3$, więc to $\sin\frac{4\pi}3$ (III ćwiartka, kąt odniesienia $\frac\pi3$). <b>$-\frac{\sqrt3}{2}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykres $y=\sin x$ przesunięto o wektor $\left[\frac\pi2,-1\right]$. Podaj wzór otrzymanej funkcji i jej miejsca zerowe.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $y=\sin\left(x-\frac\pi2\right)-1=-\cos x-1$. Zero: $\cos x=-1$. <b>$y=-\cos x-1$, $\;x=\pi+2k\pi$, $k\in\Z$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3" data-odp-opis="liczba rozwiązań"><span class="poziom">średnie</span>
+      <div class="tresc">Ile rozwiązań ma równanie $\tg x=2$ w przedziale $(0,3\pi)$? Odczytaj z wykresu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Każda gałąź tangensa przyjmuje wartość $2$ dokładnie raz. W $(0,3\pi)$ mieszczą się: część gałęzi $(0,\frac\pi2)$, gałęzie $(\frac\pi2,\frac{3\pi}2)$, $(\frac{3\pi}2,\frac{5\pi}2)$ i część $(\frac{5\pi}2,3\pi)$, w której $\tg x&lt;0$. <b>3 rozwiązania</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz okres podstawowy funkcji $f(x)=\sin3x$ i uzasadnij.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\sin\left(3\left(x+\frac{2\pi}{3}\right)\right)=\sin(3x+2\pi)=\sin3x$. Gdyby okresem było $T&lt;\frac{2\pi}{3}$, to $3T&lt;2\pi$ byłoby okresem sinusa (podstaw $u=3x$), a najmniejszy okres sinusa to $2\pi$. <b>$T=\frac{2\pi}{3}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="9/4; 0" data-odp-opis="największa; najmniejsza wartość"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz największą i najmniejszą wartość funkcji $f(x)=\cos^2x-\sin x+1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\cos^2x=1-\sin^2x$, więc dla $t=\sin x\in\lp-1,1\rp$: $g(t)=-t^2-t+2$. Wierzchołek $t=-\frac12\in\lp-1,1\rp$: $g\left(-\frac12\right)=\frac94$. Końce: $g(-1)=2$, $g(1)=0$.
+        <b>Największa $\frac94$, najmniejsza $0$.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Po podstawieniu $t=\sin x$ lub $t=\cos x$ <b>zawsze</b> dopisz $t\in\lp-1,1\rp$. To najczęstszy brak w zadaniach o wartościach i równaniach.</li>
+    <li>Rozwiązania ogólne zapisuj z $k\in\Z$. Dla $\tg$ okres to $\pi$, nie $2\pi$.</li>
+    <li>$f(x-p)$ przesuwa w <b>prawo</b> o $p$. Przy szkicu zaznacz charakterystyczne punkty (zera, maksima) i asymptoty tangensa.</li>
+    <li>„Ile rozwiązań w przedziale” – najpewniej naszkicować wykres i prostą $y=m$, a potem policzyć przecięcia.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const PI = Math.PI;
+  const F = { sin: Math.sin, cos: Math.cos, tg: Math.tan };
+  const piTex = k => { // kπ/12 → TeX
+    if (k === 0) return "0";
+    const g = (a, b) => b ? g(b, a % b) : Math.abs(a), d = g(k, 12), l = Math.abs(k / d), m = 12 / d;
+    return (k < 0 ? "-" : "") + (m === 1 ? `${l === 1 ? "" : l}\\pi` : `\\frac{${l === 1 ? "" : l}\\pi}{${m}}`);
+  };
+
+  // --- 1. Okrąg → wykres ---
+  const cx = -1.75;
+  const w1 = new Wykres($("ow-plot"), { xmin: -2.9, xmax: 6.6, ymin: -1.5, ymax: 1.5, krokX: PI / 2, krokY: 0.5,
+    formatX: v => v < -0.01 ? "" : Wykres.pi(v), rowneSkale: true });
+  let t = 1, pet = null;
+  function rysujOw() {
+    const f = $("ow-f").value, c = Math.cos(t), s = Math.sin(t), px = cx + c, py = s;
+    w1.rysuj(g => {
+      g.okrag(cx, 0, 1, 3);
+      g.funkcja(F[f], 1, { przerywana: true, od: 0 });
+      g.funkcja(F[f], 1, { od: 0, do: t });
+      g.odcinek(cx, 0, px, py, 1, false);
+      g.luk(cx, 0, 0.25, 0, t, 4);
+      if (f === "sin") {
+        g.odcinek(px, 0, px, py, 2, false);
+        g.odcinek(px, py, t, py, 2);
+        g.odcinek(t, 0, t, py, 2, false);
+      } else if (f === "cos") {
+        g.odcinek(cx, 0, px, 0, 3, false);
+        g.odcinek(t, 0, t, c, 3, false);
+        g.odcinek(px, py, px, 0, 3);
+      } else {
+        const tg = Math.tan(t), ok = Math.abs(c) > 0.05;
+        g.odcinek(cx + 1, g.z.ymin, cx + 1, g.z.ymax, 4);
+        if (ok) {
+          g.prosta(cx, 0, px, py, 4, true);
+          g.odcinek(cx + 1, 0, cx + 1, tg, 4, false);
+          g.odcinek(cx + 1, tg, t, tg, 4);
+          g.odcinek(t, 0, t, tg, 4, false);
+          g.punkt(t, tg, "", 4);
+        }
+        [PI / 2, 3 * PI / 2].forEach(a => g.odcinek(a, g.z.ymin, a, g.z.ymax, 3));
+      }
+      g.punkt(px, py, "P");
+      if (f === "sin") g.punkt(t, s, "", 2);
+      if (f === "cos") g.punkt(t, c, "", 3);
+    });
+    const v = f === "sin" ? s : f === "cos" ? c : Math.tan(t);
+    const fn = { sin: "\\sin", cos: "\\cos", tg: "\\tg" }[f];
+    tex("ow-wynik", `t=${ladnaTex(t)}\\text{ rad}\\approx${Math.round(t * 180 / PI)}^\\circ:\\quad ${fn} t${Math.abs(c) < 0.005 && f === "tg" ? "\\text{ nie istnieje}" : "\\approx" + ladnaTex(v)}`);
+  }
+  $("ow-start").addEventListener("click", () => {
+    if (pet) { pet.stop(); pet = null; $("ow-start").textContent = "▶ Odtwórz"; return; }
+    const t0 = t >= 6.27 ? 0 : t;
+    $("ow-start").textContent = "⏸ Pauza";
+    pet = petla(sek => {
+      t = (t0 + sek * 0.9) % (2 * PI);
+      $("ow-t").value = t;
+      rysujOw();
+    });
+  });
+  $("ow-t").addEventListener("input", () => { if (pet) { pet.stop(); pet = null; $("ow-start").textContent = "▶ Odtwórz"; } t = +$("ow-t").value; rysujOw(); });
+  $("ow-f").addEventListener("change", rysujOw);
+  rysujOw();
+
+  // --- 3. Przekształcenia ---
+  const w2 = new Wykres($("pr-plot"), { xmin: -2 * PI, xmax: 2 * PI, ymin: -3.5, ymax: 3.5, krokX: PI / 2, formatX: Wykres.pi });
+  function rysujPr() {
+    const f = $("pr-f").value, kp = +$("pr-p").value, p = kp * PI / 12, q = +$("pr-q").value, k = +$("pr-k").value;
+    const s1 = $("pr-m").checked ? -1 : 1, s2 = $("pr-o").checked ? -1 : 1;
+    $("pr-p-v").textContent = Wykres.pi(p); $("pr-q-v").textContent = ladna(q); $("pr-k-v").textContent = ladna(k);
+    const h = x => s1 * F[f](s2 * k * (x - p)) + q;
+    const T = (f === "tg" ? PI : 2 * PI) / k;
+    w2.rysuj(g => {
+      g.funkcja(F[f], 3, { przerywana: true });
+      g.funkcja(h, 1);
+      if (kp || q) g.strzalka(0, 0, p, q, 2);
+      const y0 = q - (f === "tg" ? 0 : 1.4);
+      g.odcinek(p, y0, p + T, y0, 4, false);
+      g.tekst(p + T / 2, y0, "T", 4, { dy: -6, wyrownanie: "center", gruby: true });
+    });
+    const fn = { sin: "\\sin", cos: "\\cos", tg: "\\tg" }[f];
+    const kk = k === 1 ? "" : ladnaTex(k);
+    const pre = (s2 < 0 ? "-" : "") + kk;
+    const x = kp ? `x${kp > 0 ? "-" : "+"}${piTex(Math.abs(kp))}` : "x";
+    const arg = pre && kp ? `${pre}(${x})` : pre + x;
+    const wz = `y=${s1 < 0 ? "-" : ""}${fn}\\left(${arg}\\right)${q ? znakTex(q) : ""}`;
+    const zw = f === "tg" ? "\\R" : `\\lp ${ladnaTex(q - 1)};\\,${ladnaTex(q + 1)}\\rp`;
+    const Tt = k === 1 ? (f === "tg" ? "\\pi" : "2\\pi") : `\\frac{${f === "tg" ? "" : 2}\\pi}{${kk}}`;
+    tex("pr-wynik", `${wz},\\quad T=${Tt},\\quad ZW=${zw}`);
+  }
+  ["pr-p", "pr-q", "pr-k"].forEach(id => $(id).addEventListener("input", rysujPr));
+  ["pr-f", "pr-m", "pr-o"].forEach(id => $(id).addEventListener("change", rysujPr));
+  rysujPr();
+});
+</script>
+</body>
+</html>

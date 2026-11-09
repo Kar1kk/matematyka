@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dowodzenie monotoniczności funkcji</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Dowodzenie monotoniczności funkcji</h1>
+  <p class="lead">Bierzesz <b>dowolne</b> dwa argumenty $x_1&lt;x_2$ z przedziału i badasz znak różnicy $f(x_2)-f(x_1)$. Cała praca to przekształcić tę różnicę w iloczyn lub iloraz, w którym znak każdego czynnika widać od razu. Geometrycznie: każda sieczna ma nachylenie tego samego znaku.</p>
+  <p class="wymagania">V.R.3 (oraz definicje z V.4)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definicja i schemat</h2>
+  <div class="definicja"><b>Definicja</b> Funkcja $f$ jest <b>rosnąca</b> w zbiorze $A$, gdy dla dowolnych $x_1,x_2\in A$:
+    $$x_1&lt;x_2\ \Rightarrow\ f(x_2)-f(x_1)&gt;0.$$
+    <b>Malejąca</b>: różnica $&lt;0$; niemalejąca: $\ge0$; nierosnąca: $\le0$.</div>
+  <div class="wzor">
+    <div class="tytul">Schemat dowodu z definicji</div>
+    <ol>
+      <li>„Niech $x_1,x_2\in A$ i $x_1&lt;x_2$” (dowolne, nie konkretne liczby!).</li>
+      <li>Oblicz $f(x_2)-f(x_1)$: wspólny mianownik, redukcja.</li>
+      <li>Wyłącz czynnik $(x_2-x_1)$. Zwykle się da, bo różnica znika dla $x_1=x_2$ (przy pierwiastkach pomaga sprzężenie).</li>
+      <li>Ustal znak każdego czynnika, korzystając z $x_1,x_2\in A$.</li>
+      <li>Wniosek: „więc $f(x_2)-f(x_1)&gt;0$, czyli $f$ jest rosnąca w $A$”.</li>
+    </ol>
+  </div>
+  <div class="uwaga">Sprawdzenie na kilku liczbach ($f(-5)&lt;f(-3)$) <b>nie jest</b> dowodem. Do <b>obalenia</b> monotoniczności wystarczy natomiast jeden kontrprzykład.</div>
+  <p>Na rozszerzeniu monotoniczność bada się też pochodną (dział XIII), ale V.R.3 wymaga dowodu z definicji.</p>
+
+  <h2 id="roznica">2. Interaktywnie: znak różnicy</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkty $x_1$, $x_2$ po wykresie. Pionowy odcinek to $f(x_2)-f(x_1)$: zielony, gdy dodatni, czerwony, gdy ujemny. Dla $\frac{x-1}{x+2}$ przenieś jeden punkt na drugą stronę asymptoty $x=-2$ i zobacz, co się dzieje ze znakiem.</p>
+    <canvas id="mo-plot"></canvas>
+    <div class="sterowanie">
+      <label>$f(x)=$ <select id="mo-f">
+        <option value="wym">(x − 1)/(x + 2)</option>
+        <option value="kw">x² − 4x</option>
+        <option value="sz">x³</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="mo-wynik"></div>
+    <div class="wynik" id="mo-znak"></div>
+  </div>
+
+  <h2 id="sieczne">3. Wszystkie sieczne naraz</h2>
+  <div class="demo">
+    <p class="opis">„▶ Losuj sieczne” rysuje sieczne $y=\frac{x-1}{x+2}$ przez losowe pary punktów z wybranego zbioru: zielone rosną, czerwone maleją. W każdym z przedziałów wszystkie są zielone (funkcja rosnąca), w całej dziedzinie już nie.</p>
+    <canvas id="ms-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>zbiór <select id="ms-zb">
+        <option value="L">(−∞, −2)</option>
+        <option value="P">(−2, ∞)</option>
+        <option value="D">cała dziedzina</option>
+      </select></label>
+      <button id="ms-start">▶ Losuj sieczne</button>
+    </div>
+    <div class="wynik" id="ms-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wykaż, że funkcja $f(x)=\frac{x-1}{x+2}$ jest rosnąca w przedziale $(-\infty,-2)$. (Przykład z podstawy programowej.)</p>
+    <ol>
+      <li>Niech $x_1,x_2\in(-\infty,-2)$, $x_1&lt;x_2$.</li>
+      <li>$f(x_2)-f(x_1)=\frac{(x_2-1)(x_1+2)-(x_1-1)(x_2+2)}{(x_1+2)(x_2+2)}$.</li>
+      <li>Licznik: $x_1x_2+2x_2-x_1-2-(x_1x_2+2x_1-x_2-2)=3x_2-3x_1$.
+        $$f(x_2)-f(x_1)=\frac{3(x_2-x_1)}{(x_1+2)(x_2+2)}$$</li>
+      <li>$x_2-x_1&gt;0$ (bo $x_1&lt;x_2$); $x_1+2&lt;0$ i $x_2+2&lt;0$ (bo oba $&lt;-2$), więc mianownik $&gt;0$.</li>
+      <li>Iloraz liczby dodatniej przez dodatnią jest dodatni: $f(x_2)-f(x_1)&gt;0$.</li>
+    </ol>
+    <p class="odp">$f$ jest rosnąca w $(-\infty,-2)$ $\blacksquare$</p>
+    <p>Ten sam wzór działa w $(-2,\infty)$: tam oba czynniki mianownika są dodatnie.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykaż z definicji, że $f(x)=-3x+5$ jest malejąca w $\R$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x_1&lt;x_2$: $f(x_2)-f(x_1)=-3x_2+3x_1=-3(x_2-x_1)$. Ponieważ $x_2-x_1&gt;0$, różnica jest ujemna. <b>$f(x_2)-f(x_1)&lt;0$, więc $f$ maleje w $\R$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że $f(x)=x^2-6x$ jest rosnąca w przedziale $\lp3,\infty)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x_2)-f(x_1)=x_2^2-x_1^2-6(x_2-x_1)=(x_2-x_1)(x_1+x_2-6)$. Dla $3\le x_1&lt;x_2$: $x_1+x_2&gt;6$, więc oba czynniki są dodatnie.
+        <b>$f(x_2)-f(x_1)&gt;0$, $f$ rośnie w $\lp3,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że $f(x)=\frac{2x+1}{x-1}$ jest malejąca w przedziale $(1,\infty)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Licznik różnicy: $(2x_2+1)(x_1-1)-(2x_1+1)(x_2-1)=-3x_2+3x_1$, więc
+        $$f(x_2)-f(x_1)=\frac{-3(x_2-x_1)}{(x_1-1)(x_2-1)}.$$
+        Dla $1&lt;x_1&lt;x_2$ mianownik $&gt;0$, licznik $&lt;0$. <b>$f(x_2)-f(x_1)&lt;0$, $f$ maleje w $(1,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że $f(x)=\frac{x-1}{x+2}$ <b>nie jest</b> monotoniczna w swojej dziedzinie.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kontrprzykłady: $-3&lt;0$, ale $f(-3)=4&gt;f(0)=-\frac12$, więc nie jest rosnąca (ani niemalejąca). $0&lt;1$ i $f(0)=-\frac12&lt;f(1)=0$, więc nie jest malejąca (ani nierosnąca).
+        <b>$f$ nie jest monotoniczna w $\R\setminus\{-2\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że funkcja $f(x)=x^3+3x$ jest rosnąca w $\R$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x_2)-f(x_1)=(x_2^3-x_1^3)+3(x_2-x_1)$
+        $$=(x_2-x_1)(x_1^2+x_1x_2+x_2^2+3).$$
+        Drugi nawias: $x_1^2+x_1x_2+x_2^2=\left(x_1+\frac{x_2}{2}\right)^2+\frac34x_2^2\ge0$, więc cały nawias $\ge3&gt;0$.
+        <b>Oba czynniki dodatnie, więc $f$ rośnie w $\R$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że $f(x)=\sqrt{x+4}$ jest rosnąca w swojej dziedzinie.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $D=\lp-4,\infty)$. Pomnóż przez sprzężenie:
+        $$\sqrt{x_2+4}-\sqrt{x_1+4}=\frac{x_2-x_1}{\sqrt{x_2+4}+\sqrt{x_1+4}}.$$
+        Licznik $&gt;0$, mianownik $&gt;0$ (bo $\sqrt{x_2+4}&gt;0$ dla $x_2&gt;x_1\ge-4$). <b>$f$ rośnie w $\lp-4,\infty)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Zacznij od zdania „Niech $x_1,x_2\in A$, $x_1&lt;x_2$”. Bez niego dowód jest niepełny.</li>
+    <li>Pisz przy <b>każdym</b> czynniku, skąd znasz jego znak (np. „bo $x_1&lt;-2$”). Za to są punkty.</li>
+    <li>Nie dziel nierówności przez wyrażenie o nieznanym znaku. Badaj znak różnicy, nie przekształcaj $x_1&lt;x_2$.</li>
+    <li>Brak monotoniczności wykazujesz <b>konkretnymi liczbami</b>, a monotoniczność tylko ogólnie.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const pn = v => v < 0 ? `(${ladnaTex(v)})` : ladnaTex(v);
+  const FUN = {
+    wym: { f: x => (x - 1) / (x + 2), ogr: x => Math.abs(x + 2) < 0.45 ? -2 + (x < -2 ? -0.45 : 0.45) : x,
+      tex: (a, b) => `\\frac{3(x_2-x_1)}{(x_1+2)(x_2+2)}=\\frac{3\\cdot${pn(b - a)}}{${pn(a + 2)}\\cdot${pn(b + 2)}}` },
+    kw: { f: x => x * x - 4 * x, ogr: x => Math.max(-1.4, Math.min(5.4, x)),
+      tex: (a, b) => `(x_2-x_1)(x_1+x_2-4)=${pn(b - a)}\\cdot${pn(a + b - 4)}` },
+    sz: { f: x => x ** 3, ogr: x => Math.max(-1.8, Math.min(1.8, x)),
+      tex: (a, b) => `(x_2-x_1)(x_1^2+x_1x_2+x_2^2)=${pn(b - a)}\\cdot${pn(a * a + a * b + b * b)}` },
+  };
+
+  // --- 2. Znak różnicy ---
+  const w1 = new Wykres($("mo-plot"), { xmin: -8, xmax: 6, ymin: -6, ymax: 8 });
+  const fun = () => FUN[$("mo-f").value];
+  const ogr = p => { const x = Math.round(fun().ogr(Math.max(-7.5, Math.min(5.5, p.x))) * 20) / 20; return { x: fun().ogr(x), y: fun().f(fun().ogr(x)) }; };
+  const P = w1.przeciagaj([{ x: -6, y: 0, ogranicz: ogr }, { x: -3, y: 0, ogranicz: ogr }], rysujMo);
+  function rysujMo() {
+    const F = fun();
+    P.forEach(p => { const q = ogr(p); p.x = q.x; p.y = q.y; });
+    const [a, b] = [P[0].x, P[1].x].sort((u, v) => u - v), fa = F.f(a), fb = F.f(b), d = fb - fa;
+    const nr = d > 1e-12 ? 3 : d < -1e-12 ? 2 : 4;
+    w1.rysuj(g => {
+      if ($("mo-f").value === "wym") { g.odcinek(-2, g.z.ymin, -2, g.z.ymax, 4); g.odcinek(g.z.xmin, 1, g.z.xmax, 1, 4); }
+      g.funkcja(F.f, 1);
+      if (b - a > 1e-9) {
+        g.prosta(a, fa, b, fb, nr, true);
+        g.odcinek(a, fa, b, fa, 4);
+        g.odcinek(b, fa, b, fb, nr, false);
+      }
+      g.punkt(a, fa, "x₁", 2); g.punkt(b, fb, "x₂", 2);
+    });
+    if (b - a < 1e-9) { tex("mo-wynik", "x_1=x_2:\\ \\text{rozsuń punkty}"); tex("mo-znak", "\\ "); return; }
+    tex("mo-wynik", `x_1=${ladnaTex(a)},\\ x_2=${ladnaTex(b)}:\\quad f(x_2)-f(x_1)=${F.tex(a, b)}`);
+    tex("mo-znak", `f(x_2)-f(x_1)\\approx${ladnaTex(d)}\\ ${d > 1e-12 ? ">0\\Rightarrow f(x_1)<f(x_2)\\ (\\text{sieczna rośnie})" : d < -1e-12 ? "<0\\Rightarrow f(x_1)>f(x_2)\\ (\\text{sieczna maleje})" : "=0"}`);
+  }
+  $("mo-f").addEventListener("change", () => {
+    const start = { wym: [-6, -3], kw: [-1, 1], sz: [-1.5, 1] }[$("mo-f").value];
+    P[0].x = start[0]; P[1].x = start[1]; rysujMo();
+  });
+  rysujMo();
+
+  // --- 3. Sieczne ---
+  const f = x => (x - 1) / (x + 2);
+  const w2 = new Wykres($("ms-plot"), { xmin: -9, xmax: 7, ymin: -6, ymax: 8 });
+  let sieczne = [], p = null;
+  const losuj = zb => {
+    const L = () => -8.5 + Math.random() * 6, R = () => -1.5 + Math.random() * 8;
+    return zb === "L" ? L() : zb === "P" ? R() : (Math.random() < 0.5 ? L() : R());
+  };
+  function rysujMs() {
+    w2.rysuj(g => {
+      g.odcinek(-2, g.z.ymin, -2, g.z.ymax, 4);
+      g.funkcja(f, 1);
+      sieczne.forEach(([a, b]) => g.odcinek(a, f(a), b, f(b), f(b) > f(a) ? 3 : 2, false));
+    });
+    const r = sieczne.filter(([a, b]) => f(b) > f(a)).length, m = sieczne.length - r;
+    tex("ms-wynik", `\\text{sieczne rosnące: } ${r},\\quad \\text{malejące: } ${m}\\quad ${!sieczne.length ? "" : m ? "\\Rightarrow \\text{nie jest rosnąca w tym zbiorze}" : "\\Rightarrow \\text{wszystkie rosną}"}`);
+  }
+  $("ms-start").addEventListener("click", () => {
+    if (p) p.stop();
+    sieczne = []; const zb = $("ms-zb").value; let ost = -1;
+    p = petla(s => {
+      if (sieczne.length >= 40) { if (p) p.stop(); return; }
+      if (s - ost < 0.1) return;
+      ost = s;
+      const [a, b] = [losuj(zb), losuj(zb)].sort((u, v) => u - v);
+      if (b - a > 0.2) sieczne.push([a, b]);
+      rysujMs();
+    });
+  });
+  $("ms-zb").addEventListener("change", () => { if (p) p.stop(); sieczne = []; rysujMs(); });
+  rysujMs();
+});
+</script>
+</body>
+</html>

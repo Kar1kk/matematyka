@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wzory redukcyjne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wzory redukcyjne</h1>
+  <p class="lead">Punkt dla kąta $90^\circ\pm\alpha$, $180^\circ\pm\alpha$, $270^\circ\pm\alpha$ albo $360^\circ-\alpha$ to obraz punktu dla $\alpha$ w obrocie albo symetrii. Trójkąt pod spodem jest ten sam, więc współrzędne tylko <b>zamieniają się miejscami</b> lub <b>zmieniają znak</b>. Nie ucz się tabelki – czytaj ją z okręgu.</p>
+  <p class="wymagania">VII.R.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="regula">1. Reguła w dwóch krokach</h2>
+  <div class="twierdzenie"><b>Reguła</b> Dla wyrażenia $f(\text{kąt}\pm\alpha)$, gdzie $f\in\{\sin,\cos,\tg\}$:
+    <ol>
+      <li><b>Funkcja:</b> przy $90^\circ$ i $270^\circ$ ($\frac\pi2$, $\frac{3\pi}2$) zamień $\sin\leftrightarrow\cos$, $\;\tg\to\frac{1}{\tg}$. Przy $180^\circ$ i $360^\circ$ ($\pi$, $2\pi$) funkcja zostaje.</li>
+      <li><b>Znak:</b> udawaj, że $\alpha$ jest mały i ostry. Ustal ćwiartkę kąta po lewej stronie i daj znak, jaki ma tam funkcja <b>wyjściowa</b> $f$.</li>
+    </ol></div>
+  <p>Przykład: $\cos(270^\circ+\alpha)$. Kąt $270^\circ$ → zamiana na $\sin$. $270^\circ+\alpha$ leży w IV ćwiartce, tam $\cos&gt;0$. Wynik: $+\sin\alpha$.</p>
+  <table class="tabela">
+    <tr><th>kąt</th><th>$\sin$</th><th>$\cos$</th><th>$\tg$</th></tr>
+    <tr><td>$90^\circ-\alpha$</td><td>$\cos\alpha$</td><td>$\sin\alpha$</td><td>$\frac{1}{\tg\alpha}$</td></tr>
+    <tr><td>$90^\circ+\alpha$</td><td>$\cos\alpha$</td><td>$-\sin\alpha$</td><td>$-\frac{1}{\tg\alpha}$</td></tr>
+    <tr><td>$180^\circ-\alpha$</td><td>$\sin\alpha$</td><td>$-\cos\alpha$</td><td>$-\tg\alpha$</td></tr>
+    <tr><td>$180^\circ+\alpha$</td><td>$-\sin\alpha$</td><td>$-\cos\alpha$</td><td>$\tg\alpha$</td></tr>
+    <tr><td>$270^\circ-\alpha$</td><td>$-\cos\alpha$</td><td>$-\sin\alpha$</td><td>$\frac{1}{\tg\alpha}$</td></tr>
+    <tr><td>$270^\circ+\alpha$</td><td>$-\cos\alpha$</td><td>$\sin\alpha$</td><td>$-\frac{1}{\tg\alpha}$</td></tr>
+    <tr><td>$360^\circ-\alpha$</td><td>$-\sin\alpha$</td><td>$\cos\alpha$</td><td>$-\tg\alpha$</td></tr>
+  </table>
+  <p>W radianach to samo: $\frac\pi2$, $\pi$, $\frac{3\pi}2$, $2\pi$. Wzory działają dla <b>każdego</b> $\alpha$ (z dziedziny), nie tylko ostrego. $\frac1{\tg\alpha}$ to w podręcznikach $\ctg\alpha$. Do tego parzystość: $\sin(-\alpha)=-\sin\alpha$, $\cos(-\alpha)=\cos\alpha$, $\tg(-\alpha)=-\tg\alpha$.</p>
+  <div class="uwaga">Wzory redukcyjne to szczególne przypadki wzorów na $\sin(\alpha\pm\beta)$, $\cos(\alpha\pm\beta)$ <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>. Jeśli zapomnisz reguły, rozpisz np. $\cos(270^\circ+\alpha)=\cos270^\circ\cos\alpha-\sin270^\circ\sin\alpha=\sin\alpha$.</div>
+
+  <h2 id="demo">2. Interaktywnie: skąd to się bierze</h2>
+  <div class="demo">
+    <p class="opis">Przeciągnij $P$ (kąt $\alpha$) i wybierz kąt. Zielony odcinek ma długość $|\cos\alpha|$, czerwony $|\sin\alpha|$. Przy $90^\circ$ i $270^\circ$ kolory w punkcie $Q$ zamieniają się osiami – to zamiana $\sin\leftrightarrow\cos$. „▶ Pokaż ruch” animuje obrót lub symetrię.</p>
+    <canvas id="rd-plot"></canvas>
+    <div class="sterowanie">
+      <label>kąt <select id="rd-typ">
+        <option value="0">90° − α</option><option value="1">90° + α</option><option value="2">180° − α</option><option value="3">180° + α</option>
+        <option value="4">270° − α</option><option value="5">270° + α</option><option value="6">360° − α (= −α)</option></select></label>
+      <button id="rd-start">▶ Pokaż ruch</button>
+    </div>
+    <div class="wynik" id="rd-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">Trening reguły: wylosuj wyrażenie i wybierz odpowiedź. Po odpowiedzi zobaczysz uzasadnienie i kąt na okręgu (dla $\alpha=25^\circ$).</p>
+    <canvas id="rq-plot" style="height:240px"></canvas>
+    <div class="sterowanie">
+      <button id="rq-los">Losuj</button>
+      <button id="rq-o0"></button><button id="rq-o1"></button><button id="rq-o2"></button><button id="rq-o3"></button>
+    </div>
+    <div class="wynik" id="rq-pyt"></div>
+    <div class="wynik" id="rq-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Uprość wyrażenie $\dfrac{\sin(\pi-\alpha)\cdot\cos\left(\frac{3\pi}{2}+\alpha\right)}{\tg(\pi+\alpha)\cdot\cos\left(\frac\pi2-\alpha\right)}$.</p>
+    <ol>
+      <li>$\sin(\pi-\alpha)=\sin\alpha$ (II ćw., $\sin&gt;0$).</li>
+      <li>$\cos\left(\frac{3\pi}2+\alpha\right)=\sin\alpha$ (zamiana; IV ćw., $\cos&gt;0$).</li>
+      <li>$\tg(\pi+\alpha)=\tg\alpha$ (III ćw., $\tg&gt;0$), $\;\cos\left(\frac\pi2-\alpha\right)=\sin\alpha$.</li>
+      <li>$\dfrac{\sin\alpha\cdot\sin\alpha}{\tg\alpha\cdot\sin\alpha}=\dfrac{\sin\alpha}{\sin\alpha/\cos\alpha}=\cos\alpha$.</li>
+    </ol>
+    <p class="odp">$\cos\alpha$</p>
+  </div>
+
+  <h2 id="zadania">4. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/2; sqrt(3)/3; -sqrt(2)/2" data-odp-opis="a); b); c)"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz: a) $\cos300^\circ$, b) $\tg210^\circ$, c) $\sin(-135^\circ)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) $\cos(360^\circ-60^\circ)=\cos60^\circ$; b) $\tg(180^\circ+30^\circ)=\tg30^\circ$; c) $-\sin135^\circ=-\sin(180^\circ-45^\circ)=-\sin45^\circ$.
+        <b>a) $\frac12$, b) $\frac{\sqrt3}{3}$, c) $-\frac{\sqrt2}{2}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\sin\frac{11\pi}{6}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\sin\left(2\pi-\frac\pi6\right)=-\sin\frac\pi6$ (IV ćw., $\sin&lt;0$). <b>$-\frac12$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz $\sin\left(\frac\pi2+\alpha\right)\cos(\pi-\alpha)+\cos\left(\frac\pi2+\alpha\right)\sin(\pi-\alpha)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\cos\alpha\cdot(-\cos\alpha)+(-\sin\alpha)\cdot\sin\alpha=-(\cos^2\alpha+\sin^2\alpha)$. <b>$-1$</b> (dla każdego $\alpha$)
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">$\alpha,\beta,\gamma$ to kąty trójkąta. Wykaż, że $\sin(\alpha+\beta)=\sin\gamma$ i $\cos(\alpha+\beta)=-\cos\gamma$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\alpha+\beta=180^\circ-\gamma$, więc $\sin(180^\circ-\gamma)=\sin\gamma$, $\cos(180^\circ-\gamma)=-\cos\gamma$. <b>Obie równości zachodzą.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Oblicz $\tg1^\circ\cdot\tg2^\circ\cdot\tg3^\circ\cdot\ldots\cdot\tg89^\circ$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Łącz w pary $k^\circ$ i $(90-k)^\circ$: $\tg k^\circ\cdot\tg(90^\circ-k^\circ)=\tg k^\circ\cdot\frac{1}{\tg k^\circ}=1$. Par jest $44$, w środku zostaje $\tg45^\circ=1$. <b>$1$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. Na maturze</h2>
+  <ul>
+    <li>Znak bierzesz z funkcji <b>wyjściowej</b> (tej przed redukcją), nie z wyniku. To najczęstszy błąd.</li>
+    <li>Duży kąt najpierw zmniejsz okresem ($-2k\pi$), dopiero potem redukuj: $\cos\frac{23\pi}{6}=\cos\left(4\pi-\frac\pi6\right)=\cos\frac\pi6$.</li>
+    <li>W trójkącie $\alpha+\beta+\gamma=\pi$ – wzory redukcyjne zamieniają $\sin(\alpha+\beta)$ na $\sin\gamma$. Pojawia się to w dowodach.</li>
+    <li>W zadaniach zamkniętych sprawdzaj wynik dla $\alpha=30^\circ$: szybki test znaku.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const PI = Math.PI, st = PI / 180;
+  // typ: kąt bazowy, znak przy α, czy obrót (o kąt) czy symetria (oś pod kątem), wynik [sin, cos, tg], ćwiartka
+  const TYPY = [
+    { baza: 90, z: -1, sym: 45, w: ["\\cos\\alpha", "\\sin\\alpha", "\\frac{1}{\\tg\\alpha}"], cw: "I", zam: true },
+    { baza: 90, z: 1, obr: 90, w: ["\\cos\\alpha", "-\\sin\\alpha", "-\\frac{1}{\\tg\\alpha}"], cw: "II", zam: true },
+    { baza: 180, z: -1, sym: 90, w: ["\\sin\\alpha", "-\\cos\\alpha", "-\\tg\\alpha"], cw: "II", zam: false },
+    { baza: 180, z: 1, obr: 180, w: ["-\\sin\\alpha", "-\\cos\\alpha", "\\tg\\alpha"], cw: "III", zam: false },
+    { baza: 270, z: -1, sym: 135, w: ["-\\cos\\alpha", "-\\sin\\alpha", "\\frac{1}{\\tg\\alpha}"], cw: "III", zam: true },
+    { baza: 270, z: 1, obr: 270, w: ["-\\cos\\alpha", "\\sin\\alpha", "-\\frac{1}{\\tg\\alpha}"], cw: "IV", zam: true },
+    { baza: 360, z: -1, sym: 0, w: ["-\\sin\\alpha", "\\cos\\alpha", "-\\tg\\alpha"], cw: "IV", zam: false },
+  ];
+  const katQ = (T, a) => T.baza * st + T.z * a; // kąt punktu Q w radianach
+  const rysujPunkt = (g, kat, nr, etyk, zamien) => { // punkt na okręgu z rzutami
+    const x = Math.cos(kat), y = Math.sin(kat);
+    g.wielokat([[0, 0], [x, 0], [x, y]], nr, { wypelnij: 0.12, bezObrysu: true });
+    g.odcinek(0, 0, x, y, nr, false);
+    g.odcinek(0, 0, x, 0, zamien ? 2 : 3, false);
+    g.odcinek(x, 0, x, y, zamien ? 3 : 2, false);
+    g.punkt(x, y, etyk, nr === 1 ? 2 : nr);
+  };
+
+  // --- 2a. Okrąg z obrazem punktu ---
+  const w1 = new Wykres($("rd-plot"), { xmin: -1.4, xmax: 1.4, ymin: -1.35, ymax: 1.35, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let alfa = 35 * st, stop = null;
+  const pk = w1.przeciagaj([{ x: Math.cos(alfa), y: Math.sin(alfa), ogranicz: p => {
+    alfa = Math.atan2(p.y, p.x); if (alfa < 0) alfa += 2 * PI;
+    alfa = Math.round(alfa / st) * st;
+    return { x: Math.cos(alfa), y: Math.sin(alfa) };
+  } }], () => { if (stop) stop(); rysujRd(1); });
+  function rysujRd(t) {
+    const T = TYPY[+$("rd-typ").value], q = katQ(T, alfa);
+    w1.rysuj(g => {
+      g.okrag(0, 0, 1, "--plot-axis", { przerywana: true });
+      if (T.sym !== undefined) g.prosta(0, 0, Math.cos(T.sym * st), Math.sin(T.sym * st), 4, true);
+      rysujPunkt(g, alfa, 1, "P", false);
+      g.luk(0, 0, 0.2, 0, alfa, 1);
+      if (t < 1) {
+        let x, y;
+        if (T.obr !== undefined) { const k = alfa + t * T.obr * st; x = Math.cos(k); y = Math.sin(k); g.luk(0, 0, 0.35, alfa, k, 4); }
+        else { x = Math.cos(alfa) + t * (Math.cos(q) - Math.cos(alfa)); y = Math.sin(alfa) + t * (Math.sin(q) - Math.sin(alfa)); }
+        g.odcinek(0, 0, x, y, 4, false); g.punkt(x, y, "", 4);
+      } else {
+        if (T.obr !== undefined) g.luk(0, 0, 0.35, alfa, alfa + T.obr * st, 4);
+        rysujPunkt(g, q, 4, "Q", T.zam);
+      }
+    });
+    const nazwa = `${T.baza}^\\circ${T.z < 0 ? "-" : "+"}\\alpha`;
+    const ruch = T.obr !== undefined ? `\\text{obrót o }${T.obr}^\\circ` : `\\text{symetria względem }${{ 0: "Ox", 45: "y=x", 90: "Oy", 135: "y=-x" }[T.sym]}`;
+    tex("rd-wynik", `\\alpha=${Math.round(alfa / st)}^\\circ;\\ ${ruch}:\\ \\sin(${nazwa})=${T.w[0]},\\ \\cos(${nazwa})=${T.w[1]}`);
+  }
+  $("rd-typ").addEventListener("change", () => { if (stop) stop(); rysujRd(1); });
+  $("rd-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(1800, rysujRd); });
+  rysujRd(1);
+
+  // --- 2b. Trening ---
+  const w2 = new Wykres($("rq-plot"), { xmin: -1.3, xmax: 1.3, ymin: -1.2, ymax: 1.2, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  const FN = ["\\sin", "\\cos", "\\tg"];
+  const OPCJE = [["\\sin\\alpha", "-\\sin\\alpha", "\\cos\\alpha", "-\\cos\\alpha"], ["\\sin\\alpha", "-\\sin\\alpha", "\\cos\\alpha", "-\\cos\\alpha"], ["\\tg\\alpha", "-\\tg\\alpha", "\\frac{1}{\\tg\\alpha}", "-\\frac{1}{\\tg\\alpha}"]];
+  const RAD = { 90: "\\frac{\\pi}{2}", 180: "\\pi", 270: "\\frac{3\\pi}{2}", 360: "2\\pi" };
+  const ZNAKI = { I: ["+", "+", "+"], II: ["+", "-", "-"], III: ["-", "-", "+"], IV: ["-", "+", "-"] };
+  let pyt = null, i0 = 0;
+  function rysujRq(pokaz) {
+    w2.rysuj(g => {
+      g.okrag(0, 0, 1, "--plot-axis", { przerywana: true });
+      if (pokaz && pyt) {
+        const a = 25 * st, q = katQ(pyt.T, a);
+        rysujPunkt(g, a, 1, "α", false);
+        g.luk(0, 0, 0.3, 0, q, 4);
+        rysujPunkt(g, q, 4, "", pyt.T.zam);
+      }
+    });
+  }
+  function losuj() {
+    i0 = (i0 + 1 + Math.floor(Math.random() * 6)) % 7;
+    const T = TYPY[i0], f = Math.floor(Math.random() * 3), rad = Math.random() < 0.5;
+    pyt = { T, f, ok: OPCJE[f].indexOf(T.w[f]) };
+    const kat = `${rad ? RAD[T.baza] : T.baza + "^\\circ"}${T.z < 0 ? "-" : "+"}\\alpha`;
+    tex("rq-pyt", `${FN[f]}\\left(${kat}\\right)=\\ ?`);
+    OPCJE[f].forEach((o, i) => tex(`rq-o${i}`, o));
+    $("rq-wynik").textContent = "";
+    rysujRq(false);
+  }
+  function odpowiedz(i) {
+    if (!pyt) return;
+    const { T, f, ok } = pyt;
+    const zn = ZNAKI[T.cw][f] === "+" ? "dodatni" : "ujemny";
+    const krok1 = T.zam ? `\\text{kąt }${T.baza}^\\circ\\Rightarrow\\text{zamiana funkcji}` : `\\text{kąt }${T.baza}^\\circ\\Rightarrow\\text{ta sama funkcja}`;
+    tex("rq-wynik", `${i === ok ? "\\textcolor{green}{\\text{Dobrze! }}" : "\\textcolor{red}{\\text{Źle. }}"}${krok1};\\ \\text{ćw. ${T.cw}: } ${FN[f]}\\text{ ${zn}}\\Rightarrow ${T.w[f]}`);
+    rysujRq(true);
+  }
+  [0, 1, 2, 3].forEach(i => $(`rq-o${i}`).addEventListener("click", () => odpowiedz(i)));
+  $("rq-los").addEventListener("click", losuj);
+  losuj();
+});
+</script>
+</body>
+</html>

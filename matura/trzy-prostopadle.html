@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twierdzenie o trzech prostopadłych</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/bryly3d.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Twierdzenie o trzech prostopadłych</h1>
+  <p class="lead">Prostopadłość do pochyłej prostej sprawdzasz na jej „cieniu”: prosta $m$ w płaszczyźnie jest prostopadła do pochyłej $k$ dokładnie wtedy, gdy jest prostopadła do rzutu $l$ tej prostej. Dzięki temu kąty proste w bryłach widać na rzucie.</p>
+  <p class="wymagania">X.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenia">1. Dwa twierdzenia</h2>
+  <div class="twierdzenie"><b>Twierdzenie o prostej prostopadłej do płaszczyzny</b> Dane są proste $k$, $l$ i $m$ leżące na jednej płaszczyźnie. Jeśli proste $k$ i $l$ mają dokładnie jeden punkt wspólny i prosta $n$ jest do nich prostopadła, to prosta $n$ jest także prostopadła do prostej $m$.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Przesuwając proste równolegle (nie zmienia to kątów), możemy przyjąć, że $n$ i $m$ przechodzą przez punkt $O$ wspólny dla $k$ i $l$. Jeśli $m=k$ lub $m=l$, teza jest oczywista.</p>
+      <ol>
+        <li>Na $n$ weź punkty $P$, $P'$ symetryczne względem $O$: $|OP|=|OP'|$.</li>
+        <li>W płaszczyźnie poprowadź prostą nieprzechodzącą przez $O$, która przecina $k$, $l$, $m$ w punktach $K$, $L$, $M$.</li>
+        <li>$k$ jest prostopadła do $PP'$ w jego środku, więc $|KP|=|KP'|$. Tak samo $|LP|=|LP'|$.</li>
+        <li>Trójkąty $KLP$ i $KLP'$ są przystające (bbb), więc $\sphericalangle PKL=\sphericalangle P'KL$.</li>
+        <li>Trójkąty $PKM$ i $P'KM$ są przystające (bkb: $|KP|=|KP'|$, wspólny bok $KM$, równe kąty przy $K$), więc $|MP|=|MP'|$.</li>
+        <li>Trójkąt $PMP'$ jest równoramienny, a $O$ jest środkiem podstawy, więc $MO\perp PP'$, czyli $m\perp n$. $\blacksquare$</li>
+      </ol>
+      <p>Wniosek: prosta prostopadła do dwóch przecinających się prostych płaszczyzny jest prostopadła do całej płaszczyzny.</p>
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Twierdzenie o trzech prostopadłych</b> Prosta $k$ przecina płaszczyznę $P$ i nie jest do niej prostopadła. Prosta $l$ jest rzutem prostokątnym prostej $k$ na płaszczyznę $P$. Prosta $m$ leży na płaszczyźnie $P$. Wówczas proste $k$ i $m$ są prostopadłe wtedy i tylko wtedy, gdy proste $l$ i $m$ są prostopadłe. <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Weź punkt $A\in k$ spoza $P$ i jego rzut $A'\in l$. Prosta $AA'$ jest prostopadła do $P$, więc $AA'\perp m$. Proste $k$, $l$, $AA'$ leżą w jednej płaszczyźnie $Q$ (płaszczyzna rzutowania), a $AA'$ przecina $k$ w $A$ i $l$ w $A'$.</p>
+      <ul>
+        <li>($\Leftarrow$) $m\perp l$ i $m\perp AA'$, a $l$, $AA'$ przecinają się w $A'$. Z poprzedniego twierdzenia (w płaszczyźnie $Q$) $m\perp k$.</li>
+        <li>($\Rightarrow$) $m\perp k$ i $m\perp AA'$, a $k$, $AA'$ przecinają się w $A$. Z poprzedniego twierdzenia $m\perp l$. $\blacksquare$</li>
+      </ul>
+      <p>Założenie „$k$ nie jest prostopadła do $P$” gwarantuje, że rzut $l$ jest prostą, a nie punktem.</p>
+    </div></details></div>
+  <div class="uwaga">Twierdzenie mówi o kącie między $k$ a $m$, a nie o punkcie przecięcia: $m$ nie musi przechodzić przez punkt przebicia (wtedy $k$ i $m$ są skośne).</div>
+
+  <h2 id="demo">2. Interaktywnie: obracaj prostą m</h2>
+  <div class="demo">
+    <p class="opis">Czerwona $k$ jest pochyła, niebieska $l$ to jej rzut („cień”), fioletowa $m$ leży w płaszczyźnie. Obracaj $m$ suwakiem: kąt prosty z $k$ i z $l$ pojawia się w tej samej chwili. Scenę obracaj palcem.</p>
+    <canvas id="tp-plot"></canvas>
+    <div class="sterowanie">
+      <label>obrót $m$ <input type="range" id="tp-t" min="0" max="180" step="1" value="40"></label>
+      <label>nachylenie $k$ <input type="range" id="tp-f" min="10" max="80" step="1" value="45"></label>
+      <button id="tp-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="tp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Krawędź $DA$ czworościanu $ABCD$ jest prostopadła do płaszczyzny $ABC$, a $\sphericalangle ABC=90^\circ$. Dane: $|AB|=3$, $|BC|=4$, $|DA|=4$. Oblicz pole ściany $BCD$.</p>
+    <ol>
+      <li>Rzutem prostej $DB$ na płaszczyznę $ABC$ jest $AB$ (bo $D$ rzutuje się na $A$).</li>
+      <li>$BC\perp AB$, więc z twierdzenia o trzech prostopadłych $BC\perp DB$: trójkąt $BCD$ jest prostokątny przy $B$.</li>
+      <li>$|DB|=\sqrt{3^2+4^2}=5$, więc $P=\frac12\cdot 5\cdot 4$.</li>
+    </ol>
+    <p class="odp">$P_{BCD}=10$</p>
+  </div>
+
+  <h2 id="zadania">4. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Uzasadnij, że w sześcianie $ABCDEFGH$ przekątna $AG$ jest prostopadła do przekątnej podstawy $BD$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Rzutem $AG$ na płaszczyznę $ABCD$ jest $AC$ ($G$ rzutuje się na $C$). Przekątne kwadratu są prostopadłe: $AC\perp BD$. Z tw. o trzech prostopadłych <b>$AG\perp BD$</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="5" data-odp-opis="odległość"><span class="poziom">średnie</span>
+      <div class="tresc">Odcinek $SA$ o długości $4$ jest prostopadły do płaszczyzny kwadratu $ABCD$ o boku $3$. Oblicz odległość punktu $S$ od prostej $BC$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Rzutem $SB$ jest $AB\perp BC$, więc $SB\perp BC$ i odległość to $|SB|=\sqrt{16+9}$. <b>$5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60" data-odp-opis="P_b"><span class="poziom">średnie</span>
+      <div class="tresc">Ostrosłup prawidłowy czworokątny ma krawędź podstawy $6$ i wysokość $4$. Uzasadnij, że odcinek $SE$ ($E$ – środek krawędzi $BC$) jest wysokością ściany $BCS$, i oblicz pole powierzchni bocznej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Spodek wysokości $O$ to środek kwadratu, $OE\perp BC$, a $OE$ jest rzutem $SE$. Z tw. o trzech prostopadłych $SE\perp BC$. $|SE|=\sqrt{4^2+3^2}=5$, $P_b=4\cdot\frac12\cdot 6\cdot 5$. <b>$P_b=60$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60; 3/4" data-odp-opis="pole BCD; tangens kąta"><span class="poziom">maturalne</span>
+      <div class="tresc">W trójkącie $ABC$: $|AB|=|AC|=10$, $|BC|=12$. Odcinek $DA$ o długości $6$ jest prostopadły do płaszczyzny $ABC$. Oblicz pole trójkąta $BCD$ i tangens kąta między płaszczyznami $BCD$ i $ABC$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $M$ – środek $BC$; $AM\perp BC$, $|AM|=\sqrt{100-36}=8$. $AM$ jest rzutem $DM$, więc $DM\perp BC$ i $|DM|=\sqrt{64+36}=10$. Pole $\frac12\cdot12\cdot10=60$. Kąt między płaszczyznami to $\sphericalangle DMA$: $\tg=\frac{6}{8}$. <b>$P=60$, $\tg\alpha=\frac34$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">W czworościanie $ABCD$: $AB\perp CD$ i $AC\perp BD$. Wykaż, że $AD\perp BC$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Niech $H$ będzie rzutem $A$ na płaszczyznę $BCD$. Rzutem $AB$ jest $BH$, a $CD$ leży w $BCD$, więc z $AB\perp CD$ (tw. o trzech prostopadłych) $BH\perp CD$. Tak samo $CH\perp BD$. Zatem $H$ leży na dwóch wysokościach trójkąta $BCD$, czyli jest jego ortocentrum, więc $DH\perp BC$. Ponownie z tw. o trzech prostopadłych (rzutem $AD$ jest $DH$) <b>$AD\perp BC$</b>. (Gdy $H=D$, $AD$ jest prostopadła do płaszczyzny $BCD$, więc i do $BC$.)
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. Na maturze</h2>
+  <ul>
+    <li>Powołując się na twierdzenie, <b>nazwij wszystkie trzy proste</b>: która jest pochyłą, który odcinek jej rzutem, która prosta leży w płaszczyźnie.</li>
+    <li>Typowe użycie: wysokość ściany bocznej ostrosłupa, odległość punktu od prostej, kąt dwuścienny (oba ramiona prostopadłe do krawędzi).</li>
+    <li>Rzut wyznacza spodek prostopadłej: najpierw uzasadnij, gdzie leży spodek wysokości (np. środek okręgu opisanego).</li>
+    <li>W dowodach „$n\perp$ płaszczyzny” wymaga prostopadłości do <b>dwóch przecinających się</b> prostych tej płaszczyzny.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("tp-plot"), { zakres: 2.6, srodek: [0, 0, 0.7], kat: [-0.5, 0.45] });
+  const O = [0, 0, 0], st = Math.PI / 180;
+  let stop = null;
+  function rysuj() {
+    const t = +$("tp-t").value * st, f = +$("tp-f").value * st;
+    const A = [2 * Math.cos(f), 0, 2 * Math.sin(f)], A1 = [A[0], 0, 0], dm = [Math.cos(t), Math.sin(t), 0];
+    const km = Math.acos(Math.abs(Math.cos(f) * Math.cos(t))) / st, lm = Math.min(t, Math.PI - t) / st;
+    const prostyK = Math.abs(km - 90) < 0.5, prostyL = Math.abs(lm - 90) < 0.5;
+    s3.rysuj(g => {
+      g.wielokat([[-2.2, -2.2, 0], [2.2, -2.2, 0], [2.2, 2.2, 0], [-2.2, 2.2, 0]], 3, { wypelnij: 0.12, grubosc: 1 });
+      g.tekst([-2.2, 2.2, 0], "P", 3, { dx: 6, dy: 14, gruby: true });
+      g.odcinek([-2.4, 0, 0], [2.4, 0, 0], 1);
+      g.odcinek(V3.razy(dm, -2.4), V3.razy(dm, 2.4), 4);
+      g.odcinek(V3.razy(A, -0.25), V3.razy(A, 1.25), 2);
+      g.odcinek(A, A1, 3, { przerywana: true });
+      g.kat(A1, A, O, 0.25, 3, { prosty: true });
+      const lk = t <= Math.PI / 2 ? [1, 0, 0] : [-1, 0, 0], kk = Math.cos(t) >= 0 ? A : V3.razy(A, -1);
+      g.kat(O, lk, dm, 0.5, 1, { prosty: prostyL });
+      g.kat(O, kk, dm, 0.8, 2, { prosty: prostyK });
+      g.punkt(A, "A", 2); g.punkt(A1, "A'", 3); g.punkt(O, "", 2);
+      g.tekst(V3.razy(A, 1.25), "k", 2, { gruby: true, dx: 4 });
+      g.tekst([2.4, 0, 0], "l", 1, { gruby: true, dx: 4 });
+      g.tekst(V3.razy(dm, 2.4), "m", 4, { gruby: true, dx: 4 });
+    });
+    tex("tp-wynik", `\\sphericalangle(k,m)=${ladnaTex(km, 1)}^\\circ,\\quad \\sphericalangle(l,m)=${ladnaTex(lm, 1)}^\\circ`);
+  }
+  $("tp-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(5000, u => { $("tp-t").value = Math.round(180 * u); rysuj(); });
+  });
+  ["tp-t", "tp-f"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); rysuj(); }));
+  rysuj();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obliczanie pochodnych (iloczyn, iloraz, złożenie)</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Obliczanie pochodnych (iloczyn, iloraz, złożenie)</h1>
+  <p class="lead">Z definicji liczy się pochodną raz, żeby zrozumieć. Potem używasz kilku reguł: potęga, suma, iloczyn, iloraz, złożenie. Każda pochodna z matury to ich kombinacja.</p>
+  <p class="wymagania">XIII.R.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Wzory</h2>
+  <table class="tabela">
+    <tr><th>Funkcja</th><th>Pochodna</th><th>Tablice CKE</th></tr>
+    <tr><td>$c$</td><td>$0$</td><td>tak</td></tr>
+    <tr><td>$x^r$, $r\in\R$</td><td>$r\,x^{r-1}$</td><td>tak</td></tr>
+    <tr><td>$\sqrt x$</td><td>$\frac{1}{2\sqrt x}$</td><td>tak</td></tr>
+    <tr><td>$\frac1x$</td><td>$-\frac{1}{x^2}$</td><td>tak</td></tr>
+    <tr><td>$c\cdot f$</td><td>$c\cdot f'$</td><td>tak</td></tr>
+    <tr><td>$f\pm g$</td><td>$f'\pm g'$</td><td>tak</td></tr>
+    <tr><td>$f\cdot g$</td><td>$f'g+fg'$</td><td>tak</td></tr>
+    <tr><td>$\frac fg$</td><td>$\frac{f'g-fg'}{g^2}$</td><td>tak</td></tr>
+    <tr><td>$f\big(g(x)\big)$</td><td>$f'\big(g(x)\big)\cdot g'(x)$</td><td>tak</td></tr>
+  </table>
+  <div class="uwaga">Iloraz: w liczniku <b>minus</b>, kolejność ma znaczenie ($f'g$ najpierw). Dla $x^r$ z niecałkowitym $r$ zakładamy $x&gt;0$ (np. $(x^{\sqrt2})'=\sqrt2\,x^{\sqrt2-1}$).</div>
+  <div class="wzor">
+    <div class="tytul">Złożenie: „zewnętrzna razy wewnętrzna”</div>
+    $$\left[(2x+1)^5\right]'=5(2x+1)^4\cdot2$$
+    $$\left[\sqrt{u(x)}\right]'=\frac{u'(x)}{2\sqrt{u(x)}}$$
+    <dl><dt>$f$</dt><dd>funkcja zewnętrzna (potęga, pierwiastek), liczona w $g(x)$</dd>
+        <dt>$g'$</dt><dd>pochodna środka: o tym mnożeniu najczęściej się zapomina</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Skąd wzór na pochodną iloczynu?</summary><div>
+    $$f(x+h)g(x+h)-f(x)g(x)$$
+    $$=\big[f(x+h)-f(x)\big]g(x+h)$$
+    $$+f(x)\big[g(x+h)-g(x)\big]$$
+    <p>Dzielimy przez $h$ i przechodzimy do granicy: $g(x+h)\to g(x)$ (bo $g$ różniczkowalna, więc ciągła). Zostaje $f'g+fg'$. Geometrycznie pokazuje to demo w punkcie 3.</p>
+  </div></details>
+
+  <h2 id="fprim">2. Interaktywnie: wykres $f'$ rysuje się z nachyleń</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt po wykresie $f$ (lub ▶). Nachylenie czerwonej stycznej to wysokość punktu na dolnym wykresie. Ślad tych punktów to wykres $f'$. Gdzie styczna jest pozioma, $f'$ przecina oś.</p>
+    <canvas id="po-f" style="height:250px"></canvas>
+    <canvas id="po-d" style="height:200px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>funkcja <select id="po-fun">
+        <option value="0">x³/3 − x</option>
+        <option value="1">4x/(x² + 1)</option>
+        <option value="2">x⁴/4 − x²</option>
+        <option value="3">√(x + 3)</option>
+      </select></label>
+      <button id="po-start">▶ Rysuj f′</button>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <h2 id="iloczyn">3. Interaktywnie: dlaczego $(fg)'=f'g+fg'$</h2>
+  <div class="demo">
+    <p class="opis">Iloczyn $f\cdot g$ to pole prostokąta o bokach $f(x)=x$ i $g(x)=\frac{x^2}{3}$. Gdy $x$ rośnie o $\Delta x$, pole rośnie o dwa paski (czerwony $\Delta f\cdot g$, zielony $f\cdot\Delta g$) i róg $\Delta f\cdot\Delta g$. Przy $\Delta x\to0$ róg znika szybciej niż paski.</p>
+    <canvas id="pi-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$x$ <input type="range" id="pi-x" min="1" max="3" step="0.05" value="2"> <span id="pi-x-v"></span></label>
+      <label>$\Delta x$ <input type="range" id="pi-dx" min="0.01" max="1" step="0.01" value="0.8"> <span id="pi-dx-v"></span></label>
+      <button id="pi-start">▶ Δx → 0</button>
+    </div>
+    <div class="wynik" id="pi-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Oblicz pochodną $f(x)=\frac{2x-1}{x^2+1}$.</p>
+    <ol>
+      <li>Iloraz: licznik $u=2x-1$, $u'=2$; mianownik $w=x^2+1$, $w'=2x$.</li>
+      <li>$f'(x)=\frac{2(x^2+1)-(2x-1)\cdot2x}{(x^2+1)^2}$.</li>
+      <li>Licznik: $2x^2+2-4x^2+2x=-2x^2+2x+2$.</li>
+    </ol>
+    <p class="odp">$f'(x)=\frac{-2x^2+2x+2}{(x^2+1)^2}$</p>
+  </div>
+  <div class="przyklad">
+    <p>Oblicz pochodne $g(x)=\sqrt{x^2+9}$ i $h(x)=x\sqrt x$.</p>
+    <ol>
+      <li>$g$: zewnętrzna $\sqrt{\ }$, wewnętrzna $x^2+9$: $g'(x)=\frac{1}{2\sqrt{x^2+9}}\cdot2x=\frac{x}{\sqrt{x^2+9}}$. Np. $g'(4)=\frac45$.</li>
+      <li>$h$: zamiast iloczynu zapisz potęgę $h(x)=x^{3/2}$, więc $h'(x)=\frac32x^{1/2}$.</li>
+    </ol>
+    <p class="odp">$g'(x)=\frac{x}{\sqrt{x^2+9}}$, $\;h'(x)=\frac32\sqrt x$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz pochodną $f(x)=4x^3-5x^2+7x-2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        <b>$f'(x)=12x^2-10x+7$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz pochodną $f(x)=4\sqrt x+\frac2x$, $x&gt;0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $4\cdot\frac{1}{2\sqrt x}+2\cdot\left(-\frac1{x^2}\right)$. <b>$f'(x)=\frac{2}{\sqrt x}-\frac{2}{x^2}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz pochodną $f(x)=(x^2+1)(3x-2)$ dwoma sposobami: ze wzoru na iloczyn i po wymnożeniu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Iloczyn: $2x(3x-2)+3(x^2+1)=9x^2-4x+3$. Po wymnożeniu: $(3x^3-2x^2+3x-2)'=9x^2-4x+3$. <b>$f'(x)=9x^2-4x+3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3/4"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz $f'(0)$ dla $f(x)=\frac{x^2-3}{x+2}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $$f'(x)=\frac{2x(x+2)-(x^2-3)}{(x+2)^2}$$
+        $$=\frac{x^2+4x+3}{(x+2)^2}$$
+        <b>$f'(0)=\frac34$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz pochodną $f(x)=(2x-1)^5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Złożenie: $5(2x-1)^4\cdot(2x-1)'$. <b>$f'(x)=10(2x-1)^4$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Oblicz pochodną $f(x)=\frac{x}{\sqrt{x^2+1}}$ i zapisz ją w najprostszej postaci.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Iloraz i złożenie (w mianowniku $\left(\sqrt{x^2+1}\right)'=\frac{x}{\sqrt{x^2+1}}$):
+        $$f'(x)=\frac{\sqrt{x^2+1}-x\cdot\frac{x}{\sqrt{x^2+1}}}{x^2+1}$$
+        Pomnóż licznik i mianownik przez $\sqrt{x^2+1}$: licznik $x^2+1-x^2=1$.
+        <b>$f'(x)=\frac{1}{(x^2+1)\sqrt{x^2+1}}$</b>, np. $f'(0)=1$.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Przed liczeniem <b>uprość</b>: $\frac{x^2+1}{x}=x+\frac1x$, $x\sqrt x=x^{3/2}$. Mniej rachunków, mniej błędów.</li>
+    <li>Iloraz: nie rozwijaj mianownika $(x^2+1)^2$. Zostaw go, bo potrzebujesz tylko znaku pochodnej, a mianownik jest dodatni.</li>
+    <li>Złożenie: zawsze pomnóż przez pochodną środka (np. $\cdot2$ w $(2x-1)^5$).</li>
+    <li>Pochodnych $\sin x$, $a^x$, $\ln x$ <b>nie ma</b> w podstawie (poza podstawą). Na maturze wystarczą potęgi, pierwiastki i funkcje wymierne.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. f i f' ---
+  const FUN = [
+    { f: x => x ** 3 / 3 - x, d: x => x * x - 1, od: -2.4, do: 2.4, t: "f'(x)=x^2-1" },
+    { f: x => 4 * x / (x * x + 1), d: x => 4 * (1 - x * x) / (x * x + 1) ** 2, od: -4, do: 4, t: "f'(x)=\\frac{4(1-x^2)}{(x^2+1)^2}" },
+    { f: x => x ** 4 / 4 - x * x, d: x => x ** 3 - 2 * x, od: -2.05, do: 2.05, t: "f'(x)=x^3-2x" },
+    { f: x => Math.sqrt(x + 3), d: x => 1 / (2 * Math.sqrt(x + 3)), od: -2.97, do: 4, t: "f'(x)=\\frac{1}{2\\sqrt{x+3}}" },
+  ];
+  const wf = new Wykres($("po-f"), { xmin: -4.2, xmax: 4.2, ymin: -3, ymax: 3.5 });
+  const wd = new Wykres($("po-d"), { xmin: -4.2, xmax: 4.2, ymin: -3, ymax: 5 });
+  let F = FUN[0], lo = 1.5, hi = 1.5, stop = null;
+  const P = wf.przeciagaj([{ x: 1.5, y: 0, ogranicz: p => { const x = Math.min(Math.max(p.x, F.od), F.do); return { x, y: F.f(x) }; } }],
+    () => { if (stop) stop(); rysujPo(); });
+  function rysujPo() {
+    const x0 = P[0].x, y0 = F.f(x0), k = F.d(x0);
+    P[0].y = y0; lo = Math.min(lo, x0); hi = Math.max(hi, x0);
+    wf.rysuj(g => {
+      g.funkcja(F.f, 1, { od: F.od, do: F.do });
+      g.prosta(x0, y0, x0 + 1, y0 + k, 2);
+      g.odcinek(x0, y0, x0 + 1, y0, 3, false);
+      g.odcinek(x0 + 1, y0, x0 + 1, y0 + k, 3, false);
+      g.tekst(x0 + 1, y0 + k / 2, ladna(k), 3, { dx: 5, gruby: true });
+      g.odcinek(x0, y0, x0, g.z.ymin, 4);
+      g.punkt(x0, y0, "", 2);
+      g.tekst(g.z.xmin, g.z.ymax, "f", 1, { dx: 6, dy: 16, gruby: true });
+    });
+    wd.rysuj(g => {
+      g.funkcja(F.d, 1, { od: F.od, do: F.do, przerywana: true, grubosc: 0.6 });
+      g.funkcja(F.d, 2, { od: lo, do: hi });
+      g.odcinek(x0, g.z.ymax, x0, k, 4);
+      g.punkt(x0, k, "", 2);
+      g.tekst(g.z.xmin, g.z.ymax, "f′", 2, { dx: 6, dy: 16, gruby: true });
+    });
+    tex("po-wynik", `x_0=${ladnaTex(x0)}:\\ \\ \\text{nachylenie stycznej}=f'(x_0)=${ladnaTex(k)}\\qquad ${F.t}`);
+  }
+  $("po-fun").addEventListener("change", () => {
+    if (stop) stop();
+    F = FUN[+$("po-fun").value]; P[0].x = Math.max(F.od, 1.5); lo = hi = P[0].x; rysujPo();
+  });
+  $("po-start").addEventListener("click", () => {
+    if (stop) stop();
+    lo = hi = F.od;
+    stop = animuj(5000, t => { P[0].x = F.od + (F.do - F.od) * t; rysujPo(); });
+  });
+  rysujPo();
+
+  // --- 3. Pochodna iloczynu jako pole ---
+  const f = x => x, g = x => x * x / 3, fp = () => 1, gp = x => 2 * x / 3;
+  const pi = new Wykres($("pi-plot"), { xmin: -0.6, xmax: 4.6, ymin: -0.6, ymax: 6, rowneSkale: true, podpisy: false });
+  let stopI = null;
+  function rysujPi() {
+    const x = +$("pi-x").value, dx = +$("pi-dx").value;
+    const u = f(x), v = g(x), du = f(x + dx) - u, dv = g(x + dx) - v;
+    $("pi-x-v").textContent = ladna(x); $("pi-dx-v").textContent = ladna(dx);
+    pi.rysuj(G => {
+      G.prostokat(0, 0, u, v, 1, { wypelnij: 0.25 });
+      G.prostokat(u, 0, du, v, 2, { wypelnij: 0.35 });
+      G.prostokat(0, v, u, dv, 3, { wypelnij: 0.35 });
+      G.prostokat(u, v, du, dv, 4, { wypelnij: 0.6 });
+      G.tekst(u / 2, v / 2, "f·g", 1, { wyrownanie: "center", gruby: true, rozmiar: 16 });
+      G.tekst(u / 2, 0, "f = " + ladna(u), 1, { wyrownanie: "center", dy: 16 });
+      G.tekst(0, v / 2, "g = " + ladna(v), 1, { wyrownanie: "right", dx: -4 });
+      G.tekst(u + du / 2, v / 2, "Δf·g", 2, { wyrownanie: "left", dx: 4 + G.jednostka * du / 2 });
+      G.tekst(u / 2, v + dv, "f·Δg", 3, { wyrownanie: "center", dy: -6 });
+    });
+    const pole = (f(x + dx) * g(x + dx) - u * v) / dx;
+    tex("pi-wynik", `\\frac{\\Delta(fg)}{\\Delta x}=\\underbrace{${ladnaTex(du * v / dx)}}_{\\Delta f\\cdot g/\\Delta x}+\\underbrace{${ladnaTex(u * dv / dx)}}_{f\\cdot\\Delta g/\\Delta x}+\\underbrace{${ladnaTex(du * dv / dx, 3)}}_{\\text{róg}}=${ladnaTex(pole)}` +
+      `\\quad\\to\\ f'g+fg'=${ladnaTex(fp(x) * v + u * gp(x))}`);
+  }
+  ["pi-x", "pi-dx"].forEach(id => $(id).addEventListener("input", () => { if (stopI) stopI(); rysujPi(); }));
+  $("pi-start").addEventListener("click", () => {
+    if (stopI) stopI();
+    stopI = animuj(3000, t => { $("pi-dx").value = 1 - 0.99 * t; rysujPi(); });
+  });
+  rysujPi();
+});
+</script>
+</body>
+</html>

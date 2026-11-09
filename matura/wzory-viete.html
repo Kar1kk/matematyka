@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wzory Viète'a</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wzory Viète'a</h1>
+  <p class="lead">Znasz pierwiastki, to znasz współczynniki: wymnóż $a(x-x_1)(x-x_2)$ i porównaj z $ax^2+bx+c$. Dzięki temu sumę i iloczyn pierwiastków dostajesz bez liczenia samych pierwiastków.</p>
+  <p class="wymagania">III.R.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Twierdzenie</h2>
+  <div class="twierdzenie"><b>Twierdzenie (wzory Viète'a)</b> Jeśli $a\neq0$ i $\Delta\ge0$, a $x_1$, $x_2$ są pierwiastkami $ax^2+bx+c=0$, to
+    $$x_1+x_2=\frac{-b}{a},\qquad x_1\cdot x_2=\frac{c}{a}$$
+    (Wzory są w tablicach. Dla $\Delta=0$ przyjmujemy $x_1=x_2=x_0$.)
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Z wzorów na pierwiastki, przy $\Delta\ge0$:</p>
+      $$x_1+x_2=\frac{-b-\sqrt\Delta-b+\sqrt\Delta}{2a}$$
+      $$=\frac{-2b}{2a}=\frac{-b}{a}$$
+      $$x_1x_2=\frac{(-b-\sqrt\Delta)(-b+\sqrt\Delta)}{4a^2}$$
+      $$=\frac{b^2-\Delta}{4a^2}=\frac{b^2-b^2+4ac}{4a^2}=\frac{c}{a}$$
+      <p>W liczniku iloczynu skorzystaliśmy z $(u-v)(u+v)=u^2-v^2$. Dla $\Delta=0$ obie równości też zachodzą ($\sqrt\Delta=0$). $\blacksquare$</p>
+      <p><i>Drugi sposób:</i> $ax^2+bx+c=a(x-x_1)(x-x_2)=ax^2-a(x_1+x_2)x+ax_1x_2$. Porównanie współczynników przy $x$ i wyrazów wolnych daje $b=-a(x_1+x_2)$, $c=ax_1x_2$.</p>
+    </div></details>
+  </div>
+  <div class="uwaga">Najpierw $\Delta\ge0$ (a przy „dwóch różnych” $\Delta&gt;0$)! Gdy $\Delta&lt;0$, wzory dają liczby, ale pierwiastków nie ma. To ulubiona pułapka w zadaniach z parametrem.</div>
+
+  <h2 id="symetryczne">2. Wyrażenia symetryczne</h2>
+  <p>Każde wyrażenie, które nie zmienia się po zamianie $x_1\leftrightarrow x_2$, da się zapisać przez $s=x_1+x_2$ i $p=x_1x_2$. Tych wzorów <b>nie ma w tablicach</b>, wyprowadzaj je ze wzorów skróconego mnożenia:</p>
+  <div class="wzor">
+    <div class="tytul">Najczęstsze</div>
+    $$x_1^2+x_2^2=s^2-2p$$
+    $$\frac1{x_1}+\frac1{x_2}=\frac{s}{p}$$
+    $$(x_1-x_2)^2=s^2-4p=\frac{\Delta}{a^2}$$
+    $$|x_1-x_2|=\frac{\sqrt\Delta}{|a|}$$
+    $$x_1^3+x_2^3=s^3-3ps$$
+    <dl><dt>$s, p$</dt><dd>$s=-\frac{b}{a}$, $p=\frac{c}{a}$</dd>
+        <dt>$\frac{s}{p}$</dt><dd>wymaga $p\neq0$ (żaden pierwiastek nie jest zerem)</dd></dl>
+  </div>
+  <p>Znaki pierwiastków też czytamy z $s$ i $p$: $p&lt;0$ to pierwiastki różnych znaków; $p&gt;0$ i $s&gt;0$ to oba dodatnie; $p&gt;0$ i $s&lt;0$ to oba ujemne (wszystko przy $\Delta&gt;0$). Więcej w temacie o parametrze.</p>
+
+  <h2 id="demo">3. Interaktywnie: pierwiastki → współczynniki</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj pierwiastki $x_1$, $x_2$ po osi $Ox$. Parabola $y=a(x-x_1)(x-x_2)$ dopasowuje się sama. Zielony punkt na osi $Oy$ to $c=a\,x_1x_2$; wierzchołek leży zawsze nad środkiem $\frac{x_1+x_2}{2}$.</p>
+    <canvas id="vi-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="vi-a" min="-2" max="2" step="0.25" value="1"> <span id="vi-a-v"></span></label>
+    </div>
+    <div class="wynik" id="vi-wynik"></div>
+    <div class="wynik" id="vi-wynik2"></div>
+  </div>
+
+  <h2 id="kwadrat">4. Animacja: skąd $x_1^2+x_2^2=s^2-2p$</h2>
+  <div class="demo">
+    <p class="opis">Kwadrat o boku $x_1+x_2$ składa się z kwadratów $x_1^2$, $x_2^2$ i dwóch prostokątów $x_1x_2$. Zabierz prostokąty, a zostanie $x_1^2+x_2^2$.</p>
+    <canvas id="kw2-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$x_1$ <input type="range" id="kw2-x1" min="0.5" max="3" step="0.25" value="2"> <span id="kw2-x1-v"></span></label>
+      <label>$x_2$ <input type="range" id="kw2-x2" min="0.5" max="3" step="0.25" value="1"> <span id="kw2-x2-v"></span></label>
+      <button id="kw2-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="kw2-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Dla równania $x^2-5x+3=0$ oblicz $x_1^2+x_2^2$, $\frac1{x_1}+\frac1{x_2}$ i $|x_1-x_2|$, nie wyznaczając pierwiastków.</p>
+    <ol>
+      <li>$\Delta=25-12=13&gt;0$: pierwiastki istnieją.</li>
+      <li>$s=5$, $p=3$.</li>
+      <li>$x_1^2+x_2^2=25-6=19$; $\;\frac1{x_1}+\frac1{x_2}=\frac53$.</li>
+      <li>$|x_1-x_2|=\frac{\sqrt{13}}{1}=\sqrt{13}$.</li>
+    </ol>
+    <p class="odp">$19,\ \frac53,\ \sqrt{13}$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-3; -5/2" data-odp-opis="suma; iloczyn"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz sumę i iloczyn pierwiastków równania $2x^2+6x-5=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\Delta=36+40=76&gt;0$. <b>$x_1+x_2=-3$, $x_1x_2=-\frac52$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Napisz równanie kwadratowe ($a=1$), którego pierwiastkami są $2-\sqrt3$ i $2+\sqrt3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $s=4$, $p=(2-\sqrt3)(2+\sqrt3)=4-3=1$. Równanie $x^2-sx+p=0$. <b>$x^2-4x+1=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="36"><span class="poziom">średnie</span>
+      <div class="tresc">Pierwiastki $x_1$, $x_2$ równania $x^2-3x-1=0$. Oblicz $x_1^3+x_2^3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\Delta=13&gt;0$, $s=3$, $p=-1$. $x_1^3+x_2^3=s^3-3ps=27+9$. <b>$36$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2" data-odp-opis="wartości m"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz $m$, dla których pierwiastki równania $x^2-2mx+m^2-1=0$ spełniają $x_1^2+x_2^2=10$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\Delta=4m^2-4m^2+4=4&gt;0$ dla każdego $m$. $s=2m$, $p=m^2-1$, więc $x_1^2+x_2^2=4m^2-2m^2+2=2m^2+2=10$, $m^2=4$.
+        <b>$m=-2$ lub $m=2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz $m$, dla których równanie $x^2+2mx+m+2=0$ ma pierwiastki spełniające $x_1^2+x_2^2=2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Warunek istnienia: $\frac{\Delta}4=m^2-m-2=(m-2)(m+1)\ge0$, czyli $m\in(-\infty,-1\rp\cup\lp2,\infty)$.<br>
+        $s^2-2p=4m^2-2m-4=2 \iff 2m^2-m-3=0 \iff m=-1$ lub $m=\frac32$.<br>
+        $m=\frac32$ odpada ($\Delta&lt;0$, wtedy „$x_1^2+x_2^2$” nie istnieje). Dla $m=-1$: $(x-1)^2=0$, $1+1=2$. <b>$m=-1$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Warunek $\Delta$ zawsze na początku</b>, a na końcu przecięcie wyników. Bez tego tracisz zwykle 1–2 punkty.</li>
+    <li><b>Warunek $a\neq0$</b>, jeśli współczynnik przy $x^2$ zależy od parametru.</li>
+    <li>Wyrażenie przekształć tak, by zawierało tylko $x_1+x_2$ i $x_1x_2$, i <b>zapisz to przekształcenie</b> (np. $x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2$).</li>
+    <li>Przy $\frac1{x_1}+\frac1{x_2}$ dopisz $x_1x_2\neq0$, czyli $c\neq0$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Pierwiastki → współczynniki ---
+  const w1 = new Wykres($("vi-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+  const naOsi = p => ({ x: Math.max(-5.5, Math.min(5.5, p.x)), y: 0 });
+  const pk = [{ x: -1, y: 0, siatka: 0.5, ogranicz: naOsi }, { x: 3, y: 0, siatka: 0.5, ogranicz: naOsi }];
+  function rysujVi() {
+    let a = +$("vi-a").value; if (a === 0) a = 0.25;
+    $("vi-a-v").textContent = ladna(a);
+    const [x1, x2] = [pk[0].x, pk[1].x], s = x1 + x2, p = x1 * x2, b = -a * s, c = a * p, sr = s / 2;
+    w1.rysuj(g => {
+      g.odcinek(sr, g.z.ymin, sr, g.z.ymax, 3);
+      g.funkcja(x => a * (x - x1) * (x - x2), 1);
+      g.punkt(sr, a * (sr - x1) * (sr - x2), "W", 4);
+      g.punkt(0, c, "c", 3);
+      g.punkt(x1, 0, "x₁", 2); g.punkt(x2, 0, "x₂", 2);
+    });
+    tex("vi-wynik", `x_1+x_2=${ladnaTex(s)}=\\tfrac{-b}{a},\\quad x_1x_2=${ladnaTex(p)}=\\tfrac{c}{a}`);
+    tex("vi-wynik2", `y=${a === 1 ? "" : a === -1 ? "-" : ladnaTex(a)}x^2${znakTex(b)}x${znakTex(c)},\\quad b=${ladnaTex(b)},\\;c=${ladnaTex(c)}`);
+  }
+  w1.przeciagaj(pk, rysujVi);
+  $("vi-a").addEventListener("input", rysujVi);
+  rysujVi();
+
+  // --- 4. Kwadrat (x1+x2)² ---
+  const w2 = new Wykres($("kw2-plot"), { xmin: -0.5, xmax: 13, ymin: -0.5, ymax: 6.5, rowneSkale: true, siatka: false });
+  let stop = null;
+  function rysujKw2(t) {
+    const x1 = +$("kw2-x1").value, x2 = +$("kw2-x2").value, s = x1 + x2, d = t * (s + 1);
+    $("kw2-x1-v").textContent = ladna(x1); $("kw2-x2-v").textContent = ladna(x2);
+    w2.zakres({ xmax: 2 * s + 1.5, ymax: s + 0.5 }); // kadr dopasowany do kwadratu, by nie był malutki
+    w2.rysuj(g => {
+      g.prostokat(0, 0, x1, x1, 1);
+      g.prostokat(x1, x1, x2, x2, 3);
+      g.prostokat(x1 + d, 0, x2, x1, 2);
+      g.prostokat(d, x1, x1, x2, 2);
+      g.tekst(x1 / 2, x1 / 2, "x₁²", 1, { wyrownanie: "center", gruby: true });
+      g.tekst(x1 + x2 / 2, x1 + x2 / 2, "x₂²", 3, { wyrownanie: "center", gruby: true });
+      g.tekst(x1 + d + x2 / 2, x1 / 2, "x₁x₂", 2, { wyrownanie: "center", gruby: true });
+      g.tekst(d + x1 / 2, x1 + x2 / 2, "x₁x₂", 2, { wyrownanie: "center", gruby: true });
+      if (t < 0.05) g.wielokat([[0, 0], [s, 0], [s, s], [0, s]], 4, { przerywana: true });
+    });
+    tex("kw2-wynik", `(x_1+x_2)^2=${ladnaTex(s * s)},\\;\\; 2x_1x_2=${ladnaTex(2 * x1 * x2)}\\;\\Rightarrow\\; x_1^2+x_2^2=${ladnaTex(s * s - 2 * x1 * x2)}`);
+  }
+  ["kw2-x1", "kw2-x2"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); rysujKw2(0); }));
+  $("kw2-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2000, rysujKw2); });
+  rysujKw2(0);
+});
+</script>
+</body>
+</html>

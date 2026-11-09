@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wartość bezwzględna</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wartość bezwzględna</h1>
+  <p class="lead">$|x-a|$ to po prostu <b>odległość</b> punktów $x$ i $a$ na osi. Prawie każde zadanie z modułem rozwiązuje się szybciej, gdy przeczytasz je jako zdanie o odległości.</p>
+  <p class="wymagania">I.7 (nierówności: III.R.4)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definicja i własności</h2>
+  <div class="wzor">
+    <div class="tytul">Definicja <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$|x|=\begin{cases} x, &amp; x\ge0\\ -x, &amp; x&lt;0\end{cases}$$
+    <dl><dt>$|x|$</dt><dd>odległość $x$ od $0$; „zdejmuje minus”, np. $|-7|=7$</dd>
+        <dt>$|x-a|$</dt><dd>odległość $x$ od $a$. Uwaga: $|x+4|=|x-(-4)|$ to odległość od $-4$</dd>
+        <dt>$\sqrt{x^2}$</dt><dd>$=|x|$ <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Własności <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$|x|\ge0,\qquad |-x|=|x|$$
+    $$|xy|=|x||y|,\qquad \left|\frac xy\right|=\frac{|x|}{|y|}$$
+    $$|x+y|\le|x|+|y|$$
+    <dl><dt>trójkąta</dt><dd>równość $|x+y|=|x|+|y|$ zachodzi tylko, gdy $xy\ge0$ (te same znaki)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Skąd nierówność trójkąta?</summary><div>
+    <p>Z definicji $-|x|\le x\le|x|$ oraz $-|y|\le y\le|y|$. Dodaj stronami:</p>
+    $$-(|x|+|y|)\le x+y\le |x|+|y|,$$
+    <p>a to znaczy dokładnie, że $|x+y|\le|x|+|y|$ (liczba leży nie dalej od zera niż $|x|+|y|$).</p>
+  </div></details>
+
+  <h2 id="odleglosc">2. Interaktywnie: moduł to odległość</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkty $x$ i $a$. Wartość $|x-a|$ to długość czerwonej klamry. Zamień punkty miejscami: odległość się nie zmienia, bo $|x-a|=|a-x|$.</p>
+    <canvas id="od-plot" style="height:200px"></canvas>
+    <div class="wynik" id="od-wynik"></div>
+  </div>
+
+  <h2 id="zbiory">3. Interaktywnie: zbiór punktów odległych o $r$</h2>
+  <div class="wzor">
+    <div class="tytul">Dla $r&gt;0$ (w tablicach jest tylko wzór z $le$)</div>
+    $$|x-a|=r\iff x=a-r\ \lor\ x=a+r$$
+    $$|x-a|\le r\iff a-r\le x\le a+r$$
+    <dl><dt>$r&lt;0$</dt><dd>równanie $|x-a|=r$ nie ma rozwiązań; $r=0$: tylko $x=a$</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Wybierz warunek i przeciągaj środek $a$. „▶ Skanuj” przesuwa $x$ po osi: zielony, gdy warunek jest spełniony. Ustaw $a=-4$, $r=5$: to równanie $|x+4|=5$.</p>
+    <canvas id="zb-plot" style="height:200px"></canvas>
+    <div class="sterowanie">
+      <label>warunek <select id="zb-war">
+        <option value="eq">|x − a| = r</option>
+        <option value="lt">|x − a| &lt; r</option>
+        <option value="gt">|x − a| &gt; r</option>
+      </select></label>
+      <label>$r$ <input type="range" id="zb-r" min="0" max="7" step="0.5" value="5"> <span id="zb-r-v"></span></label>
+      <button id="zb-start">▶ Skanuj</button>
+    </div>
+    <div class="wynik" id="zb-wynik"></div>
+  </div>
+  <p>Nierówności z modułem i równania z kilkoma modułami (metoda przedziałów, zakres R): <a href="wartosc-bezwzgledna-rownania.html">równania i nierówności z wartością bezwzględną</a>.</p>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż równanie $|x+4|=5$.</p>
+    <ol>
+      <li><b>Geometrycznie:</b> szukamy punktów odległych o $5$ od $-4$: $-4-5=-9$ i $-4+5=1$.</li>
+      <li><b>Algebraicznie:</b> $x+4=5$ lub $x+4=-5$, czyli $x=1$ lub $x=-9$.</li>
+    </ol>
+    <p class="odp">$x\in\{-9,\,1\}$</p>
+  </div>
+  <div class="przyklad">
+    <p>Oblicz $|\sqrt3-2|+|\sqrt3-1|$.</p>
+    <ol>
+      <li>$\sqrt3\approx1{,}73$: $\sqrt3-2&lt;0$, więc $|\sqrt3-2|=2-\sqrt3$.</li>
+      <li>$\sqrt3-1&gt;0$, więc $|\sqrt3-1|=\sqrt3-1$.</li>
+    </ol>
+    <p class="odp">$2-\sqrt3+\sqrt3-1=1$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="2-pi"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $|-3|-|2-7|+|\pi-4|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\pi-4&lt;0$, więc $|\pi-4|=4-\pi$. $3-5+4-\pi=$ <b>$2-\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1; 5; 2; -3" data-odp-opis="rozwiązania a); rozwiązania b)"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równania: a) $|x-2|=3$, b) $|2x+1|=5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) punkty odległe o $3$ od $2$: <b>$x=-1$ lub $x=5$</b>. b) $2x+1=5$ lub $2x+1=-5$: <b>$x=2$ lub $x=-3$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz $\sqrt{(1-\sqrt2)^2}+|\sqrt2-3|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\sqrt{(1-\sqrt2)^2}=|1-\sqrt2|=\sqrt2-1$, $\;|\sqrt2-3|=3-\sqrt2$. Suma: <b>$2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7"><span class="poziom">średnie</span>
+      <div class="tresc">Ile liczb całkowitych $x$ spełnia nierówność $|x-3|&lt;4$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Odległość od $3$ mniejsza niż $4$: $x\in(-1,7)$. Liczby całkowite $0,1,\dots,6$. <b>$7$ liczb</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 8" data-odp-opis="możliwe wartości"><span class="poziom">średnie</span>
+      <div class="tresc">Wiadomo, że $|a|=3$ i $|b|=5$. Jakie wartości może przyjmować $|a+b|$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a=\pm3$, $b=\pm5$. Te same znaki: $|a+b|=8$; różne znaki: $|a+b|=2$. <b>$2$ lub $8$</b> (zgodnie z $|a+b|\le|a|+|b|=8$)
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że jeśli $|x-1|&lt;2$ i $|y+1|&lt;3$, to $|x+y|&lt;5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x+y=(x-1)+(y+1)$. Z nierówności trójkąta $|x+y|\le|x-1|+|y+1|&lt;2+3=5$. <b>$|x+y|&lt;5$</b>, co kończy dowód.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Znak w środku:</b> $|x+4|$ to odległość od $-4$, nie od $4$.</li>
+    <li><b>$\sqrt{x^2}=|x|$:</b> przed opuszczeniem modułu sprawdź znak wyrażenia (np. $|\pi-4|=4-\pi$).</li>
+    <li><b>$|\,\cdot\,|=r$ z $r&lt;0$:</b> brak rozwiązań — napisz to jednym zdaniem, bez rachunków.</li>
+    <li>Dwa moduły albo moduł z wyrażeniem po prawej stronie: <a href="wartosc-bezwzgledna-rownania.html">metoda przedziałów</a> i sprawdzenie, czy rozwiązanie należy do przedziału.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const OS = "--plot-axis";
+  // Oś liczbowa z podziałką (zamiast siatki)
+  function os(g, a, b) {
+    g.odcinek(a, 0, b, 0, OS, false);
+    for (let k = Math.ceil(a); k <= b; k++) {
+      g.odcinek(k, -0.12, k, 0.12, OS, false);
+      if (k % 2 === 0) g.tekst(k, 0, String(k).replace("-", "−"), OS, { dy: 18, wyrownanie: "center", rozmiar: 12 });
+    }
+  }
+  const naOsi = p => ({ x: Math.max(-9.5, Math.min(9.5, Math.round(p.x * 2) / 2)), y: 0 });
+
+  // --- 2. Odległość ---
+  const w1 = new Wykres($("od-plot"), { xmin: -10.5, xmax: 10.5, ymin: -1.5, ymax: 2.5, siatka: false, osie: false });
+  const p1 = w1.przeciagaj([{ x: 3, y: 0, ogranicz: naOsi }, { x: -2, y: 0, ogranicz: naOsi }], rysujOd);
+  function rysujOd() {
+    const x = p1[0].x, a = p1[1].x, d = Math.abs(x - a);
+    w1.rysuj(g => {
+      os(g, -10.5, 10.5);
+      if (d > 0) {
+        g.odcinek(a, 0.3, a, 1.1, 2, false); g.odcinek(x, 0.3, x, 1.1, 2, false);
+        g.odcinek(a, 1.1, x, 1.1, 2, false);
+        g.tekst((a + x) / 2, 1.1, "|x − a| = " + ladna(d), 2, { dy: -8, wyrownanie: "center", gruby: true });
+      }
+      g.punkt(a, 0, "a", 4); g.punkt(x, 0, "x", 2);
+    });
+    tex("od-wynik", `|x-a|=|${ladnaTex(x)}-(${ladnaTex(a)})|=${ladnaTex(d)}`);
+  }
+  rysujOd();
+
+  // --- 3. Zbiory ---
+  const w2 = new Wykres($("zb-plot"), { xmin: -10.5, xmax: 10.5, ymin: -1.5, ymax: 2.5, siatka: false, osie: false });
+  const p2 = w2.przeciagaj([{ x: -4, y: 0, ogranicz: naOsi }], () => { if (stopZb) stopZb(); klatkaZb(1); });
+  let stopZb = null;
+  function klatkaZb(t) {
+    const a = p2[0].x, r = +$("zb-r").value, war = $("zb-war").value;
+    $("zb-r-v").textContent = ladna(r);
+    const L = -10.5, P = 10.5, xs = L + (P - L) * t; // skan do xs
+    const spelnia = x => war === "eq" ? Math.abs(Math.abs(x - a) - r) < 0.12 : war === "lt" ? Math.abs(x - a) < r : Math.abs(x - a) > r;
+    w2.rysuj(g => {
+      os(g, L, P);
+      const pas = (u, v) => { const k = Math.min(v, xs); if (k > u) g.odcinek(u, 0, k, 0, 3, false); };
+      const konce = [a - r, a + r];
+      if (war === "lt") pas(a - r, a + r);
+      if (war === "gt") { pas(L, a - r); pas(a + r, P); }
+      konce.forEach(k => {
+        if (k <= xs + 1e-9) g.punkt(k, 0, "", 3, { pusty: war !== "eq" });
+      });
+      g.punkt(a, 0, "a", 4);
+      if (t < 1) {
+        const ok = spelnia(xs);
+        g.odcinek(a, 0.9, xs, 0.9, ok ? 3 : 2, true);
+        g.punkt(xs, 0.9, "x", ok ? 3 : 2);
+        g.tekst(xs, 0.9, ladna(Math.abs(xs - a), 1), ok ? 3 : 2, { dy: -14, wyrownanie: "center" });
+      }
+    });
+    const A = ladnaTex(a - r), B = ladnaTex(a + r), sa = a === 0 ? "x" : `x${a < 0 ? "+" + ladnaTex(-a) : "-" + ladnaTex(a)}`;
+    let zb = "";
+    if (war === "eq") zb = r === 0 ? `x=${ladnaTex(a)}` : `x=${A}\\ \\lor\\ x=${B}`;
+    if (war === "lt") zb = r === 0 ? "x\\in\\varnothing" : `x\\in(${A},\\,${B})`;
+    if (war === "gt") zb = `x\\in(-\\infty,\\,${A})\\cup(${B},\\,\\infty)`;
+    const zn = war === "eq" ? "=" : war === "lt" ? "<" : ">";
+    tex("zb-wynik", `|${sa}|${zn}${ladnaTex(r)}\\iff ${zb}`);
+  }
+  $("zb-start").addEventListener("click", () => { if (stopZb) stopZb(); stopZb = animuj(4000, klatkaZb); });
+  ["zb-r", "zb-war"].forEach(id => $(id).addEventListener("input", () => { if (stopZb) stopZb(); klatkaZb(1); }));
+  $("zb-war").addEventListener("change", () => { if (stopZb) stopZb(); klatkaZb(1); });
+  klatkaZb(1);
+});
+</script>
+</body>
+</html>

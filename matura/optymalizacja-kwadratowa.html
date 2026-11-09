@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optymalizacja z funkcją kwadratową</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Optymalizacja z funkcją kwadratową</h1>
+  <p class="lead">„Największe pole”, „najmniejszy koszt”: wielkość, którą optymalizujesz, zapisujesz jako funkcję jednej zmiennej. Jeśli wyjdzie parabola, odpowiedź siedzi w wierzchołku, o ile wierzchołek należy do dziedziny.</p>
+  <p class="wymagania">XIII (zakres podstawowy), V.10, V.11</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. Schemat w 5 krokach</h2>
+  <ol>
+    <li><b>Zmienna</b>: nazwij jedną wielkość $x$ (np. szerokość). Pozostałe wyraź przez $x$ z warunku zadania.</li>
+    <li><b>Dziedzina</b>: długości $&gt;0$, ograniczenia z treści. Zapisz ją jawnie, np. $x\in(0,10)$.</li>
+    <li><b>Funkcja celu</b>: $P(x)=ax^2+bx+c$.</li>
+    <li><b>Wierzchołek</b>: $p=\frac{-b}{2a}$. Sprawdź, czy $p$ należy do dziedziny i jaki jest znak $a$.</li>
+    <li><b>Odpowiedź</b> na pytanie z treści: wymiary <i>i</i> wartość (pole, koszt).</li>
+  </ol>
+  <div class="wzor">
+    <div class="tytul">Wartość największa/najmniejsza w $\lp \alpha,\beta\rp$ (V.10)</div>
+    $$p\in\lp \alpha,\beta\rp:\ f(p),\ f(\alpha),\ f(\beta)$$
+    $$p\notin\lp \alpha,\beta\rp:\ f(\alpha),\ f(\beta)$$
+    <p>Porównujesz tylko tych kandydatów: największy z nich to maksimum, najmniejszy to minimum.</p>
+    <dl><dt>$a&lt;0$</dt><dd>ramiona w dół, w wierzchołku <b>maksimum</b></dd>
+        <dt>$a&gt;0$</dt><dd>ramiona w górę, w wierzchołku <b>minimum</b></dd></dl>
+  </div>
+  <div class="uwaga">Gdy dziedzina jest przedziałem <b>otwartym</b> (np. $x\in(0,10)$), wartości na końcach nie są przyjmowane. Wtedy dla $a&lt;0$ (ramiona w dół) wartość największa istnieje tylko, jeśli wierzchołek jest w środku przedziału; dla $a&gt;0$ w wierzchołku jest wartość <b>najmniejsza</b> (największej wtedy nie ma).</div>
+
+  <h2 id="plot">2. Interaktywnie: płot przy ścianie</h2>
+  <div class="demo">
+    <p class="opis">Masz $20$ m siatki na trzy boki prostokąta, czwarty bok to ściana. Przeciągnij róg (albo suwak $x$) i patrz, jak punkt wędruje po paraboli $P(x)=x(20-2x)$. Skróć ścianę, a wierzchołek wypadnie z dziedziny.</p>
+    <canvas id="ok-plac" style="height:260px"></canvas>
+    <canvas id="ok-wyk" style="height:240px;margin-top:8px"></canvas>
+    <div class="sterowanie">
+      <label>$x$ <input type="range" id="ok-x" min="0.2" max="9.8" step="0.1" value="2"> <span id="ok-x-v"></span></label>
+      <label>ściana <input type="range" id="ok-s" min="4" max="20" step="1" value="20"> <span id="ok-s-v"></span></label>
+      <button id="ok-start">▶ Szukaj maksimum</button>
+    </div>
+    <div class="wynik" id="ok-wynik"></div>
+  </div>
+
+  <h2 id="przedzial">3. Interaktywnie: wierzchołek w przedziale?</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj końce przedziału $\alpha$, $\beta$ po osi $Ox$. Gdy wierzchołek wypadnie poza przedział, oba ekstrema lądują na końcach.</p>
+    <canvas id="pw-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="pw-znak"> ramiona w dół</label>
+    </div>
+    <div class="wynik" id="pw-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Z $20$ m siatki ogradzamy prostokątny wybieg przy ścianie (siatka na trzy boki). Jakie wymiary dają największe pole?</p>
+    <ol>
+      <li>$x$: bok prostopadły do ściany. Bok równoległy: $20-2x$.</li>
+      <li>Dziedzina: $x&gt;0$ i $20-2x&gt;0$, czyli $x\in(0,10)$.</li>
+      <li>$P(x)=x(20-2x)=-2x^2+20x$, $a=-2&lt;0$.</li>
+      <li>$p=\frac{-20}{-4}=5\in(0,10)$, więc maksimum w $x=5$: $P(5)=5\cdot10=50$.</li>
+    </ol>
+    <p class="odp">Wymiary $5$ m × $10$ m, pole $50\ \text{m}^2$.</p>
+  </div>
+  <div class="przyklad">
+    <p>To samo, ale ściana ma tylko $8$ m.</p>
+    <ol>
+      <li>Nowy warunek: $20-2x\le 8$, czyli $x\ge6$. Dziedzina: $x\in\lp 6,10)$.</li>
+      <li>$p=5\notin\lp 6,10)$, a parabola w tej dziedzinie maleje.</li>
+      <li>Największa wartość na lewym końcu: $P(6)=6\cdot8=48$.</li>
+    </ol>
+    <p class="odp">Wymiary $6$ m × $8$ m, pole $48\ \text{m}^2$ (sprawdź w demo: ściana $8$).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="6; 6" data-odp-opis="obie liczby"><span class="poziom">łatwe</span>
+      <div class="tresc">Suma dwóch liczb wynosi $12$. Dla jakich liczb ich iloczyn jest największy?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x)=x(12-x)=-x^2+12x$, $x\in\R$. $p=6$, $a&lt;0$. <b>Liczby $6$ i $6$, iloczyn $36$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; -4" data-odp-opis="obie liczby"><span class="poziom">łatwe</span>
+      <div class="tresc">Różnica dwóch liczb wynosi $8$. Dla jakich liczb ich iloczyn jest najmniejszy?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Liczby $x$ i $x-8$: $f(x)=x^2-8x$, $a&gt;0$, $p=4$. <b>Liczby $4$ i $-4$, iloczyn $-16$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="25" data-odp-opis="cena (zł)"><span class="poziom">średnie</span>
+      <div class="tresc">Przy cenie biletu $20$ zł do kina przychodzi $300$ osób. Każda podwyżka o $1$ zł zmniejsza liczbę widzów o $10$. Jaka cena daje największy przychód?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Podwyżka o $k$ zł, $k\in\lp -20,30\rp$:
+        $$R(k)=(20+k)(300-10k)$$
+        $$=-10k^2+100k+6000$$
+        $p=5$ należy do dziedziny, $a&lt;0$. <b>Cena $25$ zł, $250$ widzów, przychód $6250$ zł.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12" data-odp-opis="największe pole"><span class="poziom">średnie</span>
+      <div class="tresc">W trójkąt prostokątny o przyprostokątnych $6$ i $8$ wpisano prostokąt, którego dwa boki leżą na przyprostokątnych. Oblicz największe możliwe pole prostokąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Układ: wierzchołek kąta prostego w $(0,0)$, przeciwprostokątna $\frac{x}{6}+\frac{y}{8}=1$. Wierzchołek prostokąta $(x,y)$ leży na niej: $y=8-\frac43x$, $x\in(0,6)$.
+        $$P(x)=x\left(8-\tfrac43x\right)$$
+        $p=3$, $y=4$. <b>Największe pole $12$</b> (połowa pola trójkąta).
+      </div></details></li>
+    <li class="zadanie" data-odp="8/5; 11/5" data-odp-opis="x; y punktu P"><span class="poziom">maturalne</span>
+      <div class="tresc">Na prostej $y=2x-1$ znajdź punkt $P$ najbliższy punktowi $A=(4,1)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P=(x,2x-1)$. Minimalizuj kwadrat odległości (ma minimum w tym samym $x$):
+        $$d^2(x)=(x-4)^2+(2x-2)^2$$
+        $$=5x^2-16x+20$$
+        $p=\frac{16}{10}=\frac85$, $d^2=7{,}2$. <b>$P=\left(\frac85,\frac{11}{5}\right)$, $|AP|=\frac{6\sqrt5}{5}$</b> (zgadza się ze wzorem na odległość punktu od prostej).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Dziedzina</b> to osobny punkt w kluczu. Bez niej nie wiesz, czy wierzchołek „się liczy”.</li>
+    <li>Pytają o <b>wymiary</b>, a Ty podajesz tylko $x$? Strata punktu. Odpowiedz pełnym zdaniem: wymiary i wartość.</li>
+    <li>Wierzchołek poza dziedziną: funkcja jest monotoniczna w dziedzinie, ekstremum na końcu przedziału (o ile koniec należy do dziedziny).</li>
+    <li>Odległość: optymalizuj $d^2$ zamiast $d$. Pierwiastek jest rosnący, więc minimum jest w tym samym miejscu.</li>
+    <li>Jeśli funkcja celu wyjdzie sześcienna lub wymierna, potrzebna jest <a href="optymalizacja-pochodna.html">pochodna</a>.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Płot przy ścianie ---
+  const L = 20, P = x => x * (L - 2 * x);
+  const plac = new Wykres($("ok-plac"), { xmin: -1, xmax: 21, ymin: -10.5, ymax: 1.5, krokX: 2, krokY: 2, rowneSkale: true, podpisy: false });
+  const wyk = new Wykres($("ok-wyk"), { xmin: -0.5, xmax: 10.5, ymin: -6, ymax: 58, krokX: 1, krokY: 10 });
+  let x = 2, stop = null;
+  const minX = () => Math.max(0.2, (L - +$("ok-s").value) / 2);
+  const rog = plac.przeciagaj([{ x: 0, y: 0, ogranicz: p => ({ x: p.x, y: p.y }) }], pk => {
+    if (stop) stop();
+    x = Math.min(9.8, Math.max(minX(), -pk[0].y));
+    $("ok-x").value = x; rysujOk();
+  });
+  function rysujOk() {
+    const s = +$("ok-s").value, m = minX();
+    x = Math.max(x, m);
+    const d = L - 2 * x, x0 = 10 - d / 2;
+    rog[0].x = x0 + d; rog[0].y = -x;
+    $("ok-x-v").textContent = ladna(x); $("ok-s-v").textContent = s + " m";
+    plac.rysuj(g => {
+      g.wielokat([[10 - s / 2, 0], [10 + s / 2, 0], [10 + s / 2, 0.6], [10 - s / 2, 0.6]], 4, { wypelnij: 0.4 });
+      g.tekst(10, 0.6, "ściana " + s + " m", 4, { dy: -4, wyrownanie: "center" });
+      g.wielokat([[x0, 0], [x0, -x], [x0 + d, -x], [x0 + d, 0]], 1, { wypelnij: 0.18, zamknij: false, grubosc: 3 });
+      g.tekst(x0, -x / 2, "x", 1, { dx: -14, gruby: true });
+      g.tekst(10, -x, ladna(d), 1, { dy: 16, wyrownanie: "center", gruby: true });
+      g.tekst(10, -x / 2, "P = " + ladna(P(x)), 2, { wyrownanie: "center", rozmiar: 16, gruby: true, dy: 6 });
+      g.punkt(x0 + d, -x, "", 2);
+    });
+    wyk.rysuj(g => {
+      g.funkcja(P, 1, { przerywana: true, od: 0, do: 10 });
+      g.funkcja(P, 1, { od: m, do: 10 });
+      g.odcinek(m, 0, m, P(m), 3);
+      g.punkt(5, 50, "W", 3, { pusty: m > 5 });
+      g.odcinek(x, 0, x, P(x), 2);
+      g.punkt(x, P(x), "", 2);
+      g.tekst(10, 56, "P(x)", 1, { wyrownanie: "right", dy: 4 });
+    });
+    const best = Math.max(5, m);
+    tex("ok-wynik", `x=${ladnaTex(x)},\\ \\ 20-2x=${ladnaTex(d)},\\ \\ P=${ladnaTex(P(x))}` +
+      `\\qquad x\\in${s === 20 ? "(0" : "\\lp " + ladnaTex(m)},10)\\Rightarrow P_{\\max}=P(${ladnaTex(best)})=${ladnaTex(P(best))}`);
+  }
+  $("ok-x").addEventListener("input", () => { if (stop) stop(); x = +$("ok-x").value; rysujOk(); });
+  $("ok-s").addEventListener("input", () => { if (stop) stop(); rysujOk(); });
+  $("ok-start").addEventListener("click", () => {
+    if (stop) stop();
+    const m = minX(), best = Math.max(5, m);
+    // przemiatanie całej dziedziny, potem powrót do maksimum
+    stop = animuj(3200, t => {
+      x = t < 0.7 ? m + (9.8 - m) * (t / 0.7) : 9.8 + (best - 9.8) * ((t - 0.7) / 0.3);
+      $("ok-x").value = x; rysujOk();
+    });
+  });
+  rysujOk();
+
+  // --- 3. Wierzchołek w przedziale ---
+  const pw = new Wykres($("pw-plot"), { xmin: -2, xmax: 7, ymin: -5, ymax: 7 });
+  const f1 = t => 0.5 * (t - 2) ** 2 - 3, f2 = t => -0.5 * (t - 2) ** 2 + 4;
+  const konce = pw.przeciagaj([
+    { x: 3, y: 0, ogranicz: p => ({ x: Math.min(Math.max(p.x, -1.8), 6.8), y: 0 }) },
+    { x: 5.5, y: 0, ogranicz: p => ({ x: Math.min(Math.max(p.x, -1.8), 6.8), y: 0 }) },
+  ], rysujPw);
+  function rysujPw() {
+    const f = $("pw-znak").checked ? f2 : f1;
+    const a = Math.min(konce[0].x, konce[1].x), b = Math.max(konce[0].x, konce[1].x);
+    const kand = [[a, f(a)], [b, f(b)]];
+    const wSrodku = a <= 2 && 2 <= b;
+    if (wSrodku) kand.push([2, f(2)]);
+    const mx = kand.reduce((u, v) => v[1] > u[1] ? v : u), mn = kand.reduce((u, v) => v[1] < u[1] ? v : u);
+    pw.rysuj(g => {
+      g.funkcja(f, 1, { przerywana: true });
+      g.obszar(f, () => 0, a, b, 1, 0.12);
+      g.funkcja(f, 1, { od: a, do: b });
+      g.odcinek(2, g.z.ymin, 2, g.z.ymax, 3);
+      g.odcinek(g.z.xmin, mx[1], g.z.xmax, mx[1], 2);
+      g.odcinek(g.z.xmin, mn[1], g.z.xmax, mn[1], 4);
+      g.punkt(mx[0], mx[1], "max", 2);
+      g.punkt(mn[0], mn[1], "min", 4);
+      g.punkt(a, 0, "α", 3); g.punkt(b, 0, "β", 3);
+    });
+    tex("pw-wynik", `p=2${wSrodku ? "\\in" : "\\notin"}\\lp ${ladnaTex(a)},${ladnaTex(b)}\\rp:\\ \\ ` +
+      `f_{\\max}=${ladnaTex(mx[1])},\\ \\ f_{\\min}=${ladnaTex(mn[1])}`);
+  }
+  $("pw-znak").addEventListener("change", rysujPw);
+  rysujPw();
+});
+</script>
+</body>
+</html>

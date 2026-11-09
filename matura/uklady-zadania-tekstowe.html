@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zadania tekstowe z układami</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Zadania tekstowe z układami</h1>
+  <p class="lead">Dwie niewiadome, dwa niezależne fakty z treści, dwa równania. Każde równanie to prosta, a odpowiedź na zadanie to ich punkt przecięcia, o ile ma sens w realnym świecie.</p>
+  <p class="wymagania">IV.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. Schemat (zawsze ten sam)</h2>
+  <ol>
+    <li><b>Oznacz niewiadome</b> słowami i z jednostką: „$x$ — cena zeszytu w zł”. Dopisz warunki ($x&gt;0$, cyfra $1\le a\le9$).</li>
+    <li><b>Ułóż dwa równania</b>, każde z innego zdania treści.</li>
+    <li><b>Rozwiąż układ</b> (<a href="uklady-liniowe.html">podstawianie lub przeciwne współczynniki</a>).</li>
+    <li><b>Sprawdź z treścią</b>, nie z równaniami: czy wynik jest dodatni, całkowity, czy pasuje do zdań zadania.</li>
+    <li><b>Odpowiedź</b> pełnym zdaniem, na pytanie, które zadano.</li>
+  </ol>
+
+  <h2 id="typy">2. Typowe zadania</h2>
+  <table class="tabela">
+    <tr><th>typ</th><th>kluczowy zapis</th></tr>
+    <tr><td>ceny, sztuki</td><td>$3x+2y=19$ (ilość $\cdot$ cena)</td></tr>
+    <tr><td>procenty</td><td>obniżka o $20\%$: $0{,}8x$; podwyżka o $10\%$: $1{,}1y$</td></tr>
+    <tr><td>stężenia</td><td>masa substancji $=\frac{p}{100}\cdot$ masa roztworu</td></tr>
+    <tr><td>ruch</td><td>$s=vt$; z prądem $v+u$, pod prąd $v-u$</td></tr>
+    <tr><td>cyfry</td><td>liczba $\overline{ab}=10a+b$, po przestawieniu $10b+a$</td></tr>
+    <tr><td>wiek</td><td>za $n$ lat: $m+n$ i $c+n$ (obu przybywa!)</td></tr>
+  </table>
+  <div class="uwaga">W zadaniach o mieszaninach układaj osobne równanie na <b>masę roztworu</b> i na <b>masę substancji</b>. Stężeń nie wolno dodawać.</div>
+
+  <h2 id="demo-ruch">3. Interaktywnie: dwa pociągi</h2>
+  <div class="demo">
+    <p class="opis">Pociąg A rusza z miasta A, pociąg B z miasta B (o $t_0$ h później) naprzeciw. Wykresy drogi od A w czasie to dwie proste, ich punkt przecięcia to spotkanie. Odtwórz i obserwuj kropki na torze (z lewej).</p>
+    <canvas id="pc-plot"></canvas>
+    <div class="sterowanie">
+      <label>odległość $d$ <input type="range" id="pc-d" min="100" max="500" step="10" value="330"> <span id="pc-d-v"></span> km</label>
+      <label>$v_A$ <input type="range" id="pc-va" min="30" max="150" step="10" value="60"> <span id="pc-va-v"></span> km/h</label>
+      <label>$v_B$ <input type="range" id="pc-vb" min="30" max="150" step="10" value="90"> <span id="pc-vb-v"></span> km/h</label>
+      <label>$t_0$ <input type="range" id="pc-t0" min="0" max="3" step="0.5" value="0.5"> <span id="pc-t0-v"></span> h</label>
+      <button id="pc-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="pc-wynik"></div>
+  </div>
+
+  <h2 id="demo-mieszanina">4. Interaktywnie: mieszanie roztworów</h2>
+  <div class="demo">
+    <p class="opis">Chcesz $M$ kg roztworu $p\%$ z roztworów $p_1\%$ ($x$ kg) i $p_2\%$ ($y$ kg). Niebieska prosta: masa roztworu, fioletowa: masa substancji. Ustaw $p$ poza przedziałem $\lp p_1,p_2\rp$: układ ma rozwiązanie, ale zadanie już nie.</p>
+    <canvas id="mi-plot"></canvas>
+    <div class="sterowanie">
+      <label>$p_1$ <input type="range" id="mi-p1" min="0" max="100" step="5" value="10"> <span id="mi-p1-v"></span>%</label>
+      <label>$p_2$ <input type="range" id="mi-p2" min="0" max="100" step="5" value="40"> <span id="mi-p2-v"></span>%</label>
+      <label>$p$ <input type="range" id="mi-p" min="0" max="100" step="5" value="20"> <span id="mi-p-v"></span>%</label>
+      <label>$M$ <input type="range" id="mi-m" min="10" max="60" step="5" value="30"> <span id="mi-m-v"></span> kg</label>
+    </div>
+    <div class="wynik" id="mi-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Miasta A i B dzieli $330$ km. Z A wyjeżdża pociąg z prędkością $60$ km/h, a pół godziny później z B naprzeciw niego pociąg jadący $90$ km/h. W jakiej odległości od A się spotkają?</p>
+    <ol>
+      <li>$x$ — droga pociągu z A do spotkania, $y$ — droga pociągu z B (km), $x,y&gt;0$.</li>
+      <li>Razem przejadą całą trasę: $x+y=330$. Pociąg z A jedzie o $0{,}5$ h dłużej: $\frac{x}{60}=\frac{y}{90}+\frac12$.</li>
+      <li>Drugie razy $180$: $3x=2y+90$. Wstaw $y=330-x$: $5x=750$, $x=150$, $y=180$.</li>
+      <li>Sprawdź z treścią: A jedzie $2{,}5$ h, B jedzie $2$ h, czyli wyjechał $0{,}5$ h później ✓.</li>
+    </ol>
+    <p class="odp">Pociągi spotkają się $150$ km od A (ustawienia startowe demo z punktu 3).</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="5; 2" data-odp-opis="zeszyt; długopis (zł)"><span class="poziom">łatwe</span>
+      <div class="tresc">Za $3$ zeszyty i $2$ długopisy zapłacono $19$ zł, a za $2$ zeszyty i $5$ długopisów $20$ zł. Ile kosztuje zeszyt, a ile długopis?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\begin{cases} 3x+2y=19\\ 2x+5y=20 \end{cases}$. Pierwsze razy $2$, drugie razy $3$ i odejmij: $11y=22$, $y=2$, $x=5$. <b>Zeszyt $5$ zł, długopis $2$ zł.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="47"><span class="poziom">średnie</span>
+      <div class="tresc">Suma cyfr liczby dwucyfrowej wynosi $11$. Po przestawieniu cyfr otrzymujemy liczbę większą o $27$. Wyznacz tę liczbę.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\overline{ab}$: $a+b=11$ oraz $10b+a-(10a+b)=27$, czyli $b-a=3$. Stąd $b=7$, $a=4$. Sprawdzenie: $74-47=27$ ✓. <b>$47$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12; 48" data-odp-opis="córka; matka"><span class="poziom">średnie</span>
+      <div class="tresc">Matka jest $4$ razy starsza od córki. Za $6$ lat będzie od niej starsza $3$ razy. Ile lat ma każda z nich?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\begin{cases} m=4c\\ m+6=3(c+6) \end{cases}$. Podstaw: $4c+6=3c+18$, $c=12$, $m=48$. Za $6$ lat: $54=3\cdot18$ ✓. <b>Córka $12$ lat, matka $48$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="20; 10" data-odp-opis="kg roztworu 10%; kg roztworu 40%"><span class="poziom">średnie</span>
+      <div class="tresc">Ile kilogramów roztworu $10\%$ i ile roztworu $40\%$ trzeba zmieszać, aby otrzymać $30$ kg roztworu $20\%$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Masa roztworu: $x+y=30$. Masa substancji: $0{,}1x+0{,}4y=0{,}2\cdot30=6$. Razy $10$: $x+4y=60$, odejmij pierwsze: $3y=30$. <b>$20$ kg roztworu $10\%$ i $10$ kg roztworu $40\%$</b> (ustawienia startowe demo z punktu 4).
+      </div></details></li>
+    <li class="zadanie" data-odp="15; 3" data-odp-opis="v; u (km/h)"><span class="poziom">maturalne</span>
+      <div class="tresc">Motorówka przepływa $36$ km z prądem rzeki w $2$ h, a tę samą trasę pod prąd w $3$ h. Oblicz prędkość motorówki na stojącej wodzie i prędkość prądu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $v$ — prędkość motorówki, $u$ — prądu (km/h): $2(v+u)=36$, $3(v-u)=36$, czyli $v+u=18$, $v-u=12$. Dodaj: $2v=30$. <b>$v=15$ km/h, $u=3$ km/h</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="130; 120" data-odp-opis="cena pierwszego; drugiego"><span class="poziom">maturalne</span>
+      <div class="tresc">Dwa towary kosztowały razem $250$ zł. Po obniżce ceny pierwszego o $20\%$ i podwyżce drugiego o $10\%$ kosztują razem $236$ zł. Jakie były ceny przed zmianą?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\begin{cases} x+y=250\\ 0{,}8x+1{,}1y=236 \end{cases}$. Wstaw $y=250-x$: $0{,}8x+275-1{,}1x=236$, $0{,}3x=39$, $x=130$, $y=120$. Sprawdzenie: $104+132=236$ ✓. <b>$130$ zł i $120$ zł</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Opis niewiadomych</b> (co oznaczają, w jakich jednostkach) jest częścią rozwiązania. Bez niego trudno o punkt za „ułożenie układu”.</li>
+    <li><b>Jednostki:</b> minuty zamień na godziny ($20$ min $=\frac13$ h), zanim wstawisz do $s=vt$.</li>
+    <li><b>Procenty:</b> $20\%$ z czego? Obniżka o $20\%$, a potem podwyżka o $20\%$ nie wraca do ceny wyjściowej.</li>
+    <li><b>Sprawdź sens:</b> ujemna masa, niecałkowita liczba osób, cyfra $10$ oznaczają błąd albo brak rozwiązania zadania.</li>
+    <li>Odpowiedź na <b>pytanie z treści</b> (np. „w jakiej odległości od B” to $y$, nie $x$).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Dwa pociągi ---
+  const w1 = new Wykres($("pc-plot"), { xmin: -0.9, xmax: 6, ymin: -30, ymax: 360, krokX: 1, krokY: 50 });
+  let stop = null;
+  function dane() {
+    const d = +$("pc-d").value, va = +$("pc-va").value, vb = +$("pc-vb").value, t0 = +$("pc-t0").value;
+    $("pc-d-v").textContent = ladna(d); $("pc-va-v").textContent = ladna(va);
+    $("pc-vb-v").textContent = ladna(vb); $("pc-t0-v").textContent = ladna(t0);
+    let ts = (d + vb * t0) / (va + vb);
+    let ss = va * ts;
+    if (d / va <= t0) { ts = d / va; ss = d; } // A dojeżdża do B, zanim B ruszy
+    const koniec = Math.max(d / va, t0 + d / vb);
+    return { d, va, vb, t0, ts, ss, koniec };
+  }
+  function klatkaPc(tNow) {
+    const p = dane();
+    const { d, va, vb, t0, ts, ss } = p;
+    const sA = t => Math.min(d, va * Math.max(0, t));
+    const sB = t => Math.max(0, d - vb * Math.max(0, t - t0));
+    const tmax = Math.max(4, Math.ceil(Math.max(ts, p.koniec) + 0.3));
+    w1.zakres({ xmin: -tmax * 0.15, xmax: tmax, krokX: tmax > 10 ? 2 : 1, ymin: -d * 0.09, ymax: d * 1.12, krokY: d > 250 ? 50 : 25 });
+    w1.rysuj(g => {
+      const xt = -tmax * 0.075; // tor
+      g.odcinek(xt, 0, xt, d, 3, false);
+      g.tekst(xt, 0, "A", 1, { dx: -14, dy: 5, gruby: true });
+      g.tekst(xt, d, "B", 4, { dx: -14, dy: 5, gruby: true });
+      g.funkcja(sA, 1, { od: 0, do: tmax });
+      g.funkcja(sB, 4, { od: 0, do: tmax });
+      g.tekst(tmax * 0.98, d * 1.04, "t [h]", 3, { wyrownanie: "right" });
+      const spotkani = tNow !== null && tNow >= ts;
+      if (tNow === null || spotkani) {
+        g.odcinek(ts, 0, ts, ss, 2);
+        g.odcinek(xt, ss, ts, ss, 2);
+        g.punkt(ts, ss, "spotkanie", 2);
+      }
+      if (tNow !== null) {
+        const tt = Math.min(tNow, ts);
+        g.odcinek(tNow, 0, tNow, d, 3);
+        g.punkt(tt, sA(tt), "", 1); g.punkt(tt, sB(tt), "", 4);
+        g.punkt(xt, sA(tt), "", 1); g.punkt(xt, sB(tt), "", 4);
+      }
+    });
+    tex("pc-wynik", "\\begin{cases} s=" + va + "t\\\\ s=" + d + "-" + vb + (t0 > 0 ? "(t-" + ladnaTex(t0) + ")" : "t") + "\\end{cases}\\Rightarrow t=" + ladnaTex(ts) + "\\text{ h},\\ s=" + ladnaTex(ss) + "\\text{ km}"
+      + (d / va <= t0 ? "\\ \\text{(A dojechał, zanim B ruszył)}" : ""));
+  }
+  $("pc-start").addEventListener("click", () => {
+    if (stop) stop();
+    const k = dane().koniec;
+    stop = animuj(4000, t => klatkaPc(t * k));
+  });
+  ["pc-d", "pc-va", "pc-vb", "pc-t0"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatkaPc(null); }));
+  klatkaPc(null);
+
+  // --- 4. Mieszanie roztworów ---
+  const w2 = new Wykres($("mi-plot"), { xmin: -8, xmax: 40, ymin: -8, ymax: 40, krokX: 5, krokY: 5, rowneSkale: true });
+  function rysujMi() {
+    const p1 = +$("mi-p1").value, p2 = +$("mi-p2").value, p = +$("mi-p").value, M = +$("mi-m").value;
+    $("mi-p1-v").textContent = ladna(p1); $("mi-p2-v").textContent = ladna(p2);
+    $("mi-p-v").textContent = ladna(p); $("mi-m-v").textContent = ladna(M);
+    let x = null, y = null, opis = "";
+    if (p1 !== p2) {
+      x = M * (p2 - p) / (p2 - p1); y = M * (p - p1) / (p2 - p1);
+      if (x < 0 || y < 0) opis = "\\text{ujemna masa: zadanie nie ma rozwiązania}";
+      else opis = "x=" + ladnaTex(x) + "\\text{ kg},\\ y=" + ladnaTex(y) + "\\text{ kg}";
+    } else {
+      opis = p === p1 ? "\\text{proste się pokrywają: dowolne } x+y=" + M : "\\text{proste równoległe: układ sprzeczny}";
+    }
+    w2.zakres({ xmin: -M * 0.3, xmax: M * 1.4, ymin: -M * 0.3, ymax: M * 1.4, krokX: M > 30 ? 10 : 5, krokY: M > 30 ? 10 : 5 });
+    w2.rysuj(g => {
+      g.prosta(0, M, M, 0, 1);
+      const c = p * M; // p1·x + p2·y = p·M (w procentach)
+      if (p1 !== 0 || p2 !== 0) {
+        if (Math.abs(p2) >= Math.abs(p1)) g.prosta(0, c / p2, 1, (c - p1) / p2, 4);
+        else g.prosta(c / p1, 0, (c - p2) / p1, 1, 4);
+      }
+      g.tekst(g.z.xmax, 0, "x", 3, { dx: -12, dy: -6 });
+      g.tekst(0, g.z.ymax, "y", 3, { dx: 6, dy: 14 });
+      if (x !== null) g.punkt(x, y, x < 0 || y < 0 ? "bez sensu" : "(x, y)", 2, { pusty: x < 0 || y < 0 });
+    });
+    tex("mi-wynik", "\\begin{cases} x+y=" + M + "\\\\ " + ladnaTex(p1 / 100) + "x+" + ladnaTex(p2 / 100) + "y=" + ladnaTex(p * M / 100) + "\\end{cases}\\Rightarrow " + opis);
+  }
+  ["mi-p1", "mi-p2", "mi-p", "mi-m"].forEach(id => $(id).addEventListener("input", rysujMi));
+  rysujMi();
+});
+</script>
+</body>
+</html>

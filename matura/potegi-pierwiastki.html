@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potęgi i pierwiastki</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Potęgi i pierwiastki</h1>
+  <p class="lead">Pierwiastek to potęga o wykładniku ułamkowym: $\sqrt[n]{a}=a^{1/n}$. Dlatego wystarczy znać prawa działań na potęgach, a porównywanie liczb sprowadza się do jednego pytania: czy podstawa jest większa od $1$?</p>
+  <p class="wymagania">I.1, I.3, I.4, I.5 · dowód: własności potęg</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Pierwiastki i potęgi wymierne</h2>
+  <div class="definicja"><b>Definicja</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> Pierwiastek stopnia $n$ z $a\ge0$ to liczba $b\ge0$, dla której $b^n=a$. Dla <b>nieparzystego</b> $n$ i $a&lt;0$: $\sqrt[n]{a}$ to liczba $b&lt;0$, dla której $b^n=a$, np. $\sqrt[3]{-8}=-2$, $\sqrt[5]{-32}=-2$. Pierwiastek <b>parzystego</b> stopnia z liczby ujemnej nie istnieje.</div>
+  <div class="wzor">
+    <div class="tytul">Potęgi o wykładniku całkowitym i wymiernym <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$a^{-n}=\frac{1}{a^n},\qquad a^0=1$$
+    $$a^{\frac mn}=\sqrt[n]{a^m},\qquad a^{-\frac mn}=\frac{1}{\sqrt[n]{a^m}}$$
+    <dl><dt>założenia</dt><dd>$a\ne0$ dla wykładnika całkowitego; $a\ge0$ dla $\frac mn$; $a&gt;0$ dla $-\frac mn$ ($m,n$ całkowite dodatnie)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Prawa działań <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$a^r a^s=a^{r+s},\qquad \frac{a^r}{a^s}=a^{r-s}$$
+    $$(a^r)^s=a^{rs},\qquad (ab)^r=a^r b^r$$
+    $$\left(\frac ab\right)^r=\frac{a^r}{b^r}$$
+    <dl><dt>założenia</dt><dd>$a,b&gt;0$; dla wykładników całkowitych wystarczy $a,b\ne0$</dd>
+        <dt>$\sqrt{a^2}$</dt><dd>$=|a|$, nie $a$! <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>. Za to $\sqrt[3]{a^3}=a$ dla każdego $a$</dd></dl>
+  </div>
+  <div class="uwaga">$\sqrt[3]{-8}=-2$, ale zapisu $(-8)^{1/3}$ nie używamy: potęga o wykładniku wymiernym jest określona tylko dla $a\ge0$. Inaczej $-2=(-8)^{1/3}=(-8)^{2/6}=\sqrt[6]{64}=2$.</div>
+
+  <details class="rozwin"><summary>Dowód (wymagany na maturze): własności potęg</summary><div>
+    <p><b>Wykładniki całkowite dodatnie.</b> $a^r a^s$ to $r$ czynników $a$ i jeszcze $s$ czynników, razem $r+s$. Podobnie $(a^r)^s$ to $s$ grup po $r$ czynników, czyli $rs$ czynników. Wykładniki ujemne i zero dostajemy z definicji $a^{-n}=1/a^n$.</p>
+    <p><b>Wykładniki wymierne.</b> Sprowadź do wspólnego mianownika: $r=\frac pn$, $s=\frac qn$. Niech $x=a^{p/n}$, $y=a^{q/n}$, czyli $x^n=a^p$, $y^n=a^q$, $x,y&gt;0$. Wtedy</p>
+    $$(xy)^n=x^n y^n=a^p a^q=a^{p+q}$$
+    <p>i $xy&gt;0$, więc $xy$ jest pierwiastkiem stopnia $n$ z $a^{p+q}$: $xy=a^{\frac{p+q}{n}}=a^{r+s}$.</p>
+    <p><b>Pozostałe prawa.</b> Iloraz: $a^{r-s}a^s=a^r$, więc $a^{r-s}=\frac{a^r}{a^s}$. Iloczyn podstaw: dla $x=a^{p/n}$, $y=b^{p/n}$ jest $(xy)^n=a^pb^p=(ab)^p$, więc $xy=(ab)^{p/n}$ (iloraz $\left(\frac ab\right)^r$ analogicznie). Potęga potęgi: dla $r=\frac pn$, $s=\frac qm$ i $z=\left(a^{p/n}\right)^{q/m}$ jest $z^{mn}=\left(z^m\right)^n=\left(a^{p/n}\right)^{qn}=a^{pq}$, a $z&gt;0$, więc $z=a^{\frac{pq}{mn}}=a^{rs}$.</p>
+  </div></details>
+
+  <h2 id="niewymiernosc">2. Usuwanie niewymierności z mianownika</h2>
+  <div class="dwie">
+    <div class="wzor">
+      <div class="tytul">Jeden pierwiastek</div>
+      $$\frac{6}{\sqrt3}=\frac{6\sqrt3}{3}=2\sqrt3$$
+      $$\frac{1}{\sqrt[3]{2}}=\frac{\sqrt[3]{4}}{\sqrt[3]{8}}=\frac{\sqrt[3]{4}}{2}$$
+      <dl><dt>pomysł</dt><dd>dopełnij pod pierwiastkiem do pełnej potęgi stopnia $n$</dd></dl>
+    </div>
+    <div class="wzor">
+      <div class="tytul">Suma lub różnica: sprzężenie</div>
+      $$\frac{2}{\sqrt5-\sqrt3}=\frac{2(\sqrt5+\sqrt3)}{5-3}$$
+      $$=\sqrt5+\sqrt3$$
+      <dl><dt>pomysł</dt><dd>$(a-b)(a+b)=a^2-b^2$; przy $\sqrt[3]{\ }$ użyj $a^3-b^3$ (zakres R)</dd></dl>
+    </div>
+  </div>
+
+  <h2 id="monotonicznosc">3. Interaktywnie: kierunek nierówności</h2>
+  <div class="twierdzenie"><b>Monotoniczność potęgowania</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> Jeśli $x&lt;y$, to dla $a&gt;1$: $a^x&lt;a^y$, a dla $0&lt;a&lt;1$: $a^x&gt;a^y$ (nierówność <b>zmienia kierunek</b>).</div>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkty $x$ i $y$ po osi. Zmieniaj $a$ i przejdź przez $a=1$: wykres z rosnącego robi się malejący, a znak między $a^x$ i $a^y$ się odwraca.</p>
+    <canvas id="mo-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="mo-a" min="0.2" max="3" step="0.05" value="2"> <span id="mo-a-v"></span></label>
+    </div>
+    <div class="wynik" id="mo-wynik"></div>
+  </div>
+
+  <h2 id="porownywanie">4. Porównywanie liczb: wspólny wykładnik</h2>
+  <p>Dwa sposoby: <b>wspólna podstawa</b> ($8^{5}=2^{15}$ i $4^{7}=2^{14}$, więc $8^5&gt;4^7$) albo <b>wspólny wykładnik</b> — wtedy porównujesz podstawy, bo dla $u,v&gt;0$ i $k&gt;0$: $u&lt;v\iff u^k&lt;v^k$.</p>
+  <div class="demo">
+    <p class="opis">Każda liczba to iloczyn czynników. „▶ Pogrupuj” łączy je w tyle samo grup. Wtedy porównujesz grupę z grupą: wszystkie są mniejsze, więc cały iloczyn jest mniejszy.</p>
+    <canvas id="wk-plot" style="height:260px"></canvas>
+    <div class="sterowanie">
+      <label>para <select id="wk-para">
+        <option value="0">2^30 i 3^20</option>
+        <option value="1">2^100 i 10^30</option>
+        <option value="2">5^40 i 3^60</option>
+      </select></label>
+      <button id="wk-start">▶ Pogrupuj</button>
+    </div>
+    <div class="wynik" id="wk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Oblicz $\dfrac{\sqrt[3]{16}\cdot 4^{0{,}75}}{\sqrt8\cdot 2^{-1/3}}$.</p>
+    <ol>
+      <li>Wszystko jako potęgi dwójki: $\sqrt[3]{16}=2^{4/3}$, $4^{0{,}75}=2^{3/2}$, $\sqrt8=2^{3/2}$.</li>
+      <li>Wykładnik: $\frac43+\frac32-\frac32-\left(-\frac13\right)=\frac53$.</li>
+      <li>$2^{5/3}=2\cdot2^{2/3}=2\sqrt[3]{4}$.</li>
+    </ol>
+    <p class="odp">$2\sqrt[3]{4}$</p>
+  </div>
+  <div class="przyklad">
+    <p>Która liczba jest większa: $\sqrt3$ czy $\sqrt[3]{5}$?</p>
+    <ol>
+      <li>Obie dodatnie, więc podnieś do wspólnej potęgi $6=\text{NWW}(2,3)$ — to nie zmienia kierunku nierówności.</li>
+      <li>$(\sqrt3)^6=3^3=27$, $\;(\sqrt[3]5)^6=5^2=25$.</li>
+    </ol>
+    <p class="odp">$27&gt;25$, więc $\sqrt3&gt;\sqrt[3]{5}$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\sqrt[3]{-27}+\sqrt[4]{16}-\sqrt[5]{-32}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $-3+2-(-2)=$ <b>$1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\left(\frac18\right)^{-2/3}+16^{0{,}75}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\left(\frac18\right)^{-2/3}=8^{2/3}=(\sqrt[3]8)^2=4$, $\;16^{3/4}=(\sqrt[4]{16})^3=8$. <b>$12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="sqrt(5)+1; 2*9^(1/3)" data-odp-opis="a); b)"><span class="poziom">średnie</span>
+      <div class="tresc">Usuń niewymierność z mianownika: a) $\frac{4}{\sqrt5-1}$, b) $\frac{6}{\sqrt[3]{3}}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) $\frac{4(\sqrt5+1)}{5-1}=$ <b>$\sqrt5+1$</b>. b) Pomnóż przez $\sqrt[3]{9}$: $\frac{6\sqrt[3]9}{\sqrt[3]{27}}=\frac{6\sqrt[3]9}{3}=$ <b>$2\sqrt[3]{9}$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Która liczba jest większa: $\left(\frac23\right)^{\sqrt2}$ czy $\left(\frac23\right)^{1{,}5}$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\sqrt2\approx1{,}41&lt;1{,}5$, a podstawa $\frac23\in(0,1)$, więc nierówność zmienia kierunek. <b>$\left(\frac23\right)^{\sqrt2}&gt;\left(\frac23\right)^{1{,}5}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Porównaj liczby $3^{40}$ i $4^{30}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wspólny wykładnik $10$: $3^{40}=(3^4)^{10}=81^{10}$, $4^{30}=(4^3)^{10}=64^{10}$. Ponieważ $81&gt;64$, <b>$3^{40}&gt;4^{30}$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że $\sqrt[3]{5\sqrt2+7}-\sqrt[3]{5\sqrt2-7}=2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Zgadnij sześciany: $(\sqrt2+1)^3=2\sqrt2+6+3\sqrt2+1=5\sqrt2+7$ oraz $(\sqrt2-1)^3=2\sqrt2-6+3\sqrt2-1=5\sqrt2-7$. Zatem różnica to $(\sqrt2+1)-(\sqrt2-1)=$ <b>$2$</b>, co kończy dowód.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>$\sqrt{a^2}=|a|$:</b> np. $\sqrt{(1-\sqrt3)^2}=\sqrt3-1$, nie $1-\sqrt3$. Najczęstsza strata punktu.</li>
+    <li><b>Pierwiastek parzystego stopnia</b> tylko z liczby $\ge0$; nieparzystego z każdej: $\sqrt[3]{-0{,}001}=-0{,}1$.</li>
+    <li><b>Porównywanie:</b> sprowadź do wspólnej podstawy albo wspólnego wykładnika. Przy podstawie z $(0,1)$ odwróć znak nierówności.</li>
+    <li>Wynik podawaj w najprostszej postaci: bez ujemnych wykładników i (jeśli polecenie tego wymaga) bez niewymierności w mianowniku.</li>
+    <li>Potęgi o wykładnikach niewymiernych i wykresy $a^x$: <a href="funkcja-wykladnicza-logarytmiczna.html">funkcja wykładnicza i logarytmiczna</a>.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Monotoniczność a^x ---
+  const w1 = new Wykres($("mo-plot"), { xmin: -3.5, xmax: 3.5, ymin: -0.8, ymax: 8 });
+  const pkt = w1.przeciagaj([
+    { x: -1, y: 0, ogranicz: p => ({ x: Math.max(-3, Math.min(3, Math.round(p.x * 10) / 10)), y: 0 }) },
+    { x: 1.5, y: 0, ogranicz: p => ({ x: Math.max(-3, Math.min(3, Math.round(p.x * 10) / 10)), y: 0 }) },
+  ], rysujMo);
+  function rysujMo() {
+    const a = +$("mo-a").value;
+    $("mo-a-v").textContent = ladna(a);
+    const x = pkt[0].x, y = pkt[1].x, ax = a ** x, ay = a ** y;
+    w1.rysuj(g => {
+      g.funkcja(t => a ** t, 1);
+      g.odcinek(x, 0, x, ax, 2); g.odcinek(0, ax, x, ax, 2);
+      g.odcinek(y, 0, y, ay, 4); g.odcinek(0, ay, y, ay, 4);
+      g.punkt(x, ax, "", 2); g.punkt(y, ay, "", 4);
+      g.tekst(0, ax, "aˣ", 2, { dx: -24, dy: 4, gruby: true });
+      g.tekst(0, ay, "aʸ", 4, { dx: -24, dy: 4, gruby: true });
+      g.punkt(x, 0, "x", 2); g.punkt(y, 0, "y", 4);
+    });
+    const zn = (u, v) => Math.abs(u - v) < 1e-9 ? "=" : u < v ? "<" : ">";
+    const opis = Math.abs(a - 1) < 1e-9 ? "a=1:\\ \\text{zawsze równe}"
+      : a > 1 ? "a>1:\\ \\text{kierunek zachowany}" : "0<a<1:\\ \\text{kierunek odwrócony}";
+    tex("mo-wynik", `x=${ladnaTex(x, 1)}\\ ${zn(x, y)}\\ y=${ladnaTex(y, 1)}\\ \\Rightarrow\\ a^x\\approx${ladnaTex(ax)}\\ ${zn(ax, ay)}\\ a^y\\approx${ladnaTex(ay)}\\quad(${opis})`);
+  }
+  $("mo-a").addEventListener("input", rysujMo);
+  rysujMo();
+
+  // --- 4. Grupowanie czynników ---
+  // [podstawa1, wykładnik1, rozmiar grupy1, podstawa2, wykładnik2, rozmiar grupy2]
+  const PARY = [[2, 30, 3, 3, 20, 2], [2, 100, 10, 10, 30, 3], [5, 40, 2, 3, 60, 3]];
+  const w2 = new Wykres($("wk-plot"), { xmin: -1, xmax: 101, ymin: 0, ymax: 10, siatka: false, osie: false });
+  let stopWk = null;
+  function klatkaWk(t) {
+    const [b1, n1, s1, b2, n2, s2] = PARY[+$("wk-para").value];
+    const k = n1 / s1, slot = 100 / k, v1 = b1 ** s1, v2 = b2 ** s2;
+    w2.rysuj(g => {
+      const wiersz = (b, n, s, v, yd, nr, inny) => {
+        for (let i = 0; i < n; i++) {
+          const gr = Math.floor(i / s), j = i % s;
+          const x0 = i * 100 / n, w0 = 100 / n;
+          const x1 = gr * slot + slot * 0.08 + j * slot * 0.84 / s, w1s = slot * 0.84 / s;
+          const x = x0 + (x1 - x0) * t, wd = (w0 + (w1s - w0) * t) * 0.85;
+          g.prostokat(x, yd, wd, 2, nr, { wypelnij: 0.25 });
+          if (wd * g.jednostka > 13 && t < 0.7) g.tekst(x + wd / 2, yd + 1, String(b), nr, { wyrownanie: "center", dy: 5, rozmiar: 11 });
+        }
+        if (t > 0.7) for (let gr = 0; gr < k; gr++) {
+          const x = gr * slot + slot * 0.04, wd = slot * 0.92;
+          g.prostokat(x, yd - 0.15, wd, 2.3, nr, { wypelnij: 0.1 });
+          if (wd * g.jednostka > 20) g.tekst(x + wd / 2, yd + 1, String(v), v > inny ? 2 : 3, { wyrownanie: "center", dy: 5, rozmiar: 12, gruby: true });
+        }
+        g.tekst(-0.5, yd + 2.6, `${b}^${n}`, nr, { gruby: true });
+      };
+      wiersz(b1, n1, s1, v1, 5.6, 1, v2);
+      wiersz(b2, n2, s2, v2, 1.2, 4, v1);
+    });
+    const zn = v1 < v2 ? "<" : ">";
+    tex("wk-wynik", t < 1 ? `${b1}^{${n1}}\\ \\text{?}\\ ${b2}^{${n2}}` :
+      `${b1}^{${n1}}=(${b1}^{${s1}})^{${k}}=${v1}^{${k}}\\ ${zn}\\ ${v2}^{${k}}=(${b2}^{${s2}})^{${k}}=${b2}^{${n2}}`);
+  }
+  $("wk-start").addEventListener("click", () => { if (stopWk) stopWk(); stopWk = animuj(1800, klatkaWk); });
+  $("wk-para").addEventListener("change", () => { if (stopWk) stopWk(); klatkaWk(0); });
+  klatkaWk(0);
+});
+</script>
+</body>
+</html>

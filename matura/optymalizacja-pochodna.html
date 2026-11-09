@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zadania optymalizacyjne z pochodną</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Zadania optymalizacyjne z pochodną</h1>
+  <p class="lead">To samo co optymalizacja z parabolą, tylko funkcja celu jest sześcienna, wymierna albo z pierwiastkiem. Wierzchołka nie ma, więc maksimum szukasz tam, gdzie pochodna zmienia znak.</p>
+  <p class="wymagania">XIII.R.6, XIII.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. Schemat maturalny</h2>
+  <p>Typowy schemat rozwiązania (i oceniania) ma <b>trzy etapy</b>: model (funkcja i dziedzina), pochodna z ekstremum, odpowiedź. Poszczególne etapy zwykle ocenia się osobno, więc warto zapisać każdy z nich, nawet gdy nie dojdziesz do końcowego wyniku.</p>
+  <div class="przyklad">
+    <ol>
+      <li><b>Model</b>: zmienna $x$, pozostałe wielkości przez $x$, funkcja celu $f(x)$ i jej <b>dziedzina</b> (z warunków geometrycznych, np. $x&gt;0$, $12-2x&gt;0$).</li>
+      <li><b>Pochodna</b>: $f'(x)$ uproszczona do postaci iloczynowej i jej miejsca zerowe <b>w dziedzinie</b>.</li>
+      <li><b>Uzasadnienie i odpowiedź</b>: znak $f'$ (rośnie, potem maleje), więc w $x_0$ jest wartość <b>największa</b>. Oblicz ją i odpowiedz na pytanie z treści.</li>
+    </ol>
+  </div>
+  <div class="uwaga">„$f'(x_0)=0$, więc maksimum” to za mało: brakuje uzasadnienia. Napisz: „$f'&gt;0$ w $(0,x_0)$ i $f'&lt;0$ w $(x_0,b)$, więc $f$ rośnie w $(0,x_0\rp$ i maleje w $\lp x_0,b)$, zatem $f(x_0)$ jest wartością największą”.</div>
+
+  <h2 id="pudelko">2. Interaktywnie: pudełko z kartonu</h2>
+  <div class="demo">
+    <p class="opis">Z kwadratu $12\times12$ wycinasz w rogach kwadraty o boku $x$ i zaginasz boki. Małe $x$: płaskie pudełko. Duże $x$: wysokie, ale wąskie. Gdzieś pomiędzy objętość jest największa.</p>
+    <canvas id="pu-plot" style="height:240px"></canvas>
+    <canvas id="pu-wyk" style="height:220px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>$x$ <input type="range" id="pu-x" min="0.1" max="5.9" step="0.05" value="0.8"> <span id="pu-x-v"></span></label>
+      <button id="pu-start">▶ Szukaj maksimum</button>
+    </div>
+    <div class="wynik" id="pu-wynik"></div>
+  </div>
+
+  <h2 id="puszka">3. Interaktywnie: puszka o stałej objętości</h2>
+  <div class="demo">
+    <p class="opis">Puszka ma objętość $V=16\pi$. Zmieniaj promień $r$: wysokość dopasowuje się sama ($h=\frac{16}{r^2}$). Najmniej blachy zużywa puszka, której wysokość równa się średnicy.</p>
+    <canvas id="pc-plot" style="height:240px"></canvas>
+    <canvas id="pc-wyk" style="height:200px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="pc-r" min="1.2" max="4" step="0.05" value="3.2"> <span id="pc-r-v"></span></label>
+    </div>
+    <div class="wynik" id="pc-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Z kwadratowego kartonu o boku $12$ wycinamy w rogach kwadraty o boku $x$ i składamy pudełko bez pokrywki. Dla jakiego $x$ objętość jest największa?</p>
+    <ol>
+      <li><b>Model</b>: podstawa $(12-2x)\times(12-2x)$, wysokość $x$. $V(x)=x(12-2x)^2$, dziedzina $x\in(0,6)$.</li>
+      <li><b>Pochodna</b> (iloczyn i złożenie):
+        $$V'(x)=(12-2x)^2-4x(12-2x)$$
+        $$=(12-2x)(12-6x)$$
+        W dziedzinie $12-2x&gt;0$, więc $V'(x)=0\iff x=2$.</li>
+      <li><b>Znak</b>: $12-6x&gt;0$ dla $x&lt;2$, $&lt;0$ dla $x&gt;2$. $V$ rośnie w $(0,2\rp$, maleje w $\lp 2,6)$, więc $V(2)$ jest największa: $V(2)=2\cdot8^2=128$.</li>
+    </ol>
+    <p class="odp">$x=2$, największa objętość $128$.</p>
+  </div>
+  <div class="przyklad">
+    <p>W półokrąg o promieniu $2$ wpisujemy trapez, którego dłuższa podstawa jest średnicą. Oblicz największe pole trapezu.</p>
+    <ol>
+      <li><b>Model</b>: krótsza podstawa $2x$ (końce na okręgu), wysokość $\sqrt{4-x^2}$, dziedzina $x\in(0,2)$.
+        $$P(x)=(2+x)\sqrt{4-x^2}$$</li>
+      <li><b>Pochodna</b>:
+        $$P'(x)=\sqrt{4-x^2}-\frac{x(2+x)}{\sqrt{4-x^2}}$$
+        $$=\frac{-2(x+2)(x-1)}{\sqrt{4-x^2}}$$
+        W dziedzinie $P'(x)=0\iff x=1$.</li>
+      <li><b>Znak</b>: $P'&gt;0$ w $(0,1)$, $P'&lt;0$ w $(1,2)$, więc maksimum w $x=1$: $P(1)=3\sqrt3$.</li>
+    </ol>
+    <p class="odp">Największe pole $3\sqrt3$ (krótsza podstawa $2$, równa promieniowi: połowa sześciokąta foremnego).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="4; 8; 256" data-odp-opis="x; y; iloczyn"><span class="poziom">średnie</span>
+      <div class="tresc">Liczby dodatnie $x$, $y$ spełniają $x+y=12$. Dla jakich $x$, $y$ iloczyn $x\cdot y^2$ jest największy?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(y)=(12-y)y^2=12y^2-y^3$, $y\in(0,12)$. $f'(y)=24y-3y^2=3y(8-y)$: $+$ na $(0,8)$, $-$ na $(8,12)$.
+        <b>$y=8$, $x=4$, iloczyn $256$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="32" data-odp-opis="największe pole"><span class="poziom">średnie</span>
+      <div class="tresc">Prostokąt ma dwa wierzchołki na osi $Ox$, a dwa na paraboli $y=12-x^2$ (nad osią). Oblicz największe pole prostokąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wierzchołki $(\pm x,0)$, $(\pm x,12-x^2)$, $x\in(0,2\sqrt3)$. $P(x)=2x(12-x^2)=24x-2x^3$, $P'(x)=24-6x^2=6(2-x)(2+x)$: $+$ na $(0,2)$, $-$ dalej.
+        <b>$P(2)=32$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; 2; 48" data-odp-opis="bok podstawy a; wysokość h; pole (dm)"><span class="poziom">średnie</span>
+      <div class="tresc">Otwarte pudełko (bez pokrywki) o podstawie kwadratowej ma objętość $32\ \text{dm}^3$. Jakie wymiary minimalizują zużycie materiału?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Podstawa $a$, wysokość $h=\frac{32}{a^2}$. $P(a)=a^2+4ah=a^2+\frac{128}{a}$, $a&gt;0$.
+        $$P'(a)=2a-\frac{128}{a^2}=\frac{2(a^3-64)}{a^2}$$
+        $-$ na $(0,4)$, $+$ na $(4,\infty)$: minimum w $a=4$.
+        <b>$a=4$ dm, $h=2$ dm, pole $48\ \text{dm}^2$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4pi" data-odp-opis="V_max"><span class="poziom">maturalne</span>
+      <div class="tresc">W kulę o promieniu $\sqrt3$ wpisano walec. Oblicz największą objętość walca.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wysokość $h$, promień $r$: $r^2+\left(\frac h2\right)^2=3$, $h\in(0,2\sqrt3)$.
+        $$V(h)=\pi\left(3-\tfrac{h^2}{4}\right)h$$
+        $V'(h)=\pi\left(3-\frac{3h^2}{4}\right)=\frac{3\pi}{4}(2-h)(2+h)$: $+$ na $(0,2)$, $-$ na $(2,2\sqrt3)$. Dla $h=2$: $r^2=2$.
+        <b>$V_{\max}=4\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 18pi" data-odp-opis="h; V_max"><span class="poziom">maturalne</span>
+      <div class="tresc">Tworząca stożka ma długość $3\sqrt3$. Jaka wysokość daje największą objętość? Oblicz tę objętość.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $r^2=27-h^2$, $h\in(0,3\sqrt3)$.
+        $$V(h)=\tfrac{\pi}{3}(27h-h^3)$$
+        $V'(h)=\frac\pi3(27-3h^2)=\pi(3-h)(3+h)$: $+$ na $(0,3)$, $-$ dalej. $h=3$, $r^2=18$.
+        <b>$h=3$, $V_{\max}=18\pi$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Dziedzina</b> to osobny punkt. Wynika z geometrii: długości dodatnie, punkt na okręgu, $h&lt;2R$ itp.</li>
+    <li>Pochodną sprowadź do <b>iloczynu</b>. Wtedy znak odczytasz od razu (mianownik typu $a^2$ czy $\sqrt{\ }$ jest dodatni).</li>
+    <li>Uzasadnienie maksimum/minimum: <b>monotoniczność</b> w całej dziedzinie, nie samo $f'=0$.</li>
+    <li>Odpowiedz na <b>pytanie</b>: jeśli pytają o wymiary, podaj wszystkie wymiary; jeśli o objętość, policz ją.</li>
+    <li>Z pierwiastkiem można optymalizować kwadrat (np. $d^2$ zamiast $d$), ale trzeba to napisać i uzasadnić (pierwiastek jest rosnący).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Pudełko z kartonu ---
+  const A = 12, V = x => x * (A - 2 * x) ** 2, dV = x => (A - 2 * x) * (A - 6 * x);
+  const pu = new Wykres($("pu-plot"), { xmin: -0.5, xmax: 30, ymin: -0.5, ymax: 12.5, rowneSkale: true, siatka: false, osie: false });
+  const pw = new Wykres($("pu-wyk"), { xmin: -0.3, xmax: 6.3, ymin: -12, ymax: 145, krokY: 20 });
+  let stop = null;
+  function rysujPu() {
+    const x = +$("pu-x").value, w = A - 2 * x, v = V(x);
+    $("pu-x-v").textContent = ladna(x);
+    pu.rysuj(g => {
+      // rozkład: kwadrat z wyciętymi rogami
+      g.wielokat([[x, 0], [A - x, 0], [A - x, x], [A, x], [A, A - x], [A - x, A - x], [A - x, A], [x, A],
+        [x, A - x], [0, A - x], [0, x], [x, x]], 1, { wypelnij: 0.15 });
+      [[0, 0], [A - x, 0], [0, A - x], [A - x, A - x]].forEach(([a, b]) => g.prostokat(a, b, x, x, 2, { wypelnij: 0.25, przerywana: true }));
+      g.prostokat(x, x, w, w, 3, { wypelnij: 0.12, przerywana: true });
+      g.tekst(x / 2, 0, "x", 2, { dy: 14, wyrownanie: "center", gruby: true });
+      g.tekst(A / 2, A / 2, "dno", 3, { wyrownanie: "center" });
+      // pudełko w rzucie ukośnym
+      const X = 15, gl = 0.45 * w, dx = gl * 0.7, dy = gl * 0.7;
+      const przod = [[X, 0], [X + w, 0], [X + w, x], [X, x]];
+      const tyl = przod.map(([a, b]) => [a + dx, b + dy]);
+      g.wielokat(tyl, 1, { wypelnij: 0.08, przerywana: true });
+      g.wielokat([[X, x], [X + w, x], [X + w + dx, x + dy], [X + dx, x + dy]], 3, { wypelnij: 0.12 });
+      g.wielokat([[X + w, 0], [X + w + dx, dy], [X + w + dx, x + dy], [X + w, x]], 1, { wypelnij: 0.3 });
+      g.wielokat(przod, 1, { wypelnij: 0.35 });
+      g.tekst(X + w / 2, 0, ladna(w), 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(X, x / 2, ladna(x), 2, { dx: -6, wyrownanie: "right", gruby: true });
+      g.tekst(X + w / 2, Math.max(x + dy, 4) + 1.2, "V = " + ladna(v), 2, { wyrownanie: "center", gruby: true, rozmiar: 15 });
+    });
+    pw.rysuj(g => {
+      g.funkcja(V, 1, { od: 0, do: 6 });
+      g.punkt(2, 128, "max", 3, { pusty: true });
+      g.odcinek(x, 0, x, v, 2);
+      const k = dV(x), d = 0.35;
+      g.odcinek(x - d, v - k * d, x + d, v + k * d, 2, false);
+      g.punkt(x, v, "", 2);
+      g.tekst(6, 135, "V(x)", 1, { wyrownanie: "right" });
+    });
+    const zn = Math.abs(x - 2) < 0.03 ? "=0\\ (\\max)" : dV(x) > 0 ? ">0\\ \\nearrow" : "<0\\ \\searrow";
+    tex("pu-wynik", `V(${ladnaTex(x)})=${ladnaTex(x)}\\cdot${ladnaTex(w)}^2=${ladnaTex(v)},\\quad V'(x)=(12-2x)(12-6x)${zn}`);
+  }
+  $("pu-x").addEventListener("input", () => { if (stop) stop(); rysujPu(); });
+  $("pu-start").addEventListener("click", () => {
+    if (stop) stop();
+    // przemiatanie dziedziny, potem powrót do x = 2
+    stop = animuj(4000, t => { $("pu-x").value = t < 0.7 ? 0.1 + 5.8 * t / 0.7 : 5.9 - 3.9 * (t - 0.7) / 0.3; rysujPu(); });
+  });
+  rysujPu();
+
+  // --- 3. Puszka V = 16π ---
+  const H = r => 16 / (r * r), Pc = r => 2 * Math.PI * r * r + 32 * Math.PI / r;
+  const pc = new Wykres($("pc-plot"), { xmin: -5, xmax: 5, ymin: -1.5, ymax: 12.5, rowneSkale: true, siatka: false, osie: false });
+  const pcw = new Wykres($("pc-wyk"), { xmin: 0.9, xmax: 4.2, ymin: 0, ymax: 135, krokY: 20 });
+  function rysujPc() {
+    const r = +$("pc-r").value, h = H(r), p = Pc(r), ok = Math.abs(r - 2) < 0.03;
+    $("pc-r-v").textContent = ladna(r);
+    const elipsa = (g, y, nr, op) => g.parametryczna(t => r * Math.cos(t), t => y + 0.3 * r * Math.sin(t), 0, 2 * Math.PI, nr, op);
+    pc.rysuj(g => {
+      g.wielokat([[-r, 0], [r, 0], [r, h], [-r, h]], ok ? 3 : 1, { wypelnij: 0.2, bezObrysu: true });
+      g.odcinek(-r, 0, -r, h, ok ? 3 : 1, false); g.odcinek(r, 0, r, h, ok ? 3 : 1, false);
+      g.parametryczna(t => r * Math.cos(t), t => 0.3 * r * Math.sin(t), Math.PI, 2 * Math.PI, ok ? 3 : 1);
+      g.parametryczna(t => r * Math.cos(t), t => 0.3 * r * Math.sin(t), 0, Math.PI, ok ? 3 : 1, { przerywana: true });
+      elipsa(g, h, ok ? 3 : 1, {});
+      g.odcinek(0, h, r, h, 2, false);
+      g.tekst(r / 2, h, "r", 2, { dy: -6, wyrownanie: "center", gruby: true });
+      g.tekst(r, h / 2, "h = " + ladna(h), 1, { dx: 6 });
+      if (ok) g.tekst(0, h / 2, "h = 2r", 3, { wyrownanie: "center", gruby: true, rozmiar: 15 });
+    });
+    pcw.rysuj(g => {
+      g.funkcja(Pc, 1, { od: 1.2, do: 4 });
+      g.punkt(2, 24 * Math.PI, "min", 3, { pusty: true });
+      g.odcinek(r, 0, r, p, 2);
+      g.punkt(r, p, "", 2);
+      g.tekst(4, 125, "P(r)", 1, { wyrownanie: "right" });
+    });
+    tex("pc-wynik", `h=\\frac{16}{r^2}=${ladnaTex(h)},\\ \\ P(r)=2\\pi r^2+\\frac{32\\pi}{r}=${ladnaTex(p / Math.PI)}\\pi` +
+      `\\qquad P'(r)=\\frac{4\\pi(r^3-8)}{r^2}\\Rightarrow r=2,\\ P_{\\min}=24\\pi`);
+  }
+  $("pc-r").addEventListener("input", rysujPc);
+  rysujPc();
+});
+</script>
+</body>
+</html>

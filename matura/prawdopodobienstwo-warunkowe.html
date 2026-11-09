@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prawdopodobieństwo warunkowe i wzór Bayesa</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Prawdopodobieństwo warunkowe i wzór Bayesa</h1>
+  <p class="lead">„Wiemy, że zaszło $B$” znaczy: wyrzucamy wszystko poza $B$, a $B$ staje się nowym, całym światem. $P(A|B)$ to jaką część tego nowego świata zajmuje $A$. Wzór Bayesa pozwala odwrócić pytanie: z $P(\text{wynik}|\text{przyczyna})$ dostać $P(\text{przyczyna}|\text{wynik})$.</p>
+  <p class="wymagania">XII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definicja</h2>
+  <div class="definicja"><b>Definicja</b> Dla $P(B)&gt;0$ prawdopodobieństwo zajścia $A$ pod warunkiem, że zaszło $B$:
+    $$P(A|B)=\frac{P(A\cap B)}{P(B)}$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Wnioski</div>
+    $$P(A\cap B)=P(B)\cdot P(A|B)$$
+    $$\text{model klasyczny: } P(A|B)=\frac{|A\cap B|}{|B|}$$
+    <dl><dt>mnożenie</dt><dd>to reguła „wzdłuż gałęzi drzewka”: prawdopodobieństwo pierwszego etapu razy warunkowe drugiego</dd>
+        <dt>klasyczny</dt><dd>w modelu klasycznym po prostu liczysz w zbiorze $B$ zamiast w $\Omega$</dd></dl>
+  </div>
+  <div class="uwaga">$P(A|B)$ i $P(B|A)$ to zwykle <b>różne</b> liczby. Ich mylenie to najczęstszy błąd w tym temacie (zobacz test medyczny niżej).</div>
+  <p><b>Niezależność</b> (wprost nie ma jej w wymaganiach, ale pojawia się w zadaniach): $A$ i $B$ są niezależne, gdy $P(A\cap B)=P(A)\cdot P(B)$, czyli $P(A|B)=P(A)$: wiedza o $B$ nic nie zmienia.</p>
+
+  <h2 id="pole">2. Interaktywnie: warunkowanie zawęża świat</h2>
+  <div class="demo">
+    <p class="opis">Kwadrat to $\Omega$ (pole $1$). Zielony pas to $B$, niebieskie to $A$. Kliknij „Warunkuj na B”: reszta znika, a $B$ rozciąga się do całego kwadratu. Niebieskie pole, które zostało, to dokładnie $P(A|B)$.</p>
+    <canvas id="po-plot" style="height:330px"></canvas>
+    <div class="sterowanie">
+      <label>$P(B)$ <input type="range" id="po-b" min="0.1" max="0.9" step="0.05" value="0.4"> <span id="po-b-v"></span></label>
+      <label>$A$ w $B$ <input type="range" id="po-h1" min="0" max="1" step="0.05" value="0.75"> <span id="po-h1-v"></span></label>
+      <label>$A$ poza $B$ <input type="range" id="po-h2" min="0" max="1" step="0.05" value="0.25"> <span id="po-h2-v"></span></label>
+      <button id="po-start">▶ Warunkuj na B</button>
+      <button id="po-wroc">↺ Całe Ω</button>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <h2 id="bayes">3. Wzór Bayesa</h2>
+  <div class="wzor">
+    <div class="tytul">Wzór Bayesa</div>
+    $$P(B|A)=\frac{P(A|B)\cdot P(B)}{P(A)}$$
+    <dl><dt>$P(A)$</dt><dd>liczysz zwykle z <a href="prawdopodobienstwo-calkowite.html">prawdopodobieństwa całkowitego</a>: $P(A)=P(A|B)P(B)+P(A|B')P(B')$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Skąd? (jedna linijka)</summary><div>
+    Z definicji $P(A\cap B)$ zapisane na dwa sposoby: $P(B|A)\,P(A)=P(A\cap B)=P(A|B)\,P(B)$. Podziel przez $P(A)$. Nie musisz go pamiętać, wystarczy umieć to wyprowadzić.
+  </div></details>
+  <p><b>Na drzewku:</b> $P(B|A)=\dfrac{\text{gałąź przez }B\text{ do }A}{\text{wszystkie gałęzie do }A}$.</p>
+
+  <h2 id="test">4. Interaktywnie: test na rzadką chorobę</h2>
+  <div class="demo">
+    <p class="opis">Test ma czułość $P(+|\text{chory})$ i swoistość $P(-|\text{zdrowy})$. Grubość gałęzi to prawdopodobieństwo całej ścieżki. Ustaw częstość choroby na $1\%$: mimo „dobrego” testu większość wyników $+$ to zdrowi (dolny pasek).</p>
+    <canvas id="te-plot" style="height:360px"></canvas>
+    <div class="sterowanie">
+      <label>choroba <input type="range" id="te-p" min="0.001" max="0.2" step="0.001" value="0.01"> <span id="te-p-v"></span></label>
+      <label>czułość <input type="range" id="te-s" min="0.5" max="1" step="0.01" value="0.95"> <span id="te-s-v"></span></label>
+      <label>swoistość <input type="range" id="te-q" min="0.5" max="1" step="0.01" value="0.95"> <span id="te-q-v"></span></label>
+    </div>
+    <div class="wynik" id="te-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rzucamy dwa razy kostką. Wiadomo, że suma oczek jest co najmniej $10$. Oblicz prawdopodobieństwo, że w pierwszym rzucie wypadła szóstka.</p>
+    <ol>
+      <li>$B$ (suma $\ge10$): $(4,6),(5,5),(6,4),(5,6),(6,5),(6,6)$, $|B|=6$.</li>
+      <li>$A\cap B$ (pierwsza szóstka i suma $\ge10$): $(6,4),(6,5),(6,6)$, $|A\cap B|=3$.</li>
+      <li>$P(A|B)=\frac{|A\cap B|}{|B|}=\frac36$.</li>
+    </ol>
+    <p class="odp">$P(A|B)=\frac12$ (bez warunku byłoby $\frac16$)</p>
+  </div>
+  <div class="przyklad">
+    <p>Maszyna $M_1$ robi $60\%$ wyrobów, z czego $2\%$ wadliwych, maszyna $M_2$ robi $40\%$, z czego $5\%$ wadliwych. Wylosowany wyrób jest wadliwy. Jakie jest prawdopodobieństwo, że zrobiła go $M_1$?</p>
+    <ol>
+      <li>Gałęzie do „wadliwy”: $0{,}6\cdot0{,}02=0{,}012$ oraz $0{,}4\cdot0{,}05=0{,}02$.</li>
+      <li>$P(W)=0{,}012+0{,}02=0{,}032$.</li>
+      <li>$P(M_1|W)=\frac{0{,}012}{0{,}032}=\frac{12}{32}$.</li>
+    </ol>
+    <p class="odp">$P(M_1|W)=\frac38$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/2; 2/5" data-odp-opis="P(A|B); P(B|A)"><span class="poziom">łatwe</span>
+      <div class="tresc">$P(A)=0{,}5$, $P(B)=0{,}4$, $P(A\cap B)=0{,}2$. Oblicz $P(A|B)$ i $P(B|A)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P(A|B)=\frac{0{,}2}{0{,}4}$, $P(B|A)=\frac{0{,}2}{0{,}5}$. <b>$P(A|B)=\frac12$, $P(B|A)=\frac25$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/3" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">łatwe</span>
+      <div class="tresc">Rzucamy dwa razy kostką. Suma oczek jest parzysta. Oblicz prawdopodobieństwo, że wypadł dublet (dwa razy ta sama liczba).</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Suma parzysta, gdy oba wyniki parzyste albo oba nieparzyste: $|B|=9+9=18$. Każdy dublet ma sumę parzystą, więc $|A\cap B|=6$. <b>$P(A|B)=\frac{6}{18}=\frac13$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5/7" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">średnie</span>
+      <div class="tresc">W klasie jest $18$ dziewcząt i $12$ chłopców. Okulary nosi $10$ dziewcząt i $4$ chłopców. Losujemy osobę w okularach. Oblicz prawdopodobieństwo, że to dziewczyna.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Warunek „okulary” zawęża świat do $14$ osób, z których $10$ to dziewczęta. <b>$P=\frac{10}{14}=\frac57$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/2; 3/5" data-odp-opis="P(B); P(A|B)"><span class="poziom">średnie</span>
+      <div class="tresc">$P(A)=0{,}6$, $P(B|A)=0{,}5$, $P(A\cup B)=0{,}8$. Oblicz $P(B)$ i $P(A|B)$. Czy $A$ i $B$ są niezależne?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P(A\cap B)=0{,}6\cdot0{,}5=0{,}3$. $P(B)=P(A\cup B)-P(A)+P(A\cap B)=0{,}8-0{,}6+0{,}3=0{,}5$. $P(A|B)=\frac{0{,}3}{0{,}5}=\frac35$. Ponieważ $P(A)P(B)=0{,}3=P(A\cap B)$, zdarzenia są niezależne.
+        <b>$P(B)=\frac12$, $P(A|B)=\frac35$, niezależne</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/2" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">maturalne</span>
+      <div class="tresc">Choruje $10\%$ populacji. Test daje wynik dodatni u $90\%$ chorych i u $10\%$ zdrowych. Wylosowana osoba ma wynik dodatni. Oblicz prawdopodobieństwo, że jest chora.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P(+)=0{,}1\cdot0{,}9+0{,}9\cdot0{,}1=0{,}18$. $P(C|+)=\frac{0{,}09}{0{,}18}$. Test „trafny w $90\%$”, a wynik dodatni daje tylko pół na pół. <b>$P(C|+)=\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3/4" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">maturalne</span>
+      <div class="tresc">Urna I: $3$ kule białe i $2$ czarne, urna II: $1$ biała i $4$ czarne. Rzucamy monetą: orzeł → losujemy kulę z urny I, reszka → z urny II. Wylosowano kulę białą. Oblicz prawdopodobieństwo, że pochodziła z urny I.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P(B)=\frac12\cdot\frac35+\frac12\cdot\frac15=\frac{4}{10}=\frac25$. $P(I|B)=\frac{\frac12\cdot\frac35}{\frac25}=\frac{3/10}{4/10}$. <b>$P(I|B)=\frac34$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Nazwij zdarzenia</b> słowami („$A$: wylosowano kulę białą”, „$B$: …”) i zapisz, które prawdopodobieństwo liczysz: $P(A|B)$ czy $P(B|A)$.</li>
+    <li>W modelu klasycznym licz $\frac{|A\cap B|}{|B|}$: zwykle szybciej niż przez $P(A\cap B)$ i $P(B)$.</li>
+    <li><b>Bayes = drzewko:</b> narysuj drzewo, wynik to „moja gałąź do $A$” przez „wszystkie gałęzie do $A$”. Drzewko z opisanymi gałęziami i liczbami to pełnoprawny zapis rozwiązania.</li>
+    <li>Sprawdź, czy wynik jest sensowny: prawdopodobieństwo $\in\lp0,1\rp$, ułamek nieskracalny.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const proc = x => ladna(x * 100, 1) + "%";
+  // gałąź o grubości w pikselach (wykres.js nie ma grubości w odcinku)
+  function galaz(g, x1, y1, x2, y2, nr, px) {
+    const c = g.ctx;
+    c.strokeStyle = g.kolor(nr); c.lineWidth = px; c.lineCap = "round"; c.setLineDash([]);
+    c.beginPath(); c.moveTo(g.sx(x1), g.sy(y1)); c.lineTo(g.sx(x2), g.sy(y2)); c.stroke(); c.lineCap = "butt";
+  }
+
+  // --- 2. Model pola ---
+  const w1 = new Wykres($("po-plot"), { xmin: -0.12, xmax: 1.12, ymin: -0.13, ymax: 1.1, rowneSkale: true, siatka: false, osie: false });
+  let tt = 0, stop = null;
+  function rysujPo() {
+    const b = +$("po-b").value, h1 = +$("po-h1").value, h2 = +$("po-h2").value;
+    $("po-b-v").textContent = ladna(b); $("po-h1-v").textContent = ladna(h1); $("po-h2-v").textContent = ladna(h2);
+    const s = 1 + (1 / b - 1) * tt, gr = Math.min(1, b * s), kr = 1 - tt;
+    w1.rysuj(g => {
+      // B (rozciągane) i reszta (znika i wypada poza kwadrat)
+      g.prostokat(0, 0, gr, 1, 3, { wypelnij: 0.12, grubosc: 2.5 });
+      g.prostokat(0, 0, gr, h1, 1, { wypelnij: 0.5, bezObrysu: true });
+      if (kr > 0.01 && gr < 1) {
+        g.prostokat(gr, 0, 1 - gr, 1, "--plot-axis", { wypelnij: 0.06 * kr, bezObrysu: true });
+        g.prostokat(gr, 0, 1 - gr, h2, 1, { wypelnij: 0.5 * kr, bezObrysu: true });
+      }
+      g.prostokat(0, 0, 1, 1, "--plot-axis", { wypelnij: 0, grubosc: 1.5 });
+      g.tekst(gr / 2, 1, tt > 0.99 ? "B = nowe Ω" : "B", 3, { dy: -6, wyrownanie: "center", gruby: true });
+      if (kr > 0.3 && gr < 0.92) g.tekst((gr + 1) / 2, 1, "B′", "--plot-axis", { dy: -6, wyrownanie: "center", gruby: true });
+      if (h1 > 0.08) g.tekst(gr / 2, h1 / 2, tt > 0.99 ? "A|B" : "A∩B", 1, { dy: 5, wyrownanie: "center", gruby: true, rozmiar: 15 });
+      g.tekst(0, 0, "0", "--plot-axis", { dx: -4, dy: 16, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(1, 0, "1", "--plot-axis", { dy: 16, wyrownanie: "center", rozmiar: 12 });
+    });
+    const pa = b * h1 + (1 - b) * h2;
+    const niez = Math.abs(h1 - h2) < 1e-9 ? ",\\;\\text{niezależne!}" : "";
+    tex("po-wynik", `P(A|B)=\\frac{P(A\\cap B)}{P(B)}=\\frac{${ladnaTex(b * h1, 4)}}{${ladnaTex(b)}}=${ladnaTex(h1)},\\; P(A)=${ladnaTex(pa, 4)}${niez}`);
+  }
+  $("po-start").addEventListener("click", () => { if (stop) stop(); const t0 = tt; stop = animuj(1600, t => { tt = t0 + (1 - t0) * t; rysujPo(); }); });
+  $("po-wroc").addEventListener("click", () => { if (stop) stop(); const t0 = tt; stop = animuj(900, t => { tt = t0 * (1 - t); rysujPo(); }); });
+  ["po-b", "po-h1", "po-h2"].forEach(id => $(id).addEventListener("input", rysujPo));
+  rysujPo();
+
+  // --- 4. Test medyczny ---
+  const w2 = new Wykres($("te-plot"), { xmin: 0, xmax: 10, ymin: -2.6, ymax: 10, siatka: false, osie: false });
+  function rysujTe() {
+    const p = +$("te-p").value, s = +$("te-s").value, q = +$("te-q").value;
+    $("te-p-v").textContent = proc(p); $("te-s-v").textContent = proc(s); $("te-q-v").textContent = proc(q);
+    const tp = p * s, fn = p * (1 - s), fp = (1 - p) * (1 - q), tn = (1 - p) * q;
+    const px = v => 1.5 + 16 * v;
+    const R = [0.5, 5], C = [4, 7.8], Z = [4, 2.2];
+    const L = [[8, 9.4, "+", tp, 2], [8, 6.6, "−", fn, "--plot-axis"], [8, 3.4, "+", fp, 2], [8, 1, "−", tn, "--plot-axis"]];
+    const post = tp / (tp + fp);
+    w2.rysuj(g => {
+      galaz(g, ...R, ...C, 1, px(p)); galaz(g, ...R, ...Z, 1, px(1 - p));
+      galaz(g, ...C, L[0][0], L[0][1], 2, px(tp)); galaz(g, ...C, L[1][0], L[1][1], 1, px(fn));
+      galaz(g, ...Z, L[2][0], L[2][1], 2, px(fp)); galaz(g, ...Z, L[3][0], L[3][1], 1, px(tn));
+      g.tekst(2.2, 6.4, proc(p), 1, { dx: -6, wyrownanie: "right", rozmiar: 12 });
+      g.tekst(2.2, 3.6, proc(1 - p), 1, { dx: -6, dy: 10, wyrownanie: "right", rozmiar: 12 });
+      g.tekst(6, 8.6, proc(s), 2, { dy: -6, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(6, 7.2, proc(1 - s), "--plot-axis", { dy: 14, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(6, 2.8, proc(1 - q), 2, { dy: -6, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(6, 1.6, proc(q), "--plot-axis", { dy: 14, wyrownanie: "center", rozmiar: 12 });
+      g.punkt(...R, "", 1); g.punkt(...C, "chory", 1); g.punkt(...Z, "zdrowy", 1);
+      L.forEach(([x, y, z, v, nr]) => { g.punkt(x, y, "", nr); g.tekst(x, y, `${z}  ${ladna(v, 4)}`, nr, { dx: 10, dy: 5, gruby: z === "+" }); });
+      // pasek: wszystkie wyniki dodatnie
+      g.tekst(0.2, -0.6, "wszystkie wyniki +", "--plot-axis", { rozmiar: 12 });
+      g.prostokat(0.2, -2.3, 9.6 * post, 1.2, 2, { wypelnij: 0.55, bezObrysu: true });
+      g.prostokat(0.2 + 9.6 * post, -2.3, 9.6 * (1 - post), 1.2, "--plot-axis", { wypelnij: 0.25, bezObrysu: true });
+      if (post > 0.12) g.tekst(0.2 + 4.8 * post, -1.7, "chorzy", 2, { dy: 5, wyrownanie: "center", gruby: true, rozmiar: 12 });
+      if (post < 0.88) g.tekst(0.2 + 9.6 * post + 4.8 * (1 - post), -1.7, "zdrowi", "--plot-axis", { dy: 5, wyrownanie: "center", gruby: true, rozmiar: 12 });
+    });
+    const n1 = Math.round(tp * 10000), n2 = Math.round(fp * 10000);
+    tex("te-wynik", `P(\\text{ch}|+)=\\frac{${ladnaTex(tp, 4)}}{${ladnaTex(tp, 4)}+${ladnaTex(fp, 4)}}\\approx${ladnaTex(post * 100, 1)}\\%\\;\\;(\\text{na }10\\,000\\text{ osób: }${n1}\\text{ chorych i }${n2}\\text{ zdrowych z }+)`);
+  }
+  ["te-p", "te-s", "te-q"].forEach(id => $(id).addEventListener("input", rysujTe));
+  rysujTe();
+});
+</script>
+</body>
+</html>

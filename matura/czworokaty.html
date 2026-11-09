@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Czworokąty i wielokąty foremne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Czworokąty i wielokąty foremne</h1>
+  <p class="lead">Każdy „specjalny” czworokąt to równoległobok, trapez albo deltoid z dodatkowymi warunkami – a prawie wszystko o nim mówią przekątne: czy dzielą się na połowy, czy są równe, czy prostopadłe. Wielokąt foremny to $n$ jednakowych trójkątów równoramiennych wokół środka.</p>
+  <p class="wymagania">VIII.3, VIII.4, VIII.12</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="czworokaty">1. Czworokąty: kąty i przekątne</h2>
+  <p>Suma kątów czworokąta to $360^\circ$ (przekątna dzieli go na dwa trójkąty), $n$-kąta: $(n-2)\cdot180^\circ$.</p>
+  <table class="tabela">
+    <tr><th>Figura</th><th>Kąty</th><th>Przekątne</th></tr>
+    <tr><td><b>Trapez</b> (co najmniej 1 para boków równoległych)</td><td>kąty przy jednym ramieniu: suma $180^\circ$</td><td>w równoramiennym: równe</td></tr>
+    <tr><td><b>Równoległobok</b></td><td>przeciwległe równe, sąsiednie: suma $180^\circ$</td><td>dzielą się na połowy</td></tr>
+    <tr><td><b>Prostokąt</b></td><td>wszystkie $90^\circ$</td><td>na połowy + równe</td></tr>
+    <tr><td><b>Romb</b></td><td>jak w równoległoboku</td><td>na połowy + prostopadłe + są dwusiecznymi kątów</td></tr>
+    <tr><td><b>Kwadrat</b></td><td>wszystkie $90^\circ$</td><td>wszystko naraz, $d=a\sqrt2$</td></tr>
+    <tr><td><b>Deltoid</b></td><td>para równych kątów przy „bocznych” wierzchołkach</td><td>prostopadłe, oś symetrii dzieli drugą na połowy</td></tr>
+  </table>
+  <div class="uwaga">Według definicji CKE <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> trapez ma <i>co najmniej</i> jedną parę boków równoległych – więc równoległobok też jest trapezem. Trapez równoramienny: kąty przy każdej podstawie równe, przekątne równe, da się na nim opisać okrąg.</div>
+  <div class="wzor"><div class="tytul">Pola <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$P_{\text{trapezu}}=\frac{a+b}{2}\cdot h$$
+    $$P_{\text{równoległoboku}}=ah=ab\sin\alpha$$
+    $$P_{\text{rombu}}=\tfrac12 d_1d_2=a^2\sin\alpha$$
+    $$P=\tfrac12 d_1d_2\sin\gamma$$
+    <dl><dt>$\frac12d_1d_2\sin\gamma$</dt><dd>działa dla każdego czworokąta wypukłego, $\gamma$ – kąt między przekątnymi (w tablicach podany przy równoległoboku)</dd>
+        <dt>$\frac12d_1d_2$</dt><dd>romb, kwadrat, deltoid – przekątne prostopadłe</dd></dl>
+  </div>
+
+  <h2 id="demo-czworokat">2. Interaktywnie: rozpoznaj czworokąt</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki (skok 0,5). Strona rozpoznaje typ czworokąta i sprawdza przekątne. Spróbuj zrobić romb, który nie jest kwadratem, i trapez równoramienny.</p>
+    <canvas id="cz-plot"></canvas>
+    <div class="wynik" id="cz-typ"></div>
+    <div class="wynik" id="cz-wynik"></div>
+  </div>
+
+  <h2 id="foremne">3. Wielokąty foremne</h2>
+  <div class="definicja"><b>Definicja</b> Wielokąt foremny ma wszystkie boki równe i wszystkie kąty równe. Ma środek – wspólny środek okręgu opisanego i wpisanego.</div>
+  <div class="wzor"><div class="tytul">$n$-kąt foremny <span class="cke nie" title="Tego wzoru nie ma w karcie CKE – trzeba go pamiętać lub wyprowadzić">poza kartą CKE</span></div>
+    $$\text{kąt wewn.}=\frac{(n-2)\cdot180^\circ}{n}$$
+    $$\text{kąt zewn.}=\frac{360^\circ}{n}$$
+    $$\text{liczba przekątnych}=\frac{n(n-3)}{2}$$
+    <dl><dt>$\frac{360^\circ}{n}$</dt><dd>kąt środkowy, pod którym widać jeden bok ze środka</dd>
+        <dt>$n(n-3)$</dt><dd>z każdego z $n$ wierzchołków $n-3$ przekątnych (nie do siebie i nie do dwóch sąsiadów), każda liczona dwa razy</dd></dl>
+  </div>
+  <div class="wzor"><div class="tytul">Sześciokąt foremny o boku $a$</div>
+    $$P=6\cdot\frac{a^2\sqrt3}{4}=\frac{3a^2\sqrt3}{2}$$
+    <dl><dt>$2a$</dt><dd>długa przekątna (średnica okręgu opisanego, $R=a$)</dd>
+        <dt>$a\sqrt3$</dt><dd>krótka przekątna (dwie wysokości trójkąta równobocznego)</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Zmieniaj $n$. Zielone przekątne z jednego wierzchołka dzielą wielokąt na $n-2$ trójkąty – stąd suma kątów $(n-2)\cdot180^\circ$. Przełącz na „wszystkie przekątne”, żeby je policzyć.</p>
+    <canvas id="wf-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="wf-n" min="3" max="12" step="1" value="6"> <span id="wf-n-v"></span></label>
+      <label><input type="checkbox" id="wf-wszystkie"> wszystkie przekątne</label>
+      <label><input type="checkbox" id="wf-okregi" checked> okręgi opisany i wpisany</label>
+    </div>
+    <div class="wynik" id="wf-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Sześciokąt foremny ma bok $4$. Oblicz jego pole i długości przekątnych.</p>
+    <ol>
+      <li>Przekątne przez środek dzielą go na 6 trójkątów równobocznych o boku $4$: $P=6\cdot\frac{16\sqrt3}{4}=24\sqrt3$.</li>
+      <li>Długa przekątna to dwa boki takich trójkątów: $2\cdot4=8$.</li>
+      <li>Krótka przekątna to dwie wysokości: $2\cdot\frac{4\sqrt3}{2}=4\sqrt3$.</li>
+    </ol>
+    <p class="odp">$P=24\sqrt3$, przekątne $8$ i $4\sqrt3$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="150; 54" data-odp-opis="kąt w stopniach; liczba przekątnych"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz miarę kąta wewnętrznego i liczbę przekątnych dwunastokąta foremnego.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{10\cdot180^\circ}{12}=150^\circ$, $\frac{12\cdot9}{2}=54$. <b>$150^\circ$, $54$ przekątne</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Kąt wewnętrzny wielokąta foremnego ma $140^\circ$. Ile boków ma ten wielokąt?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kąt zewnętrzny $180^\circ-140^\circ=40^\circ=\frac{360^\circ}{n}$, więc <b>$n=9$</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="13; 120; 120/13" data-odp-opis="bok; pole; wysokość"><span class="poziom">średnie</span>
+      <div class="tresc">Przekątne rombu mają długości $10$ i $24$. Oblicz bok, pole i wysokość rombu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Przekątne dzielą się na połowy pod kątem prostym: $a=\sqrt{5^2+12^2}=13$. $P=\frac12\cdot10\cdot24=120$, $h=\frac{P}{a}=\frac{120}{13}$. <b>$a=13$, $P=120$, $h=\frac{120}{13}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12; 108; 15" data-odp-opis="wysokość; pole; przekątna"><span class="poziom">średnie</span>
+      <div class="tresc">Trapez równoramienny ma podstawy $14$ i $4$ oraz ramię $13$. Oblicz jego wysokość, pole i długość przekątnej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Spodek wysokości odcina z dłuższej podstawy $\frac{14-4}{2}=5$: $h=\sqrt{169-25}=12$. $P=\frac{14+4}{2}\cdot12=108$. Przekątna to przeciwprostokątna trójkąta o przyprostokątnych $h=12$ i $14-5=9$: $\sqrt{144+81}=15$. <b>$h=12$, $P=108$, $d=15$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="30sqrt(3); 2sqrt(19); 14" data-odp-opis="pole; przekątne"><span class="poziom">maturalne</span>
+      <div class="tresc">Równoległobok ma boki $6$ i $10$ oraz kąt ostry $60^\circ$. Oblicz jego pole i długości przekątnych.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P=6\cdot10\cdot\sin60^\circ=30\sqrt3$. Krótsza przekątna leży naprzeciw kąta $60^\circ$, dłuższa naprzeciw $120^\circ$ (<a href="rozwiazywanie-trojkatow.html">tw. cosinusów</a>):
+        $$d_1^2=36+100-120\cdot\tfrac12=76$$
+        $$d_2^2=36+100+120\cdot\tfrac12=196$$
+        <b>$P=30\sqrt3$, $d_1=2\sqrt{19}$, $d_2=14$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">W trapezie $ABCD$ ($AB\parallel CD$) przekątne przecinają się w punkcie $S$. $|AB|=12$, $|CD|=4$, a pole trójkąta $CDS$ jest równe $3$. Oblicz pole trapezu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\triangle ABS\sim\triangle CDS$ (kąty naprzemianległe) w skali $k=3$, więc $P_{ABS}=9\cdot3=27$ (<a href="podobienstwo.html">pola figur podobnych</a>). $|AS|=3|SC|$, a trójkąty $BSC$ i $BSA$ mają wspólną wysokość z $B$, więc $P_{BSC}=\frac{27}{3}=9$; tak samo $P_{ASD}=9$. $P=3+27+9+9$. <b>$P=48$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Trapez:</b> prawie zawsze dorysuj dwie wysokości z końców krótszej podstawy – powstają dwa trójkąty prostokątne i prostokąt.</li>
+    <li><b>Romb:</b> połowy przekątnych i bok tworzą trójkąt prostokątny. To jest klucz do 90% zadań z rombem.</li>
+    <li>Nie zakładaj z rysunku, że przekątne są prostopadłe lub równe – wolno korzystać tylko z własności danej figury.</li>
+    <li><b>Wielokąt foremny:</b> łącz środek z wierzchołkami – dostajesz $n$ trójkątów równoramiennych o kącie $\frac{360^\circ}{n}$ przy środku i ramionach $R$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Rozpoznawanie czworokąta ---
+  const w1 = new Wykres($("cz-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const ogr1 = wPolu(5.5, 4);
+  const pc = w1.przeciagaj([{ x: -3, y: -2, siatka: 0.5, ogranicz: ogr1 }, { x: 2, y: -2, siatka: 0.5, ogranicz: ogr1 },
+    { x: 3.5, y: 2, siatka: 0.5, ogranicz: ogr1 }, { x: -1.5, y: 2, siatka: 0.5, ogranicz: ogr1 }], rysujCz);
+  const wek = (P, Q) => ({ x: Q.x - P.x, y: Q.y - P.y });
+  const iloczynW = (u, v) => u.x * v.y - u.y * v.x;
+  const iloczynS = (u, v) => u.x * v.x + u.y * v.y;
+  const rowne = (a, b) => Math.abs(a - b) < 1e-6;
+  function typCzworokata(A, B, C, D) {
+    const ab = wek(A, B), bc = wek(B, C), cd = wek(C, D), da = wek(D, A);
+    const zn = [iloczynW(da, ab), iloczynW(ab, bc), iloczynW(bc, cd), iloczynW(cd, da)];
+    if (zn.some(z => Math.abs(z) < 1e-9)) return "Trzy wierzchołki na jednej prostej – to nie jest czworokąt.";
+    const dod = zn.filter(z => z > 0).length;
+    if (dod === 2) return "Boki się przecinają – to nie jest czworokąt (zamień kolejność wierzchołków).";
+    if (dod !== 0 && dod !== 4) return "Czworokąt wklęsły.";
+    const p1 = Math.abs(iloczynW(ab, cd)) < 1e-9, p2 = Math.abs(iloczynW(bc, da)) < 1e-9;
+    const L = [ab, bc, cd, da].map(v => Math.hypot(v.x, v.y));
+    const prosty = Math.abs(iloczynS(ab, bc)) < 1e-9;
+    if (p1 && p2) {
+      const romb = rowne(L[0], L[1]);
+      if (romb && prosty) return "Kwadrat";
+      if (romb) return "Romb";
+      if (prosty) return "Prostokąt";
+      return "Równoległobok";
+    }
+    if (p1 || p2) {
+      const rr = rowne(odl(A, C), odl(B, D));
+      const katP = [[da, ab], [ab, bc], [bc, cd], [cd, da]].some(([u, v]) => Math.abs(iloczynS(u, v)) < 1e-9);
+      return rr ? "Trapez równoramienny" : katP ? "Trapez prostokątny" : "Trapez";
+    }
+    if ((rowne(L[0], L[3]) && rowne(L[1], L[2])) || (rowne(L[0], L[1]) && rowne(L[2], L[3]))) return "Deltoid";
+    return "Dowolny czworokąt wypukły";
+  }
+  function rysujCz() {
+    const [A, B, C, D] = pc;
+    const S = { x: (A.x + B.x + C.x + D.x) / 4, y: (A.y + B.y + C.y + D.y) / 4 };
+    const typ = typCzworokata(A, B, C, D);
+    const X = przeciecie(A, C, B, D);
+    w1.rysuj(g => {
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y], [D.x, D.y]], 1, { wypelnij: 0.12 });
+      g.odcinek(A.x, A.y, C.x, C.y, 3); g.odcinek(B.x, B.y, D.x, D.y, 4);
+      [[D, A, B], [A, B, C], [B, C, D], [C, D, A]].forEach(([P, W, Q]) => lukKata(g, W, P, Q, 0.45, 2));
+      if (X) g.punkt(X.x, X.y, "", 3, { r: 3.5 });
+      [[A, "A"], [B, "B"], [C, "C"], [D, "D"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+    });
+    const katy = [kat(A, D, B), kat(B, A, C), kat(C, B, D), kat(D, C, A)];
+    $("cz-typ").textContent = typ;
+    if (X && !typ.includes("nie jest") && !typ.includes("wklęsły")) {
+      const polowy = rowne(odl(A, X), odl(X, C)) && rowne(odl(B, X), odl(X, D));
+      const tn = b => (b ? "\\checkmark" : "\\times");
+      tex("cz-wynik", `\\alpha=${stopnie(katy[0])},\\ \\beta=${stopnie(katy[1])},\\ \\gamma=${stopnie(katy[2])},\\ \\delta=${stopnie(katy[3])}` +
+        `\\\\ \\text{przekątne: na połowy }${tn(polowy)},\\ \\text{równe }${tn(rowne(odl(A, C), odl(B, D)))},\\ \\text{prostopadłe }${tn(Math.abs(iloczynS(wek(A, C), wek(B, D))) < 1e-9)}`);
+    } else tex("cz-wynik", "");
+  }
+  rysujCz();
+
+  // --- 3. Wielokąt foremny ---
+  const w2 = new Wykres($("wf-plot"), { xmin: -4, xmax: 4, ymin: -3.6, ymax: 3.6, rowneSkale: true, siatka: false, osie: false });
+  function rysujWf() {
+    const n = +$("wf-n").value, R = 3;
+    $("wf-n-v").textContent = n;
+    const P = [...Array(n)].map((_, i) => { const t = Math.PI / 2 + 2 * Math.PI * i / n; return { x: R * Math.cos(t), y: R * Math.sin(t) }; });
+    const r = R * Math.cos(Math.PI / n), O = { x: 0, y: 0 };
+    w2.rysuj(g => {
+      if ($("wf-okregi").checked) { g.okrag(0, 0, R, 4, { przerywana: true }); g.okrag(0, 0, r, 4, { przerywana: true }); }
+      g.wielokat(P.map(p => [p.x, p.y]), 1, { wypelnij: 0.12 });
+      if ($("wf-wszystkie").checked) {
+        for (let i = 0; i < n; i++) for (let j = i + 2; j < n; j++) if (!(i === 0 && j === n - 1)) g.odcinek(P[i].x, P[i].y, P[j].x, P[j].y, 3);
+      } else for (let j = 2; j < n - 1; j++) g.odcinek(P[0].x, P[0].y, P[j].x, P[j].y, 3, false);
+      lukKata(g, P[1], P[0], P[2], 0.5, 2);
+      g.odcinek(0, 0, P[1].x, P[1].y, 4); g.odcinek(0, 0, P[2].x, P[2].y, 4);
+      lukKata(g, O, P[1], P[2], 0.4, 4);
+      P.forEach(p => g.punkt(p.x, p.y, "", 2, { r: 3.5 }));
+    });
+    tex("wf-wynik", `\\text{kąt wewn.}=\\tfrac{${n - 2}\\cdot180^\\circ}{${n}}=${ladnaTex((n - 2) * 180 / n, 2)}^\\circ,\\ \\ \\text{środkowy}=${ladnaTex(360 / n, 2)}^\\circ,\\ \\ \\text{przekątnych}: ${n * (n - 3) / 2}`);
+  }
+  ["wf-n", "wf-wszystkie", "wf-okregi"].forEach(id => $(id).addEventListener("input", rysujWf));
+  rysujWf();
+});
+</script>
+</body>
+</html>

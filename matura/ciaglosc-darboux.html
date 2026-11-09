@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciągłość, własność Darboux</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Ciągłość, własność Darboux</h1>
+  <p class="lead">Funkcja ciągła na przedziale to wykres narysowany bez odrywania ołówka. Jeśli taki wykres zaczyna się pod osią, a kończy nad nią, to <i>musi</i> ją przeciąć. To jest własność Darboux.</p>
+  <p class="wymagania">XIII.R.2, XIII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="ciaglosc">1. Ciągłość</h2>
+  <div class="definicja"><b>Definicja</b>
+    $f$ jest <b>ciągła w punkcie</b> $x_0$ swojej dziedziny, gdy $\lim\limits_{x\to x_0}f(x)=f(x_0)$.
+    W praktyce: obie granice jednostronne istnieją i są równe $f(x_0)$.
+  </div>
+  $$\lim_{x\to x_0^-}f(x)=\lim_{x\to x_0^+}f(x)=f(x_0)$$
+  <ul>
+    <li><b>Ciągła w zbiorze</b>: ciągła w każdym jego punkcie (na końcach przedziału domkniętego wystarcza granica jednostronna).</li>
+    <li>Wielomiany, funkcje wymierne, pierwiastki, potęgi, $a^x$, $\log_a x$, $\sin$, $\cos$, $\tg$ są ciągłe <b>w swoich dziedzinach</b>. Suma, różnica, iloczyn, iloraz i złożenie funkcji ciągłych też są ciągłe.</li>
+    <li>Nieciągłość pojawia się zwykle w <b>punkcie sklejenia</b> funkcji określonej kawałkami. Tam liczysz granice jednostronne.</li>
+  </ul>
+  <div class="uwaga">$f(x)=\frac1x$ <b>jest</b> ciągła, bo $0$ nie należy do dziedziny. Ale nie jest ciągła na przedziale $\lp -1,1\rp$, bo nie jest tam nawet określona.</div>
+
+  <h2 id="parametr">2. Interaktywnie: dobierz parametr</h2>
+  <div class="demo">
+    <p class="opis">$f(x)=x^2+1$ dla $x\le1$ oraz $f(x)=ax-1$ dla $x&gt;1$. Zmieniaj $a$, aż oba kawałki się skleją.</p>
+    <canvas id="cp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="cp-a" min="-2" max="6" step="0.5" value="1"> <span id="cp-a-v"></span></label>
+    </div>
+    <div class="wynik" id="cp-wynik"></div>
+  </div>
+
+  <h2 id="darboux">3. Własność Darboux</h2>
+  <div class="twierdzenie"><b>Twierdzenie (własność Darboux)</b>
+    Jeśli $f$ jest ciągła na $\lp a,b\rp$ i $f(a)\cdot f(b)&lt;0$, to istnieje $c\in(a,b)$ takie, że $f(c)=0$.
+    <p>Ogólniej: funkcja ciągła na $\lp a,b\rp$ przyjmuje <b>każdą</b> wartość między $f(a)$ a $f(b)$.</p>
+  </div>
+  <ul>
+    <li>Twierdzenie daje <b>istnienie</b>, nie liczbę miejsc zerowych. Jedyność uzasadniasz osobno, np. monotonicznością.</li>
+    <li>Do równania $g(x)=h(x)$ stosujesz je dla różnicy $f(x)=g(x)-h(x)$.</li>
+  </ul>
+  <div class="demo">
+    <p class="opis">Przeciągaj końce $a$ i $b$ po osi. Gdy $f(a)$ i $f(b)$ mają różne znaki, funkcja ciągła musi przeciąć oś. „▶ Rysuj” prowadzi ołówek od $a$ do $b$. Przełącz na $\frac1x$ (nieokreślona w $0$) albo funkcję ze skokiem: znaki różne, a miejsca zerowego brak.</p>
+    <canvas id="cd-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>funkcja <select id="cd-f">
+        <option value="0">ciągła: x³ − 3x + 1</option>
+        <option value="1">1/x (nie jest określona w 0)</option>
+        <option value="2">nieciągła: skok w x = 1</option>
+      </select></label>
+      <button id="cd-start">▶ Rysuj od a do b</button>
+    </div>
+    <div class="wynik" id="cd-wynik"></div>
+  </div>
+
+  <h2 id="zapis">4. Schemat zapisu na maturze</h2>
+  <div class="przyklad">
+    <ol>
+      <li>Określ $f$ (dla równania: $f(x)=\text{lewa}-\text{prawa}$) i napisz, <b>dlaczego jest ciągła</b> na $\lp a,b\rp$ (np. „jako wielomian”).</li>
+      <li>Policz $f(a)$ i $f(b)$, pokaż, że mają <b>przeciwne znaki</b>.</li>
+      <li>Wniosek: „Z własności Darboux istnieje $c\in(a,b)$ takie, że $f(c)=0$”.</li>
+    </ol>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Uzasadnij, że równanie $x^3+x-1=0$ ma dokładnie jedno rozwiązanie i leży ono w $(0,1)$.</p>
+    <ol>
+      <li>$f(x)=x^3+x-1$ jest ciągła na $\R$ (wielomian).</li>
+      <li>$f(0)=-1&lt;0$, $f(1)=1&gt;0$, więc z własności Darboux istnieje $c\in(0,1)$, $f(c)=0$.</li>
+      <li>Jedyność: $x^3$ i $x-1$ są rosnące, więc $f$ jest rosnąca i przyjmuje wartość $0$ co najwyżej raz.</li>
+    </ol>
+    <p class="odp">Równanie ma dokładnie jedno rozwiązanie, $c\in(0,1)$.</p>
+  </div>
+  <div class="przyklad">
+    <p>Dla jakiego $m$ funkcja $f(x)=\frac{x^2-4}{x-2}$ dla $x\neq2$, $f(2)=m$, jest ciągła?</p>
+    <ol>
+      <li>Poza $2$ jest ciągła (wymierna). Sprawdzamy tylko $x_0=2$.</li>
+      <li>$\lim\limits_{x\to2}\frac{(x-2)(x+2)}{x-2}=\lim\limits_{x\to2}(x+2)=4$.</li>
+      <li>Ciągłość w $2$: $f(2)=4$.</li>
+    </ol>
+    <p class="odp">$m=4$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Zbadaj ciągłość w $x_0=1$ funkcji $f(x)=x+2$ dla $x&lt;1$, $f(x)=3x$ dla $x\ge1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\lim\limits_{x\to1^-}(x+2)=3$, $\lim\limits_{x\to1^+}3x=3$, $f(1)=3$. <b>Ciągła w $1$</b> (więc na całym $\R$).
+      </div></details></li>
+    <li class="zadanie" data-odp="1" data-odp-opis="a"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz $a$, dla którego funkcja $f(x)=ax+1$ dla $x\le2$, $f(x)=x^2-a$ dla $x&gt;2$ jest ciągła.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Granica lewostronna i $f(2)$: $2a+1$. Prawostronna: $4-a$. Warunek $2a+1=4-a$. <b>$a=1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-6" data-odp-opis="k"><span class="poziom">średnie</span>
+      <div class="tresc">Funkcja $f(x)=\frac{x^2-9}{x+3}$ dla $x\neq-3$ i $f(-3)=k$. Dla jakiego $k$ jest ciągła?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{(x-3)(x+3)}{x+3}=x-3\to-6$. <b>$k=-6$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Uzasadnij, że równanie $x^5-3x+1=0$ ma rozwiązanie w przedziale $(0,1)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x)=x^5-3x+1$ jest ciągła (wielomian). $f(0)=1&gt;0$, $f(1)=-1&lt;0$. <b>Z własności Darboux istnieje $c\in(0,1)$, $f(c)=0$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Uzasadnij, że równanie $\cos x=x$ ma rozwiązanie w przedziale $\left(0,\frac{\pi}{2}\right)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x)=\cos x-x$ jest ciągła (różnica ciągłych). $f(0)=1&gt;0$, $f\left(\frac\pi2\right)=-\frac\pi2&lt;0$.
+        <b>Z własności Darboux istnieje $c\in\left(0,\frac\pi2\right)$, $\cos c=c$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Uzasadnij, że wielomian $W(x)=x^3-6x+2$ ma trzy pierwiastki rzeczywiste.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $W$ jest ciągły. $W(-3)=-7$, $W(0)=2$, $W(1)=-3$, $W(3)=11$. Znak zmienia się na $(-3,0)$, $(0,1)$ i $(1,3)$, więc w każdym z tych rozłącznych przedziałów jest pierwiastek (Darboux). Wielomian stopnia $3$ ma ich najwyżej trzy.
+        <b>Dokładnie trzy pierwiastki rzeczywiste.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Bez słowa o <b>ciągłości</b> uzasadnienie jest niepełne. Napisz, czemu $f$ jest ciągła na $\lp a,b\rp$.</li>
+    <li>Wartości $f(a)$, $f(b)$ <b>policz dokładnie</b> i napisz znak. Same liczby bez „$&lt;0$”, „$&gt;0$” to za mało.</li>
+    <li>Darboux daje „co najmniej jedno”. „Dokładnie jedno” wymaga dodatkowo monotoniczności (często z <a href="monotonicznosc-ekstrema.html">pochodnej</a>).</li>
+    <li>Przybliżanie miejsca zerowego (bisekcja) <b>nie jest</b> już w podstawie: wystarczy wskazać przedział.</li>
+    <li>Ciągłość z parametrem: przyrównaj <b>obie</b> granice jednostronne i wartość w punkcie.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Parametr ---
+  const cp = new Wykres($("cp-plot"), { xmin: -3, xmax: 4, ymin: -3, ymax: 9 });
+  function rysujCp() {
+    const a = +$("cp-a").value, P = a - 1, ok = Math.abs(P - 2) < 1e-9;
+    $("cp-a-v").textContent = ladna(a);
+    cp.rysuj(g => {
+      g.funkcja(x => x * x + 1, 1, { do: 1 });
+      g.funkcja(x => a * x - 1, ok ? 1 : 2, { od: 1 });
+      if (!ok) g.odcinek(1, 2, 1, P, 4);
+      g.punkt(1, P, "", ok ? 1 : 2, { pusty: true });
+      g.punkt(1, 2, ok ? "sklejone" : "f(1) = 2", 1);
+    });
+    tex("cp-wynik", `\\lim_{x\\to1^-}f(x)=2=f(1),\\quad \\lim_{x\\to1^+}f(x)=a-1=${ladnaTex(P)}` +
+      (ok ? "\\quad\\Rightarrow\\ \\text{ciągła}" : "\\quad\\Rightarrow\\ \\text{skok}"));
+  }
+  $("cp-a").addEventListener("input", rysujCp);
+  rysujCp();
+
+  // --- 3. Darboux ---
+  const FUN = [
+    { f: x => x ** 3 - 3 * x + 1, ciagla: true, przerwa: null },
+    { f: x => 1 / x, ciagla: false, przerwa: 0 },
+    { f: x => x < 1 ? x - 2 : x + 1, ciagla: false, przerwa: 1 },
+  ];
+  const cd = new Wykres($("cd-plot"), { xmin: -3, xmax: 3, ymin: -5, ymax: 5 });
+  const naOsi = p => ({ x: Math.min(Math.max(p.x, -2.9), 2.9), y: 0 });
+  const konce = cd.przeciagaj([{ x: 0.6, y: 0, ogranicz: naOsi }, { x: 2.2, y: 0, ogranicz: naOsi }], () => { if (stop) stop(); rysujCd(1); });
+  let stop = null;
+  // miejsca zerowe funkcji ciągłej w (a, b): zmiany znaku + bisekcja
+  function zera(f, a, b) {
+    const w = [], n = 400;
+    for (let i = 0; i < n; i++) {
+      let u = a + (b - a) * i / n, v = a + (b - a) * (i + 1) / n;
+      if (f(u) === 0) { w.push(u); continue; }
+      if (f(u) * f(v) < 0) { for (let k = 0; k < 50; k++) { const s = (u + v) / 2; f(u) * f(s) <= 0 ? v = s : u = s; } w.push(u); }
+    }
+    return w;
+  }
+  function rysujCd(t) {
+    const F = FUN[+$("cd-f").value], f = F.f;
+    const a = Math.min(konce[0].x, konce[1].x), b = Math.max(konce[0].x, konce[1].x);
+    const fa = f(a), fb = f(b), rozne = fa * fb < 0;
+    const koniec = a + (b - a) * t;
+    const przerwaW = F.przerwa !== null && a < F.przerwa && F.przerwa < b;
+    const z = F.ciagla ? zera(f, a, koniec) : [];
+    cd.rysuj(g => {
+      const rys = (od, d, nr, op = {}) => {
+        if (F.przerwa !== null && od < F.przerwa && F.przerwa < d) {
+          g.funkcja(f, nr, { ...op, od, do: F.przerwa - 1e-3 }); g.funkcja(f, nr, { ...op, od: F.przerwa + 1e-3, do: d });
+        } else g.funkcja(f, nr, { ...op, od, do: d });
+      };
+      rys(g.z.xmin, g.z.xmax, 1, { przerywana: true });
+      if (rozne) g.obszar(() => g.z.ymax, () => g.z.ymin, a, b, 3, 0.08);
+      rys(a, koniec, 1);
+      g.odcinek(a, 0, a, fa, fa < 0 ? 2 : 3); g.odcinek(b, 0, b, fb, fb < 0 ? 2 : 3);
+      g.punkt(a, fa, "f(a)", fa < 0 ? 2 : 3); g.punkt(b, fb, "f(b)", fb < 0 ? 2 : 3);
+      g.punkt(a, 0, "a", 4, { r: 6 }); g.punkt(b, 0, "b", 4, { r: 6 });
+      z.forEach(c => g.punkt(c, 0, "c", 2, { pusty: true, r: 7 }));
+    });
+    let opis;
+    const il = fa * fb;
+    if (Math.abs(il) < 1e-9) opis = "\\text{koniec przedziału jest miejscem zerowym; założenie Darboux niespełnione}";
+    else if (!rozne) opis = "\\text{te same znaki: założenie Darboux niespełnione}";
+    else if (F.ciagla) opis = `\\Rightarrow\\ \\exists\\,c\\in(a,b):\\ f(c)=0` + (z.length > 1 ? `\\ (\\text{tu: }${z.length})` : "");
+    else opis = przerwaW ? "\\text{ale }f\\text{ nie jest ciągła na }\\lp a,b\\rp\\text{: brak zera}" : "";
+    tex("cd-wynik", `f(a)=${ladnaTex(fa)},\\ f(b)=${ladnaTex(fb)},\\ \\ f(a)\\cdot f(b)${rozne ? "<0" : Math.abs(il) < 1e-9 ? "=0" : ">0"}\\ \\ ${opis}`);
+  }
+  $("cd-f").addEventListener("change", () => {
+    if (stop) stop();
+    // dla funkcji nieciągłych ustaw końce po obu stronach przerwy
+    if (+$("cd-f").value === 0) { konce[0].x = 0.6; konce[1].x = 2.2; } else { konce[0].x = -1; konce[1].x = 2; }
+    rysujCd(1);
+  });
+  $("cd-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2200, rysujCd); });
+  rysujCd(1);
+});
+</script>
+</body>
+</html>

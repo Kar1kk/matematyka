@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wyrażenia wymierne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+<style>
+  .wm-krok { opacity: 0; transform: translateX(12px); transition: opacity .5s, transform .5s;
+    margin: 6px 0; min-height: 2.6em; font-size: 16px; }
+  .wm-krok.widac { opacity: 1; transform: none; }
+  .wm-krok .co { display: block; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wyrażenia wymierne</h1>
+  <p class="lead">Ułamki, w których zamiast liczb stoją wielomiany. Rachunki są takie same jak na ułamkach zwykłych. Jedyna nowość to dziedzina: mianownik nie może być zerem, a skracanie tego nie zmienia.</p>
+  <p class="wymagania">II.4, II.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Dziedzina i skracanie</h2>
+  <div class="definicja"><b>Definicja</b> Wyrażenie wymierne to iloraz $\dfrac{P(x)}{Q(x)}$ wielomianów, $Q$ niezerowy. Jego <b>dziedzina</b> to wszystkie $x$, dla których $Q(x)\neq0$.</div>
+  <p><b>Skracanie</b>: rozłóż licznik i mianownik na czynniki i skróć <b>wspólne czynniki</b>. Dziedzinę wyznacz <b>przed</b> skróceniem:
+    $$\frac{x^2-4}{x^2-2x}=\frac{(x-2)(x+2)}{x(x-2)}=\frac{x+2}{x}$$
+    dla $x\in\R\setminus\{0,2\}$. Bez dopisku „$x\ne2$” równość jest fałszywa: dla $x=2$ lewa strona nie istnieje, a prawa wynosi $2$. Na wykresie to „dziura” (demo niżej).</p>
+  <div class="uwaga">Skraca się czynniki, nie składniki: $\frac{x+2}{x}\neq 2$, a $\frac{x^2+1}{x}\neq x+1$.</div>
+
+  <h2 id="dzialania">2. Działania</h2>
+  <div class="dwie">
+    <div class="wzor"><div class="tytul">Mnożenie</div> $$\frac{A}{B}\cdot\frac{C}{D}=\frac{AC}{BD}$$</div>
+    <div class="wzor"><div class="tytul">Dzielenie</div> $$\frac{A}{B}:\frac{C}{D}=\frac{A}{B}\cdot\frac{D}{C}$$
+      <dl><dt>warunek</dt><dd>$B\ne0$, $D\ne0$ <b>i</b> $C\ne0$</dd></dl></div>
+  </div>
+  <div class="wzor"><div class="tytul">Dodawanie (wspólny mianownik)</div>
+    $$\frac{A}{B}+\frac{C}{D}=\frac{AD+CB}{BD}$$
+    <dl><dt>lepiej</dt><dd>rozłóż mianowniki i weź <b>najmniejszy</b> wspólny mianownik (każdy czynnik w najwyższej potędze, w jakiej występuje). Iloczyn $BD$ daje często niepotrzebnie duży licznik.</dd></dl></div>
+  <p>Przed mnożeniem najpierw rozłóż i skróć „na krzyż”, potem mnóż. Przy odejmowaniu licznik odjemnika bierz w nawias. Przydaje się $b-a=-(a-b)$, np. $\frac{1}{2-x}=-\frac{1}{x-2}$. Równania i nierówności z takimi wyrażeniami: <a href="rownania-wymierne.html">Równania i nierówności wymierne</a>.</p>
+
+  <h2 id="dziura">3. Interaktywnie: dziura po skróceniu</h2>
+  <div class="demo">
+    <p class="opis">Wykres wyrażenia przed skróceniem i po skróceniu wygląda tak samo, <b>z wyjątkiem punktów spoza dziedziny</b> (puste kółka). „▶ Skróć” dorysowuje wykres skróconego wyrażenia i „łata” dziury. Przeciągnij czerwony punkt na dziurę i zobacz $\frac00$.</p>
+    <canvas id="dz-plot"></canvas>
+    <div class="sterowanie">
+      <label>wyrażenie <select id="dz-wybor">
+        <option value="0">(x² − 4)/(x − 2)</option>
+        <option value="1">(x² − 1)/(x² + x)</option>
+        <option value="2">(x³ − x)/(x² − x)</option>
+        <option value="3">(x + 3)/(x² + 3x)</option>
+        <option value="4">(x² − x − 6)/(x² − 9)</option>
+      </select></label>
+      <button id="dz-start">▶ Skróć</button>
+    </div>
+    <div class="wynik" id="dz-wynik"></div>
+    <div class="wynik" id="dz-wartosc"></div>
+  </div>
+
+  <h2 id="wspolny">4. Interaktywnie: wspólny mianownik krok po kroku</h2>
+  <div class="demo">
+    <p class="opis">Przykłady z podstawy programowej. „Krok →” pokazuje kolejny etap. Na pomarańczowo: czynnik, przez który <b>rozszerzamy</b> ułamek, żeby dostać wspólny mianownik.</p>
+    <div class="sterowanie">
+      <label>przykład <select id="wm-wybor">
+        <option value="0">1/(x+1) − 1/x</option>
+        <option value="1">1/x + 1/x² + 1/x³</option>
+        <option value="2">(x+1)/(x+2) + (x−1)/(x+1)</option>
+        <option value="3">2/(x²−1) − 1/(x²−x)</option>
+      </select></label>
+      <button id="wm-krok">Krok →</button>
+      <button id="wm-start" class="wtorny">▶ Odtwórz</button>
+    </div>
+    <div class="wm-krok" id="wm-k0"></div>
+    <div class="wm-krok" id="wm-k1"></div>
+    <div class="wm-krok" id="wm-k2"></div>
+    <div class="wm-krok" id="wm-k3"></div>
+    <div class="wm-krok" id="wm-k4"></div>
+    <div class="wynik" id="wm-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wykonaj dzielenie i podaj, dla jakich $x$ wynik jest prawdziwy:
+      $$\frac{x^2-9}{x^2+3x}:\frac{x-3}{x^2}$$</p>
+    <ol>
+      <li>Dziedzina: mianowniki $x^2+3x=x(x+3)\ne0$ i $x^2\ne0$, a dodatkowo dzielnik $\frac{x-3}{x^2}\ne0$, czyli $x\ne3$. Zatem $x\notin\{-3,0,3\}$.</li>
+      <li>Zamień na mnożenie przez odwrotność i rozłóż:
+        $$\frac{(x-3)(x+3)}{x(x+3)}\cdot\frac{x^2}{x-3}$$</li>
+      <li>Skróć $(x-3)$, $(x+3)$ i $x$.</li>
+    </ol>
+    <p class="odp">$x$ dla $x\in\R\setminus\{-3,0,3\}$</p>
+    <p>Warunek $x\ne3$ łatwo zgubić: bierze się z <b>licznika</b> dzielnika.</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Skróć wyrażenie $\dfrac{x^2-6x+9}{x^2-9}$ i podaj założenia.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{(x-3)^2}{(x-3)(x+3)}$. <b>$\frac{x-3}{x+3}$ dla $x\ne\pm3$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\dfrac{x^2-4}{3x}\cdot\dfrac{6x^2}{x+2}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{(x-2)(x+2)}{3x}\cdot\frac{6x^2}{x+2}$, skróć $(x+2)$ i $3x$. <b>$2x(x-2)$ dla $x\notin\{-2,0\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz $\dfrac{1}{x-2}-\dfrac{4}{x^2-4}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wspólny mianownik $(x-2)(x+2)$: $\frac{x+2-4}{(x-2)(x+2)}=\frac{x-2}{(x-2)(x+2)}$. <b>$\frac{1}{x+2}$ dla $x\ne\pm2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że dla $x\ne\pm1$ wartość wyrażenia $\dfrac{x}{x-1}-\dfrac{1}{x+1}-\dfrac{2}{x^2-1}$ nie zależy od $x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wspólny mianownik $(x-1)(x+1)$:
+        $$\frac{x(x+1)-(x-1)-2}{(x-1)(x+1)}=\frac{x^2-1}{x^2-1}$$
+        <b>Wyrażenie jest równe $1$.</b> $\blacksquare$
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Uprość $\dfrac{x^3-8}{x^2-4}:\dfrac{x^2+2x+4}{x^2+4x+4}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^2+2x+4&gt;0$ zawsze ($\Delta&lt;0$), więc dzielnik nie daje nowych wykluczeń; $x^2-4\ne0$ i $(x+2)^2\ne0$ dają $x\ne\pm2$.
+        $$\frac{(x-2)(x^2+2x+4)}{(x-2)(x+2)}\cdot\frac{(x+2)^2}{x^2+2x+4}$$
+        <b>$x+2$ dla $x\ne\pm2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 3" data-odp-opis="A; B"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz liczby $A$, $B$, dla których $\dfrac{5x+1}{(x-1)(x+2)}=\dfrac{A}{x-1}+\dfrac{B}{x+2}$ dla wszystkich $x\notin\{-2,1\}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Prawa strona po sprowadzeniu: $\frac{A(x+2)+B(x-1)}{(x-1)(x+2)}$. Liczniki to równe wielomiany: $(A+B)x+(2A-B)=5x+1$ (<a href="wielomiany-dzialania.html#rownosc">porównanie współczynników</a>), więc $A+B=5$, $2A-B=1$.
+        <b>$A=2$, $B=3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Założenia</b> wypisz na początku, z mianowników <b>przed</b> skróceniem. Przy dzieleniu dołóż zera licznika dzielnika. Brak założeń to typowa strata punktu.</li>
+    <li>Najmniejszy wspólny mianownik: najpierw rozłóż mianowniki na czynniki ($x^2-1$, $x^2-x$, …).</li>
+    <li>Na końcu sprawdź, czy wynik da się jeszcze skrócić (rozłóż licznik).</li>
+    <li>Minus przed ułamkiem odnosi się do <b>całego</b> licznika: $-\frac{x+1}{\ldots}$ to $\frac{-x-1}{\ldots}$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Dziura po skróceniu ---
+  const WYR = [
+    { f: x => (x * x - 4) / (x - 2), g: x => x + 2, dziury: [2], asym: [],
+      t: "\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2", D: "\\R\\setminus\\{2\\}" },
+    { f: x => (x * x - 1) / (x * x + x), g: x => (x - 1) / x, dziury: [-1], asym: [0],
+      t: "\\frac{x^2-1}{x^2+x}=\\frac{(x-1)(x+1)}{x(x+1)}=\\frac{x-1}{x}", D: "\\R\\setminus\\{-1,0\\}" },
+    { f: x => (x ** 3 - x) / (x * x - x), g: x => x + 1, dziury: [0, 1], asym: [],
+      t: "\\frac{x^3-x}{x^2-x}=\\frac{x(x-1)(x+1)}{x(x-1)}=x+1", D: "\\R\\setminus\\{0,1\\}" },
+    { f: x => (x + 3) / (x * x + 3 * x), g: x => 1 / x, dziury: [-3], asym: [0],
+      t: "\\frac{x+3}{x^2+3x}=\\frac{x+3}{x(x+3)}=\\frac1x", D: "\\R\\setminus\\{-3,0\\}" },
+    { f: x => (x * x - x - 6) / (x * x - 9), g: x => (x + 2) / (x + 3), dziury: [3], asym: [-3],
+      t: "\\frac{x^2-x-6}{x^2-9}=\\frac{(x-3)(x+2)}{(x-3)(x+3)}=\\frac{x+2}{x+3}", D: "\\R\\setminus\\{-3,3\\}" },
+  ];
+  const w1 = new Wykres($("dz-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+  let latka = 0, stop1 = null;
+  const pkt = w1.przeciagaj([{ x: 1, y: 0, ogranicz: p => ({ x: Math.max(-5.9, Math.min(5.9, Math.round(p.x * 10) / 10)), y: 0 }) }], () => rysuj1());
+  function rysuj1() {
+    const W = WYR[+$("dz-wybor").value], x0 = pkt[0].x;
+    const pozaD = W.dziury.concat(W.asym).some(d => Math.abs(d - x0) < 1e-9);
+    w1.rysuj(g => {
+      W.asym.forEach(a => g.odcinek(a, g.z.ymin, a, g.z.ymax, 4, true));
+      if (latka > 0) g.funkcja(W.g, 3, { grubosc: 6 });
+      g.funkcja(W.f, 1);
+      W.dziury.forEach(d => {
+        g.punkt(d, W.g(d), "", latka > 0.99 ? 3 : 1, { pusty: latka < 0.99, r: 5 + 3 * Math.sin(Math.PI * latka) });
+      });
+      const y0 = pozaD ? 0 : W.f(x0);
+      g.odcinek(x0, 0, x0, Math.max(g.z.ymin, Math.min(g.z.ymax, y0)), 2, true);
+      g.punkt(x0, Math.max(g.z.ymin, Math.min(g.z.ymax, y0)), "", 2);
+    });
+    tex("dz-wynik", `${W.t},\\quad x\\in ${W.D}`);
+    let opis = "";
+    if (W.dziury.some(d => Math.abs(d - x0) < 1e-9)) opis = `x_0=${ladnaTex(x0)}:\\ \\text{wyrażenie daje } \\tfrac00 \\text{ — poza dziedziną, a skrócone daje } ${ladnaTex(W.g(x0))}`;
+    else if (pozaD) opis = `x_0=${ladnaTex(x0)}:\\ \\text{mianownik } 0 \\text{ — poza dziedziną (asymptota)}`;
+    else opis = `x_0=${ladnaTex(x0)}:\\ \\text{przed i po skróceniu } ${ladnaTex(W.f(x0))}`;
+    tex("dz-wartosc", opis);
+  }
+  $("dz-wybor").addEventListener("change", () => { if (stop1) stop1(); latka = 0; rysuj1(); });
+  $("dz-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    stop1 = animuj(1200, t => { latka = t; rysuj1(); });
+  });
+  rysuj1();
+
+  // --- 4. Wspólny mianownik ---
+  const K = s => `\\color{#e8590c}{${s}}`;
+  const PRZ = [
+    [
+      ["wyrażenie, dziedzina: $x\\ne-1$, $x\\ne0$", "\\frac{1}{x+1}-\\frac{1}{x}"],
+      ["mianowniki $x+1$ i $x$, wspólny: $x(x+1)$", "\\text{wspólny mianownik: } x(x+1)"],
+      ["rozszerz każdy ułamek o brakujący czynnik", `\\frac{1\\cdot${K("x")}}{(x+1)\\cdot${K("x")}}-\\frac{1\\cdot${K("(x+1)")}}{x\\cdot${K("(x+1)")}}`],
+      ["odejmij liczniki (nawias!)", "=\\frac{x-(x+1)}{x(x+1)}"],
+      ["uprość", "=\\frac{-1}{x(x+1)}=-\\frac{1}{x^2+x}"],
+    ],
+    [
+      ["wyrażenie, dziedzina: $x\\ne0$", "\\frac1x+\\frac{1}{x^2}+\\frac{1}{x^3}"],
+      ["najwyższa potęga $x$ to wspólny mianownik", "\\text{wspólny mianownik: } x^3"],
+      ["rozszerz", `\\frac{1\\cdot${K("x^2")}}{x\\cdot${K("x^2")}}+\\frac{1\\cdot${K("x")}}{x^2\\cdot${K("x")}}+\\frac{1}{x^3}`],
+      ["dodaj liczniki", "=\\frac{x^2+x+1}{x^3}"],
+      ["$x^2+x+1$ ma $\\Delta<0$, więc nic się nie skraca", "=\\frac{x^2+x+1}{x^3}"],
+    ],
+    [
+      ["wyrażenie, dziedzina: $x\\ne-2$, $x\\ne-1$", "\\frac{x+1}{x+2}+\\frac{x-1}{x+1}"],
+      ["mianowniki nie mają wspólnych czynników", "\\text{wspólny mianownik: } (x+2)(x+1)"],
+      ["rozszerz", `\\frac{(x+1)${K("(x+1)")}}{(x+2)${K("(x+1)")}}+\\frac{(x-1)${K("(x+2)")}}{(x+1)${K("(x+2)")}}`],
+      ["wymnóż liczniki", "=\\frac{x^2+2x+1+x^2+x-2}{(x+1)(x+2)}"],
+      ["redukcja; licznik ma $\\Delta=17$, nie skraca się z mianownikiem", "=\\frac{2x^2+3x-1}{(x+1)(x+2)}"],
+    ],
+    [
+      ["wyrażenie", "\\frac{2}{x^2-1}-\\frac{1}{x^2-x}"],
+      ["rozłóż mianowniki: dziedzina $x\\notin\\{-1,0,1\\}$", "=\\frac{2}{(x-1)(x+1)}-\\frac{1}{x(x-1)}"],
+      ["wspólny: $x(x-1)(x+1)$; rozszerz", `\\frac{2\\cdot${K("x")}}{(x-1)(x+1)${K("x")}}-\\frac{1\\cdot${K("(x+1)")}}{x(x-1)${K("(x+1)")}}`],
+      ["odejmij liczniki", "=\\frac{2x-(x+1)}{x(x-1)(x+1)}=\\frac{x-1}{x(x-1)(x+1)}"],
+      ["skróć $(x-1)$; założenie $x\\ne1$ zostaje", "=\\frac{1}{x(x+1)}"],
+    ],
+  ];
+  let ile = 0, stop2 = null;
+  function rysuj2() {
+    const P = PRZ[+$("wm-wybor").value];
+    P.forEach(([co, wz], i) => {
+      const el = $(`wm-k${i}`);
+      el.innerHTML = "";
+      const opis = document.createElement("span"); opis.className = "co";
+      const wzor = document.createElement("span");
+      el.appendChild(opis); el.appendChild(wzor);
+      // opis może zawierać $...$: renderujemy kawałki
+      co.split("$").forEach((kaw, j) => {
+        const s = document.createElement("span");
+        if (j % 2) katex.render(kaw, s, { throwOnError: false }); else s.textContent = kaw;
+        opis.appendChild(s);
+      });
+      katex.render(wz, wzor, { throwOnError: false, displayMode: false });
+      el.classList.toggle("widac", i < ile);
+    });
+    tex("wm-wynik", ile >= P.length ? "\\text{gotowe}" : `\\text{krok } ${ile}/${P.length}`);
+  }
+  $("wm-wybor").addEventListener("change", () => { if (stop2) stop2(); ile = 1; rysuj2(); });
+  $("wm-krok").addEventListener("click", () => {
+    if (stop2) stop2();
+    const n = PRZ[+$("wm-wybor").value].length;
+    ile = ile >= n ? 1 : ile + 1;
+    rysuj2();
+  });
+  $("wm-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    const n = PRZ[+$("wm-wybor").value].length;
+    ile = 1; rysuj2();
+    stop2 = animuj(900 * n, t => { const k = Math.min(n, 1 + Math.floor(t * n)); if (k !== ile) { ile = k; rysuj2(); } });
+  });
+  ile = 1; rysuj2();
+});
+</script>
+</body>
+</html>

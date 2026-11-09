@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funkcja wykładnicza i logarytmiczna</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Funkcja wykładnicza i logarytmiczna</h1>
+  <p class="lead">$y=a^x$ i $y=\log_a x$ to ta sama zależność czytana w dwie strony: $\log_a b=c\iff a^c=b$. Zamiana ról $x$ i $y$ to odbicie wykresu względem prostej $y=x$.</p>
+  <p class="wymagania">V.14, I.5, I.9, I.R (zamiana podstawy), I.8</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definicje i wzory</h2>
+  <div class="wzor">
+    <div class="tytul">Logarytm <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\log_a b=c\iff a^c=b$$
+    <dl><dt>warunki</dt><dd>$a&gt;0$, $a\neq1$, $b&gt;0$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Działania na logarytmach <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\log_a(xy)=\log_a x+\log_a y$$
+    $$\log_a\frac xy=\log_a x-\log_a y$$
+    $$\log_a x^r=r\log_a x$$
+    $$\log_a b=\frac{\log_c b}{\log_c a}$$
+    <dl><dt>założenia</dt><dd>$a,c&gt;0$, $a,c\neq1$, $x,y,b&gt;0$; ostatni wzór (zamiana podstawy) to zakres rozszerzony</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Dowód (wymagany na maturze): logarytm iloczynu i zamiana podstawy</summary><div>
+    <p><b>Iloczyn.</b> Niech $u=\log_a x$, $v=\log_a y$, czyli $a^u=x$, $a^v=y$. Wtedy $xy=a^u a^v=a^{u+v}$, więc z definicji $\log_a(xy)=u+v$. Iloraz i potęgę dowodzi się tak samo ($a^u/a^v=a^{u-v}$, $(a^u)^r=a^{ur}$).</p>
+    <p><b>Zamiana podstawy.</b> Niech $t=\log_a b$, czyli $a^t=b$. Zlogarytmuj obie strony przy podstawie $c$: $\log_c a^t=\log_c b$, czyli $t\log_c a=\log_c b$. Ponieważ $a\neq1$, $\log_c a\neq0$, więc $t=\frac{\log_c b}{\log_c a}$.</p>
+  </div></details>
+
+  <table class="tabela">
+    <tr><th></th><th>$f(x)=a^x$</th><th>$g(x)=\log_a x$</th></tr>
+    <tr><td>dziedzina</td><td>$\R$</td><td>$(0,\infty)$</td></tr>
+    <tr><td>zbiór wartości</td><td>$(0,\infty)$</td><td>$\R$</td></tr>
+    <tr><td>stały punkt</td><td>$(0,1)$</td><td>$(1,0)$</td></tr>
+    <tr><td>asymptota</td><td>$y=0$</td><td>$x=0$</td></tr>
+    <tr><td>$a&gt;1$</td><td colspan="2">obie rosnące</td></tr>
+    <tr><td>$0&lt;a&lt;1$</td><td colspan="2">obie malejące</td></tr>
+  </table>
+  <div class="uwaga">Monotoniczność potęgowania (I.5): dla $a&gt;1$ z $x&lt;y$ wynika $a^x&lt;a^y$, ale dla $0&lt;a&lt;1$ nierówność <b>zmienia kierunek</b>: $\left(\frac12\right)^x&gt;\left(\frac12\right)^3\iff x&lt;3$.</div>
+
+  <h2 id="odbicie">2. Interaktywnie: odbicie względem $y=x$</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt $P$ po wykresie $y=a^x$. Jego odbicie $P'$ (zamienione współrzędne) zawsze leży na $y=\log_a x$. „▶ Odbij” pokazuje, jak cały wykres przechodzi w drugi. Przejdź z $a&gt;1$ do $a&lt;1$.</p>
+    <canvas id="ex-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="ex-a" min="0.2" max="4" step="0.05" value="2"> <span id="ex-a-v"></span></label>
+      <button id="ex-start">▶ Odbij</button>
+    </div>
+    <div class="wynik" id="ex-wynik"></div>
+  </div>
+
+  <h2 id="zastosowania">3. Zastosowania: procent składany i rozpad</h2>
+  <div class="wzor">
+    <div class="tytul">Procent składany <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$K_n=K\left(1+\frac{p}{100}\right)^n$$
+    <dl><dt>$K$, $p$</dt><dd>kapitał początkowy, oprocentowanie w % za okres</dd>
+        <dt>$n$</dt><dd>liczba okresów kapitalizacji</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Rozpad (do zapamiętania)</div>
+    $$m(t)=m_0\cdot\left(\tfrac12\right)^{t/T}$$
+    <dl><dt>$T$</dt><dd>okres połowicznego rozpadu: po każdym $T$ zostaje połowa</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Masa $100$ g izotopu. Po każdym okresie $T$ zostaje połowa (przerywane schodki). Zmień $T$ i przesuwaj czas $t$. Zwróć uwagę: czas do spadku do $10\%$ liczysz logarytmem.</p>
+    <canvas id="rz-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$T$ <input type="range" id="rz-T" min="1" max="9" step="0.5" value="4"> <span id="rz-T-v"></span></label>
+      <label>$t$ <input type="range" id="rz-t" min="0" max="30" step="0.5" value="6"> <span id="rz-t-v"></span></label>
+      <button id="rz-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="rz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Na lokacie oprocentowanej $5\%$ w skali roku (kapitalizacja roczna) wpłacono $10\,000$ zł. Po ilu pełnych latach kwota przekroczy $15\,000$ zł?</p>
+    <ol>
+      <li>$10\,000\cdot1{,}05^n&gt;15\,000\iff 1{,}05^n&gt;1{,}5$.</li>
+      <li>Logarytmujemy ($\log$ rośnie, więc znak zostaje): $n\log1{,}05&gt;\log1{,}5$.</li>
+      <li>$n&gt;\frac{\log1{,}5}{\log1{,}05}\approx8{,}31$, więc najmniejsze całkowite $n=9$.</li>
+      <li>Sprawdzenie: $1{,}05^8\cdot10\,000\approx14\,775$ zł, $\;1{,}05^9\cdot10\,000\approx15\,513$ zł.</li>
+    </ol>
+    <p class="odp">Po $9$ latach</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/3" data-odp-opis="a"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykres $f(x)=a^x$ przechodzi przez punkt $(-2,9)$. Wyznacz $a$ i określ monotoniczność $f$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a^{-2}=9\iff a^2=\frac19$, a $a&gt;0$, więc $a=\frac13&lt;1$. <b>$a=\frac13$, funkcja malejąca</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 2" data-odp-opis="pierwsza; druga wartość"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\log_3 54-\log_3 2$ oraz $2\log_5 10-\log_5 4$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\log_3\frac{54}{2}=\log_3 27=3$. $\;\log_5 100-\log_5 4=\log_5 25=2$. <b>$3$ i $2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wiedząc, że $\log_2 3=a$, wyraź $\log_{12}18$ przez $a$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Zamiana podstawy na $2$: $\log_{12}18=\frac{\log_2 18}{\log_2 12}=\frac{\log_2(2\cdot 9)}{\log_2(4\cdot3)}$. <b>$\log_{12}18=\frac{1+2a}{2+a}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (0; 1) u (1; 6)" data-odp-opis="dziedzina"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz dziedzinę funkcji $f(x)=\log_x(6-x)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Podstawa: $x&gt;0$ i $x\neq1$. Liczba logarytmowana: $6-x&gt;0\iff x&lt;6$. <b>$D=(0,1)\cup(1,6)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="24; 25sqrt(2)" data-odp-opis="liczba dni; masa po 20 dniach (mg)"><span class="poziom">maturalne</span>
+      <div class="tresc">Okres połowicznego rozpadu jodu-131 wynosi $8$ dni. Po ilu dniach z $200$ mg zostanie $25$ mg? Ile zostanie po $20$ dniach?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $200\cdot\left(\frac12\right)^{t/8}=25\iff\left(\frac12\right)^{t/8}=\frac18=\left(\frac12\right)^3$, więc $t=24$. Po $20$ dniach: $200\cdot2^{-20/8}=200\cdot2^{-5/2}=\frac{200}{4\sqrt2}=25\sqrt2$.
+        <b>Po $24$ dniach; po $20$ dniach $25\sqrt2\approx35{,}36$ mg</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Dziedzina logarytmu</b> to dwa warunki na podstawę ($&gt;0$, $\neq1$) i jeden na liczbę ($&gt;0$). Zapisz je przed rozwiązywaniem.</li>
+    <li>Przy podstawie $0&lt;a&lt;1$ nierówność <b>zmienia kierunek</b> po opuszczeniu potęgi lub logarytmu.</li>
+    <li>Zamiana podstawy: najczęściej sprowadzasz wszystko do jednej „wygodnej” podstawy (np. $2$ lub $10$).</li>
+    <li>Zadania z lokatą: pytanie „po ilu latach” wymaga liczby <b>całkowitej</b>, sprawdź obie sąsiednie wartości.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Odbicie a^x ↔ log_a x ---
+  const w1 = new Wykres($("ex-plot"), { xmin: -4, xmax: 7, ymin: -4, ymax: 7, rowneSkale: true });
+  const aEx = () => { const a = +$("ex-a").value; return Math.abs(a - 1) < 0.04 ? 1.05 : a; };
+  const ogrEx = p => {
+    const a = aEx();
+    let x = Math.max(-4, Math.min(4, p.x));
+    if (a ** x > 6.5) x = Math.log(6.5) / Math.log(a); // nie wychodź poza widok
+    return { x, y: a ** x };
+  };
+  const P = w1.przeciagaj([{ x: 1, y: 2, ogranicz: ogrEx }], () => rysujEx(null));
+  let stop1 = null;
+  function rysujEx(t) {
+    const a = aEx(), la = Math.log(a);
+    $("ex-a-v").textContent = ladna(a);
+    const q = ogrEx(P[0]); P[0].x = q.x; P[0].y = q.y;
+    const { x, y } = P[0];
+    w1.rysuj(g => {
+      g.prosta(0, 0, 1, 1, 3, true);
+      g.funkcja(s => a ** s, 1);
+      if (t === null) {
+        g.funkcja(s => s > 0 ? Math.log(s) / la : NaN, 4);
+        g.odcinek(x, y, y, x, 2);
+        g.punkt(x, y, "P"); g.punkt(y, x, "P'", 4);
+      } else {
+        // każdy punkt (s, a^s) jedzie po odcinku prostopadłym do y = x do (a^s, s)
+        g.parametryczna(s => s + (a ** s - s) * t, s => a ** s + (s - a ** s) * t, a > 1 ? -4 : Math.log(7) / la, a > 1 ? Math.log(7) / la : 7, 2, { kroki: 300 });
+      }
+    });
+    const mon = a > 1 ? "\\text{obie rosnące}" : "\\text{obie malejące}";
+    tex("ex-wynik", `${ladnaTex(a)}^{${ladnaTex(x)}}\\approx${ladnaTex(y)}\\iff\\log_{${ladnaTex(a)}}${ladnaTex(y)}\\approx${ladnaTex(x)},\\quad P'=(${ladnaTex(y)};\\,${ladnaTex(x)}),\\quad ${mon}`);
+  }
+  $("ex-a").addEventListener("input", () => { if (stop1) stop1(); rysujEx(null); });
+  $("ex-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(2200, t => rysujEx(t), () => rysujEx(null)); });
+  rysujEx(null);
+
+  // --- 3. Rozpad ---
+  const w2 = new Wykres($("rz-plot"), { xmin: -2, xmax: 31, ymin: -12, ymax: 112, krokX: 5, krokY: 25 });
+  let stop2 = null;
+  function rysujRz() {
+    const T = +$("rz-T").value, t = +$("rz-t").value, m = s => 100 * 0.5 ** (s / T);
+    $("rz-T-v").textContent = ladna(T); $("rz-t-v").textContent = ladna(t);
+    w2.rysuj(g => {
+      for (let k = 1; k * T <= 30; k++) {
+        g.odcinek((k - 1) * T, m((k - 1) * T), k * T, m((k - 1) * T), 3);
+        g.odcinek(k * T, m((k - 1) * T), k * T, m(k * T), 3);
+      }
+      g.odcinek(g.z.xmin, 10, g.z.xmax, 10, 4);
+      g.funkcja(m, 1, { od: 0 });
+      g.punkt(T * Math.log2(10), 10, "10%", 4);
+      g.punkt(t, m(t), `${ladna(m(t), 1)} g`, 2);
+    });
+    tex("rz-wynik", `m(${ladnaTex(t)})=100\\cdot\\left(\\tfrac12\\right)^{${ladnaTex(t)}/${ladnaTex(T)}}\\approx${ladnaTex(m(t), 1)}\\text{ g},\\quad 10\\%\\text{ po } t=T\\log_2 10\\approx${ladnaTex(T * Math.log2(10), 1)}`);
+  }
+  ["rz-T", "rz-t"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); rysujRz(); }));
+  $("rz-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(4000, t => { $("rz-t").value = Math.round(t * 60) / 2; rysujRz(); }); });
+  rysujRz();
+});
+</script>
+</body>
+</html>

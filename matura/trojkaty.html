@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trójkąty: rodzaje, Pitagoras, odcinki w trójkącie prostokątnym</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Trójkąty: rodzaje, Pitagoras, odcinki w trójkącie prostokątnym</h1>
+  <p class="lead">O tym, czy trójkąt jest ostro-, prosto- czy rozwartokątny, decyduje jedno porównanie: kwadrat najdłuższego boku kontra suma kwadratów dwóch pozostałych. A wysokość z kąta prostego tnie trójkąt na dwa mniejsze, podobne do całego. Z tego biorą się wszystkie „odcinkowe” wzory.</p>
+  <p class="wymagania">VIII.1, VIII.2, VIII.12</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="rodzaje">1. Rodzaje trójkątów i Pitagoras</h2>
+  <p>Oznaczenia jak w tablicach: bok $a$ leży naprzeciw kąta $\alpha$ (przy $A$), $b$ naprzeciw $\beta$, $c$ naprzeciw $\gamma$.</p>
+  <div class="twierdzenie"><b>Twierdzenie Pitagorasa i odwrotne</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    $$\gamma=90^\circ\iff a^2+b^2=c^2$$
+    Strzałka „$\Leftarrow$” to twierdzenie odwrotne: z samych boków wiesz, że kąt jest prosty. Dowód: <a href="rozwiazywanie-trojkatow.html">twierdzenie cosinusów</a> (dla $\gamma=90^\circ$ znika człon $-2ab\cos\gamma$) albo niżej, z podobieństwa.
+  </div>
+  <div class="wzor"><div class="tytul">Rodzaj trójkąta z boków ($c$ – najdłuższy)</div>
+    $$c^2&lt;a^2+b^2\ \Rightarrow\ \text{ostrokątny}$$
+    $$c^2=a^2+b^2\ \Rightarrow\ \text{prostokątny}$$
+    $$c^2&gt;a^2+b^2\ \Rightarrow\ \text{rozwartokątny}$$
+    <dl><dt>dlaczego</dt><dd>$c^2=a^2+b^2-2ab\cos\gamma$: znak $\cos\gamma$ decyduje, czy $c^2$ jest mniejsze, czy większe od $a^2+b^2$</dd>
+        <dt>$c$</dt><dd>musi być najdłuższy: tylko naprzeciw niego może leżeć kąt prosty lub rozwarty</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>Boki a kąty</b>
+    W trójkącie naprzeciw większego kąta leży dłuższy bok (i odwrotnie). Do tego nierówność trójkąta: $c&lt;a+b$ dla każdego boku.
+    <details class="rozwin"><summary>Krótkie uzasadnienie</summary><div>
+      <p>Z <a href="rozwiazywanie-trojkatow.html">twierdzenia sinusów</a> $a=2R\sin\alpha$, $b=2R\sin\beta$. Gdy $\alpha&gt;\beta$ i $\alpha+\beta&lt;180^\circ$:</p>
+      $$\sin\alpha-\sin\beta=2\cos\tfrac{\alpha+\beta}{2}\sin\tfrac{\alpha-\beta}{2}$$
+      <p>Oba czynniki są dodatnie ($\frac{\alpha+\beta}2&lt;90^\circ$), więc $a&gt;b$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="wzor"><div class="tytul">Cięciwa (Pitagoras w okręgu, VIII.1)</div>
+    $$\left(\tfrac{l}{2}\right)^2+d^2=r^2$$
+    <dl><dt>$l$</dt><dd>długość cięciwy; $d$ – jej odległość od środka. Promień prostopadły do cięciwy dzieli ją na połowy. Nie ma tego w tablicach, wyprowadzasz z rysunku</dd></dl>
+  </div>
+  <p>Szczególne trójkąty (równoboczny: $h=\frac{a\sqrt3}{2}$, $P=\frac{a^2\sqrt3}{4}$, $r=\frac13h$, $R=\frac23h$; prostokątny: $R=\frac c2$, $r=\frac{a+b-c}{2}$) – wszystko jest w tablicach. Trójkąty $30^\circ$–$60^\circ$–$90^\circ$ i $45^\circ$–$45^\circ$–$90^\circ$: <a href="trygonometria-trojkat-prostokatny.html">trygonometria w trójkącie prostokątnym</a>.</p>
+
+  <h2 id="pitagoras-demo">2. Interaktywnie: kwadraty na bokach</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki (skok 0,5). Liczby w kwadratach to ich pola. Kwadrat na najdłuższym boku (czerwony) porównaj z sumą dwóch pozostałych: równe – kąt prosty; mniejszy – wszystkie kąty ostre; większy – kąt rozwarty.</p>
+    <canvas id="tr-plot"></canvas>
+    <div class="wynik" id="tr-wynik"></div>
+    <div class="wynik" id="tr-typ"></div>
+  </div>
+
+  <h2 id="odcinki">3. Odcinki w trójkącie prostokątnym</h2>
+  <div class="twierdzenie"><b>Twierdzenie o odcinkach w trójkącie prostokątnym</b>
+    Jeśli $CD$ jest wysokością trójkąta prostokątnego $ABC$ o kącie prostym $ACB$, to
+    $$|AD|\cdot|BD|=|CD|^2$$
+    $$|AC|^2=|AB|\cdot|AD|$$
+    $$|BC|^2=|AB|\cdot|BD|$$
+    W tablicach jest tylko $h_c=\sqrt{|AD|\cdot|DB|}$ i $h_c=\frac{ab}{c}$. Dwa pozostałe wzory zapamiętaj: „przyprostokątna$^2$ = przeciwprostokątna · jej rzut”.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Niech $|\angle BAC|=\alpha$, $|\angle ABC|=\beta$, $\alpha+\beta=90^\circ$.</p>
+      <ol>
+        <li>$\triangle ADC\sim\triangle ACB$ (cecha kkk): oba mają kąt prosty (przy $D$ i przy $C$) i wspólny kąt $\alpha$. Odpowiadają sobie wierzchołki $A\to A$, $D\to C$, $C\to B$, więc $\frac{|AD|}{|AC|}=\frac{|AC|}{|AB|}$, czyli $|AC|^2=|AB|\cdot|AD|$.</li>
+        <li>$\triangle CDB\sim\triangle ACB$: kąt prosty i wspólny kąt $\beta$. $D\to C$, $B\to B$, $C\to A$, więc $\frac{|BD|}{|BC|}=\frac{|BC|}{|AB|}$, czyli $|BC|^2=|AB|\cdot|BD|$.</li>
+        <li>Stąd $\triangle ADC\sim\triangle CDB$; kąt $\alpha$ przy $A$ odpowiada kątowi $DCB$ (bo $|\angle DCB|=90^\circ-\beta=\alpha$). $A\to C$, $D\to D$, $C\to B$, więc $\frac{|AD|}{|CD|}=\frac{|CD|}{|BD|}$, czyli $|AD|\cdot|BD|=|CD|^2$. $\blacksquare$</li>
+      </ol>
+      <p>Bonus: dodając wzory z 1. i 2.: $|AC|^2+|BC|^2=|AB|(|AD|+|BD|)=|AB|^2$. To jest dowód twierdzenia Pitagorasa.</p>
+    </div></details>
+  </div>
+  <div class="demo">
+    <p class="opis">Przeciągaj $C$ po półokręgu (kąt $C$ jest zawsze prosty – to okrąg Talesa) oraz $A$ i $B$. Zaznacz równe kąty: kąt $\alpha$ przy $A$ powtarza się przy $C$ w trójkącie fioletowym, $\beta$ – w niebieskim. Dlatego trzy trójkąty są podobne.</p>
+    <canvas id="wy-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="wy-katy" checked> pokaż równe kąty</label>
+    </div>
+    <div class="wynik" id="wy-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wysokość $CD$ trójkąta prostokątnego $ABC$ ($|\angle C|=90^\circ$) dzieli przeciwprostokątną na odcinki $|AD|=4$ i $|BD|=9$. Oblicz $|CD|$, $|AC|$, $|BC|$.</p>
+    <ol>
+      <li>$|CD|^2=|AD|\cdot|BD|=36$, więc $|CD|=6$.</li>
+      <li>$|AB|=13$, $|AC|^2=13\cdot4=52$, więc $|AC|=2\sqrt{13}$.</li>
+      <li>$|BC|^2=13\cdot9=117$, więc $|BC|=3\sqrt{13}$.</li>
+      <li>Sprawdzenie: $52+117=169=13^2$.</li>
+    </ol>
+    <p class="odp">$|CD|=6$, $|AC|=2\sqrt{13}$, $|BC|=3\sqrt{13}$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Trójkąt ma boki $6$, $8$, $11$. Czy jest ostrokątny, prostokątny, czy rozwartokątny? Przy którym boku leży największy kąt?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Najdłuższy bok $11$: $11^2=121$, $6^2+8^2=100&lt;121$. Największy kąt leży naprzeciw boku $11$. <b>Rozwartokątny, kąt rozwarty naprzeciw boku $11$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">W okręgu o promieniu $10$ poprowadzono cięciwę długości $16$. Oblicz odległość cięciwy od środka okręgu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Połowa cięciwy $8$, promień $10$ to przeciwprostokątna: $d=\sqrt{100-64}$. <b>$d=6$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12; 9; 16" data-odp-opis="wysokość; odcinki przeciwprostokątnej"><span class="poziom">średnie</span>
+      <div class="tresc">Przyprostokątne trójkąta mają długości $15$ i $20$. Oblicz wysokość opuszczoną na przeciwprostokątną i długości odcinków, na które ta wysokość dzieli przeciwprostokątną.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $c=25$, $h=\frac{ab}{c}=\frac{300}{25}=12$. Rzut przyprostokątnej $15$: $\frac{15^2}{25}=9$, rzut $20$: $\frac{400}{25}=16$ (kontrola: $9\cdot16=144=12^2$). <b>$h=12$, odcinki $9$ i $16$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (1; 3)" data-odp-opis="zbiór x"><span class="poziom">średnie</span>
+      <div class="tresc">Dla jakich $x$ liczby $x$, $x+1$, $x+2$ są długościami boków trójkąta rozwartokątnego?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąt istnieje, gdy $x+(x+1)&gt;x+2$, czyli $x&gt;1$. Najdłuższy bok to $x+2$; rozwartokątny, gdy $(x+2)^2&gt;x^2+(x+1)^2$, czyli $x^2-2x-3&lt;0$, $(x-3)(x+1)&lt;0$, $x\in(-1,3)$. Część wspólna: <b>$x\in(1,3)$</b>. (Dla $x=3$ wychodzi trójkąt $3,4,5$ – prostokątny.)
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wysokość $CD$ trójkąta prostokątnego $ABC$ o kącie prostym przy $C$ ma długość $6$ i dzieli przeciwprostokątną w stosunku $|AD|:|DB|=1:4$. Oblicz pole trójkąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $|AD|=t$, $|DB|=4t$. $t\cdot4t=36$, więc $t=3$, $|AB|=5t=15$. $P=\frac12\cdot15\cdot6$. <b>$P=45$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że jeśli $a$, $b$ są przyprostokątnymi, a $h$ wysokością opuszczoną na przeciwprostokątną, to $\frac1{h^2}=\frac1{a^2}+\frac1{b^2}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Z dwóch wzorów na pole: $\frac12ab=\frac12ch$, więc $h=\frac{ab}{c}$. Stąd
+        $$\frac1{h^2}=\frac{c^2}{a^2b^2}=\frac{a^2+b^2}{a^2b^2}$$
+        (Pitagoras), a to jest $\frac1{b^2}+\frac1{a^2}$. <b>Co należało wykazać.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Rodzaj trójkąta:</b> porównuj kwadrat <i>najdłuższego</i> boku z sumą kwadratów pozostałych. Najpierw sprawdź nierówność trójkąta.</li>
+    <li>Powołując się na twierdzenie odwrotne do Pitagorasa, napisz to wprost: „$a^2+b^2=c^2$, więc z tw. odwrotnego do tw. Pitagorasa kąt $\gamma$ jest prosty”.</li>
+    <li><b>Wysokość z kąta prostego:</b> $h=\frac{ab}{c}$ (z pól) to najszybsza droga. Wzory z odcinkami $|AD|$, $|BD|$ mają sens tylko dla kąta prostego.</li>
+    <li>Cięciwa, odcinek stycznej: zawsze dorysuj promień do punktu (styczności lub środka cięciwy) – powstaje trójkąt prostokątny.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Kwadraty na bokach ---
+  const w1 = new Wykres($("tr-plot"), { xmin: -7, xmax: 7, ymin: -6.5, ymax: 6.5, rowneSkale: true, podpisy: false });
+  const pt = w1.przeciagaj([{ x: -1.5, y: 1, siatka: 0.5, ogranicz: wPolu(3, 3) }, { x: 2.5, y: -2, siatka: 0.5, ogranicz: wPolu(3, 3) },
+    { x: -1.5, y: -2, siatka: 0.5, ogranicz: wPolu(3, 3) }], rysujTr);
+  // kwadrat zbudowany na boku PQ po stronie przeciwnej do R
+  const kwadrat = (P, Q, R) => {
+    let nx = -(Q.y - P.y), ny = Q.x - P.x;
+    if (nx * (R.x - P.x) + ny * (R.y - P.y) > 0) { nx = -nx; ny = -ny; }
+    return [[P.x, P.y], [Q.x, Q.y], [Q.x + nx, Q.y + ny], [P.x + nx, P.y + ny]];
+  };
+  function rysujTr() {
+    const [A, B, C] = pt;
+    const S = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+    const pole2 = (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
+    const boki = [{ n: "a", P: B, Q: C, R: A, k: "\\alpha" }, { n: "b", P: A, Q: C, R: B, k: "\\beta" }, { n: "c", P: A, Q: B, R: C, k: "\\gamma" }];
+    boki.forEach(s => { s.kw = (s.Q.x - s.P.x) ** 2 + (s.Q.y - s.P.y) ** 2; });
+    const naj = boki.reduce((m, s) => (s.kw > m.kw ? s : m), boki[0]);
+    const suma = boki.reduce((t, s) => t + s.kw, 0) - naj.kw;
+    const ok = Math.abs(pole2) > 1e-9;
+    let typ = "", znak = "";
+    if (!ok) { typ = "Punkty leżą na jednej prostej – to nie jest trójkąt."; znak = "?"; }
+    else if (Math.abs(naj.kw - suma) < 1e-6) { typ = "Trójkąt prostokątny: kąt prosty naprzeciw najdłuższego boku."; znak = "="; }
+    else if (naj.kw < suma) { typ = "Trójkąt ostrokątny: nawet największy kąt jest ostry."; znak = "<"; }
+    else { typ = "Trójkąt rozwartokątny: kąt rozwarty naprzeciw najdłuższego boku."; znak = ">"; }
+    w1.rysuj(g => {
+      if (ok) boki.forEach(s => {
+        const kw = kwadrat(s.P, s.Q, s.R), nr = s === naj ? 2 : 1;
+        g.wielokat(kw, nr, { wypelnij: s === naj ? 0.2 : 0.12, grubosc: 1.5 });
+        const cx = (kw[0][0] + kw[2][0]) / 2, cy = (kw[0][1] + kw[2][1]) / 2;
+        g.tekst(cx, cy, ladna(s.kw), nr, { wyrownanie: "center", dy: 5, gruby: true });
+      });
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 3, { wypelnij: 0.2 });
+      if (ok) {
+        const W = naj.R, [P, Q] = [naj.P, naj.Q];
+        if (znak === "=") katProsty(g, W, P, Q, 0.35, 2); else lukKata(g, W, P, Q, 0.5, 2);
+      }
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+    });
+    tex("tr-wynik", ok ? `${naj.n}^2=${ladnaTex(naj.kw)}\\ ${znak}\\ ${ladnaTex(suma)}=\\text{suma dwóch pozostałych}` : "\\text{---}");
+    $("tr-typ").textContent = typ;
+  }
+  rysujTr();
+
+  // --- 3. Wysokość z kąta prostego ---
+  const w2 = new Wykres($("wy-plot"), { xmin: -5.5, xmax: 5.5, ymin: -1, ymax: 5.5, rowneSkale: true });
+  let th = 2.1; // położenie C na półokręgu (kąt w radianach)
+  const pw = w2.przeciagaj([
+    { x: -4, y: 0, ogranicz: p => ({ x: Math.max(-5, Math.min(-1, p.x)), y: 0 }) },
+    { x: 4, y: 0, ogranicz: p => ({ x: Math.max(1, Math.min(5, p.x)), y: 0 }) },
+    { x: 0, y: 0, ogranicz: p => {
+      const M = sr(pw[0], pw[1]);
+      th = Math.max(0.2, Math.min(Math.PI - 0.2, Math.atan2(Math.max(0, p.y - M.y), p.x - M.x)));
+      return p;
+    } }], rysujWy);
+  function rysujWy() {
+    const [A, B, C] = pw;
+    const M = sr(A, B), R = odl(A, B) / 2;
+    C.x = M.x + R * Math.cos(th); C.y = M.y + R * Math.sin(th);
+    const D = { x: C.x, y: 0 };
+    const ad = odl(A, D), bd = odl(B, D), cd = odl(C, D), ab = odl(A, B), ac = odl(A, C), bc = odl(B, C);
+    w2.rysuj(g => {
+      g.luk(M.x, M.y, R, 0, Math.PI, 3, { przerywana: true, grubosc: 1.5 });
+      g.wielokat([[A.x, A.y], [D.x, D.y], [C.x, C.y]], 1, { wypelnij: 0.15 });
+      g.wielokat([[D.x, D.y], [B.x, B.y], [C.x, C.y]], 4, { wypelnij: 0.15 });
+      g.odcinek(C.x, C.y, D.x, D.y, 3, false);
+      katProsty(g, C, A, B, 0.3, 1); katProsty(g, D, B, C, 0.3, 3);
+      if ($("wy-katy").checked) {
+        lukKata(g, A, B, C, 0.6, 2); lukKata(g, C, D, B, 0.6, 2);
+        lukKata(g, B, A, C, 0.6, 3); lukKata(g, C, A, D, 0.45, 3);
+      }
+      const S = { x: M.x, y: C.y / 3 };
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+      g.punkt(D.x, D.y, "", 3, { r: 3.5 }); g.tekst(D.x, D.y, "D", 3, { dy: 17, wyrownanie: "center", gruby: true });
+    });
+    const f = v => ladnaTex(v);
+    tex("wy-wynik", `\\begin{aligned}|AD|\\cdot|BD|&=${f(ad * bd)},&|CD|^2&=${f(cd * cd)}\\\\|AB|\\cdot|AD|&=${f(ab * ad)},&|AC|^2&=${f(ac * ac)}\\\\|AB|\\cdot|BD|&=${f(ab * bd)},&|BC|^2&=${f(bc * bc)}\\end{aligned}`);
+  }
+  $("wy-katy").addEventListener("change", rysujWy);
+  rysujWy();
+});
+</script>
+</body>
+</html>

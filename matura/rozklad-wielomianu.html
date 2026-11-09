@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozkład wielomianu na czynniki, pierwiastki całkowite</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+<style>
+  .demo input[type=text] { font: inherit; width: 9em; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Rozkład wielomianu na czynniki, pierwiastki całkowite</h1>
+  <p class="lead">Rozłożyć wielomian to zapisać go jako iloczyn czynników liniowych i kwadratowych bez pierwiastków. Gdy nic nie widać od razu, zgadujesz pierwiastek, ale nie na ślepo: całkowity pierwiastek musi dzielić wyraz wolny.</p>
+  <p class="wymagania">II.R.2, II.R.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="metody">1. Metody, w tej kolejności</h2>
+  <table class="tabela">
+    <tr><th>Metoda</th><th>Przykład</th></tr>
+    <tr><td>1. wyłącz wspólny czynnik</td><td>$2x^4-6x^3=2x^3(x-3)$</td></tr>
+    <tr><td>2. <a href="wzory-skroconego-mnozenia.html">wzory skróconego mnożenia</a></td><td>$x^4-16=(x^2-4)(x^2+4)$ $=(x-2)(x+2)(x^2+4)$</td></tr>
+    <tr><td>3. grupowanie</td><td>$x^3+3x^2-4x-12$ $=x^2(x+3)-4(x+3)$ $=(x+3)(x-2)(x+2)$</td></tr>
+    <tr><td>4. pierwiastek całkowity + <a href="dzielenie-wielomianow.html">Horner</a></td><td>$W(1)=0\Rightarrow W(x)=(x-1)Q(x)$</td></tr>
+    <tr><td>5. trójmian: $\Delta$</td><td>$x^2-x-6=(x-3)(x+2)$</td></tr>
+  </table>
+  <p><b>Koniec</b>, gdy zostały tylko czynniki stopnia $1$ i trójmiany z $\Delta&lt;0$ (np. $x^2+4$, $x^2+x+1$).</p>
+  <p><b>Sztuczka do grupowania</b>: gdy wyrazów jest za mało, rozbij jeden z nich:
+    $$x^3-7x+6=x^3-x-6x+6$$
+    $$=x(x-1)(x+1)-6(x-1)$$
+    $$=(x-1)(x^2+x-6)$$
+    $$=(x-1)(x-2)(x+3)$$</p>
+
+  <h2 id="calkowite">2. Pierwiastki całkowite</h2>
+  <div class="twierdzenie"><b>Twierdzenie</b> Jeżeli wielomian $W(x)=a_nx^n+\ldots+a_1x+a_0$ o współczynnikach <b>całkowitych</b>, $a_0\ne0$, ma pierwiastek całkowity $k$, to $k$ jest dzielnikiem wyrazu wolnego $a_0$.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>$W(k)=0$, czyli $a_nk^n+\ldots+a_1k+a_0=0$. Stąd</p>
+      $$a_0=-k\left(a_nk^{n-1}+\ldots+a_1\right)$$
+      <p>Nawias jest liczbą całkowitą (sumą iloczynów liczb całkowitych), więc $a_0$ jest wielokrotnością $k$, czyli $k\mid a_0$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <ul>
+    <li>Gdy $a_0=0$, najpierw wyłącz $x$ (lub $x^m$), dopiero potem szukaj dzielników.</li>
+    <li>Twierdzenie daje tylko <b>kandydatów</b>. Każdego sprawdzasz: $W(k)=0$? Szybkie testy: $W(1)$ to suma współczynników, $W(-1)$ też liczy się w pamięci.</li>
+    <li>Po znalezieniu $k$ dziel przez $x-k$ (Horner) i szukaj dalej w ilorazie, <b>zaczynając znów od $k$</b>: pierwiastek może być wielokrotny.</li>
+    <li>Gdy $a_n\ne\pm1$, pierwiastki mogą być ułamkami, np. $2x-1$. Twierdzenie o pierwiastkach wymiernych jest <b>poza podstawą</b>; takie pierwiastki wyjdą z $\Delta$ po podzieleniu.</li>
+  </ul>
+
+  <h2 id="sito">3. Interaktywnie: sito dzielników</h2>
+  <div class="demo">
+    <p class="opis">Wybierz wielomian lub wpisz współczynniki całkowite (od najwyższej potęgi). „Krok →” sprawdza kolejnego kandydata. Trafienie ($P(k)=0$) dzieli wielomian przez $x-k$; kandydaci, którzy nie dzielą nowego wyrazu wolnego, wypadają (szare). Gdy zostanie trójmian, kończy $\Delta$.</p>
+    <canvas id="si-plot" style="height:150px"></canvas>
+    <canvas id="si-wykres" style="height:260px;margin-top:8px"></canvas>
+    <div class="sterowanie">
+      <label>przykład <select id="si-wybor">
+        <option value="1, -2, -5, 6">x³ − 2x² − 5x + 6</option>
+        <option value="1, 0, -5, 0, 4">x⁴ − 5x² + 4</option>
+        <option value="2, -3, -3, 2">2x³ − 3x² − 3x + 2</option>
+        <option value="1, -2, -3, 4, 4">x⁴ − 2x³ − 3x² + 4x + 4</option>
+        <option value="1, 1, 1, 1">x³ + x² + x + 1</option>
+        <option value="1, -1, -2, 0">x³ − x² − 2x</option>
+      </select></label>
+      <label>$W$: <input type="text" id="si-w" value="1, -2, -5, 6"></label>
+      <button id="si-krok">Krok →</button>
+      <button id="si-start" class="wtorny">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="si-wynik"></div>
+    <div class="wynik" id="si-rozklad"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozłóż na czynniki $W(x)=x^4-x^3-7x^2+x+6$.</p>
+    <ol>
+      <li>Kandydaci: dzielniki $6$: $\pm1,\pm2,\pm3,\pm6$.</li>
+      <li>$W(1)=1-1-7+1+6=0$. Horner dla $1$: $\;1,\,0,\,-7,\,-6\;|\;0$, więc $W(x)=(x-1)(x^3-7x-6)$.</li>
+      <li>Iloraz $P(x)=x^3-7x-6$: $P(1)=-12$, $P(-1)=-1+7-6=0$. Horner dla $-1$: $\;1,\,-1,\,-6\;|\;0$.</li>
+      <li>Zostaje trójmian $x^2-x-6$: $\Delta=25$, pierwiastki $3$ i $-2$.</li>
+    </ol>
+    <p class="odp">$W(x)=(x-1)(x+1)(x-3)(x+2)$</p>
+    <p>Szybciej: $W(1)=0$ widać od razu z sumy współczynników. Rozwiązywanie równań i nierówności z takim rozkładem: <a href="rownania-wielomianowe.html">Równania i nierówności wielomianowe</a>.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozłóż na czynniki $3x^5-12x^3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $3x^3(x^2-4)=$ <b>$3x^3(x-2)(x+2)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozłóż metodą grupowania $x^3-5x^2-4x+20$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^2(x-5)-4(x-5)=(x-5)(x^2-4)=$ <b>$(x-5)(x-2)(x+2)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Rozłóż na czynniki $x^4+x^3-8x-8$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^3(x+1)-8(x+1)=(x+1)(x^3-8)$, a $x^3-8=(x-2)(x^2+2x+4)$, gdzie $\Delta=-12&lt;0$.
+        <b>$(x+1)(x-2)(x^2+2x+4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; -3" data-odp-opis="pierwiastki całkowite"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz pierwiastki całkowite wielomianu $W(x)=2x^3+x^2-13x+6$ i rozłóż go na czynniki.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kandydaci: $\pm1,\pm2,\pm3,\pm6$. $W(1)=-4$, $W(-1)=18$, $W(2)=16+4-26+6=0$. Horner dla $2$: $\;2,\,5,\,-3\;|\;0$.
+        $2x^2+5x-3$: $\Delta=49$, $x=-3$ lub $x=\frac12$ (nie jest całkowity).
+        <b>Pierwiastki całkowite: $2$ i $-3$; $\;W(x)=(x-2)(x+3)(2x-1)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że wielomian $W(x)=x^3-3x+1$ nie ma pierwiastków całkowitych.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Współczynniki są całkowite, więc pierwiastek całkowity musiałby dzielić $a_0=1$, czyli byłby równy $1$ lub $-1$. Ale $W(1)=-1\ne0$ i $W(-1)=3\ne0$. <b>Brak pierwiastków całkowitych.</b> $\blacksquare$
+      </div></details></li>
+    <li class="zadanie" data-odp="1; -4; -2" data-odp-opis="a; b; trzeci pierwiastek"><span class="poziom">maturalne</span>
+      <div class="tresc">Liczby $2$ i $-1$ są pierwiastkami wielomianu $W(x)=x^3+ax^2-4x+b$. Wyznacz $a$, $b$ i trzeci pierwiastek.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $W(2)=4a+b=0$, $\;W(-1)=a+b+3=0$. Odejmując: $3a=3$, więc $a=1$, $b=-4$.
+        $W(x)=x^3+x^2-4x-4=x^2(x+1)-4(x+1)=(x+1)(x-2)(x+2)$.
+        <b>$a=1$, $b=-4$, trzeci pierwiastek $-2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Zapisz, <b>skąd</b> kandydaci („pierwiastek całkowity dzieli wyraz wolny $6$”) i pokaż rachunek $W(k)=0$. Samo „zgadłem” nie wystarcza.</li>
+    <li>Po Hornerze <b>nie kończ</b> na trójmianie z $\Delta\ge0$: rozłóż go do końca.</li>
+    <li>Najpierw zawsze wyłącz wspólny czynnik i sprawdź grupowanie: często oszczędza całe zgadywanie.</li>
+    <li>Pierwiastek wielokrotny: po podzieleniu przez $x-k$ sprawdź $k$ jeszcze raz w ilorazie.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function wTex(ws) {
+    const n = ws.length - 1;
+    let s = "";
+    ws.forEach((c, i) => {
+      const k = n - i;
+      if (c === 0) return;
+      const znak = c < 0 ? "-" : (s ? "+" : "");
+      const m = Math.abs(c);
+      const wsp = (m === 1 && k > 0) ? "" : ladnaTex(m);
+      const xx = k === 0 ? "" : k === 1 ? "x" : `x^{${k}}`;
+      s += znak + wsp + xx;
+    });
+    return s || "0";
+  }
+  const wart = (w, x) => w.reduce((s, c) => s * x + c, 0);
+  const horner = (w, a) => { const q = [w[0]]; for (let i = 1; i < w.length; i++) q.push(w[i] + a * q[i - 1]); return q; };
+  const dwumian = k => k === 0 ? "x" : `x${k > 0 ? "-" : "+"}${Math.abs(k)}`;
+  const dzielniki = n => { n = Math.abs(n); const d = []; for (let i = 1; i <= n; i++) if (n % i === 0) d.push(i, -i); return d; };
+
+  // --- przygotowanie wszystkich kroków (stany po kolei) ---
+  let W = [], stany = [], krok = 0, stop = null, kand = [];
+  function przygotuj() {
+    const w = $("si-w").value.split(/[,;\s]+/).filter(v => v !== "").map(Number);
+    if (w.length < 2 || w.length > 7 || w.some(v => !Number.isInteger(v)) || w[0] === 0 || w.every((v, i) => i === 0 || v === 0)) {
+      tex("si-wynik", "\\text{Wpisz 2–7 liczb całkowitych, pierwsza}\\ne0");
+      stany = []; return false;
+    }
+    W = w;
+    let m = 0, cur = W.slice();
+    while (cur[cur.length - 1] === 0) { cur.pop(); m++; }
+    kand = Math.abs(cur[cur.length - 1]) <= 60 ? dzielniki(cur[cur.length - 1]) : [];
+    const st = { cur, m, pierw: [], chip: {}, opis: "", test: null };
+    kand.forEach(k => { st.chip[k] = { stan: "nowy", v: null }; });
+    const kopia = s => JSON.parse(JSON.stringify(s));
+    stany = [];
+    const dodaj = (s, opis, test = null) => { s.opis = opis; s.test = test; stany.push(kopia(s)); };
+    dodaj(st, `W(x)=${wTex(W)}` + (m ? "" : `,\\quad\\text{kandydaci: dzielniki } ${cur[cur.length - 1]}`));
+    if (m) dodaj(st, `a_0=0:\\ \\text{wyłącz } ${m > 1 ? "x^{" + m + "}" : "x"},\\ \\text{zostaje } P(x)=${wTex(cur)}`);
+    let i = 0;
+    while (st.cur.length > 3 && i < kand.length) {
+      const k = kand[i], a0 = st.cur[st.cur.length - 1];
+      if (st.chip[k].stan === "odpada" || a0 % k !== 0) { i++; continue; }
+      const v = wart(st.cur, k);
+      if (v !== 0 && st.chip[k].stan === "tak") {
+        dodaj(st, `P(${k})=${v}\\neq0:\\ ${k}\\ \\text{nie jest już pierwiastkiem ilorazu}`, k);
+        i++;
+      } else if (v !== 0) {
+        st.chip[k] = { stan: "nie", v };
+        dodaj(st, `P(${k})=${v}\\neq0`, k);
+        i++;
+      } else {
+        st.chip[k] = { stan: "tak", v: 0, kr: (st.chip[k].kr || 0) };
+        dodaj(st, `P(${k})=0\\ \\Rightarrow\\ \\text{dzielimy przez } ${dwumian(k)}`, k);
+        const q = horner(st.cur, k); q.pop();
+        st.cur = q; st.pierw.push(k); st.chip[k].kr++;
+        const nowy = q[q.length - 1], wyp = [];
+        kand.forEach(d => { if (st.chip[d].stan === "nowy" && nowy % d !== 0) { st.chip[d].stan = "odpada"; wyp.push(d); } });
+        dodaj(st, `P(x)=(${dwumian(k)})(${wTex(q)})` + (wyp.length ? `,\\ \\text{odpadają: } ${wyp.join(",\\,")}` : "") + `,\\ \\text{dalej } P(x)=${wTex(q)}`, k);
+      }
+    }
+    // koniec: zostaje trójmian, dwumian albo stała
+    const c = st.cur;
+    let opisK = "";
+    if (c.length === 3) {
+      const [a, b, cc] = c, D = b * b - 4 * a * cc;
+      opisK = `\\Delta=${D}` + (D < 0 ? "\\lt 0:\\ \\text{trójmian się nie rozkłada}" : "");
+      if (D >= 0) {
+        const s = Math.sqrt(D);
+        [(-b - s) / (2 * a), (-b + s) / (2 * a)].forEach(r => {
+          if (Math.abs(r - Math.round(r)) < 1e-9 && st.cur.length > 1) {
+            const k = Math.round(r) || 0, q = horner(st.cur, k); q.pop();
+            st.cur = q; st.pierw.push(k);
+            if (st.chip[k]) { st.chip[k].stan = "tak"; st.chip[k].kr = (st.chip[k].kr || 0) + 1; }
+          }
+        });
+        if (st.cur.length === 3) opisK += ":\\ \\text{pierwiastki niecałkowite, trójmian zostaje}";
+        else if (st.cur.length === 2) opisK += ":\\ \\text{jeden pierwiastek całkowity, drugi nie}";
+        else opisK += ":\\ \\text{pierwiastki całkowite}";
+      }
+    } else if (c.length === 2 && Number.isInteger(-c[1] / c[0])) {
+      const k = -c[1] / c[0] || 0; st.cur = [c[0]]; st.pierw.push(k);
+      if (st.chip[k]) { st.chip[k].stan = "tak"; st.chip[k].kr = (st.chip[k].kr || 0) + 1; }
+      opisK = `\\text{czynnik liniowy } ${dwumian(k)}`;
+    } else opisK = "\\text{brak (kolejnych) pierwiastków całkowitych}";
+    dodaj(st, opisK);
+    return true;
+  }
+  function rozkladTex(s) {
+    const krot = {};
+    s.pierw.forEach(k => { krot[k] = (krot[k] || 0) + 1; });
+    let t = "";
+    const lead = s.cur.length === 1 ? s.cur[0] : 1;
+    if (lead === -1) t += "-"; else if (lead !== 1) t += ladnaTex(lead);
+    if (s.m) t += s.m > 1 ? `x^{${s.m}}` : "x";
+    Object.keys(krot).map(Number).sort((u, v) => v - u).forEach(k => {
+      t += `(${dwumian(k)})` + (krot[k] > 1 ? `^{${krot[k]}}` : "");
+    });
+    if (s.cur.length > 1) t += `(${wTex(s.cur)})`;
+    return t || "1";
+  }
+
+  // --- rysowanie ---
+  const w1 = new Wykres($("si-plot"), { xmin: 0, xmax: 8, ymin: -1, ymax: 0, siatka: false, osie: false });
+  const w2 = new Wykres($("si-wykres"), { xmin: -4, xmax: 4, ymin: -10, ymax: 10 });
+  function zakresWykresu() {
+    const s = stany[stany.length - 1];
+    const pw = s.pierw.concat(s.m ? [0] : []);
+    const lo = Math.min(-2, ...pw) - 1.5, hi = Math.max(2, ...pw) + 1.5;
+    let Y = 1;
+    for (let i = 0; i <= 200; i++) { const x = lo + 0.4 + (hi - lo - 0.8) * i / 200; Y = Math.max(Y, Math.abs(wart(W, x))); }
+    Y = Math.min(Y, 1e6);
+    const kr = 10 ** Math.floor(Math.log10(Y / 2)), krokY = [1, 2, 5, 10].map(f => f * kr).find(v => Y / v <= 5);
+    w2.zakres({ xmin: lo, xmax: hi, ymin: -1.2 * Y, ymax: 1.2 * Y, krokY });
+  }
+  function rysuj() {
+    if (!stany.length) return;
+    const s = stany[Math.min(krok, stany.length - 1)];
+    const kol = Math.min(8, Math.max(1, kand.length)), wier = Math.max(1, Math.ceil(kand.length / kol));
+    w1.zakres({ xmin: -0.05, xmax: kol + 0.05, ymin: -wier - 0.05, ymax: 0.05 });
+    w1.rysuj(g => {
+      if (!kand.length) { g.tekst(kol / 2, -0.5, "|a₀| za duże na demo — tylko wykres", "--muted", { wyrownanie: "center" }); return; }
+      kand.forEach((k, i) => {
+        const x = i % kol, y = -Math.floor(i / kol) - 1, c = s.chip[k];
+        const akt = s.test === k;
+        const nr = c.stan === "tak" ? 3 : c.stan === "nie" ? 2 : "--border";
+        const kr = c.stan === "tak" ? 0.35 : c.stan === "nie" ? 0.12 : c.stan === "odpada" ? 0.0001 : 0.0001;
+        g.prostokat(x + 0.06, y + 0.08, 0.88, 0.84, akt ? 1 : nr, { wypelnij: kr, grubosc: akt ? 3 : 1.5 });
+        const kolTxt = c.stan === "odpada" ? "--border" : "--text";
+        g.tekst(x + 0.5, y + 0.5, String(k).replace("-", "−"), kolTxt, { wyrownanie: "center", dy: -2, gruby: true, rozmiar: 17 });
+        let pod = "";
+        if (c.stan === "nie") pod = "P=" + ladna(c.v);
+        else if (c.stan === "tak") pod = "✓" + (c.kr > 1 ? " ×" + c.kr : "");
+        else if (c.stan === "odpada") pod = "odpada";
+        if (pod) g.tekst(x + 0.5, y + 0.5, pod, c.stan === "tak" ? 3 : c.stan === "nie" ? 2 : "--muted", { wyrownanie: "center", dy: 17, rozmiar: 12 });
+      });
+    });
+    w2.rysuj(g => {
+      g.funkcja(x => wart(W, x), 1);
+      if (s.m) g.punkt(0, 0, "0", 3);
+      [...new Set(s.pierw)].forEach(k => g.punkt(k, 0, String(k), 3));
+      if (s.test !== null && s.test >= g.z.xmin && s.test <= g.z.xmax) {
+        const v = wart(W, s.test);
+        g.odcinek(s.test, 0, s.test, Math.max(g.z.ymin, Math.min(g.z.ymax, v)), 2, true);
+        g.punkt(s.test, Math.max(g.z.ymin, Math.min(g.z.ymax, v)), "", 2, { pusty: v !== 0 });
+      }
+    });
+    tex("si-wynik", s.opis);
+    tex("si-rozklad", `W(x)=${rozkladTex(s)}`);
+  }
+  function odNowa() { if (stop) stop(); krok = 0; if (przygotuj()) { zakresWykresu(); rysuj(); } }
+  $("si-wybor").addEventListener("change", () => { $("si-w").value = $("si-wybor").value; odNowa(); });
+  $("si-w").addEventListener("input", odNowa);
+  $("si-krok").addEventListener("click", () => {
+    if (stop) stop();
+    if (!stany.length) return;
+    krok = krok >= stany.length - 1 ? 0 : krok + 1;
+    rysuj();
+  });
+  $("si-start").addEventListener("click", () => {
+    if (stop) stop();
+    if (!stany.length) return;
+    const N = stany.length - 1;
+    krok = 0; rysuj();
+    stop = animuj(1000 * N, t => { const k = Math.min(N, Math.floor(t * (N + 1))); if (k !== krok) { krok = k; rysuj(); } });
+  });
+  odNowa();
+});
+</script>
+</body>
+</html>

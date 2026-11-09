@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Złożenie funkcji</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Złożenie funkcji</h1>
+  <p class="lead">$(f\circ g)(x)=f(g(x))$ to dwie maszyny ustawione w szeregu: $x$ wchodzi do $g$, a wynik $g(x)$ wchodzi do $f$. Najpierw działa ta funkcja, która stoi <b>bliżej</b> $x$, czyli po prawej.</p>
+  <p class="wymagania">V.R.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definicja i dziedzina</h2>
+  <div class="definicja"><b>Definicja</b> Złożeniem funkcji $f$ i $g$ nazywamy funkcję
+    $$(f\circ g)(x)=f\big(g(x)\big).$$
+    Jej dziedzina to te $x$ z dziedziny $g$, dla których $g(x)$ leży w dziedzinie $f$:
+    $$D_{f\circ g}=\{x\in D_g:\ g(x)\in D_f\}.$$</div>
+  <div class="uwaga">Na ogół $f\circ g\neq g\circ f$. Dla $f(x)=x+1$, $g(x)=x^2$: $f(g(x))=x^2+1$, a $g(f(x))=(x+1)^2$.</div>
+  <p><b>Rozkład na złożenie</b> (przyda się przy pochodnych): $h(x)=\sqrt{x^2-4}$ to $f(g(x))$ dla $g(x)=x^2-4$ („w środku”) i $f(t)=\sqrt t$ („na zewnątrz”). Przesunięcie $f(x-a)$ to też złożenie: $f\circ g$ z $g(x)=x-a$. Wzorów na złożenie nie ma w tablicach.</p>
+
+  <h2 id="maszyna">2. Interaktywnie: maszyna $x\to g\to f$</h2>
+  <div class="demo">
+    <p class="opis">Przesuwaj $x$ (suwak lub czerwony punkt na osi). Strzałki: w górę do wykresu $g$, w bok do prostej $y=x$ (tak wartość $g(x)$ staje się nowym argumentem), w pionie do wykresu $f$, i z powrotem nad $x$. Czerwona krzywa to $f\circ g$; pogrubiony odcinek osi $Ox$ to jej dziedzina.</p>
+    <canvas id="zl-plot" style="height:400px"></canvas>
+    <div class="sterowanie">
+      <label>$g(x)=$ <select id="zl-g"></select></label>
+      <label>$f(x)=$ <select id="zl-f"></select></label>
+      <label>$x$ <input type="range" id="zl-x" min="-5" max="5" step="0.1" value="1"> <span id="zl-x-v"></span></label>
+      <button id="zl-sledz">▶ Prześledź</button>
+      <button id="zl-rysuj">▶ Narysuj f∘g</button>
+      <button id="zl-zamien">⇄ Zamień f i g</button>
+    </div>
+    <div class="wynik" id="zl-wynik"></div>
+    <div class="wynik" id="zl-wzor"></div>
+  </div>
+
+  <h2 id="kolejnosc">3. $f\circ g$ czy $g\circ f$?</h2>
+  <div class="demo">
+    <p class="opis">Te same dwie funkcje, złożone w dwóch kolejnościach. Czerwony: $f\circ g$, fioletowy: $g\circ f$. Prawie zawsze to dwa różne wykresy, często z różnymi dziedzinami.</p>
+    <canvas id="zz-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$f(x)=$ <select id="zz-f"></select></label>
+      <label>$g(x)=$ <select id="zz-g"></select></label>
+    </div>
+    <div class="wynik" id="zz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>$f(x)=\sqrt x$, $g(x)=4-x^2$. Wyznacz wzory i dziedziny $f\circ g$ oraz $g\circ f$.</p>
+    <ol>
+      <li>$(f\circ g)(x)=\sqrt{4-x^2}$. Warunek $g(x)\in D_f$: $4-x^2\ge0\iff x\in\lp-2,2\rp$.</li>
+      <li>$(g\circ f)(x)=4-(\sqrt x)^2$. Warunek $x\in D_f$: $x\ge0$.</li>
+      <li>Dla $x\ge0$: $(\sqrt x)^2=x$, więc $(g\circ f)(x)=4-x$, ale <b>tylko</b> dla $x\ge0$.</li>
+    </ol>
+    <p class="odp">$f\circ g=\sqrt{4-x^2}$, $D=\lp-2,2\rp$; $\;g\circ f=4-x$, $D=\lp0,\infty)$</p>
+    <p>Pułapka: po uproszczeniu wzoru dziedzina się <b>nie</b> rozszerza. To jest ustawienie startowe demo w punkcie 2.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="15; 9" data-odp-opis="(f∘g)(3); (g∘f)(3)"><span class="poziom">łatwe</span>
+      <div class="tresc">$f(x)=2x-3$, $g(x)=x^2$. Oblicz $(f\circ g)(3)$ i $(g\circ f)(3)$ oraz podaj wzory obu złożeń.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(g(3))=f(9)=15$, $g(f(3))=g(3)=9$. <b>$15$ i $9$; $(f\circ g)(x)=2x^2-3$, $(g\circ f)(x)=(2x-3)^2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-oo; -2) u (-2; 2) u (2; oo)" data-odp-opis="dziedzina f∘g"><span class="poziom">średnie</span>
+      <div class="tresc">$f(x)=\frac{1}{x-1}$, $g(x)=x^2-3$. Wyznacz wzór i dziedzinę $f\circ g$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(g(x))=\frac{1}{x^2-3-1}=\frac{1}{x^2-4}$. Warunek $g(x)\neq1\iff x^2\neq4$. <b>$(f\circ g)(x)=\frac{1}{x^2-4}$, $D=\R\setminus\{-2,2\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">$f(x)=x^2+1$. Znajdź funkcję liniową $g$, dla której $(f\circ g)(x)=x^2-6x+10$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^2-6x+10=(x-3)^2+1=f(x-3)$. Ponieważ $(3-x)^2=(x-3)^2$, druga możliwość też działa. <b>$g(x)=x-3$ lub $g(x)=3-x$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;2; oo)" data-odp-opis="zbiór wartości h"><span class="poziom">średnie</span>
+      <div class="tresc">Przedstaw $h(x)=\log_2(x^2+4)$ jako złożenie $f\circ g$ i wyznacz zbiór wartości $h$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $g(x)=x^2+4$, $f(t)=\log_2 t$. $ZW_g=\lp4,\infty)$, a $\log_2$ rośnie, więc $h(x)\ge\log_2 4=2$. <b>$ZW_h=\lp2,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: {}" data-odp-opis="zbiór rozwiązań równania"><span class="poziom">maturalne</span>
+      <div class="tresc">$f(x)=\frac{x+1}{x-2}$. Wyznacz wzór i dziedzinę $f\circ f$, a następnie rozwiąż równanie $(f\circ f)(x)=1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(f(x))=\frac{\frac{x+1}{x-2}+1}{\frac{x+1}{x-2}-2}=\frac{2x-1}{-x+5}$. Dziedzina: $x\neq2$ oraz $f(x)\neq2\iff x+1\neq2x-4\iff x\neq5$.
+        Równanie: $2x-1=5-x\iff x=2\notin D$. (Inaczej: $f(t)=1$ nie ma rozwiązań, bo $y=1$ to asymptota.)
+        <b>$(f\circ f)(x)=\frac{2x-1}{5-x}$, $D=\R\setminus\{2,5\}$; równanie nie ma rozwiązań</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Kolejność:</b> $f\circ g$ – najpierw $g$. Podstawiaj cały wzór $g(x)$ w miejsce każdego $x$ we wzorze $f$, w nawiasie.</li>
+    <li><b>Dziedzinę</b> wyznaczaj z warunków $x\in D_g$ i $g(x)\in D_f$, <b>zanim</b> uprościsz wzór.</li>
+    <li>Rozwiązania równania ze złożeniem sprawdź w dziedzinie złożenia (patrz zadanie 5).</li>
+    <li>Zbiór wartości złożenia: najpierw $ZW_g$, potem wartości $f$ na tym zbiorze.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nawias = s => s === "x" ? "x" : `\\left(${s}\\right)`;
+  const F = {
+    par: { n: "4 − x²", f: x => 4 - x * x, wz: s => `4-${nawias(s)}^2` },
+    pi: { n: "√x", f: x => x >= 0 ? Math.sqrt(x) : NaN, wz: s => `\\sqrt{${s}}` },
+    kw: { n: "x²", f: x => x * x, wz: s => `${nawias(s)}^2` },
+    hip: { n: "1/x", f: x => x !== 0 ? 1 / x : NaN, wz: s => `\\frac{1}{${s}}` },
+    lin: { n: "x − 2", f: x => x - 2, wz: s => `${s}-2` },
+    wyk: { n: "2^x", f: x => 2 ** x, wz: s => `2^{${s}}` },
+  };
+  const opcje = Object.entries(F).map(([k, v]) => `<option value="${k}">${v.n}</option>`).join("");
+  ["zl-g", "zl-f", "zz-f", "zz-g"].forEach(id => { $(id).innerHTML = opcje; });
+  $("zl-g").value = "par"; $("zl-f").value = "pi"; $("zz-f").value = "pi"; $("zz-g").value = "par";
+  const ok = v => typeof v === "number" && isFinite(v);
+  // dziedzina złożenia na [xmin, xmax] jako lista odcinków (próbkowanie)
+  function dziedzina(h, x0, x1) {
+    const kaw = []; let start = null;
+    for (let i = 0; i <= 1000; i++) {
+      const x = x0 + (x1 - x0) * i / 1000;
+      if (ok(h(x))) { if (start === null) start = x; } else if (start !== null) { kaw.push([start, x0 + (x1 - x0) * (i - 1) / 1000]); start = null; }
+    }
+    if (start !== null) kaw.push([start, x1]);
+    return kaw;
+  }
+
+  // --- 2. Maszyna ---
+  const w1 = new Wykres($("zl-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 6, rowneSkale: true });
+  const X = w1.przeciagaj([{ x: 1, y: 0, ogranicz: p => ({ x: Math.max(-5, Math.min(5, Math.round(p.x * 10) / 10)), y: 0 }) }], () => { $("zl-x").value = X[0].x; zatrzymaj(); rysujZl(1, null); });
+  let stop = null;
+  const zatrzymaj = () => { if (stop) stop(); stop = null; };
+  // etap: 0..1 — ile strzałek (4 etapy); slad: do jakiego x rysować f∘g (null = cały)
+  function rysujZl(etap, slad) {
+    const g = F[$("zl-g").value], f = F[$("zl-f").value], h = x => f.f(g.f(x));
+    const x = +$("zl-x").value; X[0].x = x;
+    $("zl-x-v").textContent = ladna(x);
+    const u = g.f(x), y = ok(u) ? f.f(u) : NaN;
+    w1.rysuj(G => {
+      G.prosta(0, 0, 1, 1, 3, true);
+      G.funkcja(g.f, 1); G.funkcja(f.f, 4);
+      dziedzina(h, G.z.xmin, G.z.xmax).forEach(([a, b]) => G.odcinek(a, 0, b, 0, 2, false));
+      G.funkcja(h, 2, { do: slad === null ? Infinity : slad, grubosc: 3.5 });
+      const kroki = [[x, 0, x, u, 1], [x, u, u, u, 3], [u, u, u, y, 4], [u, y, x, y, 2]];
+      const n = etap * 4;
+      kroki.forEach(([x1, y1, x2, y2, nr], i) => {
+        if (n <= i || !ok(x1) || !ok(y1) || !ok(x2) || !ok(y2)) return;
+        const s = Math.min(1, n - i);
+        if (Math.hypot(x2 - x1, y2 - y1) > 0.05) G.strzalka(x1, y1, x1 + (x2 - x1) * s, y1 + (y2 - y1) * s, nr);
+      });
+      if (ok(u)) G.tekst(x, u, "g(x)", 1, { dx: 6, dy: -6 });
+      if (ok(y) && etap >= 1) G.punkt(x, y, "f(g(x))", 2);
+      G.punkt(x, 0, "x", 2);
+    });
+    let s = `x=${ladnaTex(x)}\\xrightarrow{\\ g\\ }`;
+    if (!ok(u)) s += `\\text{?}\\quad x\\notin D_g`;
+    else if (!ok(y)) s += `${ladnaTex(u)}\\xrightarrow{\\ f\\ }\\text{?}\\quad g(x)\\notin D_f\\Rightarrow x\\notin D_{f\\circ g}`;
+    else s += `${ladnaTex(u)}\\xrightarrow{\\ f\\ }${ladnaTex(y)}`;
+    tex("zl-wynik", s);
+    tex("zl-wzor", `(f\\circ g)(x)=f\\big(g(x)\\big)=${f.wz(g.wz("x"))}`);
+  }
+  $("zl-x").addEventListener("input", () => { zatrzymaj(); rysujZl(1, null); });
+  ["zl-g", "zl-f"].forEach(id => $(id).addEventListener("change", () => { zatrzymaj(); rysujZl(1, null); }));
+  $("zl-sledz").addEventListener("click", () => { zatrzymaj(); stop = animuj(3000, t => rysujZl(t, null)); });
+  $("zl-rysuj").addEventListener("click", () => {
+    zatrzymaj();
+    stop = animuj(4000, t => { const x = -5 + 10 * t; $("zl-x").value = Math.round(x * 10) / 10; rysujZl(1, x); }, () => rysujZl(1, null));
+  });
+  $("zl-zamien").addEventListener("click", () => {
+    zatrzymaj(); const t = $("zl-g").value; $("zl-g").value = $("zl-f").value; $("zl-f").value = t; rysujZl(1, null);
+  });
+  rysujZl(1, null);
+
+  // --- 3. f∘g i g∘f ---
+  const w2 = new Wykres($("zz-plot"), { xmin: -6, xmax: 6, ymin: -4, ymax: 6 });
+  function rysujZz() {
+    const f = F[$("zz-f").value], g = F[$("zz-g").value];
+    const fg = x => f.f(g.f(x)), gf = x => g.f(f.f(x));
+    let rowne = true;
+    for (let i = 0; i <= 200; i++) {
+      const x = -6 + 0.06 * i, a = fg(x), b = gf(x);
+      if (ok(a) !== ok(b) || (ok(a) && Math.abs(a - b) > 1e-9)) { rowne = false; break; }
+    }
+    w2.rysuj(G => {
+      G.funkcja(fg, 2, { grubosc: 4 });
+      G.funkcja(gf, 4);
+    });
+    tex("zz-wynik", `f\\circ g=${f.wz(g.wz("x"))},\\quad g\\circ f=${g.wz(f.wz("x"))}\\quad ${rowne ? "\\text{(tu wyjątkowo równe)}" : "\\Rightarrow f\\circ g\\neq g\\circ f"}`);
+  }
+  ["zz-f", "zz-g"].forEach(id => $(id).addEventListener("change", rysujZz));
+  rysujZz();
+});
+</script>
+</body>
+</html>

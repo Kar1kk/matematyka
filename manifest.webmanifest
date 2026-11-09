@@ -1,0 +1,16 @@
+{
+  "name": "Matematyka krok po kroku",
+  "short_name": "Matematyka",
+  "description": "Matura rozszerzona z matematyki: wzory, animacje, zadania i powtórki.",
+  "lang": "pl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fafaf7",
+  "theme_color": "#2f5bd3",
+  "icons": [
+    { "src": "assets/ikony/ikona-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/ikony/ikona-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/ikony/ikona-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

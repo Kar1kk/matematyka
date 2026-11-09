@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dzielenie wielomianu przez x − a, schemat Hornera</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+<style>
+  .demo input[type=text] { font: inherit; width: 8.5em; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; }
+  .demo input.krotki { width: 4em; }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Dzielenie wielomianu przez x − a, schemat Hornera</h1>
+  <p class="lead">Każdy wielomian da się zapisać jako $(x-a)\cdot Q(x)+r$, gdzie reszta $r$ jest liczbą. Podstaw $x=a$: nawias się zeruje i zostaje $r=W(a)$. Schemat Hornera liczy $Q$ i $r$ jednym ruchem: „pomnóż przez $a$, dodaj”.</p>
+  <p class="wymagania">II.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenia">1. Twierdzenia</h2>
+  <div class="twierdzenie"><b>Twierdzenie (o dzieleniu z resztą przez $x-a$)</b> Dla wielomianu $W$ stopnia $n\ge1$ i liczby $a$ istnieje dokładnie jeden wielomian $Q$ stopnia $n-1$ i dokładnie jedna liczba $r$, takie że
+    $$W(x)=(x-a)\cdot Q(x)+r$$
+    Współczynniki $Q$ i resztę dają <b>wzory Hornera</b>: dla $W(x)=w_nx^n+\ldots+w_0$ i $Q(x)=q_{n-1}x^{n-1}+\ldots+q_0$
+    $$q_{n-1}=w_n,\qquad q_{k-1}=w_k+a\,q_k$$
+    $$r=w_0+a\,q_0$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze, dla $n=4$)</summary><div>
+      <p>Niech $W(x)=w_4x^4+w_3x^3+w_2x^2+w_1x+w_0$, $w_4\ne0$. Szukamy $Q(x)=q_3x^3+q_2x^2+q_1x+q_0$ i liczby $r$. Wymnóż:</p>
+      $$\begin{aligned}(x-a)Q(x)+r=\;&amp;q_3x^4+(q_2-aq_3)x^3\\&amp;+(q_1-aq_2)x^2\\&amp;+(q_0-aq_1)x\\&amp;+(r-aq_0)\end{aligned}$$
+      <p>Wielomiany są równe wtedy i tylko wtedy, gdy mają równe współczynniki (<a href="wielomiany-dzialania.html#rownosc">równość wielomianów</a>), więc:</p>
+      $$\begin{aligned}q_3&amp;=w_4\\ q_2-aq_3&amp;=w_3\\ q_1-aq_2&amp;=w_2\\ q_0-aq_1&amp;=w_1\\ r-aq_0&amp;=w_0\end{aligned}$$
+      <p>Z kolejnych równań wyznaczamy po kolei $q_3=w_4$, $q_2=w_3+aq_3$, $q_1=w_2+aq_2$, $q_0=w_1+aq_1$, $r=w_0+aq_0$. Układ ma więc <b>dokładnie jedno</b> rozwiązanie: takie $Q$ i $r$ istnieją (wzory dają je wprost) i są jednoznaczne (każde inne musiałoby spełniać ten sam układ). Ponieważ $q_3=w_4\ne0$, $Q$ ma stopień $3=n-1$. To są wzory Hornera. Dla dowolnego $n$ rachunek jest identyczny. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Twierdzenie o reszcie</b> Reszta z dzielenia $W(x)$ przez $x-a$ jest równa $W(a)$.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>Podstaw $x=a$ do $W(x)=(x-a)Q(x)+r$: $\;W(a)=0\cdot Q(a)+r=r$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Wniosek (twierdzenie Bézouta)</b> $W(x)$ jest podzielny przez $x-a$ $\iff$ $W(a)=0$, czyli gdy $a$ jest pierwiastkiem. Wtedy $W(x)=(x-a)\cdot Q(x)$.</div>
+  <div class="uwaga">Tych twierdzeń <b>nie ma w tablicach</b>. Trzeba je pamiętać i umieć je udowodnić.</div>
+
+  <h2 id="schemat">2. Schemat Hornera</h2>
+  <p>Wpisz w wiersz wszystkie współczynniki $W$, <b>również zera</b> przy brakujących potęgach. Pierwszy przepisz w dół, potem powtarzaj: <b>pomnóż przez $a$, dodaj do następnego</b>. Ostatnia liczba to reszta, pozostałe to współczynniki $Q$ (stopień o $1$ niższy). Dzielenie przez $x+3$ to dzielenie przez $x-(-3)$, czyli $a=-3$.</p>
+  <p>Można też dzielić „pisemnie”, jak liczby. Horner to ten sam rachunek, tylko bez przepisywania potęg $x$.</p>
+
+  <h2 id="demo">3. Interaktywnie: Horner krok po kroku</h2>
+  <div class="demo">
+    <p class="opis">Wpisz współczynniki $W$ od najwyższej potęgi i liczbę $a$. „Krok →” wykonuje jedną operację: strzałka ukośna to <b>mnożenie przez $a$</b>, pionowa to <b>dodawanie</b>. Czerwona kratka na końcu to reszta.</p>
+    <canvas id="ho-plot" style="height:210px"></canvas>
+    <div class="sterowanie">
+      <label>$W$: <input type="text" id="ho-w" value="2, -3, 0, 5, -6"></label>
+      <label>$a$: <input type="text" id="ho-a" class="krotki" value="2"></label>
+      <button id="ho-krok">Krok →</button>
+      <button id="ho-start" class="wtorny">▶ Odtwórz</button>
+      <button id="ho-reset" class="wtorny">↺ Od nowa</button>
+    </div>
+    <div class="wynik" id="ho-wynik"></div>
+    <div class="wynik" id="ho-wynik2"></div>
+  </div>
+
+  <h2 id="wykres">4. Interaktywnie: reszta to $W(a)$</h2>
+  <div class="demo">
+    <p class="opis">$W(x)=x^3-2x^2-5x+6$. Przeciągaj punkt $a$ po osi. Wysokość czerwonego punktu to reszta $r=W(a)$. Zielona przerywana krzywa to $W(x)-r=(x-a)Q(x)$: zawsze przechodzi przez $(a,0)$. Gdy $a$ trafi w pierwiastek, reszta znika (Bézout).</p>
+    <canvas id="rz-plot"></canvas>
+    <div class="wynik" id="rz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Podziel $W(x)=2x^4-3x^3+5x-6$ przez $x-2$.</p>
+    <ol>
+      <li>Współczynniki z zerem przy $x^2$: $2,\,-3,\,0,\,5,\,-6$; $\;a=2$.</li>
+      <li>Schemat:
+        <table class="tabela">
+          <tr><td></td><td>$2$</td><td>$-3$</td><td>$0$</td><td>$5$</td><td>$-6$</td></tr>
+          <tr><td>$a=2$</td><td>$2$</td><td>$1$</td><td>$2$</td><td>$9$</td><td><b>$12$</b></td></tr>
+        </table>
+        np. $1=-3+2\cdot2$, $\;2=0+2\cdot1$, $\;9=5+2\cdot2$, $\;12=-6+2\cdot9$.</li>
+      <li>Sprawdzenie twierdzeniem o reszcie: $W(2)=32-24+10-6=12$. Zgadza się.</li>
+    </ol>
+    <p class="odp">$W(x)=(x-2)(2x^3+x^2+2x+9)+12$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Podziel $x^3-4x^2+x+6$ przez $x-2$ schematem Hornera.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wiersz: $1,\,-2,\,-3,\,0$. <b>$Q(x)=x^2-2x-3$, $r=0$</b>, więc $x-2$ dzieli ten wielomian.
+      </div></details></li>
+    <li class="zadanie" data-odp="-1"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz resztę z dzielenia $W(x)=x^5-3x^3+2x-1$ przez $x+1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $r=W(-1)=-1+3-2-1$. <b>$r=-1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2"><span class="poziom">średnie</span>
+      <div class="tresc">Dla jakiego $m$ wielomian $W(x)=x^3+mx^2-5x+6$ jest podzielny przez $x-3$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Bézout: $W(3)=27+9m-15+6=18+9m=0$. <b>$m=-2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 3" data-odp-opis="a; b"><span class="poziom">średnie</span>
+      <div class="tresc">Wielomian $W(x)=x^3+ax^2+bx-6$ jest podzielny przez $x-1$, a z dzielenia przez $x+1$ daje resztę $-8$. Wyznacz $a$ i $b$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $W(1)=a+b-5=0$, $\;W(-1)=a-b-7=-8$. Stąd $a+b=5$, $a-b=-1$. <b>$a=2$, $b=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 1" data-odp-opis="p; q"><span class="poziom">maturalne</span>
+      <div class="tresc">Wiadomo, że $W(1)=3$ i $W(-2)=-3$. Wielomian zapisano jako $W(x)=(x-1)(x+2)\cdot P(x)+px+q$. Wyznacz $p$ i $q$ (czyli resztę z dzielenia $W$ przez $(x-1)(x+2)$).</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Podstaw $x=1$ i $x=-2$, iloczyn się zeruje: $p+q=3$, $\;-2p+q=-3$. Odejmując: $3p=6$.
+        <b>$p=2$, $q=1$, reszta $2x+1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-12; 16" data-odp-opis="a; b"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz $a$ i $b$, dla których liczba $2$ jest pierwiastkiem <b>dwukrotnym</b> wielomianu $W(x)=x^3+ax+b$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Horner dla współczynników $1,0,a,b$ i liczby $2$: $\;1,\;2,\;a+4,\;b+2a+8$. Reszta $=0$: $b=-2a-8$, iloraz $Q(x)=x^2+2x+a+4$.<br>
+        $2$ ma być też pierwiastkiem $Q$: $Q(2)=12+a=0$, więc $a=-12$, $b=16$. Kontrola: $W(x)=(x-2)^2(x+4)$.
+        <b>$a=-12$, $b=16$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Najczęstszy błąd w Hornerze: <b>pominięte zero</b> przy brakującej potędze. Drugi: dzielenie przez $x+3$ z $a=3$ zamiast $a=-3$.</li>
+    <li>Pytają tylko o resztę? Nie dziel, policz $W(a)$.</li>
+    <li>Wynik zapisz w pełnej postaci $W(x)=(x-a)Q(x)+r$; reszta jest <b>liczbą</b>, iloraz ma stopień o $1$ niższy.</li>
+    <li>Dowód twierdzenia o dzieleniu (np. dla stopnia $4$) jest na liście wymaganych: porównanie współczynników i wzory $q_{k-1}=w_k+aq_k$.</li>
+    <li>Rozkład na czynniki z użyciem Hornera: <a href="rozklad-wielomianu.html">Rozkład wielomianu na czynniki</a>.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function wTex(ws) {
+    const n = ws.length - 1;
+    let s = "";
+    ws.forEach((c, i) => {
+      const k = n - i;
+      if (Math.abs(c) < 1e-9) return;
+      const znak = c < 0 ? "-" : (s ? "+" : "");
+      const m = Math.abs(c);
+      const wsp = (Math.abs(m - 1) < 1e-9 && k > 0) ? "" : ladnaTex(m);
+      const xx = k === 0 ? "" : k === 1 ? "x" : `x^{${k}}`;
+      s += znak + wsp + xx;
+    });
+    return s || "0";
+  }
+  const horner = (w, a) => { const q = [w[0]]; for (let i = 1; i < w.length; i++) q.push(w[i] + a * q[i - 1]); return q; };
+  const naw = x => x < 0 ? `(${ladnaTex(x)})` : ladnaTex(x);
+  const dwumian = a => a === 0 ? "x" : `x${a > 0 ? "-" : "+"}${ladnaTex(Math.abs(a))}`;
+
+  // --- 3. Horner krok po kroku ---
+  const w1 = new Wykres($("ho-plot"), { xmin: 0, xmax: 1, ymin: -3, ymax: 0, siatka: false, osie: false });
+  let W = [], A = 0, B = [], krok = 0, stop1 = null;
+  function wczytaj() {
+    const w = $("ho-w").value.split(/[,;\s]+/).filter(v => v !== "").map(Number);
+    const a = Number($("ho-a").value.replace(",", "."));
+    if (w.length < 2 || w.some(v => !Number.isFinite(v)) || w[0] === 0 || !Number.isFinite(a) || w.length > 8) {
+      tex("ho-wynik", "\\text{Wpisz 2–8 liczb (pierwsza}\\ne0\\text{) i liczbę } a");
+      return false;
+    }
+    W = w; A = a; B = horner(W, A);
+    w1.zakres({ xmin: -0.05, xmax: W.length + 1.05, ymin: -3.05, ymax: 0.05 });
+    return true;
+  }
+  const KROKI = () => 2 * W.length - 1; // 0: start, 1: sprowadź, potem (×, +) dla każdej kolumny
+  function rysuj1() {
+    const n = W.length;
+    // co widać: b[j] widoczne, gdy krok >= 2j+1; iloczyn w kolumnie j (j>=1), gdy krok >= 2j
+    w1.rysuj(g => {
+      const srodek = (kol, w) => [kol + 0.5, -(w + 0.5)];
+      const pis = (kol, w, s, nr) => { const [x, y] = srodek(kol, w); g.tekst(x, y, s, nr, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: 15 }); };
+      const kom = (kol, w, nr, kr) => g.prostokat(kol, -(w + 1), 1, 1, nr, { wypelnij: kr, grubosc: 1 });
+      pis(0, 0, "W", "--muted"); pis(0, 1, "·a", "--muted"); pis(0, 2, "a = " + ladna(A), 2);
+      for (let j = 0; j < n; j++) {
+        const kol = j + 1, reszta = j === n - 1;
+        const aktB = krok === 2 * j + 1, aktI = j >= 1 && krok === 2 * j;
+        kom(kol, 0, "--border", 0.0001);
+        kom(kol, 1, aktI ? 4 : "--border", aktI ? 0.3 : 0.0001);
+        kom(kol, 2, reszta ? 2 : (aktB ? 1 : "--border"), reszta ? (krok >= 2 * j + 1 ? 0.3 : 0.08) : (aktB ? 0.3 : 0.0001));
+        pis(kol, 0, ladna(W[j]), "--text");
+        if (j >= 1 && krok >= 2 * j) pis(kol, 1, ladna(A * B[j - 1]), 4);
+        if (krok >= 2 * j + 1) pis(kol, 2, ladna(B[j]), reszta ? 2 : 1);
+        if (aktI) { const [x1, y1] = srodek(kol - 1, 2), [x2, y2] = srodek(kol, 1); g.strzalka(x1 + 0.2, y1 + 0.2, x2 - 0.2, y2 - 0.15, 4); }
+        if (aktB) { const [x, y] = srodek(kol, 0); g.strzalka(x - 0.3, y - 0.25, x - 0.3, y - 1.75, 1); }
+      }
+      g.odcinek(n, 0, n, -3, 2, true);
+    });
+    const j = Math.floor(krok / 2);
+    let opis = "";
+    if (krok === 0) opis = `W(x)=${wTex(W)},\\quad \\text{dzielimy przez } ${dwumian(A)}`;
+    else if (krok === 1) opis = `\\text{przepisz: } q_{${n - 2}}=${ladnaTex(W[0])}`;
+    else if (krok % 2 === 0) opis = `\\text{mnóż: } ${ladnaTex(A)}\\cdot ${naw(B[j - 1])}=${ladnaTex(A * B[j - 1])}`;
+    else opis = `\\text{dodaj: } ${ladnaTex(W[j])}+${naw(A * B[j - 1])}=${ladnaTex(B[j])}` + (j === n - 1 ? "=r" : `=q_{${n - 2 - j}}`);
+    tex("ho-wynik", opis);
+    if (krok >= KROKI()) {
+      const r = B[n - 1], Q = B.slice(0, n - 1);
+      tex("ho-wynik2", `W(x)=(${dwumian(A)})(${wTex(Q)})${r >= 0 ? "+" : ""}${ladnaTex(r)},\\quad W(${ladnaTex(A)})=${ladnaTex(r)}`);
+    } else $("ho-wynik2").textContent = "";
+  }
+  function reset() { if (stop1) stop1(); krok = 0; if (wczytaj()) rysuj1(); }
+  $("ho-krok").addEventListener("click", () => {
+    if (stop1) stop1();
+    if (!wczytaj()) return;
+    krok = krok >= KROKI() ? 0 : krok + 1;
+    rysuj1();
+  });
+  $("ho-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    if (!wczytaj()) return;
+    const N = KROKI();
+    stop1 = animuj(900 * N, t => { const k = Math.min(N, Math.floor(t * (N + 1))); if (k !== krok) { krok = k; rysuj1(); } });
+    krok = 0; rysuj1();
+  });
+  $("ho-reset").addEventListener("click", reset);
+  ["ho-w", "ho-a"].forEach(id => $(id).addEventListener("input", reset));
+  reset();
+
+  // --- 4. Reszta = W(a) ---
+  const WW = [1, -2, -5, 6], f = x => x ** 3 - 2 * x * x - 5 * x + 6;
+  const w2 = new Wykres($("rz-plot"), { xmin: -4, xmax: 5, ymin: -12, ymax: 14, krokY: 2 });
+  const pkt = w2.przeciagaj([{ x: 2, y: 0, ogranicz: p => ({ x: Math.max(-3.5, Math.min(4.5, Math.round(p.x * 10) / 10)), y: 0 }) }], rysuj2);
+  function rysuj2() {
+    const a = pkt[0].x, B2 = horner(WW, a), r = B2[3], Q = B2.slice(0, 3);
+    w2.rysuj(g => {
+      g.funkcja(x => f(x) - r, 3, { przerywana: true });
+      g.funkcja(f, 1);
+      g.odcinek(g.z.xmin, r, g.z.xmax, r, 2, true);
+      g.odcinek(a, 0, a, r, 2, false);
+      g.punkt(a, r, "r = W(a)", 2);
+      g.punkt(a, 0, "a", 2, { pusty: true });
+    });
+    const bez = Math.abs(r) < 1e-9 ? `\\quad\\Rightarrow\\quad (${dwumian(a)})\\mid W(x)` : "";
+    tex("rz-wynik", `W(x)=(${dwumian(a)})(${wTex(Q)})${r >= 0 ? "+" : ""}${ladnaTex(r)}${bez}`);
+  }
+  rysuj2();
+});
+</script>
+</body>
+</html>

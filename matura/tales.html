@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twierdzenie Talesa i twierdzenie do niego odwrotne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Twierdzenie Talesa i twierdzenie do niego odwrotne</h1>
+  <p class="lead">Proste równoległe tną ramiona kąta „proporcjonalnie”: jeśli na jednym ramieniu odcinki mają się jak $2:3$, to na drugim też. Twierdzenie odwrotne działa w drugą stronę: równe stosunki gwarantują równoległość.</p>
+  <p class="wymagania">VIII.7, VIII.R.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenie">1. Twierdzenie Talesa</h2>
+  <p>Proste $AB$ i $CD$ przecinają się w punkcie $P$ ($A$, $B$ na jednym ramieniu, $C$, $D$ na drugim).</p>
+  <div class="twierdzenie"><b>Twierdzenie Talesa</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    Jeżeli $AC\parallel BD$, to
+    $$\frac{|PA|}{|AB|}=\frac{|PC|}{|CD|}$$
+    Równoważnie $\frac{|PA|}{|PB|}=\frac{|PC|}{|PD|}$. Do tego odcinki równoległe:
+    $$\frac{|AC|}{|BD|}=\frac{|PA|}{|PB|}$$
+    <details class="rozwin"><summary>Skąd to się bierze (dowód z pól, dla chętnych)</summary><div>
+      <p>Trójkąty $ACB$ i $ACD$ mają wspólną podstawę $AC$, a $B$ i $D$ leżą na prostej równoległej do $AC$ – więc mają równe wysokości i <b>równe pola</b>. Trójkąty $PAC$ i $ACB$ mają wspólną wysokość z $C$, więc stosunek ich pól to stosunek podstaw. Podobnie $PAC$ i $ACD$ (wysokość z $A$):</p>
+      $$\frac{|PA|}{|AB|}=\frac{P_{PAC}}{P_{ACB}}=\frac{P_{PAC}}{P_{ACD}}=\frac{|PC|}{|CD|}$$
+      <p>Ostatni wzór z $|AC|$, $|BD|$ wynika z podobieństwa trójkątów $PAC$ i $PBD$ (kkk). $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="uwaga">Odcinków równoległych $|AC|$, $|BD|$ <b>nie</b> wolno zestawiać z $|AB|$: poprawnie $\frac{|AC|}{|BD|}=\frac{|PA|}{|PB|}$ (całe odcinki od $P$), a nie $\frac{|PA|}{|AB|}$.</div>
+  <p>Twierdzenie działa też, gdy $P$ leży między równoległymi („motylek”: $A$ i $B$ po przeciwnych stronach $P$) – wtedy trójkąty $PAC$ i $PBD$ są „odwrócone”, a proporcje te same.</p>
+
+  <h2 id="demo">2. Interaktywnie: proporcje zostają</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj $P$, $A$, $C$ oraz $B$ (po prostej $PA$). Punkt $D$ jest wyznaczony tak, by $BD\parallel AC$. Obserwuj, że oba stosunki są zawsze równe – także w „motylku”, gdy przeciągniesz $B$ za $P$.</p>
+    <canvas id="ta-plot"></canvas>
+    <div class="wynik" id="ta-wynik"></div>
+  </div>
+
+  <h2 id="odwrotne">3. Twierdzenie odwrotne</h2>
+  <div class="twierdzenie"><b>Twierdzenie odwrotne do twierdzenia Talesa</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    Jeżeli $A$ leży wewnątrz odcinka $PB$ i $C$ wewnątrz $PD$ (albo oba na zewnątrz) oraz
+    $$\frac{|PA|}{|AB|}=\frac{|PC|}{|CD|},$$
+    to $AC\parallel BD$.
+    <details class="rozwin"><summary>Dowód (dla chętnych)</summary><div>
+      <p>Poprowadź przez $B$ prostą równoległą do $AC$; przetnie prostą $PC$ w punkcie $D'$ po tej samej stronie co $D$. Z tw. Talesa $\frac{|PC|}{|CD'|}=\frac{|PA|}{|AB|}=\frac{|PC|}{|CD|}$, więc $|CD'|=|CD|$ i $D'=D$. Zatem $BD\parallel AC$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="uwaga">Warunek o położeniu punktów nie jest ozdobą: z samej równości długości nie wynika równoległość. Sprawdź w demo poniżej.</div>
+  <div class="demo">
+    <p class="opis">$A$, $B$, $C$ są ustalone, $\frac{|PA|}{|AB|}=\frac23$. Przeciągaj $D$ po prostej $PC$. Są <b>dwa</b> położenia, w których $\frac{|PC|}{|CD|}=\frac23$, ale proste są równoległe tylko w jednym z nich.</p>
+    <canvas id="to-plot" style="height:300px"></canvas>
+    <div class="wynik" id="to-wynik"></div>
+    <div class="wynik" id="to-opis"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Ramiona kąta o wierzchołku $P$ przecięto prostymi równoległymi $AC$ i $BD$ ($A$, $B$ na jednym ramieniu). $|PA|=4$, $|AB|=6$, $|PC|=5$, $|AC|=3$. Oblicz $|CD|$ i $|BD|$.</p>
+    <ol>
+      <li>Tales: $\frac{4}{6}=\frac{5}{|CD|}$, więc $|CD|=\frac{30}{4}=7{,}5$.</li>
+      <li>Odcinki równoległe: $\frac{|AC|}{|BD|}=\frac{|PA|}{|PB|}=\frac{4}{10}$, więc $|BD|=\frac{3\cdot10}{4}=7{,}5$.</li>
+    </ol>
+    <p class="odp">$|CD|=7{,}5$, $|BD|=7{,}5$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Proste $AC$ i $BD$ są równoległe, $|PA|=3$, $|PC|=4$, $|CD|=8$ (oznaczenia jak wyżej). Oblicz $|AB|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{3}{|AB|}=\frac48$, więc <b>$|AB|=6$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Pionowa tyczka o wysokości $2$ m rzuca cień długości $1{,}5$ m. W tej samej chwili cień drzewa ma $9$ m. Jak wysokie jest drzewo?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Promienie słońca są równoległe, tyczka i drzewo też: $\frac{h}{9}=\frac{2}{1{,}5}$. <b>$h=12$ m</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Ramiona $AD$ i $BC$ trapezu $ABCD$ ($AB\parallel CD$) przedłużono do przecięcia w punkcie $P$. $|AB|=15$, $|CD|=6$, $|AD|=6$. Oblicz $|PD|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{|PD|}{|PA|}=\frac{|CD|}{|AB|}=\frac{6}{15}=\frac25$, a $|PA|=|PD|+6$. $5|PD|=2|PD|+12$. <b>$|PD|=4$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Punkty $A\in PB$ i $C\in PD$ leżą wewnątrz odcinków. Czy $AC\parallel BD$, gdy: a) $|PA|=4$, $|AB|=6$, $|PC|=6$, $|CD|=9$; b) $|PA|=4$, $|PB|=10$, $|PC|=5$, $|PD|=12$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) $\frac46=\frac69=\frac23$ i punkty leżą wewnątrz odcinków – z tw. odwrotnego <b>tak</b>. b) $\frac{4}{10}=0{,}4\ne\frac{5}{12}$ – gdyby proste były równoległe, z tw. Talesa stosunki byłyby równe, więc <b>nie</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Na bokach $AC$ i $BC$ trójkąta $ABC$ wybrano punkty $D$ i $E$: $|CD|=4$, $|DA|=6$, $|CE|=6$, $|EB|=9$. Wykaż, że $DE\parallel AB$, i oblicz $|AB|$, jeśli $|DE|=5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{|CD|}{|DA|}=\frac46=\frac23=\frac69=\frac{|CE|}{|EB|}$, a $D$, $E$ leżą wewnątrz boków, więc z twierdzenia odwrotnego do tw. Talesa $DE\parallel AB$. Wtedy $\frac{|DE|}{|AB|}=\frac{|CD|}{|CA|}=\frac{4}{10}$. <b>$|AB|=12{,}5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że odcinek łączący środki dwóch boków trójkąta jest równoległy do trzeciego boku i równy jego połowie (linia środkowa).</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $M$, $N$ – środki $CA$ i $CB$. $\frac{|CM|}{|MA|}=1=\frac{|CN|}{|NB|}$ i punkty leżą wewnątrz boków, więc z tw. odwrotnego do tw. Talesa $MN\parallel AB$. Z tw. Talesa (odcinki równoległe) $\frac{|MN|}{|AB|}=\frac{|CM|}{|CA|}=\frac12$. <b>Co należało wykazać.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Napisz, <b>które</b> proste są równoległe i z czego to wynika – dopiero potem proporcję.</li>
+    <li>Najczęstszy błąd: $\frac{|AC|}{|BD|}=\frac{|PA|}{|AB|}$. Odcinki równoległe porównuj z całymi odcinkami od wierzchołka $P$.</li>
+    <li>Przy twierdzeniu odwrotnym sprawdź i zapisz położenie punktów (oba wewnątrz albo oba na zewnątrz odcinków).</li>
+    <li>Tales to szczególny przypadek podobieństwa trójkątów $PAC$ i $PBD$ – jeśli się gubisz, wypisz trójkąty podobne.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Tales ---
+  const w1 = new Wykres($("ta-plot"), { xmin: -6, xmax: 6, ymin: -4, ymax: 4, rowneSkale: true });
+  const ogr = wPolu(5.6, 3.7);
+  const pt = w1.przeciagaj([
+    { x: -4.5, y: -0.5, ogranicz: ogr }, { x: -2, y: 1.5, ogranicz: ogr },
+    { x: 1, y: 3.5, ogranicz: p => ogr(rzut(p, pt[0], pt[1])) }, { x: -1.5, y: -1.5, ogranicz: ogr }], rysujTa);
+  function rysujTa() {
+    const [P, A, B, C] = pt;
+    const pa2 = (A.x - P.x) ** 2 + (A.y - P.y) ** 2;
+    const ok = pa2 > 0.09 && odl(P, C) > 0.3 && Math.abs((A.x - P.x) * (C.y - P.y) - (A.y - P.y) * (C.x - P.x)) > 0.05;
+    if (ok) { const Bn = rzut(B, P, A); B.x = Bn.x; B.y = Bn.y; }
+    const k = ok ? ((B.x - P.x) * (A.x - P.x) + (B.y - P.y) * (A.y - P.y)) / pa2 : 1;
+    const D = { x: P.x + k * (C.x - P.x), y: P.y + k * (C.y - P.y) };
+    w1.rysuj(g => {
+      if (ok) { g.prosta(P.x, P.y, A.x, A.y, 1, true); g.prosta(P.x, P.y, C.x, C.y, 1, true); }
+      g.odcinek(A.x, A.y, C.x, C.y, 2, false); g.odcinek(B.x, B.y, D.x, D.y, 2, false);
+      g.odcinek(P.x, P.y, A.x, A.y, 3, false); g.odcinek(P.x, P.y, C.x, C.y, 3, false);
+      g.odcinek(A.x, A.y, B.x, B.y, 4, false); g.odcinek(C.x, C.y, D.x, D.y, 4, false);
+      const S = { x: (P.x + A.x + B.x + C.x + D.x) / 5, y: (P.y + A.y + B.y + C.y + D.y) / 5 };
+      [[P, "P", 1], [A, "A", 2], [B, "B", 2], [C, "C", 2], [D, "D", 4]].forEach(([Q, s, nr]) => {
+        g.punkt(Q.x, Q.y, "", nr, s === "D" ? { pusty: true } : {});
+        etykieta(g, Q, S, s, nr);
+      });
+    });
+    if (!ok || odl(A, B) < 0.2 || odl(P, B) < 0.2) { tex("ta-wynik", "\\text{rozsuń punkty}"); return; }
+    const pa = odl(P, A), ab = odl(A, B), pc = odl(P, C), cd = odl(C, D), f = ladnaTex;
+    tex("ta-wynik", `\\begin{aligned}\\tfrac{|PA|}{|AB|}&=\\tfrac{${f(pa)}}{${f(ab)}}=${f(pa / ab)}, & \\tfrac{|PC|}{|CD|}&=\\tfrac{${f(pc)}}{${f(cd)}}=${f(pc / cd)}\\\\` +
+      `\\tfrac{|AC|}{|BD|}&=${f(odl(A, C) / odl(B, D))}, & \\tfrac{|PA|}{|PB|}&=${f(pa / odl(P, B))}\\end{aligned}`);
+  }
+  rysujTa();
+
+  // --- 3. Twierdzenie odwrotne ---
+  const w2 = new Wykres($("to-plot"), { xmin: -7, xmax: 3, ymin: -3.5, ymax: 2.5, rowneSkale: true });
+  const P2 = { x: -5, y: -1 }, u1 = { x: 0.8, y: 0.6 }, u2 = { x: 0.96, y: -0.28 };
+  const pun = (u, s) => ({ x: P2.x + s * u.x, y: P2.y + s * u.y });
+  const A2 = pun(u1, 2), B2 = pun(u1, 5), C2 = pun(u2, 2.4);
+  let s = 4; // położenie D na prostej PC (odległość ze znakiem od P)
+  const pd = w2.przeciagaj([{ ...pun(u2, s), ogranicz: p => {
+    s = Math.max(-2, Math.min(8, Math.round(((p.x - P2.x) * u2.x + (p.y - P2.y) * u2.y) / 0.2) * 0.2));
+    return pun(u2, s);
+  } }], rysujTo);
+  function rysujTo() {
+    const D = pd[0];
+    const cd = Math.abs(s - 2.4), rown = Math.abs(s - 6) < 1e-6, rowneStos = cd > 1e-9 && Math.abs(2.4 / cd - 2 / 3) < 1e-6;
+    w2.rysuj(g => {
+      g.prosta(P2.x, P2.y, B2.x, B2.y, 1, true); g.prosta(P2.x, P2.y, C2.x, C2.y, 1, true);
+      g.odcinek(A2.x, A2.y, C2.x, C2.y, 2, false);
+      g.odcinek(B2.x, B2.y, D.x, D.y, rown ? 3 : 2, !rown);
+      [[P2, "P", 1, -12], [A2, "A", 2, -12], [B2, "B", 2, -12], [C2, "C", 2, 18], [D, "D", 4, 18]].forEach(([Q, t, nr, dy]) => {
+        g.punkt(Q.x, Q.y, "", nr); g.tekst(Q.x, Q.y, t, nr, { dy, wyrownanie: "center", gruby: true });
+      });
+    });
+    tex("to-wynik", `\\tfrac{|PA|}{|AB|}=\\tfrac{2}{3},\\quad \\tfrac{|PC|}{|CD|}=` + (cd > 1e-9 ? `\\tfrac{2{,}4}{${ladnaTex(cd)}}=${ladnaTex(2.4 / cd)}` : "\\text{---}"));
+    $("to-opis").textContent = rown ? "AC ∥ BD – stosunki równe i C leży wewnątrz odcinka PD, jak A wewnątrz PB." :
+      rowneStos ? "Stosunki równe, ale proste NIE są równoległe: P leży między C i D, więc C nie jest wewnątrz odcinka PD (a A jest wewnątrz PB)." :
+      "Proste AC i BD nie są równoległe.";
+  }
+  rysujTo();
+});
+</script>
+</body>
+</html>

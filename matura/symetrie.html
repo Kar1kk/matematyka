@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Symetrie względem osi i początku układu</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Symetrie względem osi i początku układu</h1>
+  <p class="lead">Symetria względem osi to „złożenie kartki wzdłuż osi”: zmienia znak <b>jednej</b> współrzędnej. Symetria względem $O$ to obrót o $180^\circ$: zmienia znak <b>obu</b>.</p>
+  <p class="wymagania">IX.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Wzory</h2>
+  <table class="tabela">
+    <tr><th>symetria</th><th>$(x,y)\mapsto$</th><th>środek okręgu $(a,b)\mapsto$</th></tr>
+    <tr><td>względem $Ox$</td><td>$(x,-y)$</td><td>$(a,-b)$</td></tr>
+    <tr><td>względem $Oy$</td><td>$(-x,y)$</td><td>$(-a,b)$</td></tr>
+    <tr><td>względem $O$</td><td>$(-x,-y)$</td><td>$(-a,-b)$</td></tr>
+  </table>
+  <div class="uwaga">Symetria względem osi $Ox$ zmienia <b>$y$</b>, nie $x$! Punkt „przeskakuje” przez oś $Ox$, więc zmienia się jego wysokość.</div>
+  <div class="wzor">
+    <div class="tytul">Obraz okręgu $(x-a)^2+(y-b)^2=r^2$</div>
+    $$S_{Ox}\colon\ (x-a)^2+(y+b)^2=r^2$$
+    $$S_{Oy}\colon\ (x+a)^2+(y-b)^2=r^2$$
+    $$S_{O}\colon\ (x+a)^2+(y+b)^2=r^2$$
+    <dl><dt>zasada</dt><dd>symetria nie zmienia odległości, więc promień zostaje, a środek przechodzi na obraz środka</dd></dl>
+  </div>
+  <p><b>Wielokąt:</b> wyznacz obrazy wierzchołków i połącz je w tej samej kolejności. <b>Prosta / wykres:</b> w równaniu zamień $y\to-y$ ($Ox$), $x\to-x$ ($Oy$) lub oba ($O$), np. $y=f(x)$ przechodzi na $y=-f(x)$, $y=f(-x)$, $y=-f(-x)$. W karcie wzorów CKE są wzory na obrazy punktu w symetriach względem $Ox$, $Oy$ i punktu; zamiana w równaniu wykresu wynika z nich wprost.</p>
+  <details class="rozwin"><summary>Złożenie dwóch symetrii osiowych</summary><div>
+    <p>$(x,y)\xrightarrow{Ox}(x,-y)\xrightarrow{Oy}(-x,-y)$, więc $S_{Oy}\circ S_{Ox}=S_O$. Dwa odbicia względem prostopadłych osi dają obrót o $180^\circ$. Dlatego symetria środkowa zachowuje kolejność wierzchołków (orientację), a osiowa ją odwraca.</p>
+  </div></details>
+
+  <h2 id="demo">2. Interaktywnie: odbicie wielokąta</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki $A,B,C,D$ i odtwórz odbicie. Zwróć uwagę na kolejność liter: po symetrii osiowej obiegają figurę w drugą stronę, po środkowej nie.</p>
+    <canvas id="sy-plot"></canvas>
+    <div class="sterowanie">
+      <button id="sy-ox">▶ względem Ox</button>
+      <button id="sy-oy">▶ względem Oy</button>
+      <button id="sy-o">▶ względem O</button>
+    </div>
+    <div class="wynik" id="sy-wynik"></div>
+  </div>
+
+  <h2 id="demo-okrag">3. Interaktywnie: obraz okręgu</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj środek $S$ (niebieski okrąg) i zmieniaj $r$. Obrazy: czerwony względem $Ox$, zielony względem $Oy$, fioletowy względem $O$.</p>
+    <canvas id="so-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="so-r" min="0.5" max="4" step="0.5" value="1.5"> <span id="so-r-v"></span></label>
+    </div>
+    <div class="wynik" id="so-w1"></div>
+    <div class="wynik" id="so-w2"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Trójkąt $A=(1,2)$, $B=(4,1)$, $C=(3,5)$ i okrąg $(x-2)^2+(y+3)^2=4$. Wyznacz obraz trójkąta w symetrii względem $O$ i obraz okręgu w symetrii względem $Oy$.</p>
+    <ol>
+      <li>$S_O$: zmieniamy oba znaki: $A'=(-1,-2)$, $B'=(-4,-1)$, $C'=(-3,-5)$.</li>
+      <li>Środek okręgu $(2,-3)$, w $S_{Oy}$ przechodzi na $(-2,-3)$. Promień $2$ bez zmian.</li>
+    </ol>
+    <p class="odp">$A'B'C'$: $(-1,-2)$, $(-4,-1)$, $(-3,-5)$; okrąg $(x+2)^2+(y+3)^2=4$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz obrazy punktu $P=(-3,5)$ w symetrii względem $Ox$, $Oy$ i $O$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        <b>$(-3,-5)$, $(3,5)$, $(3,-5)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; -4; 3" data-odp-opis="x_S; y_S; r obrazu"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz obraz okręgu $(x+1)^2+(y-4)^2=9$ w symetrii względem początku układu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Środek $(-1,4)\mapsto(1,-4)$, $r=3$. <b>$(x-1)^2+(y+4)^2=9$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2" data-odp-opis="m; n"><span class="poziom">średnie</span>
+      <div class="tresc">Punkty $A=(2m-1,\ 3)$ i $B=(5,\ n+1)$ są symetryczne względem osi $Oy$. Wyznacz $m$ i $n$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Względem $Oy$: przeciwne $x$, równe $y$. $2m-1=-5$, $n+1=3$. <b>$m=-2$, $n=2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz obraz prostej $y=2x-3$ w symetrii względem osi $Ox$ oraz względem punktu $O$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $Ox$: $-y=2x-3$, czyli $y=-2x+3$. $O$: $-y=2\cdot(-x)-3$, czyli $y=2x+3$. <b>$y=-2x+3$ oraz $y=2x+3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="21" data-odp-opis="pole"><span class="poziom">maturalne</span>
+      <div class="tresc">$A=(2,1)$, $B=(5,4)$, a $A'$, $B'$ to ich obrazy w symetrii względem $Oy$. Oblicz pole czworokąta $ABB'A'$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $A'=(-2,1)$, $B'=(-5,4)$. $AA'$ i $BB'$ są poziome, więc to trapez: podstawy $|AA'|=4$, $|BB'|=10$, wysokość $4-1=3$. $P=\frac{4+10}{2}\cdot3$. <b>$21$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5" data-odp-opis="r"><span class="poziom">maturalne</span>
+      <div class="tresc">Okrąg $o\colon(x-3)^2+(y-4)^2=r^2$ i jego obraz w symetrii względem $O$ są styczne zewnętrznie. Wyznacz $r$ i punkt styczności.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Środki $S=(3,4)$, $S'=(-3,-4)$, $|SS'|=10$. Styczność zewnętrzna: $|SS'|=r+r$, więc $r=5$. Punkt styczności leży w połowie $SS'$, czyli w środku symetrii. <b>$r=5$, punkt $(0,0)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Najczęstszy błąd: mylenie osi. Względem $Ox$ zmienia się $y$, względem $Oy$ zmienia się $x$. W razie wątpliwości narysuj jeden punkt.</li>
+    <li>Obraz okręgu: <b>promień bez zmian</b>, przekształcasz tylko środek.</li>
+    <li>Obraz prostej: podstaw $-x$ lub $-y$ do równania i dopiero potem przekształcaj. Kontrola: obraz jednego punktu musi spełniać nowe równanie.</li>
+    <li>Wierzchołki obrazu podawaj z oznaczeniami $A'$, $B'$… w tej samej kolejności.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const kw = (zm, a) => a === 0 ? `${zm}^2` : `(${zm}${a > 0 ? "-" : "+"}${ladnaTex(Math.abs(a))})^2`;
+  const rownanie = (a, b, r) => `${kw("x", a)}+${kw("y", b)}=${ladnaTex(r * r)}`;
+  // symetrie: [nazwa TeX, kolor, przekształcenie z parametrem t ∈ [0,1] (animacja „składania”)]
+  const SYM = {
+    ox: ["S_{Ox}", 2, (x, y, t) => [x, y * Math.cos(Math.PI * t)]],
+    oy: ["S_{Oy}", 3, (x, y, t) => [x * Math.cos(Math.PI * t), y]],
+    o:  ["S_{O}",  4, (x, y, t) => [x * Math.cos(Math.PI * t) - y * Math.sin(Math.PI * t), x * Math.sin(Math.PI * t) + y * Math.cos(Math.PI * t)]],
+  };
+
+  // --- 2. Wielokąt ---
+  const w1 = new Wykres($("sy-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) });
+  const pk = w1.przeciagaj([[1, 1], [4, 1], [5, 3], [2, 4]].map(([x, y]) => ({ x, y, siatka: 1, ogranicz: ogr })), () => rysujSy());
+  const NAZWY = ["A", "B", "C", "D"];
+  let stop = null, akt = "ox", tAkt = 0;
+  function rysujSy() {
+    const [nazwa, nr, f] = SYM[akt];
+    const obr = pk.map(p => f(p.x, p.y, tAkt));
+    w1.rysuj(g => {
+      if (tAkt === 1) pk.forEach((p, i) => g.odcinek(p.x, p.y, obr[i][0], obr[i][1], nr, true));
+      g.wielokat(pk.map(p => [p.x, p.y]), 1, { wypelnij: 0.15 });
+      if (tAkt > 0) g.wielokat(obr, nr, { wypelnij: 0.15 });
+      pk.forEach((p, i) => g.punkt(p.x, p.y, NAZWY[i], 1));
+      if (tAkt > 0) obr.forEach(([x, y], i) => g.punkt(x, y, NAZWY[i] + "'", nr, { r: 4 }));
+      if (akt === "o" && tAkt > 0) g.punkt(0, 0, "O", 4, { r: 4 });
+    });
+    if (tAkt < 1) { tex("sy-wynik", tAkt ? "\\dots" : "\\text{Wybierz symetrię przyciskiem}"); return; }
+    tex("sy-wynik", `${nazwa}\\colon\\ ` + pk.map((p, i) => `${NAZWY[i]}'=(${ladnaTex(obr[i][0])},${ladnaTex(obr[i][1])})`).join(",\\ "));
+  }
+  [["sy-ox", "ox"], ["sy-oy", "oy"], ["sy-o", "o"]].forEach(([id, k]) => $(id).addEventListener("click", () => {
+    if (stop) stop();
+    akt = k;
+    stop = animuj(1800, t => { tAkt = t; rysujSy(); });
+  }));
+  rysujSy();
+
+  // --- 3. Okrąg ---
+  const w2 = new Wykres($("so-plot"), { xmin: -8, xmax: 8, ymin: -7, ymax: 7, rowneSkale: true });
+  const pk2 = w2.przeciagaj([{ x: 3, y: 2, siatka: 1, ogranicz: p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) }) }], rysujSo);
+  function rysujSo() {
+    const r = +$("so-r").value, { x: a, y: b } = pk2[0];
+    $("so-r-v").textContent = ladna(r);
+    w2.rysuj(g => {
+      [[a, -b, 2, "S'(Ox)"], [-a, b, 3, "S'(Oy)"], [-a, -b, 4, "S'(O)"]].forEach(([x, y, nr, et]) => {
+        g.odcinek(a, b, x, y, nr, true);
+        g.okrag(x, y, r, nr, { wypelnij: 0.08 });
+        g.punkt(x, y, et, nr, { r: 4 });
+      });
+      g.okrag(a, b, r, 1, { wypelnij: 0.12 });
+      g.punkt(a, b, "S", 1);
+    });
+    tex("so-w1", `o\\colon ${rownanie(a, b, r)},\\quad S_{Ox}\\colon ${rownanie(a, -b, r)}`);
+    tex("so-w2", `S_{Oy}\\colon ${rownanie(-a, b, r)},\\quad S_{O}\\colon ${rownanie(-a, -b, r)}`);
+  }
+  $("so-r").addEventListener("input", rysujSo);
+  rysujSo();
+});
+</script>
+</body>
+</html>

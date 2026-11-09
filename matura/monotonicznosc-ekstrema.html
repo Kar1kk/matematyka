@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monotoniczność i ekstrema</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Monotoniczność i ekstrema</h1>
+  <p class="lead">Znak pochodnej mówi, czy wykres idzie w górę, czy w dół. Gdzie pochodna zmienia znak, funkcja zawraca: tam jest szczyt (maksimum) albo dołek (minimum).</p>
+  <p class="wymagania">XIII.R.5, XIII.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenia">1. Twierdzenia</h2>
+  <div class="twierdzenie"><b>Monotoniczność</b>
+    Niech $f$ będzie różniczkowalna w przedziale $I$.
+    $$f'(x)&gt;0 \text{ w } I\ \Rightarrow\ f \text{ rośnie w } I$$
+    $$f'(x)&lt;0 \text{ w } I\ \Rightarrow\ f \text{ maleje w } I$$
+    <p>Odwrotnie: jeśli $f$ jest różniczkowalna i rośnie w przedziale $I$, to $f'(x)\ge0$ w $I$ (analogicznie: maleje $\Rightarrow f'(x)\le0$).</p>
+    <p>Wystarczy też $f'\ge0$, jeśli $f'=0$ tylko w pojedynczych punktach (np. $x^3$ rośnie w $\R$, choć $f'(0)=0$).</p>
+  </div>
+  <div class="twierdzenie"><b>Ekstremum</b>
+    <b>Warunek konieczny:</b> jeśli $f$ ma ekstremum w $x_0$ i jest tam różniczkowalna, to $f'(x_0)=0$.<br>
+    <b>Warunek wystarczający:</b> jeśli $f'(x_0)=0$ i $f'$ <b>zmienia znak</b> w $x_0$, to w $x_0$ jest ekstremum:
+    <ul>
+      <li>z $+$ na $-$: <b>maksimum</b> lokalne,</li>
+      <li>z $-$ na $+$: <b>minimum</b> lokalne.</li>
+    </ul>
+  </div>
+  <div class="uwaga">Samo $f'(x_0)=0$ to za mało: $f(x)=x^3$ ma $f'(0)=0$, a ekstremum nie ma (pochodna nie zmienia znaku).</div>
+  <div class="wzor">
+    <div class="tytul">Wartość największa i najmniejsza w $\lp a,b\rp$</div>
+    $$f(a),\ f(b),\ f(x_i)$$
+    <dl><dt>$x_i$</dt><dd>punkty z $(a,b)$, w których $f'(x_i)=0$ (lub $f'$ nie istnieje)</dd>
+        <dt>wynik</dt><dd>największa z tych liczb to $f_{\max}$, najmniejsza to $f_{\min}$</dd></dl>
+  </div>
+
+  <h2 id="znak">2. Interaktywnie: znak $f'$ ↔ kierunek $f$</h2>
+  <div class="demo">
+    <p class="opis">Zielone: $f'&gt;0$, funkcja rośnie. Czerwone: $f'&lt;0$, maleje. Przeciągnij punkt po $f$: styczna i punkt na dolnym wykresie pokazują znak $f'$. Sprawdź $x^3$ i funkcję wymierną z asymptotą.</p>
+    <canvas id="me-f" style="height:260px"></canvas>
+    <canvas id="me-d" style="height:190px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>funkcja <select id="me-fun">
+        <option value="0">x³ − 3x</option>
+        <option value="1">x⁴ − 2x²</option>
+        <option value="2">x³</option>
+        <option value="3">(x² + 3)/(x − 1)</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="me-wynik"></div>
+  </div>
+
+  <h2 id="przedzial">3. Interaktywnie: największa i najmniejsza w przedziale</h2>
+  <div class="demo">
+    <p class="opis">$f(x)=x^3-3x$. Przeciągaj końce $a$, $b$. Kandydaci to końce i ekstrema w środku ($x=\pm1$). Czasem wygrywa koniec przedziału, a nie ekstremum.</p>
+    <canvas id="mz-plot" style="height:300px"></canvas>
+    <div class="wynik" id="mz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Zbadaj monotoniczność i wyznacz ekstrema $f(x)=x^3-3x^2-9x+5$.</p>
+    <ol>
+      <li>$D=\R$, $f'(x)=3x^2-6x-9=3(x+1)(x-3)$.</li>
+      <li>$f'(x)=0 \iff x=-1$ lub $x=3$. Parabola $f'$ ma ramiona w górę:</li>
+    </ol>
+    <table class="tabela">
+      <tr><th>$x$</th><td>$(-\infty,-1)$</td><td>$-1$</td><td>$(-1,3)$</td><td>$3$</td><td>$(3,\infty)$</td></tr>
+      <tr><th>$f'$</th><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr>
+      <tr><th>$f$</th><td>↗</td><td>max</td><td>↘</td><td>min</td><td>↗</td></tr>
+    </table>
+    <ol start="3">
+      <li>$f(-1)=-1-3+9+5=10$, $\;f(3)=27-27-27+5=-22$.</li>
+    </ol>
+    <p class="odp">Rośnie w $(-\infty,-1\rp$ i w $\lp 3,\infty)$, maleje w $\lp -1,3\rp$. Maksimum lokalne $f(-1)=10$, minimum lokalne $f(3)=-22$.</p>
+  </div>
+  <div class="przyklad">
+    <p>To samo dla funkcji wymiernej $f(x)=\frac{x^2+3}{x-1}$.</p>
+    <ol>
+      <li>$D=\R\setminus\{1\}$. $f'(x)=\frac{2x(x-1)-(x^2+3)}{(x-1)^2}=\frac{(x+1)(x-3)}{(x-1)^2}$.</li>
+      <li>Mianownik $&gt;0$, więc znak $f'$ to znak $(x+1)(x-3)$: $+$, $-$, $-$, $+$ na $(-\infty,-1)$, $(-1,1)$, $(1,3)$, $(3,\infty)$.</li>
+      <li>$f(-1)=\frac{4}{-2}=-2$, $\;f(3)=\frac{12}{2}=6$.</li>
+    </ol>
+    <p class="odp">Rośnie w $(-\infty,-1\rp$ i w $\lp 3,\infty)$, maleje w $\lp -1,1)$ i w $(1,3\rp$. Maksimum lokalne $-2$, minimum lokalne $6$ (maksimum lokalne mniejsze od minimum lokalnego, to możliwe: oddziela je asymptota).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="16; -16" data-odp-opis="maksimum lokalne; minimum lokalne"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz przedziały monotoniczności i ekstrema $f(x)=x^3-12x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x)=3x^2-12=3(x-2)(x+2)$. <b>Rośnie w $(-\infty,-2\rp$ i $\lp 2,\infty)$, maleje w $\lp -2,2\rp$; maksimum lokalne $f(-2)=16$, minimum lokalne $f(2)=-16$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-13; 3" data-odp-opis="minimum lokalne; maksimum lokalne"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz ekstrema $f(x)=x^4-8x^2+3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x)=4x^3-16x=4x(x-2)(x+2)$. Znaki: $-,+,-,+$ na kolejnych przedziałach.
+        <b>Minima lokalne $f(-2)=f(2)=-13$, maksimum lokalne $f(0)=3$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8; -19" data-odp-opis="największa; najmniejsza"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz największą i najmniejszą wartość $f(x)=2x^3-3x^2-12x+1$ w przedziale $\lp -2,3\rp$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x)=6(x-2)(x+1)$, oba punkty w przedziale. Kandydaci: $f(-2)=-3$, $f(-1)=8$, $f(2)=-19$, $f(3)=-8$.
+        <b>Największa $8$, najmniejsza $-19$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1/4; 1/4" data-odp-opis="minimum lokalne; maksimum lokalne"><span class="poziom">średnie</span>
+      <div class="tresc">Zbadaj monotoniczność $f(x)=\frac{x}{x^2+4}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x)=\frac{x^2+4-2x^2}{(x^2+4)^2}=\frac{(2-x)(2+x)}{(x^2+4)^2}$.
+        <b>Rośnie w $\lp -2,2\rp$, maleje w $(-\infty,-2\rp$ i w $\lp 2,\infty)$; minimum lokalne $-\frac14$, maksimum lokalne $\frac14$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-3; 3&gt;" data-odp-opis="zbiór wartości m"><span class="poziom">maturalne</span>
+      <div class="tresc">Dla jakich $m$ funkcja $f(x)=x^3+mx^2+3x$ jest rosnąca w $\R$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x)=3x^2+2mx+3\ge0$ dla każdego $x$ (zera tylko w pojedynczych punktach) $\iff\Delta\le0$: $4m^2-36\le0$.
+        <b>$m\in\lp -3,3\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-2; 2)" data-odp-opis="zbiór wartości m"><span class="poziom">maturalne</span>
+      <div class="tresc">Dla jakich $m$ równanie $x^3-3x=m$ ma trzy rozwiązania?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Liczba rozwiązań to liczba punktów wspólnych wykresu $f(x)=x^3-3x$ z prostą $y=m$. $f'=3(x-1)(x+1)$: maksimum lokalne $f(-1)=2$, minimum lokalne $f(1)=-2$, a $f\to\pm\infty$ na krańcach. Prosta pozioma przecina wykres trzy razy, gdy leży ściśle między minimum lokalnym a maksimum lokalnym.
+        <b>$m\in(-2,2)$</b> (zobacz wykres w demo).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Zacznij od <b>dziedziny</b>. Przedziały monotoniczności nie mogą przechodzić przez punkt spoza dziedziny.</li>
+    <li>Nie pisz „maleje w $(-\infty,0)\cup(0,\infty)$”. $\frac1x$ maleje w każdym z tych przedziałów osobno, ale nie na sumie ($-1&lt;1$, a $f(-1)&lt;f(1)$).</li>
+    <li>Ekstremum: pokaż <b>zmianę znaku</b> $f'$ (tabelka lub szkic paraboli). Samo $f'=0$ nie wystarcza.</li>
+    <li>Wartość największa w $\lp a,b\rp$: <b>porównaj</b> z wartościami na końcach. Maksimum lokalne nie musi być największą wartością.</li>
+    <li>Końce przedziałów monotoniczności można domknąć (jeśli należą do dziedziny). Zwykle uznawane są oba zapisy; najbezpieczniej domykać końce, w których funkcja jest określona i ciągła.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Znak f' ---
+  // kr: punkty, w których f'=0; br: asymptoty pionowe; widok: zakres osi
+  const FUN = [
+    { f: x => x ** 3 - 3 * x, d: x => 3 * x * x - 3, kr: [-1, 1], br: [], od: -2.2, do: 2.2,
+      wf: [-3, 3, -4.5, 4.5], wd: [-3, 3, -4, 9], t: "f'(x)=3(x-1)(x+1)" },
+    { f: x => x ** 4 - 2 * x * x, d: x => 4 * x ** 3 - 4 * x, kr: [-1, 0, 1], br: [], od: -1.7, do: 1.7,
+      wf: [-2.2, 2.2, -1.5, 3], wd: [-2.2, 2.2, -8, 8], t: "f'(x)=4x(x-1)(x+1)" },
+    { f: x => x ** 3, d: x => 3 * x * x, kr: [0], br: [], od: -1.8, do: 1.8,
+      wf: [-2.2, 2.2, -6, 6], wd: [-2.2, 2.2, -2, 10], t: "f'(x)=3x^2\\ge0" },
+    { f: x => (x * x + 3) / (x - 1), d: x => (x + 1) * (x - 3) / (x - 1) ** 2, kr: [-1, 3], br: [1], od: -5, do: 7,
+      wf: [-5.5, 7.5, -12, 16], wd: [-5.5, 7.5, -5, 3], t: "f'(x)=\\frac{(x+1)(x-3)}{(x-1)^2}" },
+  ];
+  const wf = new Wykres($("me-f"), { xmin: -3, xmax: 3, ymin: -4, ymax: 4 });
+  const wd = new Wykres($("me-d"), { xmin: -3, xmax: 3, ymin: -4, ymax: 9 });
+  const ustaw = (w, [a, b, c, d]) => {
+    const krok = v => v > 16 ? 4 : v > 8 ? 2 : 1;
+    Object.assign(w.z0, { xmin: a, xmax: b, ymin: c, ymax: d, krokY: krok(d - c) });
+  };
+  let F = FUN[0];
+  const P = wf.przeciagaj([{ x: -1.8, y: 0, ogranicz: p => {
+    let x = Math.min(Math.max(p.x, F.od), F.do);
+    F.br.forEach(b => { if (Math.abs(x - b) < 0.15) x = b + (x < b ? -0.15 : 0.15); });
+    return { x, y: F.f(x) };
+  } }], rysujMe);
+  function przedzialy() {
+    const pkt = [F.od, ...F.kr, ...F.br, F.do].sort((u, v) => u - v);
+    const w = [];
+    for (let i = 0; i + 1 < pkt.length; i++) {
+      const a = pkt[i], b = pkt[i + 1];
+      w.push({ a, b, znak: Math.sign(F.d((a + b) / 2)) });
+    }
+    return w;
+  }
+  function rysujMe() {
+    const x0 = P[0].x, y0 = F.f(x0), k = F.d(x0);
+    P[0].y = y0;
+    const prz = przedzialy();
+    const e = 0.02;
+    wf.rysuj(g => {
+      prz.forEach(({ a, b, znak }) => g.funkcja(F.f, znak > 0 ? 3 : 2, {
+        od: F.br.includes(a) ? a + e : a, do: F.br.includes(b) ? b - e : b }));
+      F.br.forEach(b => g.odcinek(b, g.z.ymin, b, g.z.ymax, 4));
+      F.kr.forEach(c => {
+        const l = Math.sign(F.d(c - 0.01)), p = Math.sign(F.d(c + 0.01));
+        const typ = l > 0 && p < 0 ? "max" : l < 0 && p > 0 ? "min" : "";
+        g.punkt(c, F.f(c), typ || "f′ = 0, brak ekstremum", typ ? 1 : 4, { pusty: !typ });
+      });
+      const dl = 0.6 / Math.sqrt(1 + k * k) * (wf.z.xmax - wf.z.xmin) / 6;
+      g.odcinek(x0 - dl, y0 - k * dl, x0 + dl, y0 + k * dl, 1, false);
+      g.punkt(x0, y0, "", 1);
+    });
+    wd.rysuj(g => {
+      prz.forEach(({ a, b, znak }) => {
+        const od = F.br.includes(a) ? a + e : a, d = F.br.includes(b) ? b - e : b;
+        g.obszar(F.d, () => 0, od, d, znak > 0 ? 3 : 2, 0.25);
+        g.funkcja(F.d, znak > 0 ? 3 : 2, { od, do: d });
+      });
+      F.kr.forEach(c => g.punkt(c, 0, "", 4, { r: 4 }));
+      g.odcinek(x0, g.z.ymax, x0, k, 1);
+      g.punkt(x0, k, "", 1);
+      g.tekst(g.z.xmin, g.z.ymax, "f′", 1, { dx: 6, dy: 16, gruby: true });
+    });
+    const stan = Math.abs(k) < 0.02 ? "\\approx0" : k > 0 ? ">0\\ \\Rightarrow\\ f\\nearrow" : "<0\\ \\Rightarrow\\ f\\searrow";
+    tex("me-wynik", `f'(${ladnaTex(x0)})=${ladnaTex(k)}${stan}\\qquad ${F.t}`);
+  }
+  $("me-fun").addEventListener("change", () => {
+    F = FUN[+$("me-fun").value];
+    ustaw(wf, F.wf); ustaw(wd, F.wd);
+    P[0].x = F.od + 0.4 * (F.kr[0] - F.od + 0.5); rysujMe();
+  });
+  ustaw(wf, F.wf); ustaw(wd, F.wd);
+  rysujMe();
+
+  // --- 3. Największa i najmniejsza w przedziale ---
+  const f = x => x ** 3 - 3 * x;
+  const mz = new Wykres($("mz-plot"), { xmin: -2.8, xmax: 2.8, ymin: -4.5, ymax: 4.5 });
+  const naOsi = p => ({ x: Math.round(Math.min(Math.max(p.x, -2.5), 2.5) * 20) / 20, y: 0 });
+  const K = mz.przeciagaj([{ x: -1.5, y: 0, ogranicz: naOsi }, { x: 2.2, y: 0, ogranicz: naOsi }], rysujMz);
+  function rysujMz() {
+    const a = Math.min(K[0].x, K[1].x), b = Math.max(K[0].x, K[1].x);
+    const kand = [a, b, ...[-1, 1].filter(c => a < c && c < b)].map(x => [x, f(x)]);
+    const mx = kand.reduce((u, v) => v[1] > u[1] ? v : u), mn = kand.reduce((u, v) => v[1] < u[1] ? v : u);
+    mz.rysuj(g => {
+      g.funkcja(f, 1, { przerywana: true });
+      g.funkcja(f, 1, { od: a, do: b });
+      g.odcinek(g.z.xmin, mx[1], g.z.xmax, mx[1], 2);
+      g.odcinek(g.z.xmin, mn[1], g.z.xmax, mn[1], 4);
+      kand.forEach(([x, y]) => g.punkt(x, y, "", 3, { r: 4 }));
+      g.punkt(mx[0], mx[1], "max", 2);
+      g.punkt(mn[0], mn[1], "min", 4);
+      g.punkt(a, 0, "a", 3); g.punkt(b, 0, "b", 3);
+    });
+    const lista = kand.map(([x, y]) => `f(${ladnaTex(x)})=${ladnaTex(y, 3)}`).join(",\\ ");
+    tex("mz-wynik", `${lista}\\qquad f_{\\max}=${ladnaTex(mx[1], 3)},\\ f_{\\min}=${ladnaTex(mn[1], 3)}`);
+  }
+  rysujMz();
+});
+</script>
+</body>
+</html>

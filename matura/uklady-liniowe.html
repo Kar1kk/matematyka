@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Układy liniowe i ich interpretacja geometryczna</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Układy liniowe i ich interpretacja geometryczna</h1>
+  <p class="lead">Każde równanie $ax+by=c$ to prosta. Rozwiązać układ to znaleźć punkt wspólny dwóch prostych, a dwie proste mają jeden punkt wspólny, żadnego albo nieskończenie wiele.</p>
+  <p class="wymagania">IV.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="metody">1. Dwie metody</h2>
+  <div class="dwie">
+    <div class="wzor">
+      <div class="tytul">Podstawianie</div>
+      $$\begin{cases} x+2y=8\\ 3x-y=3 \end{cases}$$
+      <p>Z drugiego $y=3x-3$. Wstaw do pierwszego: $x+6x-6=8$, więc $x=2$, $y=3$.</p>
+      <dl><dt>kiedy</dt><dd>gdy któraś niewiadoma ma współczynnik $\pm1$</dd></dl>
+    </div>
+    <div class="wzor">
+      <div class="tytul">Przeciwne współczynniki</div>
+      $$\begin{cases} 2x+3y=7 &amp;|\cdot 2\\ 3x-2y=4 &amp;|\cdot 3 \end{cases}$$
+      <p>$4x+6y=14$ i $9x-6y=12$. Dodaj stronami: $13x=26$, $x=2$, $y=1$.</p>
+      <dl><dt>kiedy</dt><dd>współczynniki „brzydkie”, bez ułamków po drodze</dd></dl>
+    </div>
+  </div>
+  <div class="uwaga">Mnożenie równania przez liczbę $\neq0$ nie zmienia prostej, a suma dwóch równań to nowa prosta <b>przez ten sam punkt wspólny</b>. Dlatego metoda działa (animacja w punkcie 4).</div>
+
+  <h2 id="rodzaje">2. Trzy rodzaje układów</h2>
+  <table class="tabela">
+    <tr><th>układ</th><th>proste</th><th>rozwiązania</th></tr>
+    <tr><td>oznaczony</td><td>przecinają się</td><td>dokładnie jedno $(x_0,y_0)$</td></tr>
+    <tr><td>nieoznaczony</td><td>pokrywają się</td><td>nieskończenie wiele</td></tr>
+    <tr><td>sprzeczny</td><td>równoległe, różne</td><td>brak</td></tr>
+  </table>
+  <div class="wzor">
+    <div class="tytul">Szybki test: wyznacznik</div>
+    $$\begin{cases} a_1x+b_1y=c_1\\ a_2x+b_2y=c_2 \end{cases}$$
+    $$W=a_1b_2-a_2b_1$$
+    <dl><dt>$W\neq0$</dt><dd>układ oznaczony (proste nierównoległe)</dd>
+        <dt>$W=0$</dt><dd>proste równoległe: nieoznaczony albo sprzeczny, rozstrzyga rachunek ($0=0$ czy $0=5$)</dd></dl>
+  </div>
+  <p>Warunek $A_1B_2-A_2B_1=0$ na równoległość prostych <b>jest w tablicach</b> (równania ogólne). Więcej o położeniu prostych: <a href="polozenie-prostych.html">wzajemne położenie prostych</a>.</p>
+  <details class="rozwin"><summary>Jak zapisać rozwiązanie układu nieoznaczonego?</summary><div>
+    <p>Np. $\begin{cases} x-2y=2\\ -2x+4y=-4\end{cases}$: drugie to pierwsze razy $-2$. Wszystkie punkty prostej $x-2y=2$:</p>
+    $$\left\{\left(x,\ \tfrac{x-2}{2}\right): x\in\R\right\}$$
+    <p>Samo „nieskończenie wiele rozwiązań” to za mało, podaj zbiór (parametr $x$ dowolny).</p>
+  </div></details>
+
+  <h2 id="demo">3. Interaktywnie: dwie proste</h2>
+  <div class="demo">
+    <p class="opis">Zmieniaj współczynniki. Rodzaj układu i punkt wspólny liczą się na żywo. Spróbuj: $a_2=2$, $b_2=2$, $c_2=6$ (nieoznaczony), potem $c_2=2$ (sprzeczny).</p>
+    <canvas id="ul-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="ul-a1" min="-5" max="5" step="1" value="1"> <span id="ul-a1-v"></span></label>
+      <label>$b_1$ <input type="range" id="ul-b1" min="-5" max="5" step="1" value="1"> <span id="ul-b1-v"></span></label>
+      <label>$c_1$ <input type="range" id="ul-c1" min="-8" max="8" step="1" value="3"> <span id="ul-c1-v"></span></label>
+      <label>$a_2$ <input type="range" id="ul-a2" min="-5" max="5" step="1" value="1"> <span id="ul-a2-v"></span></label>
+      <label>$b_2$ <input type="range" id="ul-b2" min="-5" max="5" step="1" value="-1"> <span id="ul-b2-v"></span></label>
+      <label>$c_2$ <input type="range" id="ul-c2" min="-8" max="8" step="1" value="1"> <span id="ul-c2-v"></span></label>
+    </div>
+    <div class="wynik" id="ul-wynik"></div>
+  </div>
+
+  <h2 id="animacja">4. Animacja: metoda przeciwnych współczynników</h2>
+  <div class="demo">
+    <p class="opis">Mnożenie równania nie rusza prostej. Dodawanie obraca nową prostą (zielona) wokół punktu wspólnego, aż stanie pionowo ($y$ znika), potem poziomo ($x$ znika). Przy prostych równoległych nowa prosta „ucieka w nieskończoność”.</p>
+    <canvas id="el-plot"></canvas>
+    <div class="sterowanie">
+      <label>układ <select id="el-uklad">
+        <option value="0">oznaczony</option>
+        <option value="1">sprzeczny</option>
+        <option value="2">nieoznaczony</option>
+      </select></label>
+      <button id="el-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="el-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż układ $\begin{cases} \frac{x+1}{2}-\frac{y-1}{3}=2\\ 3(x-y)=2x-7 \end{cases}$.</p>
+    <ol>
+      <li>Pozbądź się ułamków (pierwsze razy $6$): $3x+3-2y+2=12$, czyli $3x-2y=7$.</li>
+      <li>Uporządkuj drugie: $3x-3y=2x-7$, czyli $x-3y=-7$, więc $x=3y-7$.</li>
+      <li>Podstaw: $3(3y-7)-2y=7$, $7y=28$, $y=4$, $x=5$.</li>
+      <li>Sprawdź w <b>wyjściowym</b> układzie: $\frac{6}{2}-\frac{3}{3}=2$ ✓, $3\cdot1=3=10-7$ ✓.</li>
+    </ol>
+    <p class="odp">$\begin{cases} x=5\\ y=4 \end{cases}$ (układ oznaczony, proste przecinają się w $(5,4)$)</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-2; 4" data-odp-opis="x; y"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż metodą przeciwnych współczynników: $\begin{cases} 3x+4y=10\\ 5x-6y=-34 \end{cases}$</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Pierwsze razy $3$, drugie razy $2$: $9x+12y=30$, $10x-12y=-68$. Dodaj: $19x=-38$, $x=-2$. Z pierwszego $4y=16$. <b>$x=-2,\ y=4$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Określ liczbę rozwiązań i podaj interpretację geometryczną:<br>a) $\begin{cases} 2x-3y=6\\ -4x+6y=-12 \end{cases}$ &nbsp; b) $\begin{cases} 2x-3y=6\\ 4x-6y=5 \end{cases}$</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) Drugie to pierwsze razy $-2$: ta sama prosta. <b>Nieoznaczony: $\{(x,\tfrac23x-2): x\in\R\}$.</b><br>
+        b) Pierwsze razy $2$: $4x-6y=12$, a drugie mówi $4x-6y=5$. Odejmij: $0=7$. <b>Sprzeczny, proste równoległe.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Bez rozwiązywania rozstrzygnij, czy układ $\begin{cases} 6x-4y=1\\ 9x-6y=2 \end{cases}$ ma rozwiązanie.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $W=6\cdot(-6)-9\cdot(-4)=0$, więc proste są równoległe. Lewe strony: drugie $=\tfrac32\cdot$ pierwsze, ale $\tfrac32\cdot1\neq2$. <b>Układ sprzeczny, brak rozwiązań.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6; 3" data-odp-opis="x; y"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż $\begin{cases} \frac{x}{2}+\frac{y}{3}=4\\ \frac{x}{3}-\frac{y}{4}=\frac54 \end{cases}$</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Razy $6$ i razy $12$: $3x+2y=24$, $4x-3y=15$. Pierwsze razy $3$, drugie razy $2$: $9x+6y=72$, $8x-6y=30$. Dodaj: $17x=102$, $x=6$, z pierwszego $2y=6$. <b>$x=6,\ y=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4" data-odp-opis="pole trójkąta"><span class="poziom">maturalne</span>
+      <div class="tresc">Proste $y=x+1$, $y=-x+5$ i $y=1$ ograniczają trójkąt. Wyznacz jego wierzchołki i pole.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Każdy wierzchołek to rozwiązanie układu dwóch prostych: $x+1=-x+5\Rightarrow(2,3)$; $x+1=1\Rightarrow(0,1)$; $-x+5=1\Rightarrow(4,1)$. Podstawa na prostej $y=1$ ma długość $4$, wysokość $3-1=2$. <b>$(0,1),(4,1),(2,3)$, pole $4$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Odpowiedź jako para:</b> $x=5,\ y=4$ albo $(5,4)$. Samo $x$ to niedokończone zadanie.</li>
+    <li><b>Sprawdzaj w wyjściowym układzie</b>, nie w przekształconym: błąd z przepisywania wtedy wychodzi.</li>
+    <li><b>$0=7$</b> po odjęciu oznacza układ sprzeczny, <b>$0=0$</b> nieoznaczony. Napisz to słowami i podaj interpretację (proste równoległe / pokrywające się).</li>
+    <li>Układ nieoznaczony: podaj <b>zbiór rozwiązań</b> z parametrem, np. $\{(x,2x-1): x\in\R\}$.</li>
+    <li>Wierzchołki figury z równań boków = rozwiązania układów par prostych (typowe w geometrii analitycznej).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // wyraz k·v do wzoru (pomija 0 i jedynki)
+  function skladnik(k, v, pierwszy) {
+    if (Math.abs(k) < 1e-9) return "";
+    const abs = Math.abs(k);
+    const znak = k < 0 ? "-" : (pierwszy ? "" : "+");
+    return znak + (Math.abs(abs - 1) < 1e-9 ? "" : ladnaTex(abs)) + v;
+  }
+  function lewa(a, b) {
+    const s = skladnik(a, "x", true);
+    const t = skladnik(b, "y", s === "");
+    return (s + t) || "0";
+  }
+  const rown = (a, b, c) => lewa(a, b) + "=" + ladnaTex(c);
+  // rysuje prostą ax+by=c (jeśli to prosta)
+  function prostaABC(g, a, b, c, nr, przerywana) {
+    if (Math.abs(a) + Math.abs(b) < 1e-9) return;
+    if (Math.abs(b) >= Math.abs(a)) g.prosta(0, c / b, 1, (c - a) / b, nr, przerywana);
+    else g.prosta(c / a, 0, (c - b) / a, 1, nr, przerywana);
+  }
+
+  // --- 3. Dwie proste ---
+  const w1 = new Wykres($("ul-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const ids = ["ul-a1", "ul-b1", "ul-c1", "ul-a2", "ul-b2", "ul-c2"];
+  function rysujUl() {
+    const [a1, b1, c1, a2, b2, c2] = ids.map(id => +$(id).value);
+    ids.forEach(id => { $(id + "-v").textContent = ladna(+$(id).value); });
+    const W = a1 * b2 - a2 * b1;
+    const zly1 = a1 === 0 && b1 === 0, zly2 = a2 === 0 && b2 === 0;
+    let typ = "", pkt = null;
+    if (zly1 || zly2) {
+      typ = "\\text{równanie } 0=c \\text{ nie jest prostą}";
+    } else if (W !== 0) {
+      pkt = [(c1 * b2 - c2 * b1) / W, (a1 * c2 - a2 * c1) / W];
+      typ = "\\text{oznaczony: } (" + ladnaTex(pkt[0]) + ",\\," + ladnaTex(pkt[1]) + ")";
+    } else if (a1 * c2 - a2 * c1 === 0 && b1 * c2 - b2 * c1 === 0) {
+      typ = "\\text{nieoznaczony (ta sama prosta)}";
+    } else {
+      typ = "\\text{sprzeczny (proste równoległe)}";
+    }
+    w1.rysuj(g => {
+      prostaABC(g, a1, b1, c1, 1, false);
+      prostaABC(g, a2, b2, c2, 4, W === 0 && !zly1 && !zly2 && typ.includes("nieozn"));
+      if (pkt) g.punkt(pkt[0], pkt[1], "P", 2);
+    });
+    tex("ul-wynik", "\\begin{cases}" + rown(a1, b1, c1) + "\\\\" + rown(a2, b2, c2) + "\\end{cases}\\;W=" + W + "\\;\\Rightarrow\\;" + typ);
+  }
+  ids.forEach(id => $(id).addEventListener("input", rysujUl));
+  rysujUl();
+
+  // --- 4. Animacja eliminacji ---
+  const uklady = [[2, 3, 7, 3, -2, 4], [1, -2, 2, -2, 4, 6], [1, -2, 2, -2, 4, -4]];
+  const nwd = (p, q) => { p = Math.abs(p); q = Math.abs(q); while (q) { const r = p % q; p = q; q = r; } return p || 1; };
+  const w2 = new Wykres($("el-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  let stop = null;
+  // mnożniki m1, m2 tak, by m1*E1 + m2*E2 nie miało zmiennej (indeks 1 = y, 0 = x)
+  function mnozniki(u, ktora) {
+    const k1 = u[ktora], k2 = u[3 + ktora], d = nwd(k1, k2);
+    let m1 = k2 / d, m2 = -k1 / d;
+    const inna = 1 - ktora, s = m1 * u[inna] + m2 * u[3 + inna];
+    if (s < 0 || (s === 0 && m1 < 0)) { m1 = -m1; m2 = -m2; }
+    return [m1, m2];
+  }
+  function klatkaEl(faza, t) {
+    const u = uklados();
+    const [a1, b1, c1, a2, b2, c2] = u;
+    const W = a1 * b2 - a2 * b1;
+    const [m1, m2] = mnozniki(u, 1);
+    const [n1, n2] = mnozniki(u, 0);
+    let opis = "";
+    let zielone = [];
+    const pkt = W !== 0 ? [(c1 * b2 - c2 * b1) / W, (a1 * c2 - a2 * c1) / W] : null;
+    const komb = (p, q, s) => [p * a1 + s * q * a2, p * b1 + s * q * b2, p * c1 + s * q * c2];
+    if (faza === 0) {
+      opis = "\\begin{cases}" + rown(a1, b1, c1) + "\\\\" + rown(a2, b2, c2) + "\\end{cases}";
+    } else if (faza === 1) {
+      opis = "\\begin{cases}" + rown(m1 * a1, m1 * b1, m1 * c1) + "&|\\cdot" + (m1 < 0 ? "(" + m1 + ")" : m1) + "\\\\" + rown(m2 * a2, m2 * b2, m2 * c2) + "&|\\cdot" + (m2 < 0 ? "(" + m2 + ")" : m2) + "\\end{cases}\\;\\text{te same proste}";
+    } else if (faza === 2) {
+      const L = komb(m1, m2, t);
+      zielone.push(L);
+      if (t < 1) opis = "\\text{suma z wagą } " + ladnaTex(t) + ":\\;" + rown(L[0], L[1], L[2]);
+      else if (W !== 0) opis = rown(L[0], 0, L[2]) + "\\;\\Rightarrow\\;x=" + ladnaTex(pkt[0]) + "\\;\\text{(pionowa)}";
+      else opis = "0=" + ladnaTex(L[2]) + "\\;\\Rightarrow\\;" + (L[2] === 0 ? "\\text{nieoznaczony}" : "\\text{sprzeczny}");
+    } else {
+      zielone.push(komb(m1, m2, 1));
+      const L = komb(n1, n2, t);
+      zielone.push(L);
+      if (t < 1) opis = "x=" + ladnaTex(pkt[0]) + ",\\;\\text{teraz } x:\\;" + rown(L[0], L[1], L[2]);
+      else opis = "x=" + ladnaTex(pkt[0]) + ",\\;" + rown(0, L[1], L[2]) + "\\Rightarrow y=" + ladnaTex(pkt[1]);
+    }
+    w2.rysuj(g => {
+      prostaABC(g, a1, b1, c1, 1, false);
+      prostaABC(g, a2, b2, c2, 4, W === 0 && c1 * a2 === c2 * a1);
+      if (faza === 1) { g.tekst(g.z.xmin + 0.3, g.z.ymax - 0.6, "·" + m1 + " i ·" + m2 + ": proste się nie ruszają", 3); }
+      zielone.forEach(L => prostaABC(g, L[0], L[1], L[2], 3, false));
+      if (pkt) g.punkt(pkt[0], pkt[1], faza === 3 && t >= 1 ? "(" + ladna(pkt[0]) + "; " + ladna(pkt[1]) + ")" : "P", 2);
+    });
+    tex("el-wynik", opis);
+  }
+  function uklados() { return uklady[+$("el-uklad").value]; }
+  function odtworz() {
+    if (stop) stop();
+    const u = uklados(), W = u[0] * u[4] - u[3] * u[1];
+    const fazy = [[0, 700], [1, 1500], [2, 2500]];
+    if (W !== 0) fazy.push([3, 2500]);
+    const krok = i => {
+      if (i >= fazy.length) return;
+      const [f, ms] = fazy[i];
+      stop = animuj(ms, t => klatkaEl(f, t), () => krok(i + 1));
+    };
+    krok(0);
+  }
+  $("el-start").addEventListener("click", odtworz);
+  $("el-uklad").addEventListener("change", () => { if (stop) stop(); klatkaEl(0, 0); });
+  klatkaEl(0, 0);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wzory skróconego mnożenia</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wzory skróconego mnożenia (także a³ ± b³, aⁿ − bⁿ)</h1>
+  <p class="lead">To zwykłe wymnożenie nawiasów, zapamiętane raz na zawsze. Każdy wzór to pole kwadratu albo objętość sześcianu pociętego na kawałki, a czytany od prawej strony jest gotowym rozkładem na czynniki.</p>
+  <p class="wymagania">II.1, II.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Wzory <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></h2>
+  <div class="wzor">
+    <div class="tytul">Kwadraty i różnica kwadratów (zakres podstawowy)</div>
+    $$(a+b)^2=a^2+2ab+b^2$$
+    $$(a-b)^2=a^2-2ab+b^2$$
+    $$a^2-b^2=(a-b)(a+b)$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Sześciany (zakres rozszerzony)</div>
+    $$(a+b)^3=a^3+3a^2b+3ab^2+b^3$$
+    $$(a-b)^3=a^3-3a^2b+3ab^2-b^3$$
+    $$a^3-b^3=(a-b)(a^2+ab+b^2)$$
+    $$a^3+b^3=(a+b)(a^2-ab+b^2)$$
+    <dl><dt>$a^2\pm ab+b^2$</dt><dd>„niepełny kwadrat”: dla $(a,b)\ne(0,0)$ jest dodatni, więc <b>nie rozkłada się dalej</b> (jako trójmian zmiennej $a$ ma $\Delta=-3b^2&lt;0$)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Uogólnienie, $n\ge1$</div>
+    $$\begin{aligned}a^n-b^n=(a-b)(&amp;a^{n-1}+a^{n-2}b\\&amp;+\ldots+b^{n-1})\end{aligned}$$
+    <dl><dt>$(a\pm b)^n$</dt><dd>dwumian Newtona; dowody wzorów na $a^n\pm b^n$ i wniosek $(a-b)\mid(a^n-b^n)$ są na stronie <a href="symbol-newtona.html#podzielnosc">Symbol Newtona</a></dd></dl>
+  </div>
+  <div class="uwaga">$(a+b)^2\neq a^2+b^2$ i $(a+b)^3\neq a^3+b^3$. Brakuje „wyrazów mieszanych”: na rysunkach poniżej to zielone prostokąty i bryły.</div>
+
+  <h2 id="kwadrat">2. Interaktywnie: kwadraty pocięte na kawałki</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj końce odcinków $a$ (niebieski) i $b$ (czerwony) pod rysunkiem. „▶ Odtwórz” składa kawałki: kwadrat $(a+b)^2$ to $a^2$, $b^2$ i <b>dwa</b> prostokąty $ab$. W trybie $a^2-b^2$ odcięty pasek obraca się i dokleja z boku.</p>
+    <canvas id="ws-plot"></canvas>
+    <div class="sterowanie">
+      <button id="ws-kw" class="wtorny aktywny">$(a+b)^2$</button>
+      <button id="ws-roz" class="wtorny">$a^2-b^2$</button>
+      <button id="ws-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="ws-wynik"></div>
+  </div>
+
+  <h2 id="szescian">3. Interaktywnie: sześcian $(a+b)^3$</h2>
+  <div class="demo">
+    <p class="opis">Sześcian o krawędzi $a+b$ tniemy trzema płaszczyznami. „▶ Rozsuń” pokazuje 8 brył: jeden sześcian $a^3$, trzy bryły $a^2b$, trzy bryły $ab^2$ i jeden $b^3$. Stąd współczynniki $1,3,3,1$.</p>
+    <canvas id="sz-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="sz-a" min="1" max="4" step="0.5" value="3"> <span id="sz-a-v"></span></label>
+      <label>$b$ <input type="range" id="sz-b" min="0.5" max="2.5" step="0.5" value="1.5"> <span id="sz-b-v"></span></label>
+      <button id="sz-start">▶ Rozsuń</button>
+    </div>
+    <div class="wynik" id="sz-wynik"></div>
+  </div>
+
+  <h2 id="zastosowania">4. Do czego się przydają</h2>
+  <table class="tabela">
+    <tr><th>Zastosowanie</th><th>Przykład</th></tr>
+    <tr><td>rozkład na czynniki</td><td>$8x^3-1=(2x-1)(4x^2+2x+1)$</td></tr>
+    <tr><td>rachunek w pamięci</td><td>$102\cdot 98=100^2-2^2=9996$</td></tr>
+    <tr><td>niewymierność w mianowniku</td><td>$\frac{1}{\sqrt5-2}=\frac{\sqrt5+2}{5-4}=\sqrt5+2$</td></tr>
+    <tr><td>dowody nierówności</td><td>$a^2+b^2-2ab=(a-b)^2\ge0$</td></tr>
+    <tr><td>symetryczne wyrażenia</td><td>$a^2+b^2=(a+b)^2-2ab$</td></tr>
+  </table>
+  <p>Przy pierwiastku sześciennym w mianowniku pomaga $a^3\pm b^3$: mnożysz przez „niepełny kwadrat”, np. $\left(\sqrt[3]{2}-1\right)\left(\sqrt[3]{4}+\sqrt[3]{2}+1\right)=2-1=1$.</p>
+  <p>Wzory czytaj w obie strony. Z lewej na prawą wymnażasz, z prawej na lewą <a href="rozklad-wielomianu.html">rozkładasz wielomian</a>.</p>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozłóż na czynniki $x^6-64$ tak bardzo, jak się da.</p>
+    <ol>
+      <li>Najpierw różnica kwadratów: $x^6-64=(x^3)^2-8^2=(x^3-8)(x^3+8)$.</li>
+      <li>Różnica sześcianów: $x^3-8=(x-2)(x^2+2x+4)$.</li>
+      <li>Suma sześcianów: $x^3+8=(x+2)(x^2-2x+4)$.</li>
+      <li>Trójmiany $x^2\pm2x+4$ mają $\Delta=4-16&lt;0$, więc koniec.</li>
+    </ol>
+    <p class="odp">$x^6-64=(x-2)(x+2)(x^2+2x+4)(x^2-2x+4)$</p>
+    <p>Gdybyś zaczął od różnicy sześcianów, $(x^2)^3-4^3$, dostaniesz $(x^2-4)(x^4+4x^2+16)$, a czwórkę trudniej rozłożyć. Zasada: <b>najpierw różnica kwadratów</b>.</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Uprość wyrażenie $(2x-3)^2-(x+1)(x-1)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $4x^2-12x+9-(x^2-1)=$ <b>$3x^2-12x+10$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz bez kalkulatora $1001^2-999^2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $(1001-999)(1001+999)=2\cdot2000=$ <b>$4000$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Rozłóż na czynniki $8x^3-27$ oraz $x^3+64$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $8x^3-27=(2x)^3-3^3$, $\;x^3+64=x^3+4^3$.
+        <b>$(2x-3)(4x^2+6x+9)$ oraz $(x+4)(x^2-4x+16)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="19; 80" data-odp-opis="a^2+b^2; a^3+b^3"><span class="poziom">średnie</span>
+      <div class="tresc">Liczby $a$, $b$ spełniają $a+b=5$ i $ab=3$. Oblicz $a^2+b^2$ oraz $a^3+b^3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a^2+b^2=(a+b)^2-2ab=25-6=19$.<br>
+        $a^3+b^3=(a+b)(a^2-ab+b^2)=5\cdot(19-3)=80$.
+        <b>$a^2+b^2=19$, $\;a^3+b^3=80$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="9^(1/3)+3^(1/3)+1"><span class="poziom">maturalne</span>
+      <div class="tresc">Usuń niewymierność z mianownika: $\dfrac{2}{\sqrt[3]{3}-1}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Rozszerz przez $\sqrt[3]{9}+\sqrt[3]{3}+1$, bo $(a-b)(a^2+ab+b^2)=a^3-b^3$ dla $a=\sqrt[3]3$, $b=1$:
+        $$\frac{2\left(\sqrt[3]{9}+\sqrt[3]{3}+1\right)}{3-1}$$
+        <b>$\sqrt[3]{9}+\sqrt[3]{3}+1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że dla dowolnych liczb dodatnich $a$, $b$ zachodzi $a^3+b^3\ge a^2b+ab^2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a^3+b^3-a^2b-ab^2=(a+b)(a^2-ab+b^2)-ab(a+b)$
+        $$=(a+b)(a^2-2ab+b^2)$$
+        $$=(a+b)(a-b)^2\ge0,$$
+        bo $a+b&gt;0$ i $(a-b)^2\ge0$. <b>Nierówność zachodzi; równość tylko dla $a=b$.</b> $\blacksquare$
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Wzory są w tablicach, ale <b>znaki w $(a-b)^3$</b> i w „niepełnym kwadracie” przy $a^3\pm b^3$ myl się najczęściej: w $a^3-b^3$ jest $+ab$, w $a^3+b^3$ jest $-ab$.</li>
+    <li>Trójmian $a^2\pm ab+b^2$ <b>nie rozkłada się</b>. Nie pisz $x^2+2x+4=(x+2)^2$.</li>
+    <li>W dowodach nierówności celem jest zwykle zapis „$\ldots=(\text{coś})^2\ge0$” albo iloczyn czynników o znanym znaku. Na końcu napisz, <b>dlaczego</b> wyrażenie jest nieujemne.</li>
+    <li>Przy $\sqrt[3]{\ }$ w mianowniku rozszerzaj przez niepełny kwadrat, nie przez „sprzężenie” $a+b$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const TXT = "--text";
+  const napis = (g, x, y, s) => g.tekst(x, y, s, TXT, { wyrownanie: "center", dy: 5, gruby: true });
+
+  // --- 2. Kwadraty: (a+b)^2 i a^2-b^2 ---
+  const w1 = new Wykres($("ws-plot"), { xmin: -0.8, xmax: 9.2, ymin: -2.7, ymax: 8.6, rowneSkale: true, siatka: false, osie: false });
+  let A = 3, B = 1.5, tryb = "kw", t1 = 0, stop1 = null;
+  const YA = -1.1, YB = -2.0;
+  const uchwyty = w1.przeciagaj([
+    { x: A, y: YA, ogranicz: p => ({ x: Math.min(5, Math.max(1, Math.round(p.x * 10) / 10)), y: YA }) },
+    { x: B, y: YB, ogranicz: p => ({ x: Math.min(3, Math.max(0.5, Math.round(p.x * 10) / 10)), y: YB }) },
+  ], pk => {
+    A = pk[0].x; B = pk[1].x;
+    if (stop1) stop1();
+    rysuj1();
+  });
+  function popraw() {
+    if (tryb === "roz" && B > A - 0.5) B = Math.max(0.5, A - 0.5);
+    if (tryb === "roz" && A < 1.5) A = 1.5;
+    uchwyty[0].x = A; uchwyty[1].x = B;
+  }
+  function rysuj1() {
+    popraw();
+    const t = t1;
+    w1.rysuj(g => {
+      // linijki a i b
+      g.odcinek(0, YA, A, YA, 1, false); g.punkt(A, YA, "", 1);
+      g.tekst(A, YA, "a = " + ladna(A), 1, { dx: 10, dy: 5, gruby: true });
+      g.odcinek(0, YB, B, YB, 2, false); g.punkt(B, YB, "", 2);
+      g.tekst(B, YB, "b = " + ladna(B), 2, { dx: 10, dy: 5, gruby: true });
+      if (tryb === "kw") {
+        const d = 1.2 * (1 - t);
+        g.prostokat(0, 0, A, A, 1); napis(g, A / 2, A / 2, "a²");
+        g.prostokat(A + d, 0, B, A, 3); napis(g, A + d + B / 2, A / 2, "ab");
+        g.prostokat(0, A + d, A, B, 3); napis(g, A / 2, A + d + B / 2, "ab");
+        g.prostokat(A + d, A + d, B, B, 2); napis(g, A + d + B / 2, A + d + B / 2, "b²");
+        if (t > 0.98) g.wielokat([[0, 0], [A + B, 0], [A + B, A + B], [0, A + B]], TXT, { przerywana: true });
+      } else {
+        const h = A - B;
+        // pasek A: a × (a−b), nieruchomy
+        g.prostokat(0, 0, A, h, 1); napis(g, A / 2, h / 2, "a(a−b)");
+        // odcięty kwadrat b²
+        if (t < 0.5) { g.wielokat([[h, h], [A, h], [A, A], [h, A]], 2, { przerywana: true }); napis(g, h + B / 2, h + B / 2, "−b²"); }
+        // pasek B: (a−b) × b, obraca się o −90° i jedzie w prawo
+        const cx0 = h / 2, cy0 = h + B / 2, cx1 = A + B / 2, cy1 = h / 2;
+        const cx = cx0 + (cx1 - cx0) * t, cy = cy0 + (cy1 - cy0) * t + 1.5 * Math.sin(Math.PI * t);
+        const fi = -Math.PI / 2 * t, c = Math.cos(fi), s = Math.sin(fi);
+        const rog = [[-h / 2, -B / 2], [h / 2, -B / 2], [h / 2, B / 2], [-h / 2, B / 2]]
+          .map(([x, y]) => [cx + x * c - y * s, cy + x * s + y * c]);
+        g.wielokat(rog, 3, { wypelnij: 0.35 }); napis(g, cx, cy, "b(a−b)");
+        if (t > 0.98) {
+          g.wielokat([[0, 0], [A + B, 0], [A + B, h], [0, h]], TXT, { przerywana: true });
+          g.tekst((A + B) / 2, h, "a + b", TXT, { wyrownanie: "center", dy: -8, gruby: true });
+          g.tekst(A + B, h / 2, "a − b", TXT, { dx: 8, dy: 5, gruby: true });
+        }
+      }
+    });
+    const a = ladnaTex(A), b = ladnaTex(B);
+    if (tryb === "kw") {
+      tex("ws-wynik", `(${a}+${b})^2=${ladnaTex(A * A)}+2\\cdot${ladnaTex(A * B)}+${ladnaTex(B * B)}=${ladnaTex((A + B) ** 2)}`);
+    } else {
+      tex("ws-wynik", `${ladnaTex(A * A)}-${ladnaTex(B * B)}=(${a}+${b})(${a}-${b})=${ladnaTex(A * A - B * B)}`);
+    }
+  }
+  function ustawTryb(nowy) {
+    tryb = nowy; t1 = 0; if (stop1) stop1();
+    $("ws-kw").classList.toggle("aktywny", tryb === "kw");
+    $("ws-roz").classList.toggle("aktywny", tryb === "roz");
+    rysuj1();
+  }
+  $("ws-kw").addEventListener("click", () => ustawTryb("kw"));
+  $("ws-roz").addEventListener("click", () => ustawTryb("roz"));
+  $("ws-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    stop1 = animuj(1800, t => { t1 = t; rysuj1(); });
+  });
+  rysuj1();
+
+  // --- 3. Sześcian (a+b)^3 w rzucie ukośnym ---
+  const w2 = new Wykres($("sz-plot"), { xmin: -0.5, xmax: 12, ymin: -0.5, ymax: 11.5, rowneSkale: true, siatka: false, osie: false });
+  const K = 0.5 * Math.SQRT1_2;
+  const rzut = (x, y, z) => [x + K * y, z + K * y];
+  let r2 = 0, stop2 = null, cel2 = 0;
+  const KOLOR = [1, 3, 4, 2], NAZWA = ["a³", "a²b", "ab²", "b³"];
+  function rysuj2() {
+    const a = +$("sz-a").value, b = +$("sz-b").value, d = 1.6 * r2;
+    $("sz-a-v").textContent = ladna(a); $("sz-b-v").textContent = ladna(b);
+    const bryly = [];
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) for (let l = 0; l < 2; l++) bryly.push({ i, j, l });
+    bryly.sort((p, q) => (q.j - p.j) || (p.l - q.l) || (p.i - q.i));
+    w2.rysuj(g => {
+      bryly.forEach(({ i, j, l }) => {
+        const x0 = i ? a + d : 0, y0 = j ? a + d : 0, z0 = l ? a + d : 0;
+        const x1 = x0 + (i ? b : a), y1 = y0 + (j ? b : a), z1 = z0 + (l ? b : a);
+        const nb = i + j + l, nr = KOLOR[nb];
+        const sciany = [
+          [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1]],   // przód
+          [[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]],   // góra
+          [[x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1]],   // prawy bok
+        ];
+        [0.6, 0.3, 0.45].forEach((kr, k) => {
+          const pts = sciany[k].map(p => rzut(...p));
+          g.wielokat(pts, "--surface", { wypelnij: 1, bezObrysu: true });
+          g.wielokat(pts, nr, { wypelnij: kr, grubosc: 1.5 });
+        });
+        const [sx, sy] = rzut((x0 + x1) / 2, y0, (z0 + z1) / 2);
+        napis(g, sx, sy, NAZWA[nb]);
+      });
+    });
+    const t = x => ladnaTex(x);
+    tex("sz-wynik", `${t((a + b) ** 3)}=${t(a ** 3)}+3\\cdot${t(a * a * b)}+3\\cdot${t(a * b * b)}+${t(b ** 3)}`);
+  }
+  $("sz-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    const od = r2; cel2 = cel2 ? 0 : 1;
+    $("sz-start").textContent = cel2 ? "◀ Złóż" : "▶ Rozsuń";
+    stop2 = animuj(1400, t => { r2 = od + (cel2 - od) * t; rysuj2(); });
+  });
+  ["sz-a", "sz-b"].forEach(id => $(id).addEventListener("input", rysuj2));
+  rysuj2();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Równania i nierówności liniowe</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Równania i nierówności liniowe</h1>
+  <p class="lead">Rozwiązać $ax+b&gt;c$ to znaleźć, gdzie prosta $y=ax+b$ leży nad poziomem $y=c$. Jedyna prawdziwa pułapka: dzielenie przez liczbę ujemną odwraca zwrot nierówności.</p>
+  <p class="wymagania">III.1, III.2, III.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="przeksztalcenia">1. Przekształcenia równoważne</h2>
+  <div class="definicja"><b>Definicja</b> Dwa równania (nierówności) są <i>równoważne</i>, gdy mają ten sam zbiór rozwiązań. Rozwiązujemy, przechodząc łańcuchem $\iff$ do coraz prostszej postaci.</div>
+  <table class="tabela">
+    <tr><th>Operacja na obu stronach</th><th>Równanie</th><th>Nierówność</th></tr>
+    <tr><td>dodanie tej samej liczby lub wyrażenia</td><td>OK</td><td>OK</td></tr>
+    <tr><td>mnożenie przez liczbę $k&gt;0$</td><td>OK</td><td>OK</td></tr>
+    <tr><td>mnożenie przez liczbę $k&lt;0$</td><td>OK</td><td><b>zmiana zwrotu</b></td></tr>
+    <tr><td>mnożenie przez $0$ lub wyrażenie z $x$</td><td colspan="2">niebezpieczne: może dodać lub zgubić rozwiązania</td></tr>
+  </table>
+  <div class="uwaga">Mnożysz przez wyrażenie z $x$ (np. mianownik)? Najpierw założenie, że jest różne od zera. Przykład z podstawy: $\frac{5}{x+1}=\frac{x+3}{2x-1}$ przy $x\neq-1$, $x\neq\frac12$ jest równoważne $5(2x-1)=(x+3)(x+1)$, czyli $x^2-6x+8=0$, więc $x\in\{2,4\}$.</div>
+
+  <h2 id="przypadki">2. Trzy przypadki: jedno, żadne, wszystkie</h2>
+  <div class="wzor">
+    <div class="tytul">Równanie $ax=b$</div>
+    <dl><dt>$a\neq0$</dt><dd>jedno rozwiązanie $x=\frac{b}{a}$</dd>
+        <dt>$a=0,\ b\neq0$</dt><dd>$0=b$: <b>sprzeczne</b>, zbiór rozwiązań $\varnothing$</dd>
+        <dt>$a=0,\ b=0$</dt><dd>$0=0$: <b>tożsamościowe</b>, zbiór rozwiązań $\R$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Nierówność $ax&gt;b$</div>
+    <dl><dt>$a&gt;0$</dt><dd>$x&gt;\frac{b}{a}$</dd>
+        <dt>$a&lt;0$</dt><dd>$x&lt;\frac{b}{a}$ (zwrot się odwraca)</dd>
+        <dt>$a=0$</dt><dd>$0&gt;b$: gdy $b&lt;0$, to $\R$ (tożsamościowa); gdy $b\ge0$, to $\varnothing$ (sprzeczna)</dd></dl>
+  </div>
+  <p>Geometrycznie: prosta przecina poziom $y=c$ w jednym punkcie albo, gdy $a=0$, jest do niego równoległa (brak przecięcia) lub się z nim pokrywa (każdy $x$).</p>
+
+  <h2 id="demo">3. Interaktywnie: prosta kontra poziom</h2>
+  <div class="demo">
+    <p class="opis">Rozwiązujemy $ax+b \;?\; c$. Czerwona część prostej spełnia nierówność, jej rzut na oś $Ox$ to zbiór rozwiązań. Ustaw $a=0$ i zobacz nierówność sprzeczną albo tożsamościową.</p>
+    <canvas id="li-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="li-a" min="-3" max="3" step="0.5" value="-1"> <span id="li-a-v"></span></label>
+      <label>$b$ <input type="range" id="li-b" min="-4" max="4" step="0.5" value="1"> <span id="li-b-v"></span></label>
+      <label>$c$ <input type="range" id="li-c" min="-4" max="4" step="0.5" value="-1"> <span id="li-c-v"></span></label>
+      <label>znak <select id="li-znak"><option value="gt">&gt;</option><option value="ge">≥</option><option value="lt">&lt;</option><option value="le">≤</option><option value="eq">=</option></select></label>
+    </div>
+    <div class="wynik" id="li-wynik"></div>
+  </div>
+
+  <h2 id="odwrocenie">4. Animacja: dlaczego minus odwraca zwrot</h2>
+  <div class="demo">
+    <p class="opis">Mnożenie przez $k$ to rozciągnięcie osi. Gdy $k$ przechodzi przez $0$ na ujemne, oś się „przewraca”: punkty zamieniają się stronami. Przeciągnij $u$ i $v$ (górny rząd), potem odtwórz.</p>
+    <canvas id="od-plot" style="height:220px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="od-k" min="-2" max="2" step="0.05" value="1"> <span id="od-k-v"></span></label>
+      <button id="od-start">▶ Odtwórz ($k$: 1 → −1)</button>
+    </div>
+    <div class="wynik" id="od-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż nierówność $2-\frac{x+3}{2}\ge\frac{2x+5}{3}$.</p>
+    <ol>
+      <li>Mnożymy przez $6&gt;0$ (zwrot bez zmian): $12-3(x+3)\ge2(2x+5)$.</li>
+      <li>$3-3x\ge4x+10 \iff -7x\ge7$.</li>
+      <li>Dzielimy przez $-7&lt;0$, <b>zmieniamy zwrot</b>: $x\le-1$.</li>
+    </ol>
+    <p class="odp">$x\in(-\infty,-1\rp$</p>
+  </div>
+  <div class="przyklad">
+    <p>Rozwiąż $\frac{x+1}{2}-\frac{x-2}{3}\le\frac{x+3}{6}$.</p>
+    <ol>
+      <li>Razy $6$: $3x+3-2x+4\le x+3$, czyli $x+7\le x+3$.</li>
+      <li>$x$ się skraca: $7\le3$, fałsz dla każdego $x$.</li>
+    </ol>
+    <p class="odp">Nierówność sprzeczna: $\varnothing$. (Ze znakiem $&gt;$ byłaby tożsamościowa: $\R$.)</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="przedzial: (-oo; -2)"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż nierówność $3-2x&gt;7$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $-2x&gt;4$, dzielimy przez $-2$ i odwracamy zwrot: <b>$x&lt;-2$, czyli $x\in(-\infty,-2)$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Które z równań jest sprzeczne, a które tożsamościowe: (A) $2(x+1)=2x+3$, (B) $3(x-2)+x=4x-6$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        (A) $2x+2=2x+3 \iff 2=3$: fałsz. (B) $4x-6=4x-6$: prawda dla każdego $x$.
+        <b>(A) sprzeczne, (B) tożsamościowe.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz najmniejszą liczbę całkowitą spełniającą nierówność $\frac{2x-1}{3}-\frac{x+2}{4}&gt;1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Razy $12$: $8x-4-3x-6&gt;12 \iff 5x&gt;22 \iff x&gt;4{,}4$. <b>Najmniejsza liczba całkowita: $5$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2" data-odp-opis="m (sprzeczne); m (tożsamościowe)"><span class="poziom">średnie</span>
+      <div class="tresc">Dla jakich $m$ równanie $(m^2-4)x=m-2$ jest sprzeczne, a dla jakich tożsamościowe?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Współczynnik przy $x$ zeruje się dla $m=\pm2$. Dla $m=2$: $0\cdot x=0$, tożsamościowe. Dla $m=-2$: $0\cdot x=-4$, sprzeczne. Dla pozostałych $m$: $x=\frac{1}{m+2}$.
+        <b>Sprzeczne dla $m=-2$, tożsamościowe dla $m=2$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-1-sqrt(3); oo)"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż nierówność $(1-\sqrt3)\,x&lt;2$. Wynik zapisz bez niewymierności w mianowniku.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $1-\sqrt3&lt;0$, więc dzieląc, odwracamy zwrot: $x&gt;\frac{2}{1-\sqrt3}=\frac{2(1+\sqrt3)}{1-3}=-1-\sqrt3$.
+        <b>$x\in(-1-\sqrt3,+\infty)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Znak współczynnika:</b> przy $\sqrt3-2$, $1-\sqrt2$, $-m^2-1$ sprawdź znak, zanim podzielisz. To najczęstszy błąd.</li>
+    <li><b>Odpowiedź jako zbiór:</b> przedział z poprawnymi nawiasami; $\varnothing$ dla sprzecznej, $\R$ dla tożsamościowej (nie „brak” ani „każde”).</li>
+    <li><b>Ułamki:</b> mnóż przez wspólny mianownik i bierz liczniki w nawias: $-\frac{x-2}{3}$ daje $-(x-2)$.</li>
+    <li><b>Z parametrem:</b> zawsze osobno przypadek, w którym współczynnik przy $x$ jest zerem.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{,}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "\\lp" : "("}${A}${s}${B}${p.zb ? "\\rp" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{,}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 3. Prosta kontra poziom ---
+  const w1 = new Wykres($("li-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5 });
+  function rysujLi() {
+    const a = +$("li-a").value, b = +$("li-b").value, c = +$("li-c").value, zn = $("li-znak").value;
+    $("li-a-v").textContent = ladna(a); $("li-b-v").textContent = ladna(b); $("li-c-v").textContent = ladna(c);
+    const pred = x => POR[zn](a * x + b - c);
+    const kryt = a !== 0 ? [(c - b) / a] : [];
+    const z = zbior(pred, kryt);
+    w1.rysuj(g => {
+      g.prosta(0, c, 1, c, 3, true);
+      g.tekst(g.z.xmax, c, "y = c", 3, { dx: -44, dy: -6 });
+      g.funkcja(x => a * x + b, 1);
+      z.forEach(p => {
+        if (p.a < p.b) g.funkcja(x => a * x + b, 2, { od: p.a, do: p.b, grubosc: 5 });
+        else g.punkt(p.a, c, "", 2);
+      });
+      naOsi(g, z, 2);
+    });
+    const L = `${a === 1 ? "" : a === -1 ? "-" : ladnaTex(a)}x${b === 0 ? "" : znakTex(b)}${ZNAK[zn]}${ladnaTex(c)}`;
+    let s;
+    if (a === 0) {
+      s = `${L}\\iff 0${ZNAK[zn]}${ladnaTex(c - b)}\\;\\Rightarrow\\;` +
+          (z.length ? "\\text{tożsamościowa: }x\\in\\R" : "\\text{sprzeczna: }\\varnothing");
+    } else {
+      const zn2 = a < 0 ? ODWR[zn] : zn;
+      s = `${L}\\iff x${ZNAK[zn2]}${ulamekTex((c - b) / a)}` + (a < 0 && zn !== "eq" ? "\\quad(\\text{dzielimy przez } a<0)" : "");
+    }
+    tex("li-wynik", s);
+  }
+  ["li-a", "li-b", "li-c", "li-znak"].forEach(id => $(id).addEventListener("input", rysujLi));
+  rysujLi();
+
+  // --- 4. Mnożenie przez k ---
+  const w2 = new Wykres($("od-plot"), { xmin: -7, xmax: 7, ymin: -1.6, ymax: 1.6, krokY: 10 });
+  const pk = [{ x: -1, y: 0.9, siatka: 0.5, ogranicz: p => ({ x: Math.max(-6, Math.min(6, p.x)), y: 0.9 }) },
+              { x: 3, y: 0.9, siatka: 0.5, ogranicz: p => ({ x: Math.max(-6, Math.min(6, p.x)), y: 0.9 }) }];
+  let k = 1, stop = null;
+  function rysujOd() {
+    $("od-k-v").textContent = ladna(k);
+    const [u, v] = [pk[0].x, pk[1].x];
+    w2.rysuj(g => {
+      g.odcinek(g.z.xmin, 0.9, g.z.xmax, 0.9, 3, true);
+      g.punkt(u, 0.9, "u", 1); g.punkt(v, 0.9, "v", 2);
+      g.odcinek(u, 0.8, k * u, 0.1, 1, true); g.odcinek(v, 0.8, k * v, 0.1, 2, true);
+      g.punkt(k * u, 0, "", 1); g.punkt(k * v, 0, "", 2);
+      g.tekst(k * u, 0, "ku", 1, { dx: -8, dy: 22, gruby: true });
+      g.tekst(k * v, 0, "kv", 2, { dx: -8, dy: 22, gruby: true });
+    });
+    const r = (x, y) => Math.abs(x - y) < 1e-9 ? "=" : x < y ? "<" : ">";
+    tex("od-wynik", `u${r(u, v)}v,\\quad k=${ladnaTex(k)}:\\; ku=${ladnaTex(k * u)}\\;${r(k * u, k * v)}\\;kv=${ladnaTex(k * v)}`);
+  }
+  w2.przeciagaj(pk, () => rysujOd());
+  $("od-k").addEventListener("input", () => { if (stop) stop(); k = +$("od-k").value; rysujOd(); });
+  $("od-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(3000, t => { k = 1 - 2 * t; $("od-k").value = k; rysujOd(); });
+  });
+  rysujOd();
+});
+</script>
+</body>
+</html>

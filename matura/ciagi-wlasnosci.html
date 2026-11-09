@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciągi: wzór ogólny, rekurencja, monotoniczność</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Ciągi: wzór ogólny, rekurencja, monotoniczność</h1>
+  <p class="lead">Ciąg to funkcja, której argumentami są tylko liczby naturalne $1, 2, 3, \ldots$ Jej wykres to osobne punkty $(n, a_n)$, a monotoniczność czytasz ze znaku „skoku” $a_{n+1}-a_n$.</p>
+  <p class="wymagania">VI.1–VI.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definicje</h2>
+  <div class="definicja"><b>Ciąg liczbowy</b> to funkcja $a\colon \N_+\to\R$. Zamiast $a(n)$ piszemy $a_n$ i nazywamy to $n$-tym wyrazem. Ciąg może być skończony (dziedzina $\{1,\ldots,k\}$).</div>
+  <div class="dwie">
+    <div class="wzor">
+      <div class="tytul">Wzór ogólny</div>
+      $$a_n=\frac{2n-1}{n+1}$$
+      <dl><dt>$a_5$</dt><dd>podstaw $n=5$: $a_5=\frac{9}{6}=\frac32$</dd></dl>
+    </div>
+    <div class="wzor">
+      <div class="tytul">Wzór rekurencyjny</div>
+      $$a_1=2,\quad a_{n+1}=3a_n-2$$
+      <dl><dt>kolejne</dt><dd>$a_2=4$, $a_3=10$, $a_4=28$: każdy wyraz z poprzedniego</dd></dl>
+    </div>
+  </div>
+  <div class="definicja"><b>Monotoniczność</b> Ciąg $(a_n)$ jest
+    <b>rosnący</b>, gdy $a_{n+1}&gt;a_n$ dla każdego $n$; <b>malejący</b>, gdy $a_{n+1}&lt;a_n$; <b>stały</b>, gdy $a_{n+1}=a_n$;
+    <b>niemalejący</b> ($\ge$) i <b>nierosnący</b> ($\le$). Monotoniczny = jeden z tych typów.</div>
+  <div class="wzor">
+    <div class="tytul">Jak badać monotoniczność</div>
+    $$a_{n+1}-a_n\ \gtrless\ 0\ ?$$
+    <dl><dt>różnica</dt><dd>uprość $a_{n+1}-a_n$ do jednego ułamka i zbadaj znak <b>dla wszystkich</b> $n\in\N_+$</dd>
+        <dt>iloraz</dt><dd>tylko gdy wszystkie $a_n&gt;0$: $\frac{a_{n+1}}{a_n}&gt;1$ ⇒ rosnący, $&lt;1$ ⇒ malejący (wygodne przy potęgach i silniach)</dd></dl>
+  </div>
+  <div class="uwaga">Żeby pokazać, że ciąg <b>nie jest</b> monotoniczny, wystarczy kontrprzykład: trzy wyrazy, np. $a_1&lt;a_2$ i $a_2&gt;a_3$. Za to „pierwsze wyrazy rosną” niczego nie dowodzi.</div>
+
+  <h2 id="wykres">2. Wykres ciągu i jego „skoki”</h2>
+  <div class="demo">
+    <p class="opis">Wybierz ciąg i kliknij ▶: pojawiają się punkty $(n,a_n)$, a pod spodem słupki $a_{n+1}-a_n$. Wszystkie zielone (nad osią) = ciąg rosnący, wszystkie czerwone = malejący, mieszane = niemonotoniczny.</p>
+    <canvas id="cw-plot" style="height:260px"></canvas>
+    <canvas id="cw-roz" style="height:170px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>ciąg <select id="cw-wzor">
+        <option value="0">aₙ = (2n − 1)/(n + 1)</option>
+        <option value="1">aₙ = n² − 9n</option>
+        <option value="2">aₙ = 6/n</option>
+        <option value="3">aₙ = (−1)ⁿ · 4/n</option>
+        <option value="4">aₙ = 2ⁿ/n!</option>
+      </select></label>
+      <label>$n$ do <input type="range" id="cw-n" min="2" max="12" step="1" value="10"> <span id="cw-n-v"></span></label>
+      <button id="cw-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="cw-wynik"></div>
+  </div>
+
+  <h2 id="rekurencja">3. Rekurencja krok po kroku</h2>
+  <div class="demo">
+    <p class="opis">Każdy kolejny wyraz liczysz z poprzedniego. Klikaj „Krok” i patrz, jak punkt „przeskakuje” do następnego $n$. Zmień $a_1$: przy $a_{n+1}=2a_n-3$ i $a_1=3$ ciąg jest stały, dla $a_1&gt;3$ rośnie, dla $a_1&lt;3$ maleje.</p>
+    <canvas id="rk-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>wzór <select id="rk-wzor">
+        <option value="0">aₙ₊₁ = 2aₙ − 3</option>
+        <option value="1">aₙ₊₁ = ½aₙ + 2</option>
+        <option value="2">aₙ₊₁ = −½aₙ + 3</option>
+      </select></label>
+      <label>$a_1$ <input type="range" id="rk-a1" min="-2" max="6" step="0.5" value="4"> <span id="rk-a1-v"></span></label>
+      <button id="rk-krok">Krok →</button>
+      <button id="rk-reset">↺ Od nowa</button>
+    </div>
+    <div class="wynik" id="rk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Zbadaj monotoniczność ciągu $a_n=\frac{2n-1}{n+1}$.</p>
+    <ol>
+      <li>$a_{n+1}=\frac{2(n+1)-1}{(n+1)+1}=\frac{2n+1}{n+2}$.</li>
+      <li>$a_{n+1}-a_n=\frac{(2n+1)(n+1)-(2n-1)(n+2)}{(n+1)(n+2)}$.</li>
+      <li>Licznik: $(2n^2+3n+1)-(2n^2+3n-2)=3$.</li>
+      <li>$a_{n+1}-a_n=\frac{3}{(n+1)(n+2)}&gt;0$ dla każdego $n\in\N_+$ (mianownik dodatni).</li>
+    </ol>
+    <p class="odp">Ciąg jest rosnący.</p>
+  </div>
+  <div class="przyklad">
+    <p>Czy ciąg $a_n=n^2-9n$ jest monotoniczny? Który wyraz jest najmniejszy?</p>
+    <ol>
+      <li>$a_{n+1}-a_n=(n+1)^2-9(n+1)-n^2+9n=2n-8$.</li>
+      <li>$2n-8&lt;0$ dla $n&lt;4$, $=0$ dla $n=4$, $&gt;0$ dla $n&gt;4$: ciąg najpierw maleje, potem rośnie.</li>
+      <li>Najmniejsze są $a_4=a_5=-20$ (dla $n=4$ różnica wynosi $0$).</li>
+    </ol>
+    <p class="odp">Nie jest monotoniczny (np. $a_1&gt;a_2$, $a_5&lt;a_6$); najmniejsze wyrazy: $a_4=a_5=-20$.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="3; 4" data-odp-opis="numery n wyrazów ujemnych"><span class="poziom">łatwe</span>
+      <div class="tresc">Ciąg dany jest wzorem $a_n=n^2-7n+10$. Które wyrazy tego ciągu są ujemne?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $n^2-7n+10=(n-2)(n-5)&lt;0 \iff 2&lt;n&lt;5$, a $n\in\N_+$, więc $n\in\{3,4\}$. <b>Ujemne są $a_3=a_4=-2$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Ciąg określony jest rekurencyjnie: $a_1=2$, $a_{n+1}=3a_n-2$. Oblicz $a_4$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_2=3\cdot2-2=4$, $a_3=3\cdot4-2=10$, $a_4=3\cdot10-2=28$. <b>$a_4=28$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Zbadaj monotoniczność ciągu $a_n=\frac{3n+1}{n+2}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_{n+1}-a_n=\frac{3n+4}{n+3}-\frac{3n+1}{n+2}=\frac{(3n+4)(n+2)-(3n+1)(n+3)}{(n+2)(n+3)}$. Licznik: $3n^2+10n+8-(3n^2+10n+3)=5$.
+        Zatem $a_{n+1}-a_n=\frac{5}{(n+2)(n+3)}&gt;0$. <b>Ciąg jest rosnący.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Zbadaj monotoniczność ciągu $a_n=\frac{2^n}{n!}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wszystkie wyrazy dodatnie, więc iloraz: $\frac{a_{n+1}}{a_n}=\frac{2^{n+1}}{(n+1)!}\cdot\frac{n!}{2^n}=\frac{2}{n+1}$.
+        Dla $n=1$ iloraz $=1$ ($a_1=a_2=2$), dla $n\ge2$ jest $&lt;1$. <b>Ciąg jest nierosnący, ale nie malejący</b> (bo $a_1=a_2$).
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-1; oo)" data-odp-opis="zbiór wartości k"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz wszystkie wartości parametru $k$, dla których ciąg $a_n=\frac{kn-1}{n+1}$ jest rosnący.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wydziel część całkowitą: $a_n=\frac{k(n+1)-k-1}{n+1}=k-\frac{k+1}{n+1}$. Stąd
+        $a_{n+1}-a_n=(k+1)\left(\frac{1}{n+1}-\frac{1}{n+2}\right)=\frac{k+1}{(n+1)(n+2)}$.
+        Mianownik jest dodatni, więc różnica jest dodatnia dla każdego $n$ wtedy i tylko wtedy, gdy $k+1&gt;0$. <b>$k&gt;-1$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Schemat:</b> wyznacz $a_{n+1}$ (podstaw $n+1$ <i>w nawiasie</i>), policz $a_{n+1}-a_n$, sprowadź do wspólnego mianownika, uzasadnij znak „dla każdego $n\in\N_+$”. Bez tego zdania tracisz punkt.</li>
+    <li><b>Iloraz</b> tylko dla ciągów o wyrazach dodatnich. Porównujesz z $1$, nie z $0$.</li>
+    <li><b>Ciąg kwadratowy</b> $a_n=an^2+bn+c$: wierzchołek $p$ nie musi być naturalny. Najmniejszy/największy wyraz jest przy liczbie naturalnej najbliższej $p$ (sprawdź obie sąsiednie).</li>
+    <li><b>„Które wyrazy są…”</b>: rozwiązujesz nierówność, ale odpowiedź to tylko $n\in\N_+$. Częsty błąd: podanie przedziału zamiast numerów.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Pomocnik: zmiana zakresu wykresu (wykres.js nie ma do tego metody)
+  const rown = (x, m = 2) => (Math.abs(Math.round(x * 10 ** m) / 10 ** m - x) < 1e-9 ? "=" : "\\approx ") + ladnaTex(x, m);
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+  function zakresY(w, lo, hi) {
+    lo = Math.min(lo, 0); hi = Math.max(hi, 0);
+    const pad = (hi - lo) * 0.12 || 1;
+    Object.assign(w.z0, { ymin: lo - pad, ymax: hi + pad, krokY: ladnyKrok(hi - lo + 2 * pad) });
+  }
+  const silnia = n => n <= 1 ? 1 : n * silnia(n - 1);
+
+  // --- 2. Wykres ciągu i różnice ---
+  const CIAGI = [
+    { f: n => (2 * n - 1) / (n + 1), tex: "\\frac{2n-1}{n+1}", opis: "rosnący" },
+    { f: n => n * n - 9 * n, tex: "n^2-9n", opis: "niemonotoniczny (maleje do } n=4\\text{, potem rośnie)" },
+    { f: n => 6 / n, tex: "\\frac{6}{n}", opis: "malejący" },
+    { f: n => (-1) ** n * 4 / n, tex: "(-1)^n\\cdot\\frac{4}{n}", opis: "niemonotoniczny (znaki na przemian)" },
+    { f: n => 2 ** n / silnia(n), tex: "\\frac{2^n}{n!}", opis: "nierosnący (} a_1=a_2\\text{, potem maleje)" },
+  ];
+  const w1 = new Wykres($("cw-plot"), { xmin: -0.5, xmax: 12.8, ymin: -1, ymax: 3 });
+  const w2 = new Wykres($("cw-roz"), { xmin: -0.5, xmax: 12.8, ymin: -1, ymax: 1 });
+  let stop1 = null;
+  function klatka1(t) {
+    const c = CIAGI[+$("cw-wzor").value], N = +$("cw-n").value;
+    $("cw-n-v").textContent = N;
+    const a = [], d = [];
+    for (let n = 1; n <= N; n++) a.push(c.f(n));
+    for (let n = 1; n < N; n++) d.push(a[n] - a[n - 1]);
+    zakresY(w1, Math.min(...a), Math.max(...a));
+    zakresY(w2, Math.min(...d), Math.max(...d));
+    const ile = t * N; // ile punktów już widać (ułamek = pojawianie się)
+    w1.rysuj(g => {
+      a.forEach((v, i) => {
+        const n = i + 1;
+        if (n > ile + 1e-9) return;
+        if (n > 1) g.odcinek(n - 1, a[i - 1], n, v, 3);
+        g.punkt(n, v, N <= 8 || n === 1 || n === N ? `a${String(n).replace(/\d/g, x => "₀₁₂₃₄₅₆₇₈₉"[x])}` : "", 1);
+      });
+    });
+    w2.rysuj(g => {
+      d.forEach((v, i) => {
+        const n = i + 1;
+        if (n + 1 > ile + 1e-9) return;
+        const nr = Math.abs(v) < 1e-12 ? 4 : v > 0 ? 3 : 2;
+        g.prostokat(n + 0.2, 0, 0.6, v, nr, { wypelnij: 0.55 });
+      });
+      g.tekst(g.z.xmax, g.z.ymax, "aₙ₊₁ − aₙ ", 4, { dy: 16, wyrownanie: "right" });
+    });
+    tex("cw-wynik", `a_n=${c.tex}\\;\\Rightarrow\\;\\text{${c.opis}}`);
+  }
+  $("cw-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(2500, klatka1); });
+  ["cw-wzor", "cw-n"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); klatka1(1); }));
+  klatka1(1);
+
+  // --- 3. Rekurencja krok po kroku ---
+  const REK = [
+    { f: x => 2 * x - 3, tex: (n, p) => `2a_{${n}}-3=2\\cdot(${ladnaTex(p)})-3` },
+    { f: x => x / 2 + 2, tex: (n, p) => `\\tfrac12 a_{${n}}+2=\\tfrac12\\cdot(${ladnaTex(p)})+2` },
+    { f: x => -x / 2 + 3, tex: (n, p) => `-\\tfrac12 a_{${n}}+3=-\\tfrac12\\cdot(${ladnaTex(p)})+3` },
+  ];
+  const MAXN = 10;
+  const w3 = new Wykres($("rk-plot"), { xmin: -0.5, xmax: 10.8, ymin: -2, ymax: 8 });
+  let wyr = [], stop3 = null;
+  function wyrazy() {
+    const r = REK[+$("rk-wzor").value], a1 = +$("rk-a1").value;
+    $("rk-a1-v").textContent = ladna(a1);
+    const a = [a1];
+    for (let n = 1; n < MAXN; n++) a.push(r.f(a[n - 1]));
+    // ograniczenie zakresu, by wybuchające ciągi (2aₙ−3) nie spłaszczały wykresu
+    const widoczne = a.map(v => Math.max(-60, Math.min(60, v)));
+    zakresY(w3, Math.min(...widoczne), Math.max(...widoczne));
+    return a;
+  }
+  function klatka3(k, t) { // k = liczba gotowych wyrazów, t = postęp skoku do wyrazu k+1
+    const a = wyrazy(), r = REK[+$("rk-wzor").value];
+    w3.rysuj(g => {
+      for (let n = 1; n <= k; n++) {
+        if (n > 1) g.odcinek(n - 1, a[n - 2], n, a[n - 1], 3);
+        g.punkt(n, a[n - 1], k <= 6 ? `a${"₀₁₂₃₄₅₆₇₈₉"[n] || ""}` : "", 1);
+      }
+      if (t > 0 && k < MAXN) {
+        const x = k + t, y = a[k - 1] + (a[k] - a[k - 1]) * t;
+        g.strzalka(k, a[k - 1], x, y, 2);
+        g.punkt(x, y, "", 2);
+      }
+    });
+    const n = Math.min(k, MAXN);
+    tex("rk-wynik", n === 1 ? `a_1=${ladnaTex(a[0])}` :
+      `a_{${n}}=${r.tex(n - 1, a[n - 2])}${rown(a[n - 1], 3)}`);
+  }
+  let k = 1;
+  const reset = () => { if (stop3) stop3(); k = 1; klatka3(1, 0); };
+  $("rk-krok").addEventListener("click", () => {
+    if (stop3) stop3();
+    if (k >= MAXN) { k = 1; klatka3(1, 0); return; }
+    const k0 = k;
+    stop3 = animuj(600, t => klatka3(k0, t), () => { k = k0 + 1; klatka3(k, 0); });
+  });
+  $("rk-reset").addEventListener("click", reset);
+  ["rk-wzor", "rk-a1"].forEach(id => $(id).addEventListener("input", reset));
+  reset();
+});
+</script>
+</body>
+</html>

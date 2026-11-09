@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proporcjonalność odwrotna: f(x) = a/x</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Proporcjonalność odwrotna: f(x) = a/x</h1>
+  <p class="lead">Dwie wielkości są odwrotnie proporcjonalne, gdy ich iloczyn jest stały: $x\cdot y=a$. Dwa razy więcej pracowników, dwa razy krócej pracy. Na wykresie każdy prostokąt „pod” hiperbolą ma to samo pole $|a|$.</p>
+  <p class="wymagania">V.13, V.12</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definicja i własności</h2>
+  <div class="definicja"><b>Definicja</b> Wielkości $x$ i $y$ są <b>odwrotnie proporcjonalne</b>, gdy $y=\frac{a}{x}$ dla pewnego $a\neq0$, czyli $x\cdot y=a$. Liczba $a$ to współczynnik proporcjonalności.</div>
+  <table class="tabela">
+    <tr><th></th><th>$a&gt;0$</th><th>$a&lt;0$</th></tr>
+    <tr><td>ćwiartki</td><td>I i III</td><td>II i IV</td></tr>
+    <tr><td>monotoniczność</td><td>maleje w $(-\infty,0)$ i w $(0,\infty)$</td><td>rośnie w $(-\infty,0)$ i w $(0,\infty)$</td></tr>
+    <tr><td colspan="3">$D=\R\setminus\{0\}$, $\;ZW=\R\setminus\{0\}$, asymptoty: $x=0$ i $y=0$, środek symetrii $(0,0)$</td></tr>
+  </table>
+  <div class="uwaga">$f(x)=\frac{1}{x}$ <b>nie jest</b> malejąca w całej dziedzinie: $-1&lt;1$, a $f(-1)=-1&lt;f(1)=1$. Maleje osobno w każdym z dwóch przedziałów.</div>
+  <div class="wzor">
+    <div class="tytul">Przesunięta hiperbola (V.12)</div>
+    $$f(x)=\frac{a}{x-p}+q$$
+    <dl><dt>$[p,q]$</dt><dd>wektor przesunięcia wykresu $y=\frac{a}{x}$</dd>
+        <dt>asymptoty</dt><dd>$x=p$ i $y=q$; $\;D=\R\setminus\{p\}$, $ZW=\R\setminus\{q\}$</dd></dl>
+  </div>
+  <p>Wzór $\frac{cx+d}{x-p}$ sprowadzisz do tej postaci, dzieląc licznik: np. $\frac{2x+1}{x-1}=2+\frac{3}{x-1}$ (przykład niżej).</p>
+
+  <h2 id="pole">2. Interaktywnie: stałe pole</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt $P$ po hiperboli. Prostokąt o wierzchołkach $(0,0)$ i $P$ zmienia kształt, ale jego pole się nie zmienia, bo $x\cdot y=a$. „▶ Spłaszcz” przesuwa $P$ w prawo.</p>
+    <canvas id="ho-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="ho-a" min="-8" max="8" step="0.5" value="4"> <span id="ho-a-v"></span></label>
+      <button id="ho-start">▶ Spłaszcz</button>
+    </div>
+    <div class="wynik" id="ho-wynik"></div>
+  </div>
+
+  <h2 id="przesuniecie">3. Przesunięcie o wektor $[p,q]$</h2>
+  <div class="demo">
+    <p class="opis">Przerywana: $y=\frac{a}{x}$. „▶ Przesuń”: cały wykres razem z asymptotami jedzie o wektor $[p,q]$.</p>
+    <canvas id="hp-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="hp-a" min="-6" max="6" step="1" value="3"> <span id="hp-a-v"></span></label>
+      <label>$p$ <input type="range" id="hp-p" min="-4" max="4" step="0.5" value="2"> <span id="hp-p-v"></span></label>
+      <label>$q$ <input type="range" id="hp-q" min="-3" max="3" step="0.5" value="1"> <span id="hp-q-v"></span></label>
+      <button id="hp-start">▶ Przesuń</button>
+    </div>
+    <div class="wynik" id="hp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Zapisz $f(x)=\frac{2x+1}{x-1}$ w postaci $\frac{a}{x-p}+q$, podaj asymptoty, zbiór wartości i monotoniczność.</p>
+    <ol>
+      <li>Licznik przez mianownik: $2x+1=2(x-1)+3$.</li>
+      <li>$f(x)=\frac{2(x-1)+3}{x-1}=2+\frac{3}{x-1}$, czyli $a=3$, $p=1$, $q=2$.</li>
+      <li>To $y=\frac3x$ przesunięte o $[1,2]$: asymptoty $x=1$, $y=2$, $ZW=\R\setminus\{2\}$.</li>
+      <li>$a=3&gt;0$, więc maleje w każdym przedziale dziedziny.</li>
+    </ol>
+    <p class="odp">$f(x)=\frac{3}{x-1}+2$; maleje w $(-\infty,1)$ i w $(1,\infty)$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-6; -3/2" data-odp-opis="a; f(4)"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykres $f(x)=\frac ax$ przechodzi przez punkt $(-2,3)$. Wyznacz $a$ i oblicz $f(4)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a=x\cdot y=(-2)\cdot3=-6$. $f(4)=\frac{-6}{4}$. <b>$a=-6$, $f(4)=-1{,}5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="15" data-odp-opis="liczba pracowników"><span class="poziom">łatwe</span>
+      <div class="tresc">$6$ pracowników wykonuje pewną pracę w $10$ dni. Ilu pracowników (pracujących w tym samym tempie) wykona ją w $4$ dni? Zapisz liczbę dni $d$ jako funkcję liczby pracowników $n$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $n\cdot d=6\cdot10=60$, więc $d(n)=\frac{60}{n}$ i $n=\frac{60}{4}$. <b>$15$ pracowników; $d(n)=\frac{60}{n}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1" data-odp-opis="miejsce zerowe"><span class="poziom">średnie</span>
+      <div class="tresc">Dla $f(x)=\frac{3}{x+2}-1$ podaj dziedzinę, zbiór wartości, asymptoty i miejsce zerowe.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac3x$ przesunięte o $[-2,-1]$. $\frac{3}{x+2}=1\iff x+2=3$.
+        <b>$D=\R\setminus\{-2\}$, $ZW=\R\setminus\{-1\}$, asymptoty $x=-2$, $y=-1$, miejsce zerowe $x=1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (0; 3&gt;" data-odp-opis="zbiór x"><span class="poziom">średnie</span>
+      <div class="tresc">Odczytaj z wykresu (lub uzasadnij), dla jakich $x$ funkcja $f(x)=\frac6x$ przyjmuje wartości nie mniejsze niż $2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Dla $x&lt;0$ jest $f(x)&lt;0$, więc nie. Dla $x&gt;0$ funkcja maleje i $f(3)=2$, więc $f(x)\ge2\iff 0&lt;x\le3$. <b>$x\in(0,3\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (2; 5)" data-odp-opis="rozwiązanie nierówności f(x) &gt; 0"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykres funkcji $f(x)=\frac{a}{x-p}+q$ ma asymptoty $x=2$ i $y=-1$ i przechodzi przez punkt $(3,2)$. Wyznacz $a$ i rozwiąż nierówność $f(x)&gt;0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $p=2$, $q=-1$. $f(3)=\frac a1-1=2$, więc $a=3$. $f(x)&gt;0\iff\frac{3}{x-2}&gt;1$. Dla $x&lt;2$ lewa strona jest ujemna. Dla $x&gt;2$: $3&gt;x-2\iff x&lt;5$. Miejsce zerowe $x=5$ widać też na wykresie.
+        <b>$a=3$, $\;f(x)&gt;0\iff x\in(2,5)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Monotoniczność:</b> zawsze dwa osobne przedziały, nigdy „maleje w $\R\setminus\{0\}$”.</li>
+    <li>Rozpoznaj odwrotną proporcjonalność w treści: „iloczyn stały” (czas × prędkość = droga, cena × ilość = kwota).</li>
+    <li>Z asymptot od razu masz $p$ i $q$; $a$ wyznaczasz z jednego punktu wykresu.</li>
+    <li>Przy nierówności $\frac{a}{x-p}&gt;c$ nie mnóż „w ciemno” przez $x-p$: rozważ znak mianownika albo mnóż przez $(x-p)^2$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Stałe pole ---
+  const w1 = new Wykres($("ho-plot"), { xmin: -8, xmax: 8, ymin: -6, ymax: 6, rowneSkale: true });
+  const aHo = () => +$("ho-a").value || 0.5;
+  // x tak, by |y| ≤ 5,5 i punkt był w widoku
+  const ogrHo = x => {
+    const a = aHo(), min = Math.max(0.3, Math.abs(a) / 5.5), s = x < 0 ? -1 : 1;
+    return s * Math.min(7.5, Math.max(min, Math.abs(x)));
+  };
+  const P = w1.przeciagaj([{ x: 2, y: 2, ogranicz: p => { const x = ogrHo(p.x); return { x, y: aHo() / x }; } }], () => rysujHo());
+  let stop1 = null;
+  function rysujHo() {
+    const a = aHo();
+    $("ho-a-v").textContent = ladna(a);
+    P[0].x = ogrHo(P[0].x); P[0].y = a / P[0].x;
+    const { x, y } = P[0];
+    w1.rysuj(g => {
+      g.prostokat(0, 0, x, y, 2, { wypelnij: 0.25 });
+      g.tekst(x / 2, y / 2, `pole = ${ladna(Math.abs(a))}`, 2, { wyrownanie: "center", gruby: true });
+      g.funkcja(t => a / t, 1);
+      g.odcinek(0, g.z.ymin, 0, g.z.ymax, 3); g.odcinek(g.z.xmin, 0, g.z.xmax, 0, 3);
+      g.punkt(x, y, "P");
+    });
+    tex("ho-wynik", `P\\approx(${ladnaTex(x)};\\,${ladnaTex(y)}),\\quad x\\cdot y=${ladnaTex(a)}=a\\ \\text{(stałe)},\\quad \\text{pole}=|a|=${ladnaTex(Math.abs(a))}`);
+  }
+  $("ho-a").addEventListener("input", () => { if (stop1) stop1(); rysujHo(); });
+  $("ho-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    const s = P[0].x < 0 ? -1 : 1, x0 = Math.abs(aHo()) / 5.5, x1 = 7.5;
+    stop1 = animuj(2500, t => { P[0].x = s * Math.max(0.3, x0 + (x1 - x0) * t); rysujHo(); });
+  });
+  rysujHo();
+
+  // --- 3. Przesunięcie ---
+  const w2 = new Wykres($("hp-plot"), { xmin: -8, xmax: 8, ymin: -6, ymax: 6 });
+  let stop2 = null;
+  function klatka(t) {
+    const a = +$("hp-a").value || 1, p = +$("hp-p").value, q = +$("hp-q").value;
+    $("hp-a-v").textContent = ladna(a); $("hp-p-v").textContent = ladna(p); $("hp-q-v").textContent = ladna(q);
+    const pk = p * t, qk = q * t;
+    w2.rysuj(g => {
+      g.funkcja(x => a / x, 3, { przerywana: true });
+      g.odcinek(pk, g.z.ymin, pk, g.z.ymax, 4); g.odcinek(g.z.xmin, qk, g.z.xmax, qk, 4);
+      if (t > 0 && (p || q)) g.strzalka(0, 0, pk, qk, 2);
+      g.funkcja(x => a / (x - pk) + qk, 1);
+    });
+    const ul = `\\frac{${ladnaTex(a)}}{x${znakTex(-pk)}}`.replace("x+0}", "x}");
+    tex("hp-wynik", `y=${ul}${Math.abs(qk) < 1e-9 ? "" : znakTex(qk)},\\quad \\text{asymptoty: } x=${ladnaTex(pk)},\\ y=${ladnaTex(qk)},\\quad ZW=\\R\\setminus\\{${ladnaTex(qk)}\\}`);
+  }
+  $("hp-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(2000, klatka); });
+  ["hp-a", "hp-p", "hp-q"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); klatka(1); }));
+  klatka(0);
+});
+</script>
+</body>
+</html>

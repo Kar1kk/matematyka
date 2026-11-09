@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kąty wpisane i środkowe, styczne, łuk i wycinek</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Kąty wpisane i środkowe, styczne, łuk i wycinek</h1>
+  <p class="lead">Kąt wpisany „widzi” łuk z obwodu, kąt środkowy – ze środka; ze środka łuk wygląda dwa razy szerzej. Gdziekolwiek przesuniesz wierzchołek kąta wpisanego po tym samym łuku, kąt się nie zmienia.</p>
+  <p class="wymagania">VIII.1, VIII.5, VIII.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="katy">1. Kąt wpisany i środkowy</h2>
+  <div class="definicja"><b>Definicja</b> <b>Kąt środkowy</b> ma wierzchołek w środku $O$ okręgu. <b>Kąt wpisany</b> ma wierzchołek na okręgu, a ramiona zawierają cięciwy. Oba są <i>oparte na łuku</i>, który leży wewnątrz kąta. Miarą łuku jest miara kąta środkowego opartego na nim.</div>
+  <div class="twierdzenie"><b>Twierdzenie o kątach w okręgu</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    <ol>
+      <li>Kąt wpisany jest połową kąta środkowego opartego na tym samym łuku.</li>
+      <li>Dwa kąty wpisane w ten sam okrąg są równe wtedy i tylko wtedy, gdy są oparte na równych łukach.</li>
+    </ol>
+    W szczególności kąt wpisany oparty na półokręgu jest prosty.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p><b>1.</b> Kąt wpisany $APB$, środek $O$, $|OA|=|OB|=|OP|=r$. Trzy przypadki:</p>
+      <ul>
+        <li><b>$O$ leży na ramieniu</b>, np. $PB$. Trójkąt $AOP$ jest równoramienny, więc $|\angle OAP|=|\angle OPA|=\alpha$. Kąt $AOB$ jest kątem zewnętrznym tego trójkąta, więc $|\angle AOB|=\alpha+\alpha=2\alpha$.</li>
+        <li><b>$O$ wewnątrz kąta.</b> Poprowadź średnicę $PQ$. Dzieli ona kąt wpisany na $\alpha_1+\alpha_2$, a środkowy na dwa kąty, do których stosuje się przypadek pierwszy: $2\alpha_1+2\alpha_2=2\alpha$.</li>
+        <li><b>$O$ na zewnątrz kąta.</b> Znów średnica $PQ$, ale teraz kąt wpisany to <i>różnica</i> $\alpha_1-\alpha_2$, a środkowy to $2\alpha_1-2\alpha_2$.</li>
+      </ul>
+      <p><b>2.</b> Równe łuki $\iff$ równe kąty środkowe (z definicji miary łuku) $\iff$ równe ich połowy, czyli kąty wpisane (z punktu 1). $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="uwaga">Cięciwa $AB$ dzieli okrąg na dwa łuki. Kąty wpisane po przeciwnych stronach cięciwy mają sumę $180^\circ$: $\alpha$ i $180^\circ-\alpha$ (łuki: $2\alpha+(360^\circ-2\alpha)$).</div>
+
+  <h2 id="demo">2. Interaktywnie: kąt wpisany się nie zmienia</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj $P$ po okręgu (albo „▶ Przesuń $P$”): dopóki $P$ jest na tym samym łuku, kąt $APB$ stoi w miejscu i jest połową kąta środkowego na czerwonym łuku. Przeciągnij $P$ na drugą stronę cięciwy – kąt zmienia się na $180^\circ-\alpha$. Punkty $A$, $B$ też można przesuwać.</p>
+    <canvas id="kw-plot"></canvas>
+    <div class="sterowanie"><button id="kw-start">▶ Przesuń $P$</button></div>
+    <div class="wynik" id="kw-wynik"></div>
+  </div>
+
+  <h2 id="styczne">3. Styczne</h2>
+  <div class="twierdzenie"><b>Styczna i promień</b>
+    Styczna do okręgu jest prostopadła do promienia poprowadzonego do punktu styczności.
+  </div>
+  <div class="twierdzenie"><b>Twierdzenie o odcinkach stycznych</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    Jeśli styczne w punktach $A$ i $B$ przecinają się w $P$, to $|PA|=|PB|$, a $PO$ jest dwusieczną kąta $APB$.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>Trójkąty $OAP$ i $OBP$ są prostokątne (kąty przy $A$ i $B$), mają wspólną przeciwprostokątną $OP$ i $|OA|=|OB|=r$. Z Pitagorasa $|PA|=\sqrt{|OP|^2-r^2}=|PB|$, więc trójkąty są przystające (bbb) i $|\angle APO|=|\angle BPO|$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="wzor"><div class="tytul">Długość odcinka stycznej</div>
+    $$t=\sqrt{d^2-r^2}$$
+    <dl><dt>$d$</dt><dd>odległość punktu $P$ od środka okręgu (Pitagoras w trójkącie $OAP$)</dd></dl>
+  </div>
+  <p>W tablicach są jeszcze dwa twierdzenia: o odcinkach siecznej i stycznej ($|PA|\cdot|PB|=|PC|^2$) oraz o kącie między styczną a cięciwą. To drugie jest <b>poza wymaganiami 2024</b>, ale jest w karcie wzorów CKE, więc możesz się na nie powołać; wystarczy wiedzieć, że ten kąt równa się kątowi wpisanemu opartemu na tym samym łuku.</p>
+
+  <h2 id="wycinek">4. Długość łuku i pole wycinka</h2>
+  <div class="wzor"><div class="tytul">Kąt $\alpha$ w stopniach <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$L=\frac{\alpha}{360^\circ}\cdot2\pi r$$
+    $$P=\frac{\alpha}{360^\circ}\cdot\pi r^2$$
+    <dl><dt>$\frac{\alpha}{360^\circ}$</dt><dd>jaką część pełnego kąta (koła) zajmuje wycinek</dd>
+        <dt>w radianach</dt><dd>$L=\alpha r$, $P=\frac12\alpha r^2=\frac12Lr$ (<a href="miara-lukowa.html">miara łukowa</a>)</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Zmieniaj kąt i promień. Wycinek to po prostu ułamek $\frac{\alpha}{360^\circ}$ koła – tym samym ułamkiem jest łuk względem obwodu.</p>
+    <canvas id="wc-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$\alpha$ <input type="range" id="wc-a" min="5" max="360" step="5" value="120"> <span id="wc-a-v"></span></label>
+      <label>$r$ <input type="range" id="wc-r" min="1" max="4" step="0.5" value="3"> <span id="wc-r-v"></span></label>
+    </div>
+    <div class="wynik" id="wc-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Punkty $A$, $B$, $C$ leżą na okręgu o środku $O$ i promieniu $6$, $|\angle AOB|=110^\circ$. Oblicz $|\angle ACB|$, gdy $C$ leży na dłuższym łuku $AB$, oraz gdy leży na krótszym. Oblicz długość krótszego łuku $AB$.</p>
+    <ol>
+      <li>$C$ na dłuższym łuku: kąt $ACB$ jest oparty na krótszym łuku, któremu odpowiada kąt środkowy $110^\circ$, więc $|\angle ACB|=55^\circ$.</li>
+      <li>$C$ na krótszym łuku: kąt jest oparty na dłuższym łuku ($250^\circ$), więc $125^\circ=180^\circ-55^\circ$.</li>
+      <li>$L=\frac{110}{360}\cdot12\pi=\frac{11\pi}{3}$.</li>
+    </ol>
+    <p class="odp">$55^\circ$ lub $125^\circ$; $L=\frac{11\pi}{3}$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Punkt $P$ leży w odległości $13$ od środka okręgu o promieniu $5$. Oblicz długość odcinka stycznej poprowadzonej z $P$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $t=\sqrt{169-25}$. <b>$t=12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2pi; 9pi" data-odp-opis="długość łuku; pole wycinka"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz długość łuku i pole wycinka koła o promieniu $9$ i kącie środkowym $40^\circ$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{40}{360}=\frac19$. $L=\frac19\cdot18\pi$, $P=\frac19\cdot81\pi$. <b>$L=2\pi$, $P=9\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="140; 100; 120" data-odp-opis="kąty BOC; AOC; AOB w stopniach"><span class="poziom">średnie</span>
+      <div class="tresc">Trójkąt $ABC$ jest wpisany w okrąg o środku $O$, $|\angle BAC|=70^\circ$, $|\angle ABC|=50^\circ$. Oblicz kąty $BOC$, $AOC$, $AOB$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $|\angle ACB|=60^\circ$. Trójkąt jest ostrokątny, więc każdy kąt środkowy jest dwa razy większy od kąta wpisanego opartego na tym samym łuku: <b>$|\angle BOC|=140^\circ$, $|\angle AOC|=100^\circ$, $|\angle AOB|=120^\circ$</b> (suma $360^\circ$).
+      </div></details></li>
+    <li class="zadanie" data-odp="30; 150" data-odp-opis="kąty w stopniach"><span class="poziom">średnie</span>
+      <div class="tresc">Cięciwa $AB$ ma długość równą promieniowi okręgu. Oblicz miary kątów wpisanych opartych na tej cięciwie.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąt $AOB$ jest równoboczny, więc $|\angle AOB|=60^\circ$. Kąt wpisany po jednej stronie cięciwy: $30^\circ$, po drugiej: $180^\circ-30^\circ$. <b>$30^\circ$ lub $150^\circ$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6sqrt(3); 4pi" data-odp-opis="długość PA; długość łuku"><span class="poziom">maturalne</span>
+      <div class="tresc">Z punktu $P$ poprowadzono styczne $PA$ i $PB$ do okręgu o środku $O$ i promieniu $6$. $|\angle APB|=60^\circ$. Oblicz $|PA|$ i długość krótszego łuku $AB$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        W czworokącie $OAPB$ kąty przy $A$ i $B$ są proste, więc $|\angle AOB|=360^\circ-90^\circ-90^\circ-60^\circ=120^\circ$. $PO$ jest dwusieczną: w trójkącie $OAP$ kąt przy $P$ to $30^\circ$, $\tg30^\circ=\frac{6}{|PA|}$, $|PA|=\frac{6}{\sqrt3/3}=6\sqrt3$. Łuk: $\frac{120}{360}\cdot12\pi=4\pi$. <b>$|PA|=6\sqrt3$, $L=4\pi$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">W trójkącie $ABC$ środkowa $CM$ ma długość równą połowie boku $AB$. Wykaż, że kąt $ACB$ jest prosty.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $M$ jest środkiem $AB$, więc $|MA|=|MB|=\frac12|AB|=|MC|$. Punkty $A$, $B$, $C$ leżą więc na okręgu o środku $M$, a $AB$ jest jego średnicą. Kąt $ACB$ jest kątem wpisanym opartym na półokręgu, więc <b>$|\angle ACB|=90^\circ$</b>, co należało wykazać.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Zawsze ustal, <b>na którym łuku</b> oparty jest kąt – po której stronie cięciwy leży wierzchołek. Stąd bierze się $\alpha$ albo $180^\circ-\alpha$.</li>
+    <li>W uzasadnieniu pisz pełną nazwę: „kąt wpisany i środkowy oparte na tym samym łuku $AB$”, „kąt wpisany oparty na półokręgu”.</li>
+    <li>Punkt styczności = kąt prosty. Dorysuj promień i odcinek do środka – prawie zawsze dostajesz trójkąt prostokątny.</li>
+    <li>Wzory na łuk i wycinek w tablicach są ze stopniami; jeśli kąt jest w radianach, użyj $L=\alpha r$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Kąt wpisany i środkowy ---
+  const R = 3, O = { x: 0, y: 0 };
+  const w1 = new Wykres($("kw-plot"), { xmin: -4, xmax: 4, ymin: -3.8, ymax: 3.8, rowneSkale: true });
+  const naO = naOkregu(O, R);
+  const biegun = t => ({ x: R * Math.cos(t), y: R * Math.sin(t) });
+  const pk = w1.przeciagaj([{ ...biegun(-2.5), ogranicz: naO }, { ...biegun(-0.4), ogranicz: naO }, { ...biegun(1.9), ogranicz: naO }], rysujKw);
+  const kt = P => { let t = Math.atan2(P.y, P.x); if (t < 0) t += 2 * Math.PI; return t; };
+  function rysujKw() {
+    const [A, B, P] = pk;
+    // łuk AB nie zawierający P (przeciwnie do zegara od A do B lub od B do A)
+    const a = kt(A), b = kt(B), p = kt(P);
+    const odAdoB = ((b - a) + 2 * Math.PI) % (2 * Math.PI), odAdoP = ((p - a) + 2 * Math.PI) % (2 * Math.PI);
+    const [t0, dl] = odAdoP < odAdoB ? [b, 2 * Math.PI - odAdoB] : [a, odAdoB];
+    const wpis = kat(P, A, B);
+    w1.rysuj(g => {
+      g.okrag(0, 0, R, 1);
+      g.luk(0, 0, R, t0, t0 + dl, 2, { grubosc: 5 });
+      g.wielokat([[A.x, A.y], [0, 0], [B.x, B.y]], 2, { zamknij: false, grubosc: 1.5 });
+      g.luk(0, 0, 0.6, t0, t0 + dl, 2, { wypelnij: 0.18 });
+      g.wielokat([[A.x, A.y], [P.x, P.y], [B.x, B.y]], 4, { zamknij: false });
+      lukKata(g, P, A, B, 0.7, 4);
+      g.punkt(0, 0, "O", 1, { r: 3.5 });
+      [[A, "A"], [B, "B"], [P, "P"]].forEach(([Q, s]) => { g.punkt(Q.x, Q.y, "", s === "P" ? 4 : 2); etykieta(g, Q, O, s, s === "P" ? 4 : 2); });
+    });
+    tex("kw-wynik", `|\\angle APB|=${stopnie(wpis)},\\quad \\text{kąt środkowy na czerwonym łuku}=${stopnie(dl)},\\quad \\tfrac12\\cdot${stopnie(dl)}=${stopnie(dl / 2)}`);
+  }
+  let stop = null;
+  $("kw-start").addEventListener("click", () => {
+    if (stop) stop();
+    const [A, B, P] = pk;
+    const a = kt(A), b = kt(B), p = kt(P);
+    const odAdoB = ((b - a) + 2 * Math.PI) % (2 * Math.PI), odAdoP = ((p - a) + 2 * Math.PI) % (2 * Math.PI);
+    // P wędruje po swoim łuku (od końca do końca, z marginesem)
+    const [s0, d] = odAdoP < odAdoB ? [a, odAdoB] : [b, 2 * Math.PI - odAdoB];
+    stop = animuj(3000, t => { const u = s0 + d * (0.08 + 0.84 * (t < 0.5 ? 2 * t : 2 - 2 * t)); P.x = R * Math.cos(u); P.y = R * Math.sin(u); rysujKw(); });
+  });
+  rysujKw();
+
+  // --- 4. Wycinek koła ---
+  const w2 = new Wykres($("wc-plot"), { xmin: -4.5, xmax: 4.5, ymin: -4.3, ymax: 4.3, rowneSkale: true });
+  function rysujWc() {
+    const al = +$("wc-a").value, r = +$("wc-r").value;
+    $("wc-a-v").textContent = al + "°"; $("wc-r-v").textContent = ladna(r);
+    const rad = al / st;
+    w2.rysuj(g => {
+      g.okrag(0, 0, r, 3, { przerywana: true });
+      g.luk(0, 0, r, 0, rad, 1, { wypelnij: 0.25 });
+      g.luk(0, 0, r, 0, rad, 2, { grubosc: 4 });
+      if (al < 360) { g.odcinek(0, 0, r, 0, 1, false); g.odcinek(0, 0, r * Math.cos(rad), r * Math.sin(rad), 1, false); }
+      g.luk(0, 0, 0.5, 0, rad, 4);
+    });
+    const ul = al / 360;
+    tex("wc-wynik", `\\tfrac{\\alpha}{360^\\circ}=${ladnaTex(ul, 3)},\\ \\ L=${ladnaTex(ul * 2 * r, 3)}\\pi\\approx${ladnaTex(ul * 2 * Math.PI * r)},\\ \\ P=${ladnaTex(ul * r * r, 3)}\\pi\\approx${ladnaTex(ul * Math.PI * r * r)}`);
+  }
+  ["wc-a", "wc-r"].forEach(id => $(id).addEventListener("input", rysujWc));
+  rysujWc();
+});
+</script>
+</body>
+</html>

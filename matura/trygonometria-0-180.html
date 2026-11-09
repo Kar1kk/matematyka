@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funkcje trygonometryczne kątów 0°–180°, jedynka trygonometryczna</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Funkcje trygonometryczne kątów 0°–180°, jedynka trygonometryczna</h1>
+  <p class="lead">Ramię kąta przecina półokrąg o promieniu $1$ w punkcie $P=(x,y)$. Wtedy po prostu $\cos\alpha=x$, $\sin\alpha=y$. Dla kąta rozwartego $P$ jest na lewo od osi $Oy$, więc cosinus i tangens są ujemne.</p>
+  <p class="wymagania">VII.1, VII.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definicja i wartości</h2>
+  <div class="definicja"><b>Definicja</b> Kąt $\alpha\in\lp 0^\circ,180^\circ\rp$ ma wierzchołek w $O=(0,0)$, a pierwsze ramię na dodatniej półosi $Ox$. Jeśli $P=(x,y)\neq O$ leży na drugim ramieniu i $r=|OP|=\sqrt{x^2+y^2}$, to
+    $$\sin\alpha=\frac{y}{r},\quad \cos\alpha=\frac{x}{r}$$
+    $$\tg\alpha=\frac{y}{x}\quad(\alpha\neq 90^\circ)$$
+    Dla kąta ostrego to ta sama definicja co w trójkącie prostokątnym. Gdy $r=1$: $\;P=(\cos\alpha,\sin\alpha)$.</div>
+  <table class="tabela">
+    <tr><th>$\alpha$</th><th>$0^\circ$</th><th>$30^\circ$</th><th>$45^\circ$</th><th>$60^\circ$</th><th>$90^\circ$</th><th>$120^\circ$</th><th>$135^\circ$</th><th>$150^\circ$</th><th>$180^\circ$</th></tr>
+    <tr><td>$\sin$</td><td>$0$</td><td>$\frac12$</td><td>$\frac{\sqrt2}2$</td><td>$\frac{\sqrt3}2$</td><td>$1$</td><td>$\frac{\sqrt3}2$</td><td>$\frac{\sqrt2}2$</td><td>$\frac12$</td><td>$0$</td></tr>
+    <tr><td>$\cos$</td><td>$1$</td><td>$\frac{\sqrt3}2$</td><td>$\frac{\sqrt2}2$</td><td>$\frac12$</td><td>$0$</td><td>$-\frac12$</td><td>$-\frac{\sqrt2}2$</td><td>$-\frac{\sqrt3}2$</td><td>$-1$</td></tr>
+    <tr><td>$\tg$</td><td>$0$</td><td>$\frac{\sqrt3}3$</td><td>$1$</td><td>$\sqrt3$</td><td>—</td><td>$-\sqrt3$</td><td>$-1$</td><td>$-\frac{\sqrt3}3$</td><td>$0$</td></tr>
+  </table>
+  <p>W tablicach są wartości dla $0^\circ$–$90^\circ$. Kąty rozwarte odczytasz z symetrii (wzory niżej). Znaki: $\sin\alpha\ge0$ zawsze; $\cos\alpha$ i $\tg\alpha$ są ujemne dla $\alpha\in(90^\circ,180^\circ)$.</p>
+
+  <h2 id="tozsamosci">2. Tożsamości</h2>
+  <div class="wzor">
+    <div class="tytul">Jedynka trygonometryczna i tangens <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\sin^2\alpha+\cos^2\alpha=1$$
+    $$\tg\alpha=\frac{\sin\alpha}{\cos\alpha}$$
+    <dl><dt>dowód</dt><dd>$\frac{y^2}{r^2}+\frac{x^2}{r^2}=\frac{x^2+y^2}{r^2}=1$; $\;\frac{y/r}{x/r}=\frac{y}{x}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Kąt i jego dopełnienie do $180^\circ$</div>
+    $$\sin(180^\circ-\alpha)=\sin\alpha$$
+    $$\cos(180^\circ-\alpha)=-\cos\alpha$$
+    $$\tg(180^\circ-\alpha)=-\tg\alpha$$
+    <dl><dt>dlaczego</dt><dd>punkty $(x,y)$ i $(-x,y)$ są symetryczne względem osi $Oy$: ta sama wysokość, przeciwna odcięta</dd></dl>
+  </div>
+  <div class="uwaga">Z samego $\sin\alpha$ nie odczytasz kąta: $\sin\alpha=\frac12$ daje $\alpha=30^\circ$ <b>albo</b> $150^\circ$. Cosinus rozstrzyga jednoznacznie (każdej wartości z $(-1,1)$ odpowiada jeden kąt z $(0^\circ,180^\circ)$).</div>
+
+  <h2 id="demo">3. Interaktywnie</h2>
+  <div class="demo">
+    <p class="opis">Przeciągnij punkt $P$ po półokręgu (przyciąga do wielokrotności $15^\circ$). Czerwony odcinek to $\sin\alpha$, zielony $\cos\alpha$, fioletowy na prostej $x=1$ to $\tg\alpha$. Szary punkt $P'$ odpowiada kątowi $180^\circ-\alpha$: ta sama wysokość.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">Skąd wartości dla $30^\circ$, $45^\circ$, $60^\circ$: kwadrat przecięty przekątną i trójkąt równoboczny przecięty wysokością.</p>
+    <canvas id="sp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <button id="sp-45">▶ 45°: pół kwadratu</button>
+      <button id="sp-30">▶ 30° i 60°: pół trójkąta</button>
+    </div>
+    <div class="wynik" id="sp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Kąt $\alpha\in(90^\circ,180^\circ)$ i $\tg\alpha=-2$. Oblicz $\sin\alpha$ i $\cos\alpha$.</p>
+    <ol>
+      <li>$\sin\alpha=-2\cos\alpha$. Wstaw do jedynki: $4\cos^2\alpha+\cos^2\alpha=1$, więc $\cos^2\alpha=\frac15$.</li>
+      <li>Kąt rozwarty, więc $\cos\alpha&lt;0$: $\cos\alpha=-\frac{1}{\sqrt5}=-\frac{\sqrt5}{5}$.</li>
+      <li>$\sin\alpha=-2\cos\alpha=\frac{2\sqrt5}{5}$ (dodatni, zgadza się).</li>
+    </ol>
+    <p class="odp">$\sin\alpha=\frac{2\sqrt5}{5},\ \cos\alpha=-\frac{\sqrt5}{5}$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\sin120^\circ\cdot\cos150^\circ+\tg135^\circ$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{\sqrt3}{2}\cdot\left(-\frac{\sqrt3}{2}\right)+(-1)=-\frac34-1$. <b>$-\frac74$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-4/5; 3/5" data-odp-opis="cos α; sin α"><span class="poziom">średnie</span>
+      <div class="tresc">Kąt $\alpha$ jest rozwarty i $\tg\alpha=-\frac34$. Oblicz $\sin\alpha$ i $\cos\alpha$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\sin\alpha=-\frac34\cos\alpha$, więc $\frac{9}{16}\cos^2\alpha+\cos^2\alpha=1$, $\cos^2\alpha=\frac{16}{25}$. Kąt rozwarty: <b>$\cos\alpha=-\frac45$, $\sin\alpha=\frac35$</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="12/25"><span class="poziom">średnie</span>
+      <div class="tresc">Wiadomo, że $\sin\alpha+\cos\alpha=\frac75$. Oblicz $\sin\alpha\cdot\cos\alpha$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Podnieś do kwadratu: $\sin^2\alpha+2\sin\alpha\cos\alpha+\cos^2\alpha=\frac{49}{25}$, czyli $1+2\sin\alpha\cos\alpha=\frac{49}{25}$. <b>$\sin\alpha\cos\alpha=\frac{12}{25}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że dla każdego kąta ostrego $\alpha$: $\;\tg\alpha+\frac{1}{\tg\alpha}=\frac{1}{\sin\alpha\cos\alpha}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $L=\frac{\sin\alpha}{\cos\alpha}+\frac{\cos\alpha}{\sin\alpha}=\frac{\sin^2\alpha+\cos^2\alpha}{\sin\alpha\cos\alpha}=\frac{1}{\sin\alpha\cos\alpha}=P$. <b>Tożsamość zachodzi</b> (mianowniki niezerowe, bo kąt ostry).
+      </div></details></li>
+    <li class="zadanie" data-odp="3/8; sqrt(7)/2" data-odp-opis="sin α·cos α; sin α + cos α"><span class="poziom">maturalne</span>
+      <div class="tresc">Kąt $\alpha\in(0^\circ,180^\circ)$ spełnia $\sin\alpha-\cos\alpha=\frac12$. Oblicz $\sin\alpha\cos\alpha$ oraz $\sin\alpha+\cos\alpha$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kwadrat: $1-2\sin\alpha\cos\alpha=\frac14$, więc $\sin\alpha\cos\alpha=\frac38$.
+        Dalej $(\sin\alpha+\cos\alpha)^2=1+2\cdot\frac38=\frac74$. Iloczyn jest dodatni, a $\sin\alpha&gt;0$, więc $\cos\alpha&gt;0$ i suma jest dodatnia.
+        <b>$\sin\alpha\cos\alpha=\frac38$, $\;\sin\alpha+\cos\alpha=\frac{\sqrt7}{2}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Znak z pierwiastka:</b> po jedynce zawsze napisz, dlaczego wybierasz $+$ albo $-$ (kąt ostry / rozwarty). Bez tego tracisz punkt.</li>
+    <li>Kąt rozwarty sprowadzaj do ostrego: $\cos135^\circ=-\cos45^\circ$, $\sin150^\circ=\sin30^\circ$.</li>
+    <li>Typowy trik: dane $\sin\alpha\pm\cos\alpha$ → podnieś do kwadratu i użyj jedynki, dostaniesz $\sin\alpha\cos\alpha$.</li>
+    <li>W trójkącie kąt wyznaczony z sinusa może mieć dwie wartości ($\alpha$ i $180^\circ-\alpha$). Sprawdź, czy obie pasują do sumy kątów.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DOK = { // dokładne wartości [sin, cos, tg]
+    0: ["0", "1", "0"], 30: ["\\frac12", "\\frac{\\sqrt3}2", "\\frac{\\sqrt3}3"], 45: ["\\frac{\\sqrt2}2", "\\frac{\\sqrt2}2", "1"],
+    60: ["\\frac{\\sqrt3}2", "\\frac12", "\\sqrt3"], 90: ["1", "0", "\\text{nie istnieje}"],
+    120: ["\\frac{\\sqrt3}2", "-\\frac12", "-\\sqrt3"], 135: ["\\frac{\\sqrt2}2", "-\\frac{\\sqrt2}2", "-1"],
+    150: ["\\frac12", "-\\frac{\\sqrt3}2", "-\\frac{\\sqrt3}3"], 180: ["0", "-1", "0"],
+  };
+
+  // --- 3a. Półokrąg jednostkowy ---
+  const w1 = new Wykres($("po-plot"), { xmin: -1.4, xmax: 1.6, ymin: -0.7, ymax: 1.4, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let deg = 60;
+  const pk = w1.przeciagaj([{ x: 0.5, y: Math.sqrt(3) / 2, ogranicz: p => {
+    let d = Math.atan2(Math.max(p.y, 0), p.x) * 180 / Math.PI;
+    d = Math.min(180, Math.max(0, Math.round(d)));
+    if (Math.abs(d - Math.round(d / 15) * 15) <= 2) d = Math.round(d / 15) * 15;
+    deg = d; const r = d * Math.PI / 180;
+    return { x: Math.cos(r), y: Math.sin(r) };
+  } }], rysujPo);
+  function rysujPo() {
+    const P = pk[0], x = P.x, y = P.y, r = deg * Math.PI / 180;
+    w1.rysuj(g => {
+      g.luk(0, 0, 1, 0, Math.PI, 3, { grubosc: 2 });
+      g.odcinek(1, g.z.ymin, 1, g.z.ymax, 3);
+      if (deg !== 90) {
+        const tg = Math.tan(r);
+        g.prosta(0, 0, x, y, 4, true);
+        g.odcinek(1, 0, 1, tg, 4, false);
+        g.punkt(1, Math.max(g.z.ymin, Math.min(g.z.ymax, tg)), "", 4, { r: 4 });
+      }
+      g.odcinek(-x, y, 0, 0, "--plot-axis"); g.odcinek(-x, y, x, y, "--plot-axis");
+      g.punkt(-x, y, "P′", "--plot-axis", { r: 4 });
+      g.odcinek(0, 0, x, 0, 3, false); g.odcinek(x, 0, x, y, 2, false);
+      g.odcinek(0, 0, x, y, 1, false);
+      g.luk(0, 0, 0.25, 0, r, 1, { wypelnij: 0.2 });
+      g.punkt(x, y, "P");
+    });
+    const d = DOK[deg], f = v => ladnaTex(v, 3);
+    const zn = deg !== 90 ? f(Math.tan(r)) : "\\text{—}";
+    const s = d ? `\\sin\\alpha=${d[0]},\\ \\cos\\alpha=${d[1]},\\ \\tg\\alpha=${d[2]}` : `\\sin\\alpha\\approx${f(y)},\\ \\cos\\alpha\\approx${f(x)},\\ \\tg\\alpha\\approx${zn}`;
+    tex("po-wynik", `\\alpha=${deg}^\\circ:\\ ${s};\\quad \\sin(${180 - deg}^\\circ)=\\sin(${deg}^\\circ)`);
+  }
+  rysujPo();
+
+  // --- 3b. Trójkąty szczególne ---
+  const w2 = new Wykres($("sp-plot"), { xmin: -0.4, xmax: 2.4, ymin: -0.3, ymax: 1.9, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let stop = null;
+  const s3 = Math.sqrt(3);
+  function kw(t) {
+    const t1 = Math.min(1, t / 0.35), t2 = Math.min(1, Math.max(0, (t - 0.35) / 0.35)), t3 = Math.max(0, (t - 0.7) / 0.3);
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [1, 0], [1, 1], [0, 1]].map(([a, b]) => [a * t1, b * t1]), 1, { wypelnij: 0.08 });
+      if (t2 > 0) g.odcinek(0, 0, t2, t2, 2, false);
+      if (t3 > 0) {
+        g.wielokat([[0, 0], [1, 0], [1, 1]], 2, { wypelnij: 0.25 * t3 });
+        g.luk(0, 0, 0.25, 0, Math.PI / 4, 2);
+        g.tekst(0.3, 0.08, "45°", 2, { gruby: true });
+        g.tekst(0.5, 0, "1", 1, { dy: 16, gruby: true }); g.tekst(1, 0.5, "1", 1, { dx: 6, gruby: true });
+        g.tekst(0.5, 0.5, "√2", 2, { dx: -24, dy: -4, gruby: true });
+      }
+    });
+    tex("sp-wynik", t3 > 0.5 ? "\\sin45^\\circ=\\cos45^\\circ=\\tfrac{1}{\\sqrt2}=\\tfrac{\\sqrt2}{2},\\ \\tg45^\\circ=\\tfrac11=1" : "\\text{kwadrat o boku 1, przekątna }\\sqrt{1^2+1^2}=\\sqrt2");
+  }
+  function tr(t) {
+    const t1 = Math.min(1, t / 0.35), t2 = Math.min(1, Math.max(0, (t - 0.35) / 0.35)), t3 = Math.max(0, (t - 0.7) / 0.3);
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [2, 0], [1, s3]].map(([a, b]) => [a * t1, b * t1]), 1, { wypelnij: 0.08 });
+      if (t2 > 0) g.odcinek(1, s3, 1, s3 * (1 - t2), 2, false);
+      if (t3 > 0) {
+        g.wielokat([[0, 0], [1, 0], [1, s3]], 2, { wypelnij: 0.25 * t3 });
+        g.luk(0, 0, 0.25, 0, Math.PI / 3, 2); g.luk(1, s3, 0.35, -Math.PI / 2 - Math.PI / 6, -Math.PI / 2, 2);
+        g.tekst(0.28, 0.1, "60°", 2, { gruby: true }); g.tekst(0.86, s3 - 0.55, "30°", 2, { gruby: true });
+        g.tekst(0.5, 0, "1", 1, { dy: 16, gruby: true }); g.tekst(1, s3 / 2, "√3", 2, { dx: 6, gruby: true });
+        g.tekst(0.5, s3 / 2, "2", 1, { dx: -16, gruby: true });
+      }
+    });
+    tex("sp-wynik", t3 > 0.5 ? "\\sin30^\\circ=\\cos60^\\circ=\\tfrac12,\\ \\sin60^\\circ=\\cos30^\\circ=\\tfrac{\\sqrt3}2,\\ \\tg60^\\circ=\\sqrt3" : "\\text{trójkąt równoboczny o boku 2, wysokość }\\sqrt{2^2-1^2}=\\sqrt3");
+  }
+  $("sp-45").addEventListener("click", () => { if (stop) stop(); stop = animuj(2200, kw); });
+  $("sp-30").addEventListener("click", () => { if (stop) stop(); stop = animuj(2200, tr); });
+  tr(1);
+});
+</script>
+</body>
+</html>

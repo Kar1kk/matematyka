@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kąty w bryłach: prosta–płaszczyzna, kąt dwuścienny</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/bryly3d.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Kąty w bryłach: prosta–płaszczyzna, kąt dwuścienny</h1>
+  <p class="lead">Każdy kąt w bryle liczysz w <b>płaskim trójkącie</b>. Sztuka polega na tym, żeby ten trójkąt dobrze wybrać: przy kącie prostej z płaszczyzną potrzebny jest rzut, a przy kącie między ścianami dwa odcinki prostopadłe do wspólnej krawędzi.</p>
+  <p class="wymagania">X.2, X.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definicje</h2>
+  <div class="definicja"><b>Kąt między prostą a płaszczyzną</b> to kąt między prostą a jej <b>rzutem prostokątnym</b> na tę płaszczyznę. Ma miarę z $\lp 0^\circ,90^\circ\rp$: $0^\circ$, gdy prosta jest równoległa do płaszczyzny, $90^\circ$, gdy jest prostopadła.</div>
+  <div class="definicja"><b>Kąt dwuścienny</b> (między półpłaszczyznami o wspólnej krawędzi $k$): wybierz punkt $K\in k$ i w każdej półpłaszczyźnie poprowadź półprostą z $K$ <b>prostopadłą do $k$</b>. Kąt między tymi półprostymi to <b>kąt liniowy</b> kąta dwuściennego. Nie zależy od wyboru $K$.</div>
+  <div class="uwaga">Kąt dwuścienny może być rozwarty (np. między sąsiednimi ścianami bocznymi ostrosłupa). Kąt <b>między płaszczyznami</b> to zawsze ten ostry (lub prosty).</div>
+
+  <h2 id="metoda">2. Metoda</h2>
+  <div class="dwie">
+    <div><p><b>Prosta–płaszczyzna</b></p><ol>
+      <li>Z punktu prostej opuść prostopadłą na płaszczyznę (spodek = rzut punktu).</li>
+      <li>Rzut prostej przechodzi przez spodek i punkt przebicia.</li>
+      <li>Trójkąt prostokątny: odcinek, jego rzut, wysokość. Licz $\sin$, $\cos$ lub $\tg$.</li></ol></div>
+    <div><p><b>Ściana–ściana</b></p><ol>
+      <li>Znajdź wspólną krawędź.</li>
+      <li>W obu ścianach poprowadź odcinki prostopadłe do niej w <b>tym samym punkcie</b> (np. wysokości trójkątów; tw. o trzech prostopadłych).</li>
+      <li>Kąt między nimi: z trójkąta prostokątnego albo z tw. cosinusów.</li></ol></div>
+  </div>
+
+  <h2 id="demo">3. Interaktywnie: trójkąt kąta</h2>
+  <div class="demo">
+    <p class="opis">Wybierz kąt w ostrosłupie prawidłowym czworokątnym. Zielony trójkąt to ten, w którym go liczysz. Przycisk ▶ obraca kamerę tak, by patrzeć na trójkąt na wprost: widać go w prawdziwym kształcie, jak na kartce.</p>
+    <canvas id="kb-plot"></canvas>
+    <div class="sterowanie">
+      <button id="kb-kr" class="wtorny aktywny">krawędź–podstawa</button>
+      <button id="kb-sc" class="wtorny">ściana–podstawa</button>
+      <button id="kb-ss" class="wtorny">ściana–ściana</button>
+      <button id="kb-start">▶ Na wprost</button>
+      <label>$H$ <input type="range" id="kb-h" min="0.5" max="3.5" step="0.1" value="2"></label>
+    </div>
+    <div class="wynik" id="kb-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wszystkie krawędzie ostrosłupa prawidłowego czworokątnego $ABCDS$ mają długość $2$. Oblicz cosinus kąta dwuściennego między ścianami $ABS$ i $BCS$.</p>
+    <ol>
+      <li>Wspólna krawędź: $SB$. Ściany są trójkątami równobocznymi, więc wysokości $AK$ i $CK$ opuszczone na $SB$ mają wspólny spodek $K$ (środek $SB$): $|AK|=|CK|=\sqrt3$.</li>
+      <li>$|AC|=2\sqrt2$ (przekątna podstawy).</li>
+      <li>Tw. cosinusów w trójkącie $AKC$: $8=3+3-2\cdot3\cos\varphi$.</li>
+    </ol>
+    <p class="odp">$\cos\varphi=-\frac13$ (kąt rozwarty, ok. $109{,}5^\circ$)</p>
+    <p>W demo: tryb „ściana–ściana”, $H\approx1{,}4$ ($H=\sqrt2$).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="sqrt(2)/2" data-odp-opis="tangens kąta"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz tangens kąta nachylenia przekątnej sześcianu do płaszczyzny podstawy.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Rzutem przekątnej $AG$ jest przekątna podstawy $AC=a\sqrt2$, wysokość $CG=a$. $\tg\alpha=\frac{a}{a\sqrt2}$. <b>$\tg\alpha=\frac{\sqrt2}{2}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="sqrt(2)" data-odp-opis="tangens kąta"><span class="poziom">średnie</span>
+      <div class="tresc">W sześcianie $ABCDEFGH$ ($E$ nad $A$) oblicz tangens kąta między płaszczyzną $BDE$ a płaszczyzną podstawy.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wspólna krawędź $BD$. $O$ – środek $BD$: $AO\perp BD$, a $EO\perp BD$ (tw. o trzech prostopadłych lub trójkąt $BDE$ równoboczny). Kąt $EOA$: $\tg=\frac{|AE|}{|AO|}=\frac{a}{a\sqrt2/2}$. <b>$\tg\alpha=\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60; sqrt(3)/2" data-odp-opis="kąt β (w stopniach); tg α"><span class="poziom">średnie</span>
+      <div class="tresc">Ostrosłup prawidłowy trójkątny ma krawędź podstawy $6$ i wysokość $3$. Oblicz kąt nachylenia ściany bocznej do podstawy i tangens kąta nachylenia krawędzi bocznej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $r=\frac{6\sqrt3}{6}=\sqrt3$, $R=2\sqrt3$. $\tg\beta=\frac{3}{\sqrt3}=\sqrt3$, $\tg\alpha=\frac{3}{2\sqrt3}$. <b>$\beta=60^\circ$, $\tg\alpha=\frac{\sqrt3}{2}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/3" data-odp-opis="cosinus kąta"><span class="poziom">maturalne</span>
+      <div class="tresc">Oblicz cosinus kąta nachylenia ściany bocznej czworościanu foremnego do płaszczyzny podstawy.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąt $SOM$: $|SM|=h$ (wysokość ściany), $|OM|=r=\frac13h$ (spodek w środku trójkąta równobocznego). $\cos\beta=\frac{r}{h}$. <b>$\cos\beta=\frac13$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2" data-odp-opis="H"><span class="poziom">maturalne</span>
+      <div class="tresc">Ostrosłup prawidłowy czworokątny ma krawędź podstawy $4$, a kąt dwuścienny między sąsiednimi ścianami bocznymi wynosi $120^\circ$. Oblicz wysokość ostrosłupa.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąt $AKC$ ($AK$, $CK$ – wysokości ścian na $SB$): równoramienny z kątem $120^\circ$, $|AC|=4\sqrt2=|AK|\sqrt3$, więc $|AK|=\frac{4\sqrt6}{3}$. Pole ściany $ABS$ na dwa sposoby, $b=|SB|$: $b\cdot|AK|=4\sqrt{b^2-4}$, stąd $\frac{32}{3}b^2=16(b^2-4)$, $b^2=12$. $H^2=b^2-R^2=12-8$. <b>$H=2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Na rysunku <b>zaznacz kąt łukiem</b> i nazwij go ($\sphericalangle SMO$). Bez tego egzaminator nie wie, który kąt liczysz.</li>
+    <li>Uzasadnij kąt prosty: „$SO\perp ABC$, więc $SO\perp OM$”, a przy kącie dwuściennym: oba ramiona $\perp$ krawędzi.</li>
+    <li>Kąt między ścianami bocznymi: wysokości z $A$ i $C$ trafiają w <b>ten sam</b> punkt $K$ tylko z symetrii (bryła prawidłowa); w ogólnym przypadku poprowadź prostopadłe z jednego punktu.</li>
+    <li>Wynik z tw. cosinusów ujemny = kąt dwuścienny rozwarty. Kąt między płaszczyznami to wtedy $180^\circ-\varphi$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("kb-plot"), { zakres: 2.2, srodek: [0, 0, 0.9] });
+  const A = [-1, -1, 0], B = [1, -1, 0], C = [1, 1, 0], D = [-1, 1, 0], O = [0, 0, 0], M = [0, -1, 0];
+  const SC = [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]];
+  const TR = { kr: $("kb-kr"), sc: $("kb-sc"), ss: $("kb-ss") };
+  let tryb = "kr", stop = null;
+  const d = (p, q) => V3.dl(V3.odj(p, q)), st = 180 / Math.PI;
+  function trojkat() {
+    const H = +$("kb-h").value, S = [0, 0, H];
+    if (tryb === "kr") return { S, T: [S, O, A], W: A, P: O, opis: `\\tg\\alpha=\\frac{H}{R}=\\frac{${ladnaTex(H)}}{${ladnaTex(Math.SQRT2)}}`, kat: Math.atan2(H, Math.SQRT2) * st, n: "\\alpha" };
+    if (tryb === "sc") return { S, T: [S, O, M], W: M, P: O, opis: `\\tg\\beta=\\frac{H}{r}=${ladnaTex(H)}`, kat: Math.atan2(H, 1) * st, n: "\\beta" };
+    const u = V3.odj(S, B), K = V3.dod(B, V3.razy(u, V3.il(V3.odj(A, B), u) / V3.il(u, u)));
+    const ak = d(A, K), c = (2 * ak * ak - 8) / (2 * ak * ak);
+    return { S, T: [A, K, C], W: K, P: null, opis: `|AK|=${ladnaTex(ak)},\\ \\cos\\varphi=${ladnaTex(c, 3)}`, kat: Math.acos(c) * st, n: "\\varphi" };
+  }
+  function rysuj() {
+    const t = trojkat(), W = [A, B, C, D, t.S];
+    s3.o.srodek = [0, 0, t.S[2] / 2];
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.05 });
+      g.wielokat(t.T, 3, { wypelnij: 0.3, grubosc: 2.5 });
+      const [p, q] = t.T.filter(x => x !== t.W);
+      g.kat(t.W, p, q, 0.35, 2, { wypelnij: 0.35 });
+      if (t.P) { g.kat(t.P, t.S, t.W, 0.2, 3, { prosty: true }); g.odcinek(t.S, O, 3, { przerywana: true }); }
+      else { g.kat(t.W, A, t.S, 0.2, 3, { prosty: true }); g.kat(t.W, C, t.S, 0.2, 3, { prosty: true }); }
+      ["A", "B", "C", "D", "S"].forEach((n, i) => g.tekst(W[i], n, "--muted", { dx: 5, dy: -6, gruby: true }));
+      if (t.P) g.punkt(O, "O", 3, { r: 3 });
+      g.punkt(t.W, tryb === "ss" ? "K" : tryb === "sc" ? "M" : "", 2, { r: 3 });
+    });
+    tex("kb-wynik", `${t.opis},\\quad ${t.n}=${ladnaTex(t.kat, 1)}^\\circ`);
+  }
+  function naWprost() {
+    const t = trojkat();
+    let n = V3.norm(V3.wek(V3.odj(t.T[1], t.T[0]), V3.odj(t.T[2], t.T[0])));
+    if (n[2] < -1e-9 || (Math.abs(n[2]) < 1e-9 && Math.cos(Math.atan2(-n[0], -n[1]) - s3.az) < 0)) n = V3.razy(n, -1);
+    const el = Math.asin(Math.min(1, n[2])), az0 = s3.az, el0 = s3.el;
+    let az = Math.atan2(-n[0], -n[1]);
+    while (az - az0 > Math.PI) az -= 2 * Math.PI;
+    while (az0 - az > Math.PI) az += 2 * Math.PI;
+    if (stop) stop();
+    stop = animuj(1500, x => { s3.az = az0 + (az - az0) * x; s3.el = el0 + (el - el0) * x; rysuj(); });
+  }
+  Object.keys(TR).forEach(k => TR[k].addEventListener("click", () => {
+    tryb = k; Object.keys(TR).forEach(j => TR[j].classList.toggle("aktywny", j === k)); rysuj();
+  }));
+  $("kb-start").addEventListener("click", naWprost);
+  $("kb-h").addEventListener("input", rysuj);
+  rysuj();
+});
+</script>
+</body>
+</html>

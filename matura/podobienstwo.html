@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podobieństwo figur</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Podobieństwo figur</h1>
+  <p class="lead">Figury podobne to ta sama figura w innej skali: kąty bez zmian, wszystkie długości razy $k$. Pole rośnie szybciej – razy $k^2$, bo mnożysz dwie długości naraz.</p>
+  <p class="wymagania">VIII.8, VIII.9</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Podobieństwo i cechy podobieństwa trójkątów</h2>
+  <div class="definicja"><b>Definicja</b> Figura $\mathcal B$ jest podobna do figury $\mathcal A$ w skali $k&gt;0$, jeśli odległość każdych dwóch punktów $\mathcal B$ jest $k$ razy większa od odległości odpowiadających im punktów $\mathcal A$. Piszemy $\triangle ABC\sim\triangle KLM$ – <b>kolejność liter</b> mówi, które wierzchołki sobie odpowiadają.</div>
+  <div class="twierdzenie"><b>Cechy podobieństwa trójkątów</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    <ul>
+      <li><b>bbb:</b> trzy pary boków proporcjonalne: $\frac{|KL|}{|AB|}=\frac{|LM|}{|BC|}=\frac{|MK|}{|CA|}$.</li>
+      <li><b>bkb:</b> dwie pary boków proporcjonalne i równe kąty <b>między nimi</b>.</li>
+      <li><b>kkk:</b> równe kąty. Wystarczą dwie pary – trzecia wynika z sumy $180^\circ$.</li>
+    </ul>
+  </div>
+  <div class="uwaga">W cesze bkb kąt musi leżeć między tymi bokami. Dwa boki proporcjonalne i kąt „obok” nie wystarczą.</div>
+  <p>Najczęstsze źródła podobieństwa: <b>proste równoległe</b> (kąty odpowiadające/naprzemianległe – <a href="tales.html">Tales</a>), <b>wspólny kąt + kąt prosty</b> (<a href="trojkaty.html">wysokość w trójkącie prostokątnym</a>), kąty wpisane oparte na tym samym łuku.</p>
+
+  <h2 id="pola">2. Obwody i pola figur podobnych</h2>
+  <div class="wzor"><div class="tytul">Figury podobne w skali $k$</div>
+    $$\frac{\text{Obw}_{\mathcal B}}{\text{Obw}_{\mathcal A}}=k\qquad\frac{P_{\mathcal B}}{P_{\mathcal A}}=k^2$$
+    <dl><dt>$k$</dt><dd>tak samo skalują się wszystkie „długości”: wysokości, środkowe, przekątne, promienie $R$ i $r$</dd>
+        <dt>$k^2$</dt><dd>jest w tablicach („Pola figur podobnych”). Dla trójkąta: $\frac12(ka)(kh)=k^2\cdot\frac12ah$</dd></dl>
+  </div>
+  <div class="uwaga">Gdy znasz stosunek pól, skala to jego <b>pierwiastek</b>: pola $1:4$ oznaczają boki $1:2$, nie $1:4$.</div>
+
+  <h2 id="demo">3. Interaktywnie: skala $k$</h2>
+  <div class="demo">
+    <p class="opis">Przesuwaj suwak $k$ i przeciągaj wierzchołki oraz środek $S$. Trójkąt $A'B'C'$ powstaje przez „rozciągnięcie” każdego punktu od $S$ $k$ razy. Obwód rośnie $k$ razy, pole $k^2$ razy.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="po-k" min="0.25" max="3" step="0.25" value="2"> <span id="po-k-v"></span></label>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+  <div class="demo">
+    <p class="opis">Dlaczego $k^2$? Trójkąt powiększony $k$ razy da się pociąć na $k^2$ kopii oryginału (czerwony). Zmieniaj $k$ i kształt trójkąta.</p>
+    <canvas id="pk-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="pk-k" min="1" max="6" step="1" value="3"> <span id="pk-k-v"></span></label>
+    </div>
+    <div class="wynik" id="pk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Trójkąt $ABC$ ma boki $4$, $6$, $8$ i pole $P$. Trójkąt $KLM$ jest do niego podobny, a jego najkrótszy bok ma długość $6$. Oblicz pozostałe boki $KLM$, jego obwód i pole (przez $P$).</p>
+    <ol>
+      <li>Najkrótszy odpowiada najkrótszemu: $k=\frac64=\frac32$.</li>
+      <li>Boki: $6\cdot\frac32=9$, $8\cdot\frac32=12$. Obwód: $18\cdot\frac32=27$.</li>
+      <li>Pole: $k^2P=\frac94P$.</li>
+    </ol>
+    <p class="odp">Boki $6$, $9$, $12$; obwód $27$; pole $\frac94P$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Pola dwóch trójkątów podobnych są równe $12$ i $75$. Oblicz stosunek ich obwodów (większego do mniejszego).</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $k^2=\frac{75}{12}=\frac{25}{4}$, więc <b>$k=\frac52$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Czy podobne są trójkąty o bokach: a) $3, 4, 6$ i $4{,}5;\ 6;\ 9$; b) $6, 8, 12$ i $9, 12, 16$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Ustaw boki rosnąco i dziel odpowiednie. a) $\frac{4{,}5}{3}=\frac64=\frac96=1{,}5$ – <b>tak</b> (bbb). b) $\frac96=\frac{12}{8}=1{,}5$, ale $\frac{16}{12}=\frac43$ – <b>nie</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 5" data-odp-opis="długości DE; BE"><span class="poziom">średnie</span>
+      <div class="tresc">W trójkącie prostokątnym $ABC$ ($|\angle C|=90^\circ$) $|AC|=6$, $|BC|=8$. Na przeciwprostokątnej wybrano $D$ tak, że $|BD|=4$, a prosta prostopadła do $AB$ w punkcie $D$ przecina $BC$ w punkcie $E$. Oblicz $|DE|$ i $|BE|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $|AB|=10$. $\triangle BDE\sim\triangle BCA$ (kkk: wspólny kąt $B$ i kąt prosty przy $D$ i $C$), więc $\frac{|BD|}{|BC|}=\frac{|DE|}{|CA|}=\frac{|BE|}{|BA|}$, czyli $\frac48=\frac{|DE|}{6}=\frac{|BE|}{10}$. <b>$|DE|=3$, $|BE|=5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4sqrt(2)"><span class="poziom">średnie</span>
+      <div class="tresc">Trójkąt ma podstawę $12$ i wysokość $8$ opuszczoną na nią. Prosta równoległa do podstawy dzieli go na dwie figury o równych polach. W jakiej odległości od wierzchołka przeciwległego podstawie leży ta prosta?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Odcięty trójkąt jest podobny do całego (równoległość) i ma połowę jego pola: $k^2=\frac12$, $k=\frac{\sqrt2}{2}$. Wysokość też skaluje się przez $k$: $8\cdot\frac{\sqrt2}2$. <b>$4\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">W trójkącie $ABC$: $|AB|=9$, $|AC|=12$, $|BC|=10$. Na boku $AC$ wybrano punkt $D$ tak, że $|AD|=6{,}75$. Wykaż, że $\triangle ABD\sim\triangle ACB$, i oblicz $|BD|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{|AD|}{|AB|}=\frac{6{,}75}{9}=\frac34$ i $\frac{|AB|}{|AC|}=\frac{9}{12}=\frac34$, a kąt $A$ jest wspólny i leży między tymi bokami – cecha bkb. Odpowiedniość $A\to A$, $B\to C$, $D\to B$, więc $\frac{|BD|}{|CB|}=\frac34$. <b>$|BD|=7{,}5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Obwody dwóch trójkątów podobnych wynoszą $18$ i $30$, a pole większego jest równe $75$. Oblicz pole mniejszego.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Skala (mniejszy do większego) $k=\frac{18}{30}=\frac35$, więc $P=75\cdot\frac{9}{25}$. <b>$P=27$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Zapisuj podobieństwo z <b>właściwą kolejnością wierzchołków</b> i nazwą cechy (np. „kkk: wspólny kąt $B$ i kąty proste”). Bez uzasadnienia cechy tracisz punkt.</li>
+    <li>Ustal odpowiedniość boków po kątach: bok naprzeciw równych kątów odpowiada sobie. Nie dopasowuj „na oko” z rysunku.</li>
+    <li>Pola $\to$ skala: pierwiastek. Skala $\to$ pola: kwadrat. Typowy błąd to pomylenie tych kierunków.</li>
+    <li>Odcięcie prostą równoległą do boku zawsze daje trójkąt podobny do wyjściowego.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 3a. Skala k ---
+  const w1 = new Wykres($("po-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 5, rowneSkale: true });
+  const ogr = wPolu(4, 3);
+  const pt = w1.przeciagaj([{ x: -2, y: -1.5, ogranicz: ogr }, { x: 0.5, y: -1, ogranicz: ogr }, { x: -1, y: 0.8, ogranicz: ogr }, { x: -4, y: -3, ogranicz: ogr }], rysujPo);
+  const obwod = T => odl(T[0], T[1]) + odl(T[1], T[2]) + odl(T[2], T[0]);
+  const pole = T => Math.abs((T[1].x - T[0].x) * (T[2].y - T[0].y) - (T[1].y - T[0].y) * (T[2].x - T[0].x)) / 2;
+  function rysujPo() {
+    const k = +$("po-k").value, [A, B, C, S] = pt;
+    $("po-k-v").textContent = ladna(k);
+    const T = [A, B, C], T2 = T.map(P => ({ x: S.x + k * (P.x - S.x), y: S.y + k * (P.y - S.y) }));
+    const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 }, G2 = { x: S.x + k * (G.x - S.x), y: S.y + k * (G.y - S.y) };
+    w1.rysuj(g => {
+      T2.forEach(P => g.odcinek(S.x, S.y, P.x, P.y, 3));
+      g.wielokat(T2.map(P => [P.x, P.y]), 4, { wypelnij: 0.15 });
+      g.wielokat(T.map(P => [P.x, P.y]), 1, { wypelnij: 0.25 });
+      ["A", "B", "C"].forEach((s, i) => {
+        g.punkt(T[i].x, T[i].y, "", 2); etykieta(g, T[i], G, s, 2);
+        g.punkt(T2[i].x, T2[i].y, "", 4, { r: 3.5 }); etykieta(g, T2[i], G2, s + "'", 4);
+      });
+      g.punkt(S.x, S.y, "S", 3);
+    });
+    const o = obwod(T), p = pole(T);
+    if (p < 1e-6) { tex("po-wynik", "\\text{rozsuń wierzchołki}"); return; }
+    tex("po-wynik", `\\begin{aligned}\\text{Obw}'&=${ladnaTex(obwod(T2))}=${ladnaTex(k)}\\cdot${ladnaTex(o)}\\\\P'&=${ladnaTex(pole(T2))}=${ladnaTex(k)}^2\\cdot${ladnaTex(p)}\\end{aligned}`);
+  }
+  $("po-k").addEventListener("input", rysujPo);
+  rysujPo();
+
+  // --- 3b. k^2 kopii ---
+  const w2 = new Wykres($("pk-plot"), { xmin: -4.5, xmax: 4.5, ymin: -3, ymax: 3.5, rowneSkale: true });
+  const ogr2 = wPolu(4.2, 3.2);
+  const pq = w2.przeciagaj([{ x: -3.5, y: -2.5, ogranicz: ogr2 }, { x: 3.5, y: -2.5, ogranicz: ogr2 }, { x: -0.5, y: 3, ogranicz: ogr2 }], rysujPk);
+  function rysujPk() {
+    const n = +$("pk-k").value, [A, B, C] = pq;
+    $("pk-k-v").textContent = n;
+    const V = (i, j) => [A.x + (i * (B.x - A.x) + j * (C.x - A.x)) / n, A.y + (i * (B.y - A.y) + j * (C.y - A.y)) / n];
+    let ile = 0;
+    w2.rysuj(g => {
+      for (let i = 0; i < n; i++) for (let j = 0; i + j < n; j++) {
+        g.wielokat([V(i, j), V(i + 1, j), V(i, j + 1)], i + j === 0 ? 2 : 1, { wypelnij: i + j === 0 ? 0.45 : 0.15, grubosc: 1 }); ile++;
+        if (i + j < n - 1) { g.wielokat([V(i + 1, j), V(i + 1, j + 1), V(i, j + 1)], 3, { wypelnij: 0.15, grubosc: 1 }); ile++; }
+      }
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1, { grubosc: 2.5 });
+      const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, G, s, 2); });
+    });
+    tex("pk-wynik", `k=${n}:\\quad ${ile}\\ \\text{kopii}=${n}^2,\\qquad P_{ABC}=${n * n}\\cdot P_{\\text{czerwonego}}`);
+  }
+  $("pk-k").addEventListener("input", rysujPk);
+  rysujPk();
+});
+</script>
+</body>
+</html>

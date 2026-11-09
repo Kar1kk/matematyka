@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prosta i okrąg, dwa okręgi, styczna do okręgu</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Prosta i okrąg, dwa okręgi, styczna do okręgu</h1>
+  <p class="lead">Punkty wspólne to rozwiązania układu równań: podstawiasz prostą do okręgu i dostajesz równanie kwadratowe, a $\Delta$ mówi, ile jest punktów. Dla dwóch okręgów wystarczy porównać odległość środków z $r_1+r_2$ i $|r_1-r_2|$.</p>
+  <p class="wymagania">IX.R.1, IX.R.2, IX.R.4, VIII.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="prosta-okrag">1. Prosta i okrąg</h2>
+  <div class="definicja"><b>Metoda</b> Z równania prostej wyznacz $y$ (lub $x$), podstaw do równania okręgu, uporządkuj do $Ax^2+Bx+C=0$. Liczba rozwiązań = liczba punktów wspólnych.</div>
+  <table class="tabela">
+    <tr><th>$\Delta$</th><th>punkty wspólne</th><th>prosta to</th><th>geometrycznie</th></tr>
+    <tr><td>$\Delta&gt;0$</td><td>2</td><td>sieczna</td><td>$d&lt;r$</td></tr>
+    <tr><td>$\Delta=0$</td><td>1</td><td>styczna</td><td>$d=r$</td></tr>
+    <tr><td>$\Delta&lt;0$</td><td>0</td><td>rozłączna</td><td>$d&gt;r$</td></tr>
+  </table>
+  <p>$d$ to odległość środka $S$ od prostej, czyli $|SF|$, gdzie $F$ to rzut $S$ na prostą (prosta prostopadła + układ). Szybciej: dla prostej $Ax+By+C=0$ i środka $S=(x_0,y_0)$ $$d=\frac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$$ (wzór jest w karcie wzorów CKE, nie ma go w wymaganiach podstawy). Metoda z rzutem to alternatywa.</p>
+  <div class="wzor">
+    <div class="tytul">Długość cięciwy (Pitagoras)</div>
+    $$|KL|=2\sqrt{r^2-d^2}$$
+    <dl><dt>skąd</dt><dd>$F$ jest środkiem cięciwy $KL$, a trójkąt $SFK$ jest prostokątny</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Przesuwaj prostą ($b$) i zmieniaj nachylenie ($a$). Obserwuj $\Delta$ i odcinek $SF$: punkt wspólny znika dokładnie wtedy, gdy $|SF|$ przekracza $r$.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="po-a" min="-2" max="2" step="0.25" value="0.5"> <span id="po-a-v"></span></label>
+      <label>$b$ <input type="range" id="po-b" min="-8" max="10" step="0.05" value="0"> <span id="po-b-v"></span></label>
+      <button id="po-start">▶ Przesuń prostą</button>
+      <button id="po-styczna">Ustaw styczną</button>
+    </div>
+    <div class="wynik" id="po-w1"></div>
+    <div class="wynik" id="po-w2"></div>
+  </div>
+
+  <h2 id="styczna">2. Styczna do okręgu</h2>
+  <div class="twierdzenie"><b>Twierdzenie</b> Styczna do okręgu jest <b>prostopadła do promienia</b> poprowadzonego do punktu styczności.</div>
+  <div class="wzor">
+    <div class="tytul">Styczna w punkcie $P=(x_P,y_P)$ okręgu o środku $S=(a,b)$</div>
+    $$\vec{SP}=[x_P-a,\ y_P-b]$$
+    $$(x_P-a)(x-x_P)+(y_P-b)(y-y_P)=0$$
+    <dl><dt>po ludzku</dt><dd>prosta przez $P$ prostopadła do $SP$; w postaci kierunkowej $a_{\text{st}}=-\frac{1}{a_{SP}}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Styczne z punktu $Q$ leżącego na zewnątrz</div>
+    $$y=m(x-x_Q)+y_Q,\quad \Delta(m)=0$$
+    $$|QT|=\sqrt{|QS|^2-r^2}$$
+    <dl><dt>uwaga</dt><dd>osobno sprawdź prostą pionową $x=x_Q$ (nie ma współczynnika $m$)</dd>
+        <dt>$|QT|$</dt><dd>oba odcinki styczne z $Q$ są równe (Pitagoras w $\triangle QTS$)</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt $Q$. Z punktu na zewnątrz wychodzą dwie styczne; zielone kąty proste pokazują, że promień $ST$ jest prostopadły do stycznej.</p>
+    <canvas id="st-plot"></canvas>
+    <div class="wynik" id="st-w1"></div>
+    <div class="wynik" id="st-w2"></div>
+  </div>
+
+  <h2 id="dwa-okregi">3. Dwa okręgi</h2>
+  <p>$d=|S_1S_2|$, promienie $r_1$, $r_2$.</p>
+  <table class="tabela">
+    <tr><th>warunek</th><th>położenie</th><th>pkt</th></tr>
+    <tr><td>$d&gt;r_1+r_2$</td><td>rozłączne zewnętrznie</td><td>0</td></tr>
+    <tr><td>$d=r_1+r_2$</td><td>styczne zewnętrznie</td><td>1</td></tr>
+    <tr><td>$|r_1-r_2|&lt;d&lt;r_1+r_2$</td><td>przecinające się</td><td>2</td></tr>
+    <tr><td>$d=|r_1-r_2|&gt;0$</td><td>styczne wewnętrznie</td><td>1</td></tr>
+    <tr><td>$d&lt;|r_1-r_2|$</td><td>rozłączne wewnętrznie</td><td>0</td></tr>
+  </table>
+  <div class="uwaga">Punkty wspólne dwóch okręgów: rozwiń oba równania i <b>odejmij</b> je stronami. Znikną $x^2$ i $y^2$, zostanie równanie prostej przez oba punkty wspólne. Dalej jak w punkcie 1.</div>
+  <div class="demo">
+    <p class="opis">Przeciągaj środki $S_1$, $S_2$ i zmieniaj promienie. Na dole porównanie $d$ z $r_1+r_2$ i $|r_1-r_2|$ oraz nazwa położenia.</p>
+    <canvas id="do-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r_1$ <input type="range" id="do-r1" min="0.5" max="5" step="0.5" value="3"> <span id="do-r1-v"></span></label>
+      <label>$r_2$ <input type="range" id="do-r2" min="0.5" max="5" step="0.5" value="2"> <span id="do-r2-v"></span></label>
+    </div>
+    <div class="wynik" id="do-w1"></div>
+    <div class="wynik" id="do-w2"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wyznacz punkty wspólne prostej $y=x+1$ i okręgu $(x-2)^2+(y-1)^2=10$ oraz styczną do okręgu w punkcie o dodatniej odciętej.</p>
+    <ol>
+      <li>Podstaw $y=x+1$: $(x-2)^2+x^2=10$, czyli $2x^2-4x-6=0$, $x^2-2x-3=0$.</li>
+      <li>$x=3$ lub $x=-1$, więc punkty $(3,4)$ i $(-1,0)$.</li>
+      <li>Styczna w $P=(3,4)$: $\vec{SP}=[1,3]$, więc $1\cdot(x-3)+3(y-4)=0$.</li>
+      <li>Porządkujemy: $x+3y-15=0$, czyli $y=-\frac13x+5$. Kontrola: $a_{SP}=3$, $3\cdot\left(-\frac13\right)=-1$ ✓.</li>
+    </ol>
+    <p class="odp">$(3,4)$, $(-1,0)$; styczna $x+3y-15=0$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="11/5; -2/5" data-odp-opis="x; y punktu styczności"><span class="poziom">łatwe</span>
+      <div class="tresc">Określ wzajemne położenie okręgów $(x-1)^2+(y+2)^2=4$ i $(x-4)^2+(y-2)^2=9$. Jeśli są styczne, wyznacz punkt styczności.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $d=\sqrt{3^2+4^2}=5=2+3=r_1+r_2$: styczne zewnętrznie. Punkt styczności leży na $S_1S_2$ w odległości $r_1=2$ od $S_1$: $T=S_1+\frac25\vec{S_1S_2}=(1,-2)+\frac25[3,4]$.
+        <b>Styczne zewnętrznie w $T=\left(\frac{11}{5},-\frac25\right)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-4; 4)" data-odp-opis="zbiór wartości m"><span class="poziom">średnie</span>
+      <div class="tresc">Dla jakich $m$ prosta $y=x+m$ ma z okręgiem $x^2+y^2=8$ dwa punkty wspólne?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^2+(x+m)^2=8$, $2x^2+2mx+m^2-8=0$, $\Delta=4m^2-8(m^2-8)=64-4m^2&gt;0$, czyli $m^2&lt;16$. <b>$m\in(-4,4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-3/4; 17/2" data-odp-opis="a; b w y = ax + b"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz styczną do okręgu $(x+1)^2+(y-3)^2=25$ w punkcie $P=(2,7)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P$ leży na okręgu: $9+16=25$ ✓. $\vec{SP}=[3,4]$, styczna: $3(x-2)+4(y-7)=0$. <b>$3x+4y-34=0$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Z punktu $Q=(0,-5)$ poprowadzono styczne do okręgu $x^2+y^2=5$. Wyznacz ich równania, punkty styczności i długość odcinka stycznej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Pionowa $x=0$ przecina okrąg w dwóch punktach, więc nie jest styczna. $y=mx-5$: $(1+m^2)x^2-10mx+20=0$, $\Delta=100m^2-80(1+m^2)=20m^2-80=0$, $m=\pm2$. Wtedy $x=\frac{10m}{2(1+m^2)}=m$, punkty $(2,-1)$ i $(-2,-1)$. $|QT|=\sqrt{25-5}=2\sqrt5$.
+        <b>$y=2x-5$, $y=-2x-5$; $T_1=(2,-1)$, $T_2=(-2,-1)$; $|QT|=2\sqrt5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz punkty wspólne okręgów $x^2+y^2=25$ i $(x-7)^2+(y-1)^2=25$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Drugie po rozwinięciu: $x^2+y^2-14x-2y+50=25$. Odejmij od pierwszego: $14x+2y-50=0$, $y=25-7x$. Podstaw: $x^2+(25-7x)^2=25$, $50x^2-350x+600=0$, $x^2-7x+12=0$, $x\in\{3,4\}$. Kontrola $(4,-3)$ w drugim: $9+16=25$ ✓.
+        <b>$(3,4)$ i $(4,-3)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 7" data-odp-opis="wartości r"><span class="poziom">maturalne</span>
+      <div class="tresc">Dla jakich $r&gt;0$ okręgi $x^2+y^2=4$ i $(x-3)^2+(y-4)^2=r^2$ są styczne?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $d=5$. Zewnętrznie: $r+2=5$, $r=3$. Wewnętrznie: $|r-2|=5$, $r=7$ (lub $r=-3$, odrzucamy).
+        <b>$r=3$ lub $r=7$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Styczna przez punkt zewnętrzny:</b> zapis $y=m(x-x_Q)+y_Q$ gubi prostą pionową. Zawsze sprawdź $x=x_Q$ osobno (zdarza się, że jest jedną ze stycznych).</li>
+    <li>„Styczne” bez dopisku oznacza <b>oba</b> przypadki: zewnętrznie i wewnętrznie. Odrzuć ujemny promień.</li>
+    <li>W zadaniach z parametrem warunek na $\Delta$ zapisz jawnie i rozwiąż nierówność do końca (przedział, nie „$m\ne\dots$”).</li>
+    <li>Styczna w znanym punkcie: nie licz $\Delta$, tylko użyj prostopadłości do promienia. Szybciej i bez ryzyka błędu.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function katProsty(g, X, Y, u, v, nr = 3) {
+    const s = 0.4, nu = Math.hypot(...u), nv = Math.hypot(...v);
+    const a = [u[0] / nu * s, u[1] / nu * s], b = [v[0] / nv * s, v[1] / nv * s];
+    g.wielokat([[X + a[0], Y + a[1]], [X + a[0] + b[0], Y + a[1] + b[1]], [X + b[0], Y + b[1]]], nr, { zamknij: false, grubosc: 1.5 });
+  }
+  const wsp = k => k === 1 ? "" : k === -1 ? "-" : ladnaTex(k);   // współczynnik przy zmiennej
+  const pt = (x, y) => `(${ladnaTex(x)},\\,${ladnaTex(y)})`;
+
+  // --- 1. Prosta i okrąg ---
+  const SX = 1, SY = 1, R = 3;
+  const w1 = new Wykres($("po-plot"), { xmin: -6, xmax: 8, ymin: -4, ymax: 6, rowneSkale: true });
+  let bAkt = +$("po-b").value, stop1 = null;
+  const styczneB = a => [SY - a * SX - R * Math.sqrt(1 + a * a), SY - a * SX + R * Math.sqrt(1 + a * a)];
+  function rysujPo() {
+    const a = +$("po-a").value, b = bAkt;
+    $("po-a-v").textContent = ladna(a); $("po-b-v").textContent = ladna(b);
+    // podstawienie y = ax + b do (x−1)² + (y−1)² = 9
+    const A = 1 + a * a, B = 2 * (a * (b - SY) - SX), C = SX * SX + (b - SY) ** 2 - R * R;
+    let D = B * B - 4 * A * C; if (Math.abs(D) < 1e-9) D = 0;
+    const xs = D > 0 ? [(-B - Math.sqrt(D)) / (2 * A), (-B + Math.sqrt(D)) / (2 * A)] : D === 0 ? [-B / (2 * A)] : [];
+    const n = a * SX - SY + b, F = { x: SX - a * n / A, y: SY + n / A }, d = Math.abs(n) / Math.sqrt(A);
+    w1.rysuj(g => {
+      g.okrag(SX, SY, R, 1, { wypelnij: 0.08 });
+      g.funkcja(x => a * x + b, 4);
+      g.odcinek(SX, SY, F.x, F.y, 3, false);
+      if (d > 1e-9) katProsty(g, F.x, F.y, [1, a], [SX - F.x, SY - F.y]);
+      g.punkt(SX, SY, "S", 1); g.punkt(F.x, F.y, "F", 3, { r: 4 });
+      xs.forEach((x, i) => g.punkt(x, a * x + b, xs.length === 2 ? ["K", "L"][i] : "T", 2));
+    });
+    const [ile, nazwa] = D > 0 ? ["2", "sieczna"] : D === 0 ? ["1", "styczna"] : ["0", "rozłączna"];
+    tex("po-w1", `y=${a ? wsp(a) + "x" + znakTex(b) : ladnaTex(b)}:\\quad ${wsp(A)}x^2${B ? znakTex(B) + "x" : ""}${znakTex(C)}=0,\\quad \\Delta=${ladnaTex(D)}`);
+    tex("po-w2", `d=|SF|\\approx${ladnaTex(d)}\\ ${D > 0 ? "<" : D === 0 ? "=" : ">"}\\ r=${R}\\ \\Rightarrow\\ \\textbf{${nazwa}}\\ (${ile}\\text{ pkt})`);
+  }
+  $("po-a").addEventListener("input", () => { if (stop1) stop1(); rysujPo(); });
+  $("po-b").addEventListener("input", () => { if (stop1) stop1(); bAkt = +$("po-b").value; rysujPo(); });
+  $("po-styczna").addEventListener("click", () => {
+    if (stop1) stop1();
+    const bs = styczneB(+$("po-a").value);
+    bAkt = Math.abs(bs[0] - bAkt) < Math.abs(bs[1] - bAkt) ? bs[0] : bs[1];
+    $("po-b").value = bAkt; rysujPo();
+  });
+  $("po-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    const [b0, b1] = styczneB(+$("po-a").value);
+    stop1 = animuj(5000, t => { bAkt = b0 - 1.5 + (b1 - b0 + 3) * t; $("po-b").value = bAkt; rysujPo(); });
+  });
+  rysujPo();
+
+  // --- 2. Styczne z punktu Q do x² + y² = 5 ---
+  const R2 = 5, r = Math.sqrt(R2);
+  const w2 = new Wykres($("st-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 4, rowneSkale: true });
+  const pk2 = w2.przeciagaj([{ x: 0, y: -5, siatka: 0.5, ogranicz: p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5.5, Math.min(4, p.y)) }) }], rysujSt);
+  function rysujSt() {
+    const Q = pk2[0], d2 = Q.x * Q.x + Q.y * Q.y, d = Math.sqrt(d2);
+    const T = [];
+    if (d2 > R2) {
+      const th = Math.atan2(Q.y, Q.x), fi = Math.acos(r / d);
+      [th - fi, th + fi].forEach(k => T.push({ x: r * Math.cos(k), y: r * Math.sin(k) }));
+    } else if (d2 === R2) T.push({ x: Q.x, y: Q.y });
+    w2.rysuj(g => {
+      g.okrag(0, 0, r, 1, { wypelnij: 0.08 });
+      if (d2 > R2) g.odcinek(0, 0, Q.x, Q.y, 3, true);
+      T.forEach(t => {
+        g.prosta(t.x, t.y, t.x - t.y, t.y + t.x, 4);
+        g.odcinek(0, 0, t.x, t.y, 1, false);
+        katProsty(g, t.x, t.y, [-t.x, -t.y], d2 > R2 ? [Q.x - t.x, Q.y - t.y] : [-t.y, t.x]);
+        g.punkt(t.x, t.y, "", 2, { r: 4 });
+      });
+      g.punkt(0, 0, "S", 1);
+      g.punkt(Q.x, Q.y, "Q", 2);
+    });
+    const dok = v => Math.abs(v * 100 - Math.round(v * 100)) < 1e-6;  // czy zaokrąglenie jest dokładne
+    const l2 = d2 - R2, dl = Number.isInteger(l2) ? `\\sqrt{${l2}}` : `\\sqrt{${ladnaTex(l2)}}`;
+    tex("st-w1", `x^2+y^2=5,\\quad Q=${pt(Q.x, Q.y)},\\quad |QS|^2=${ladnaTex(d2)}`);
+    if (d2 < R2) tex("st-w2", "Q\\text{ wewnątrz okręgu: brak stycznych}");
+    else if (d2 === R2) tex("st-w2", `Q\\text{ na okręgu: jedna styczna }${wsp(Q.x)}x${Q.y > 0 ? "+" : ""}${wsp(Q.y)}y=5`);
+    else tex("st-w2", `|QT|=${dl}\\approx${ladnaTex(Math.sqrt(l2))},\\quad ` + T.map((t, i) => `T_${i + 1}${dok(t.x) && dok(t.y) ? "=" : "\\approx"}${pt(t.x, t.y)}`).join(",\\ "));
+  }
+  rysujSt();
+
+  // --- 3. Dwa okręgi ---
+  const w3 = new Wykres($("do-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 5, rowneSkale: true });
+  const ogr3 = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-4, Math.min(4, p.y)) });
+  const pk3 = w3.przeciagaj([{ x: -1.5, y: 0, siatka: 0.5, ogranicz: ogr3 }, { x: 2.5, y: 0, siatka: 0.5, ogranicz: ogr3 }], rysujDo);
+  function rysujDo() {
+    const r1 = +$("do-r1").value, r2 = +$("do-r2").value, [S1, S2] = pk3;
+    $("do-r1-v").textContent = ladna(r1); $("do-r2-v").textContent = ladna(r2);
+    const dx = S2.x - S1.x, dy = S2.y - S1.y, d2 = dx * dx + dy * dy, d = Math.sqrt(d2);
+    const suma = (r1 + r2) ** 2, roz = (r1 - r2) ** 2;   // wielokrotności 0,25 — porównania dokładne
+    let nazwa, ile;
+    if (d2 === 0) [nazwa, ile] = r1 === r2 ? ["pokrywają się", "\\infty"] : ["współśrodkowe", "0"];
+    else if (d2 > suma) [nazwa, ile] = ["rozłączne zewnętrznie", "0"];
+    else if (d2 === suma) [nazwa, ile] = ["styczne zewnętrznie", "1"];
+    else if (d2 > roz) [nazwa, ile] = ["przecinające się", "2"];
+    else if (d2 === roz) [nazwa, ile] = ["styczne wewnętrznie", "1"];
+    else [nazwa, ile] = ["rozłączne wewnętrznie", "0"];
+    const P = [];
+    if (d2 > 0 && d2 <= suma && d2 >= roz) {
+      const a = (d2 + r1 * r1 - r2 * r2) / (2 * d), h = Math.sqrt(Math.max(0, r1 * r1 - a * a));
+      const ex = dx / d, ey = dy / d, mx = S1.x + a * ex, my = S1.y + a * ey;
+      P.push([mx - h * ey, my + h * ex]);
+      if (h > 1e-9) P.push([mx + h * ey, my - h * ex]);
+    }
+    w3.rysuj(g => {
+      g.okrag(S1.x, S1.y, r1, 1, { wypelnij: 0.1 });
+      g.okrag(S2.x, S2.y, r2, 4, { wypelnij: 0.1 });
+      if (d2 > 0) g.odcinek(S1.x, S1.y, S2.x, S2.y, 3, true);
+      g.punkt(S1.x, S1.y, "S₁", 1); g.punkt(S2.x, S2.y, "S₂", 4);
+      P.forEach(([x, y]) => g.punkt(x, y, "", 2));
+    });
+    const dTex = Number.isInteger(d * 2) ? ladnaTex(d) : `\\sqrt{${ladnaTex(d2)}}\\approx${ladnaTex(d)}`;
+    tex("do-w1", `d=${dTex},\\quad r_1+r_2=${ladnaTex(r1 + r2)},\\quad |r_1-r_2|=${ladnaTex(Math.abs(r1 - r2))}`);
+    tex("do-w2", `\\Rightarrow\\ \\textbf{${nazwa}}\\ (${ile}\\text{ pkt wspólnych})`);
+  }
+  ["do-r1", "do-r2"].forEach(id => $(id).addEventListener("input", rysujDo));
+  rysujDo();
+});
+</script>
+</body>
+</html>

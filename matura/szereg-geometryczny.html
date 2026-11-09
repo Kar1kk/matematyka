@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Szereg geometryczny</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Szereg geometryczny</h1>
+  <p class="lead">Nieskończenie wiele składników może dać skończoną sumę: $\frac12+\frac14+\frac18+\ldots$ wypełnia kwadrat o polu $1$. Działa to dokładnie wtedy, gdy $|q|&lt;1$, czyli gdy kolejne kawałki maleją wykładniczo.</p>
+  <p class="wymagania">VI.R.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definicja i wzór</h2>
+  <div class="definicja"><b>Szereg geometryczny</b> to „nieskończona suma” $a_1+a_1q+a_1q^2+\ldots$ Jego <b>sumą</b> nazywamy granicę sum częściowych $S=\lim\limits_{n\to\infty}S_n$, gdzie $S_n=a_1+\ldots+a_1q^{n-1}$. Jeśli ta granica istnieje (i jest liczbą), szereg jest <b>zbieżny</b>.</div>
+  <div class="wzor">
+    <div class="tytul">Suma szeregu geometrycznego</div>
+    $$S=\frac{a_1}{1-q},\qquad |q|&lt;1$$
+    <dl><dt>$|q|&lt;1$</dt><dd>szereg zbieżny (dla $a_1\neq0$ to warunek konieczny i wystarczający)</dd>
+        <dt>$|q|\ge1$</dt><dd>szereg rozbieżny (gdy $a_1\neq0$): wyrazy nie maleją do $0$, więc sumy częściowe nie mogą się ustabilizować</dd>
+        <dt>$a_1=0$</dt><dd>trywialnie $S=0$ dla każdego $q$</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>Twierdzenie</b> Jeśli $|q|&lt;1$, to szereg $a_1+a_1q+a_1q^2+\ldots$ jest zbieżny i $S=\frac{a_1}{1-q}$.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>Ze wzoru na sumę ciągu geometrycznego ($q\neq1$):</p>
+      $$S_n=a_1\cdot\frac{1-q^n}{1-q}$$
+      <p>Dla $|q|&lt;1$ mamy $q^n\to0$, więc z twierdzeń o granicach:</p>
+      $$\lim S_n=a_1\cdot\frac{1-0}{1-q}=\frac{a_1}{1-q}$$
+      <p>Dla $q=1$: $S_n=na_1\to\pm\infty$. Dla $q=-1$: $S_n$ na przemian $a_1$ i $0$. Dla $|q|&gt;1$: $|q^n|\to\infty$, więc $S_n$ nie ma granicy skończonej.</p>
+    </div></details></div>
+  <div class="uwaga">Wzór $\frac{a_1}{1-q}$ „działa” rachunkowo także dla $q=2$: $\frac{1}{1-2}=-1$, a przecież $1+2+4+\ldots$ to nie $-1$. Dlatego <b>zawsze najpierw sprawdź $|q|&lt;1$</b>.</div>
+
+  <h2 id="kwadrat">2. Połówki wypełniają kwadrat</h2>
+  <div class="demo">
+    <p class="opis">Kwadrat ma pole $1$. Bierzemy połowę, potem połowę reszty, i tak dalej. Kliknij ▶: zostaje coraz mniejszy „ogon” $\frac{1}{2^n}$, więc suma dąży do $1$. Pasek pod spodem to to samo na odcinku $\lp 0,1\rp$.</p>
+    <canvas id="kw-plot" style="height:340px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="kw-n" min="0" max="12" step="1" value="3"> <span id="kw-n-v"></span></label>
+      <button id="kw-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="kw-wynik"></div>
+  </div>
+
+  <h2 id="sumy">3. Sumy częściowe $S_n$</h2>
+  <div class="demo">
+    <p class="opis">Punkty to $(n, S_n)$, zielona linia to $S=\frac{a_1}{1-q}$. Dla $0&lt;q&lt;1$ sumy podchodzą do $S$ z jednej strony, dla $-1&lt;q&lt;0$ skaczą na przemian nad i pod $S$. Przesuń $q$ poza $(-1,1)$: granicy brak.</p>
+    <canvas id="sz-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="sz-a1" min="-2" max="2" step="0.5" value="1"> <span id="sz-a1-v"></span></label>
+      <label>$q$ <input type="range" id="sz-q" min="-1.2" max="1.2" step="0.05" value="0.5"> <span id="sz-q-v"></span></label>
+    </div>
+    <div class="wynik" id="sz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Zamień $0{,}1(6)$ na ułamek zwykły.</p>
+    <ol>
+      <li>$0{,}1666\ldots=\frac{1}{10}+\left(\frac{6}{100}+\frac{6}{1000}+\ldots\right)$.</li>
+      <li>W nawiasie szereg geometryczny: $a_1=\frac{6}{100}$, $q=\frac1{10}$, $|q|&lt;1$.</li>
+      <li>$S=\frac{6/100}{1-1/10}=\frac{6}{90}=\frac1{15}$, więc $\frac1{10}+\frac1{15}=\frac{5}{30}$.</li>
+    </ol>
+    <p class="odp">$0{,}1(6)=\frac16$</p>
+  </div>
+  <div class="przyklad">
+    <p>Rozwiąż równanie $1+x+x^2+x^3+\ldots=\frac52-x$.</p>
+    <ol>
+      <li>Lewa strona to szereg geometryczny: $a_1=1$, $q=x$. Ma sumę tylko dla $|x|&lt;1$ — to dziedzina równania.</li>
+      <li>$\frac{1}{1-x}=\frac52-x$, czyli $2=(1-x)(5-2x)$, $2x^2-7x+3=0$, $x\in\{\frac12,3\}$.</li>
+      <li>$x=3\notin(-1,1)$ odrzucamy. Sprawdzenie $x=\frac12$: $L=2$, $P=2$.</li>
+    </ol>
+    <p class="odp">$x=\frac12$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz sumę szeregu $8-4+2-1+\ldots$</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_1=8$, $q=-\frac12$, $|q|&lt;1$. $S=\frac{8}{1+\frac12}=\frac{16}{3}$. <b>$S=\frac{16}{3}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Zamień $0{,}(27)$ na ułamek zwykły.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $0{,}(27)=\frac{27}{100}+\frac{27}{100^2}+\ldots$, $a_1=\frac{27}{100}$, $q=\frac1{100}$.
+        $S=\frac{27/100}{99/100}=\frac{27}{99}$. <b>$\frac{3}{11}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (0; 1)" data-odp-opis="x, dla których szereg jest zbieżny"><span class="poziom">średnie</span>
+      <div class="tresc">Dla jakich $x$ szereg $1+(2x-1)+(2x-1)^2+\ldots$ jest zbieżny? Wyznacz jego sumę.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $q=2x-1$, warunek $|2x-1|&lt;1 \iff 0&lt;x&lt;1$. Suma $\frac{1}{1-(2x-1)}=\frac{1}{2-2x}$.
+        <b>$x\in(0,1)$, $S=\frac{1}{2-2x}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="9/2; 1/2" data-odp-opis="a_1; q"><span class="poziom">średnie</span>
+      <div class="tresc">Zbieżny szereg geometryczny ma sumę $9$, a szereg utworzony z kwadratów jego wyrazów ma sumę $27$. Wyznacz $a_1$ i $q$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kwadraty tworzą szereg o ilorazie $q^2$: $\frac{a_1}{1-q}=9$, $\frac{a_1^2}{1-q^2}=27$. Dzieląc drugie przez pierwsze: $\frac{a_1}{1+q}=3$.
+        Zatem $9(1-q)=3(1+q)$, $q=\frac12$ ($|q|&lt;1$ ✓), $a_1=\frac92$. <b>$a_1=\frac92$, $q=\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8+4sqrt(2)"><span class="poziom">maturalne</span>
+      <div class="tresc">W kwadrat o boku $1$ wpisujemy kwadrat o wierzchołkach w środkach boków, w niego kolejny tak samo itd. Oblicz sumę obwodów wszystkich kwadratów.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Bok kolejnego kwadratu to połowa przekątnej poprzedniego: $a\cdot\frac{\sqrt2}{2}$. Obwody: $4,\ 4\cdot\frac{\sqrt2}2,\ \ldots$, $q=\frac{\sqrt2}{2}&lt;1$.
+        $S=\frac{4}{1-\frac{\sqrt2}2}=\frac{8}{2-\sqrt2}=\frac{8(2+\sqrt2)}{2}$. <b>$8+4\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż równanie $x+\frac{x}{x+1}+\frac{x}{(x+1)^2}+\ldots=6$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_1=x$, $q=\frac{1}{x+1}$ (oczywiście $x\neq-1$). Zbieżność: $\left|\frac1{x+1}\right|&lt;1 \iff |x+1|&gt;1 \iff x\in(-\infty,-2)\cup(0,\infty)$.
+        Suma: $\frac{x}{1-\frac1{x+1}}=\frac{x(x+1)}{x}=x+1$ (dla $x\neq0$). Równanie $x+1=6$, $x=5$, i $5\in(0,\infty)$ ✓. <b>$x=5$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Zawsze zapisz warunek $|q|&lt;1$</b> i sprawdź z nim każde rozwiązanie. Brak tego kroku to typowa strata punktu.</li>
+    <li><b>$q$ z parametrem</b>: dziedzina równania to rozwiązanie nierówności $|q|&lt;1$ (plus warunki typu mianownik $\neq0$).</li>
+    <li><b>Ułamek okresowy</b>: okres to $a_1$, a $q=10^{-k}$ ($k$ = długość okresu). Część przed okresem dodaj osobno.</li>
+    <li><b>Figury w nieskończoność</b> (kwadraty, trójkąty, okręgi): ustal skalę podobieństwa $k$; długości tworzą szereg z $q=k$, a pola z $q=k^2$.</li>
+    <li>$0{,}(9)=\frac{0{,}9}{1-0{,}1}=1$ — to ta sama liczba, nie „prawie $1$”.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const rown = (x, m = 2) => (Math.abs(Math.round(x * 10 ** m) / 10 ** m - x) < 1e-9 ? "=" : "\\approx ") + ladnaTex(x, m);
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  // --- 2. Połówki kwadratu ---
+  const w1 = new Wykres($("kw-plot"), { xmin: -0.1, xmax: 1.1, ymin: -0.42, ymax: 1.08, krokX: 0.5, krokY: 0.5, rowneSkale: true, siatka: false, osie: false });
+  // kawałki: k-ty to połowa reszty (na zmianę cięcie pionowe i poziome)
+  const kawalki = [];
+  { let x = 0, y = 0, w = 1, h = 1;
+    for (let k = 1; k <= 14; k++) {
+      if (k % 2) { kawalki.push([x, y, w / 2, h]); x += w / 2; w /= 2; }
+      else { kawalki.push([x, y, w, h / 2]); y += h / 2; h /= 2; }
+    } }
+  const Y0 = -0.25; // odcinek ⟨0,1⟩ pod kwadratem
+  let stop1 = null;
+  function rysujKw(nf) { // nf: liczba kawałków (może być ułamkowa w animacji)
+    const n = Math.floor(nf), fr = nf - n;
+    $("kw-n-v").textContent = n;
+    const S = 1 - 2 ** -nf;
+    w1.rysuj(g => {
+      g.prostokat(0, 0, 1, 1, 1, { wypelnij: 0.04 });
+      kawalki.forEach(([x, y, w, h], i) => {
+        if (i < n) g.prostokat(x, y, w, h, i % 2 ? 3 : 1, { wypelnij: 0.45, grubosc: 1.2 });
+        else if (i === n && fr > 0) g.prostokat(x, y, w, h, 2, { wypelnij: 0.5 * fr, grubosc: 1.2 });
+        if (i < Math.min(n, 4)) g.tekst(x + w / 2, y + h / 2, `1/${2 ** (i + 1)}`, 4, { wyrownanie: "center", dy: 5, gruby: true });
+      });
+      // odcinek
+      g.odcinek(0, Y0, 1, Y0, 4, false);
+      g.prostokat(0, Y0 - 0.035, S, 0.07, 1, { wypelnij: 0.6, grubosc: 1 });
+      [0, 1].forEach(t => g.tekst(t, Y0, String(t), 4, { wyrownanie: "center", dy: 22 }));
+      for (let k = 1; k <= Math.min(n, 6); k++) g.odcinek(1 - 2 ** -k, Y0 - 0.05, 1 - 2 ** -k, Y0 + 0.05, 2, false);
+    });
+    const czlony = n === 0 ? "0" : n <= 3 ? Array.from({ length: n }, (_, i) => `\\tfrac1{${2 ** (i + 1)}}`).join("+")
+      : `\\tfrac12+\\tfrac14+\\ldots+\\tfrac1{${2 ** n}}`;
+    tex("kw-wynik", `S_{${n}}=${czlony}=1-\\tfrac1{${2 ** n}}${rown(1 - 2 ** -n, 4)}\\ \\to\\ 1`);
+  }
+  $("kw-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    stop1 = animuj(5000, t => { const nf = 12 * t; $("kw-n").value = Math.floor(nf); rysujKw(nf); }, () => rysujKw(12));
+  });
+  $("kw-n").addEventListener("input", () => { if (stop1) stop1(); rysujKw(+$("kw-n").value); });
+  rysujKw(+$("kw-n").value);
+
+  // --- 3. Sumy częściowe ---
+  const NMAX = 20;
+  const w2 = new Wykres($("sz-plot"), { xmin: -0.5, xmax: NMAX + 0.8, krokX: 2, ymin: -1, ymax: 3 });
+  function rysujSz() {
+    const a1 = +$("sz-a1").value, q = Math.round(+$("sz-q").value * 100) / 100;
+    $("sz-a1-v").textContent = ladna(a1); $("sz-q-v").textContent = ladna(q);
+    const Sn = []; let s = 0;
+    for (let n = 1; n <= NMAX; n++) { s += a1 * q ** (n - 1); Sn.push(s); }
+    const zb = Math.abs(q) < 1, S = zb ? a1 / (1 - q) : null;
+    const LIM = 12, kl = y => Math.max(-LIM, Math.min(LIM, y));
+    const ys = Sn.map(kl).concat(zb ? [S] : []);
+    let lo = Math.min(0, ...ys), hi = Math.max(0, ...ys);
+    const pad = (hi - lo) * 0.12 || 1;
+    Object.assign(w2.z0, { ymin: lo - pad, ymax: hi + pad, krokY: ladnyKrok(hi - lo + 2 * pad) });
+    w2.rysuj(g => {
+      if (zb) { g.odcinek(0, S, NMAX + 1, S, 3, false); g.tekst(NMAX + 0.8, S, "S", 3, { dx: -14, dy: -6, gruby: true }); }
+      for (let n = 1; n < NMAX; n++) g.odcinek(n, kl(Sn[n - 1]), n + 1, kl(Sn[n]), 4);
+      Sn.forEach((v, i) => g.punkt(i + 1, kl(v), "", Math.abs(v) > LIM ? 2 : 1, { r: 3.5, pusty: Math.abs(v) > LIM }));
+    });
+    if (a1 === 0) tex("sz-wynik", "a_1=0:\\ S=0");
+    else if (zb) tex("sz-wynik", `|q|<1:\\ S=\\frac{${ladnaTex(a1)}}{1-(${ladnaTex(q)})}${rown(S, 3)},\\quad S_{${NMAX}}${rown(Sn[NMAX - 1], 3)}`);
+    else tex("sz-wynik", `|q|\\ge1:\\ \\text{szereg rozbieżny},\\ S_{${NMAX}}=${ladnaTex(Sn[NMAX - 1])}` +
+      (q === 1 || q === -1 ? "" : `\\ (\\text{wzór dałby } ${ladnaTex(a1 / (1 - q), 3)}\\text{ — bez sensu})`));
+  }
+  ["sz-a1", "sz-q"].forEach(id => $(id).addEventListener("input", rysujSz));
+  rysujSz();
+});
+</script>
+</body>
+</html>

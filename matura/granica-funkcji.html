@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Granica funkcji (w tym jednostronna)</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Granica funkcji (w tym jednostronna)</h1>
+  <p class="lead">Granica mówi, do czego <i>zmierzają</i> wartości $f(x)$, gdy $x$ podchodzi coraz bliżej do $a$, a nie ile wynosi $f(a)$. Funkcja może nawet nie być określona w $a$.</p>
+  <p class="wymagania">XIII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definicje</h2>
+  <div class="definicja"><b>Definicja (Heinego)</b>
+    $\lim\limits_{x\to a} f(x)=g$, jeśli dla <b>każdego</b> ciągu $(x_n)$ z dziedziny, $x_n\neq a$, $x_n\to a$, zachodzi $f(x_n)\to g$.
+  </div>
+  <div class="dwie">
+    <div class="wzor"><div class="tytul">Granica lewostronna</div>
+      $$\lim_{x\to a^-} f(x)$$
+      <dl><dt>$x&lt;a$</dt><dd>podchodzimy z lewej</dd></dl></div>
+    <div class="wzor"><div class="tytul">Granica prawostronna</div>
+      $$\lim_{x\to a^+} f(x)$$
+      <dl><dt>$x&gt;a$</dt><dd>podchodzimy z prawej</dd></dl></div>
+  </div>
+  <div class="twierdzenie"><b>Twierdzenie</b>
+    $\lim\limits_{x\to a} f(x)=g$ istnieje $\iff$ obie granice jednostronne istnieją i są równe $g$.
+  </div>
+  <ul>
+    <li><b>Niewłaściwa</b>: $f(x)\to+\infty$ lub $-\infty$. Np. $\lim\limits_{x\to0}\frac1{x^2}=+\infty$. Wtedy prosta $x=a$ to <b>asymptota pionowa</b>.</li>
+    <li><b>W nieskończoności</b>: $\lim\limits_{x\to\pm\infty} f(x)=g$. Wtedy prosta $y=g$ to <b>asymptota pozioma</b>.</li>
+  </ul>
+
+  <h2 id="podchodzenie">2. Interaktywnie: podchodzenie z lewej i z prawej</h2>
+  <div class="demo">
+    <p class="opis">Zielony punkt to $x=1-h$, fioletowy $x=1+h$. Odtwórz animację ($h\to0$) i patrz, dokąd zmierzają wartości. Porównaj „dziurę” ze „skokiem”.</p>
+    <canvas id="gr-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>funkcja <select id="gr-f">
+        <option value="0">dziura: (x²−1)/(x−1)</option>
+        <option value="1">skok: (x²−1)/|x−1|</option>
+        <option value="2">1/(x−1)²</option>
+        <option value="3">1/(x−1)</option>
+      </select></label>
+      <label>$h$ <input type="range" id="gr-h" min="0" max="1" step="0.01" value="0"> <span id="gr-h-v"></span></label>
+      <button id="gr-start">▶ Odtwórz h → 0</button>
+    </div>
+    <table class="tabela" id="gr-tab"></table>
+    <div class="wynik" id="gr-wynik"></div>
+  </div>
+
+  <h2 id="liczenie">3. Jak liczyć granice</h2>
+  <p>Gdy funkcja jest „porządna” w $a$ (wielomian, wymierna z mianownikiem $\neq0$, pierwiastek), po prostu <b>podstaw</b>: $\lim\limits_{x\to2}(x^2+1)=5$. Granica sumy, iloczynu, ilorazu to suma, iloczyn, iloraz granic (jeśli są skończone, a mianownik $\neq0$).</p>
+  <table class="tabela">
+    <tr><th>Symbol</th><th>Wynik</th></tr>
+    <tr><td>$\frac{c}{\pm\infty}$</td><td>$0$</td></tr>
+    <tr><td>$\frac{c}{0^+}$, $c&gt;0$</td><td>$+\infty$</td></tr>
+    <tr><td>$\frac{c}{0^-}$, $c&gt;0$</td><td>$-\infty$</td></tr>
+    <tr><td>$+\infty+(+\infty)$</td><td>$+\infty$</td></tr>
+    <tr><td>$-\infty+(-\infty)$</td><td>$-\infty$</td></tr>
+    <tr><td>$+\infty\cdot(+\infty)$</td><td>$+\infty$</td></tr>
+    <tr><td>$+\infty\cdot(-\infty)$</td><td>$-\infty$</td></tr>
+    <tr><td>$c\cdot(+\infty)$, $c&gt;0$</td><td>$+\infty$</td></tr>
+    <tr><td>$c\cdot(+\infty)$, $c&lt;0$</td><td>$-\infty$</td></tr>
+  </table>
+  <div class="uwaga"><b>Symbole nieoznaczone</b>: $\frac00$, $\frac{\infty}{\infty}$, $\infty-\infty$, $0\cdot\infty$. Wynik może być dowolny, trzeba przekształcić wzór.</div>
+  <ul>
+    <li>$\frac00$ przy wymiernej: <b>rozłóż i skróć</b> czynnik $(x-a)$.</li>
+    <li>$\frac00$ z pierwiastkiem: pomnóż przez <b>sprzężenie</b>, np. $\sqrt{x+4}+2$.</li>
+    <li>$\frac{\infty}{\infty}$: <b>podziel</b> licznik i mianownik przez najwyższą potęgę mianownika.</li>
+    <li>$\infty-\infty$ z pierwiastkiem: sprzężenie, potem jak $\frac{\infty}{\infty}$.</li>
+  </ul>
+
+  <h2 id="nieskonczonosc">4. Interaktywnie: granica w nieskończoności</h2>
+  <div class="demo">
+    <p class="opis">Oddalaj widok (suwak lub ▶). Gdy jest granica $g$, wykres „przykleja się” do prostej $y=g$. Ostatnia funkcja ucieka do $\pm\infty$, asymptoty poziomej nie ma.</p>
+    <canvas id="gn-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>funkcja <select id="gn-f">
+        <option value="0">(2x+1)/(x−1)</option>
+        <option value="1">3x/(x²+1)</option>
+        <option value="2">(x²+1)/x</option>
+      </select></label>
+      <label>zasięg <input type="range" id="gn-r" min="0" max="1" step="0.005" value="0"> <span id="gn-r-v"></span></label>
+      <button id="gn-start">▶ Oddalaj</button>
+    </div>
+    <div class="wynik" id="gn-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Oblicz $\lim\limits_{x\to2}\frac{x^2-4}{x^2-3x+2}$.</p>
+    <ol>
+      <li>Podstawienie daje $\frac00$: symbol nieoznaczony.</li>
+      <li>Rozkład: $\frac{(x-2)(x+2)}{(x-2)(x-1)}=\frac{x+2}{x-1}$ dla $x\neq2$.</li>
+      <li>Teraz podstaw: $\frac{2+2}{2-1}=4$.</li>
+    </ol>
+    <p class="odp">Granica wynosi $4$ (wykres ma „dziurę” w $(2,4)$).</p>
+  </div>
+  <div class="przyklad">
+    <p>Oblicz $\lim\limits_{x\to+\infty}\frac{3x^2-x}{2x^2+5}$ oraz granice jednostronne $\frac{x+1}{x-1}$ w $1$.</p>
+    <ol>
+      <li>Podziel przez $x^2$: $\frac{3-\frac1x}{2+\frac{5}{x^2}}\to\frac{3-0}{2+0}=\frac32$.</li>
+      <li>$x\to1^-$: licznik $\to2$, mianownik $\to0^-$, więc $\frac{x+1}{x-1}\to-\infty$.</li>
+      <li>$x\to1^+$: mianownik $\to0^+$, więc $\to+\infty$.</li>
+    </ol>
+    <p class="odp">$\frac32$; granice jednostronne $-\infty$ i $+\infty$, granica w $1$ nie istnieje, $x=1$ to asymptota pionowa.</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="6"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\lim\limits_{x\to3}\frac{x^2-9}{x-3}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{(x-3)(x+3)}{x-3}=x+3\to6$. <b>$6$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz $\lim\limits_{x\to-\infty}\frac{4x^3-x}{1-2x^3}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Podziel przez $x^3$: $\frac{4-\frac1{x^2}}{\frac1{x^3}-2}\to\frac{4}{-2}$. <b>$-2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz granice jednostronne funkcji $f(x)=\frac{x+1}{2-x}$ w punkcie $2$. Czy istnieje $\lim\limits_{x\to2}f(x)$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Licznik $\to3$. Dla $x\to2^-$: $2-x\to0^+$, więc $f\to+\infty$. Dla $x\to2^+$: $2-x\to0^-$, więc $f\to-\infty$.
+        <b>$+\infty$ i $-\infty$; granica nie istnieje</b>, $x=2$ to asymptota pionowa.
+      </div></details></li>
+    <li class="zadanie" data-odp="1/4"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz $\lim\limits_{x\to0}\frac{\sqrt{x+4}-2}{x}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Pomnóż przez sprzężenie:
+        $$\frac{(x+4)-4}{x\left(\sqrt{x+4}+2\right)}=\frac{1}{\sqrt{x+4}+2}$$
+        $\to\frac1{2+2}$. <b>$\frac14$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; -4" data-odp-opis="a; b"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz $a$ i $b$ tak, aby $\lim\limits_{x\to1}\frac{x^2+ax+b}{x-1}=5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Mianownik $\to0$, a granica skończona, więc licznik też musi $\to0$: $1+a+b=0$. Wtedy $1$ jest pierwiastkiem licznika, a drugi pierwiastek to $b$ (wzory Viète'a: $x_1x_2=b$), czyli $x^2+ax+b=(x-1)(x-b)$. Granica: $1-b=5$, więc $b=-4$, $a=3$.
+        <b>$a=3$, $b=-4$</b> (sprawdzenie: $\frac{(x-1)(x+4)}{x-1}\to5$).
+      </div></details></li>
+    <li class="zadanie" data-odp="2"><span class="poziom">maturalne</span>
+      <div class="tresc">Oblicz $\lim\limits_{x\to+\infty}\left(\sqrt{x^2+4x}-x\right)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Symbol $\infty-\infty$. Sprzężenie:
+        $$\frac{x^2+4x-x^2}{\sqrt{x^2+4x}+x}=\frac{4x}{\sqrt{x^2+4x}+x}$$
+        Podziel przez $x$ (dla $x&gt;0$: $\sqrt{x^2}=x$): $\frac{4}{\sqrt{1+\frac4x}+1}\to\frac42$. <b>$2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Zapisz, jaki symbol wychodzi z podstawienia ($\frac00$, $\frac{\infty}{\infty}$), a potem przekształcenie. Samo „$=4$” bez skracania to brak uzasadnienia.</li>
+    <li>$\frac{c}{0}$: <b>zawsze</b> licz granice jednostronne i sprawdź znak mianownika ($0^+$ czy $0^-$).</li>
+    <li>Dzielenie przez $x$ pod pierwiastkiem: dla $x\to-\infty$ mamy $\sqrt{x^2}=|x|=-x$. Klasyczna pułapka.</li>
+    <li>Granica w $a$ nie zależy od $f(a)$. Związek wartości z granicą to <a href="ciaglosc-darboux.html">ciągłość</a>.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Podchodzenie do a = 1 ---
+  const FUN = [
+    { f: x => (x * x - 1) / (x - 1), L: 2, R: 2, tL: "2", tR: "2", g: "2" },
+    { f: x => (x * x - 1) / Math.abs(x - 1), L: -2, R: 2, tL: "-2", tR: "2", g: "\\text{nie istnieje}" },
+    { f: x => 1 / (x - 1) ** 2, L: null, R: null, tL: "+\\infty", tR: "+\\infty", g: "+\\infty" },
+    { f: x => 1 / (x - 1), L: null, R: null, tL: "-\\infty", tR: "+\\infty", g: "\\text{nie istnieje}" },
+  ];
+  const gr = new Wykres($("gr-plot"), { xmin: -2, xmax: 4, ymin: -5, ymax: 6 });
+  const hZ = s => 2 * Math.pow(0.0005, s);           // suwak 0..1 → h od 2 do 0,001
+  const H_TAB = [1, 0.5, 0.1, 0.01, 0.001];
+  let stopG = null;
+  const fmt = v => Math.abs(v) >= 1e4 ? (v > 0 ? "" : "-") + "10^{" + Math.round(Math.log10(Math.abs(v))) + "}" : ladnaTex(v, 4);
+  function rysujGr() {
+    const F = FUN[+$("gr-f").value], h = hZ(+$("gr-h").value), f = F.f;
+    $("gr-h-v").textContent = ladna(h, 3);
+    const xl = 1 - h, xr = 1 + h, yl = f(xl), yr = f(xr);
+    gr.rysuj(g => {
+      g.funkcja(f, 1, { do: 1 - 1e-4 }); g.funkcja(f, 1, { od: 1 + 1e-4 });
+      g.odcinek(1, g.z.ymin, 1, g.z.ymax, 3);
+      if (F.L !== null) { g.punkt(1, F.L, "", 1, { pusty: true }); g.punkt(1, F.R, "", 1, { pusty: true }); }
+      const yc = y => Math.max(g.z.ymin + 0.2, Math.min(g.z.ymax - 0.2, y));
+      g.odcinek(xl, 0, xl, yc(yl), 3); g.odcinek(xr, 0, xr, yc(yr), 4);
+      g.punkt(xl, yc(yl), "", 3); g.punkt(xr, yc(yr), "", 4);
+      g.punkt(xl, 0, "1−h", 3, { r: 3 }); g.punkt(xr, 0, "1+h", 4, { r: 3 });
+    });
+    // tabelka: kolumny dla h, które animacja już „minęła”
+    const kol = H_TAB.filter(t => t >= h - 1e-12);
+    const wiersz = (nag, fn) => `<tr><th>${nag}</th>${kol.map(t => `<td>${fn(t)}</td>`).join("")}</tr>`;
+    $("gr-tab").innerHTML = kol.length ? wiersz("h", t => ladna(t, 3)) +
+      wiersz("f(1−h)", t => ladna(f(1 - t), 3)) + wiersz("f(1+h)", t => ladna(f(1 + t), 3)) : "";
+    tex("gr-wynik", `f(1-h)=${fmt(yl)},\\ f(1+h)=${fmt(yr)}\\qquad ` +
+      `\\lim_{x\\to1^-}f(x)=${F.tL},\\ \\lim_{x\\to1^+}f(x)=${F.tR},\\ \\lim_{x\\to1}f(x)=${F.g}`);
+  }
+  $("gr-h").addEventListener("input", () => { if (stopG) stopG(); rysujGr(); });
+  $("gr-f").addEventListener("change", () => { if (stopG) stopG(); $("gr-h").value = 0; rysujGr(); });
+  $("gr-start").addEventListener("click", () => {
+    if (stopG) stopG();
+    stopG = animuj(4000, t => { $("gr-h").value = t; rysujGr(); });
+  });
+  rysujGr();
+
+  // --- 4. Granica w nieskończoności: oddalanie widoku ---
+  const FN = [
+    { f: x => (2 * x + 1) / (x - 1), b: 1, g: 2, t: "\\lim_{x\\to\\pm\\infty}f(x)=2" },
+    { f: x => 3 * x / (x * x + 1), b: null, g: 0, t: "\\lim_{x\\to\\pm\\infty}f(x)=0" },
+    { f: x => (x * x + 1) / x, b: 0, g: null, t: "\\lim_{x\\to+\\infty}f(x)=+\\infty,\\ \\lim_{x\\to-\\infty}f(x)=-\\infty" },
+  ];
+  const gn = new Wykres($("gn-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 8 });
+  let stopN = null;
+  const ladnyKrok = r => { const p = 10 ** Math.floor(Math.log10(r)), m = r / p; return (m < 2 ? 1 : m < 5 ? 2 : 5) * p; };
+  function rysujGn() {
+    const F = FN[+$("gn-f").value], R = 6 * Math.pow(500, +$("gn-r").value);
+    $("gn-r-v").textContent = "|x| ≤ " + Math.round(R);
+    Object.assign(gn.z0, { xmin: -R, xmax: R, krokX: ladnyKrok(R / 3) });
+    const xp = 0.9 * R, yp = F.f(xp);
+    gn.rysuj(g => {
+      if (F.g !== null) g.odcinek(g.z.xmin, F.g, g.z.xmax, F.g, 2);
+      if (F.b === null) g.funkcja(F.f, 1);
+      else { const e = R * 1e-4; g.funkcja(F.f, 1, { do: F.b - e }); g.funkcja(F.f, 1, { od: F.b + e }); }
+      g.punkt(xp, Math.min(yp, g.z.ymax - 0.2), "", 2);
+    });
+    const odl = F.g === null ? "" : `,\\quad |f(x)-${F.g}|=${ladnaTex(Math.abs(yp - F.g), 4)}`;
+    tex("gn-wynik", `x=${ladnaTex(xp, 0)}:\\ f(x)=${ladnaTex(yp, 3)}${odl}\\qquad ${F.t}`);
+  }
+  $("gn-r").addEventListener("input", () => { if (stopN) stopN(); rysujGn(); });
+  $("gn-f").addEventListener("change", () => { if (stopN) stopN(); rysujGn(); });
+  $("gn-start").addEventListener("click", () => {
+    if (stopN) stopN();
+    stopN = animuj(3500, t => { $("gn-r").value = t; rysujGn(); });
+  });
+  rysujGn();
+});
+</script>
+</body>
+</html>

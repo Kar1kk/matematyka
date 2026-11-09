@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Równania i nierówności wielomianowe</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Równania i nierówności wielomianowe</h1>
+  <p class="lead">Rozłóż wielomian na czynniki, a reszta jest prosta: iloczyn jest zerem, gdy któryś czynnik jest zerem, a znak zmienia się tylko w pierwiastkach, i to tylko przy krotności nieparzystej. Stąd „wężyk”.</p>
+  <p class="wymagania">III.5, III.R.1, II.R.1, II.R.2, II.R.3, II.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="rozklad">1. Rozkład na czynniki</h2>
+  <table class="tabela">
+    <tr><th>Metoda</th><th>Przykład</th></tr>
+    <tr><td>wyłączenie przed nawias</td><td>$x^4-3x^3=x^3(x-3)$</td></tr>
+    <tr><td>grupowanie</td><td>$x^3+2x^2-x-2=x^2(x+2)-(x+2)$ $=(x+2)(x-1)(x+1)$</td></tr>
+    <tr><td>wzory skróconego mnożenia</td><td>$x^3-1=(x-1)(x^2+x+1)$</td></tr>
+    <tr><td>pierwiastek całkowity + dzielenie</td><td>patrz twierdzenie poniżej</td></tr>
+  </table>
+  <div class="twierdzenie"><b>Twierdzenie (pierwiastki całkowite)</b> Jeśli wielomian o współczynnikach całkowitych i wyrazie wolnym $a_0\neq0$ ma pierwiastek całkowity $k$, to $k$ jest dzielnikiem $a_0$.
+    <details class="rozwin"><summary>Dlaczego?</summary><div>
+      <p>$W(k)=a_nk^n+\ldots+a_1k+a_0=0$, więc $a_0=-k\,(a_nk^{n-1}+\ldots+a_1)$. Nawias jest liczbą całkowitą, zatem $k\mid a_0$.</p>
+    </div></details>
+  </div>
+  <p>Gdy $W(k)=0$, to $W(x)=(x-k)\cdot Q(x)$ (twierdzenie Bézouta); $Q$ znajdziesz dzieląc przez $x-k$ (schemat Hornera). Pierwiastki wymierne $\frac{p}{q}$ są poza podstawą.</p>
+  <div class="definicja"><b>Definicja</b> $k$ jest pierwiastkiem <i>$r$-krotnym</i> wielomianu $W$, gdy $W(x)=(x-k)^r\cdot Q(x)$ i $Q(k)\neq0$.</div>
+
+  <h2 id="wezyk">2. Nierówność: metoda wężyka</h2>
+  <ol>
+    <li>Wszystko na jedną stronę, rozłóż na czynniki: $W(x)\;?\;0$.</li>
+    <li>Zaznacz pierwiastki na osi, z krotnościami.</li>
+    <li>Zacznij <b>z prawej</b>: nad osią, gdy współczynnik przy najwyższej potędze jest dodatni (pod osią, gdy ujemny).</li>
+    <li>Idź w lewo: przy krotności <b>nieparzystej przecinaj</b> oś, przy <b>parzystej odbijaj się</b>.</li>
+    <li>Odczytaj zbiór. Przy $\ge$, $\le$ dołącz wszystkie pierwiastki, także te „odbite”.</li>
+  </ol>
+  <div class="uwaga">Czynnik bez pierwiastków (np. $x^2+x+1$, $\Delta&lt;0$) ma stały znak: nie zmienia wężyka, tylko ewentualnie go odwraca, gdy jest ujemny.</div>
+
+  <h2 id="demo">3. Interaktywnie: wężyk</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj pierwiastki po osi i zmieniaj ich krotności. Zobacz: krotność nieparzysta to przejście przez oś, parzysta to odbicie. Wykres jest przeskalowany w pionie, liczy się tylko znak.</p>
+    <canvas id="wz-plot"></canvas>
+    <div class="sterowanie">
+      <label>krotności <select id="wz-k1"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        <select id="wz-k2"><option value="2">2</option><option value="1">1</option><option value="3">3</option></select>
+        <select id="wz-k3"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
+      <label>współczynnik <select id="wz-a"><option value="1">a &gt; 0</option><option value="-1">a &lt; 0</option></select></label>
+      <label>$W(x)$ <select id="wz-znak"><option value="gt">&gt; 0</option><option value="ge">≥ 0</option><option value="lt">&lt; 0</option><option value="le">≤ 0</option></select></label>
+      <button id="wz-start">▶ Narysuj wężyk</button>
+    </div>
+    <div class="wynik" id="wz-wynik"></div>
+    <div class="wynik" id="wz-zbior"></div>
+  </div>
+
+  <h2 id="tabela">4. Interaktywnie: skąd znak iloczynu</h2>
+  <div class="demo">
+    <p class="opis">Ten sam wielomian rozpisany na czynniki: każdy rząd to znak jednego czynnika (zielony $+$, czerwony $-$). Przeciągnij fioletowy punkt na dole. Znak $W(x)$ to „minus”, gdy liczba ujemnych czynników jest nieparzysta. Czynnik w potędze parzystej nigdy nie jest ujemny.</p>
+    <canvas id="tz-plot" style="height:260px"></canvas>
+    <div class="wynik" id="tz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż nierówność $x^3-2x^2-9x+18\ge0$.</p>
+    <ol>
+      <li>Grupowanie: $x^2(x-2)-9(x-2)=(x-2)(x^2-9)$ $=(x-2)(x-3)(x+3)$.</li>
+      <li>Pierwiastki $-3,\,2,\,3$, wszystkie jednokrotne; $a=1&gt;0$.</li>
+      <li>Wężyk z prawej z góry: $+$ na $(3,\infty)$, $-$ na $(2,3)$, $+$ na $(-3,2)$, $-$ na $(-\infty,-3)$.</li>
+    </ol>
+    <p class="odp">$x\in\lp-3,2\rp\cup\lp3,\infty)$</p>
+  </div>
+  <div class="przyklad">
+    <p>Rozwiąż nierówność $x^3-3x-2&lt;0$.</p>
+    <ol>
+      <li>Kandydaci na pierwiastki całkowite: dzielniki $-2$, czyli $\pm1,\pm2$. $W(-1)=-1+3-2=0$.</li>
+      <li>Dzielimy przez $x+1$: $x^3-3x-2=(x+1)(x^2-x-2)$ $=(x+1)^2(x-2)$.</li>
+      <li>$-1$ jest dwukrotny (odbicie), $2$ jednokrotny. Ujemne tylko na lewo od $2$, ale bez $-1$.</li>
+    </ol>
+    <p class="odp">$x\in(-\infty,-1)\cup(-1,2)$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-1/2; 0; 3" data-odp-opis="rozwiązania x"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równanie $x(x-3)(2x+1)=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Iloczyn jest zerem, gdy któryś czynnik jest zerem. <b>$x\in\left\{-\frac12,0,3\right\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="0; 2; 3" data-odp-opis="rozwiązania x"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równanie $x^3-5x^2+6x=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x(x^2-5x+6)=x(x-2)(x-3)=0$. <b>$x\in\{0,2,3\}$</b> (nie dziel przez $x$!)
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-oo; -2) u (-1; 1)"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż nierówność $x^3+2x^2-x-2&lt;0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $(x+2)(x-1)(x+1)&lt;0$; pierwiastki $-2,-1,1$, wężyk z prawej z góry.
+        <b>$x\in(-\infty,-2)\cup(-1,1)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-2; 3&gt;"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż nierówność $(x-1)^2(x+2)^3(3-x)\ge0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Współczynnik przy $x^6$: $1\cdot1\cdot(-1)=-1&lt;0$, więc start z prawej <b>pod</b> osią. W $3$ przecinamy (krotność 1), w $1$ odbicie (2), w $-2$ przecinamy (3).
+        Znaki: $(3,\infty)$: $-$; $(1,3)$: $+$; $(-2,1)$: $+$; $(-\infty,-2)$: $-$. <b>$x\in\lp-2,3\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-2; 1/2) u (3; oo)"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż nierówność $2x^3-3x^2-11x+6&gt;0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Dzielniki $6$: $W(3)=54-27-33+6=0$. Dzielenie przez $x-3$: $2x^3-3x^2-11x+6=(x-3)(2x^2+3x-2)$. Dla $2x^2+3x-2$: $\Delta=25$, $x=\frac12$, $x=-2$.
+        $W(x)=2(x-3)\left(x-\frac12\right)(x+2)$. <b>$x\in\left(-2,\frac12\right)\cup(3,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-1; 1&gt;"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż nierówność $x^4+x^3\le x+1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^3(x+1)-(x+1)=(x+1)(x^3-1)$ $=(x+1)(x-1)(x^2+x+1)\le0$. Ostatni czynnik ma $\Delta=-3&lt;0$, jest zawsze dodatni.
+        Zostaje $(x+1)(x-1)\le0$. <b>$x\in\lp-1,1\rp$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Nie dziel przez $x$</b> ani przez czynnik z $x$: gubisz rozwiązania. Wyłączaj przed nawias.</li>
+    <li><b>Znak współczynnika wiodącego</b> policz z iloczynu czynników (np. $(3-x)$ daje $-1$). Od niego zależy start wężyka.</li>
+    <li><b>Pierwiastki parzystej krotności</b> przy $\ge$, $\le$ należą do zbioru, a przy $&gt;$ trzeba je wyrzucić.</li>
+    <li>Pokaż rozkład na czynniki i szkic wężyka z zaznaczonymi pierwiastkami: bezpieczniej je pokazać, bo zwykle są osobno punktowane.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{,}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "\\lp" : "("}${A}${s}${B}${p.zb ? "\\rp" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{,}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 3. Wężyk ---
+  const w1 = new Wykres($("wz-plot"), { xmin: -6, xmax: 6, ymin: -4, ymax: 4, krokY: 10 });
+  const naOx = p => ({ x: Math.max(-5.5, Math.min(5.5, p.x)), y: 0 });
+  const pk = [-3, 0.5, 3].map(x => ({ x, y: 0, siatka: 0.5, ogranicz: naOx }));
+  let stop = null, postep = 1;
+  const kr = () => ["wz-k1", "wz-k2", "wz-k3"].map(id => +$(id).value);
+  function wielomian() {
+    const k = kr(), a = +$("wz-a").value, xs = pk.map(p => p.x);
+    const W = x => a * xs.reduce((s, xi, i) => s * (x - xi) ** k[i], 1);
+    // skala pionowa: największe |W| w okolicy pierwiastków → 3 jednostki
+    const lo = Math.min(...xs) - 1, hi = Math.max(...xs) + 1;
+    let M = 1e-9;
+    for (let i = 0; i <= 200; i++) M = Math.max(M, Math.abs(W(lo + (hi - lo) * i / 200)));
+    return { W, k, a, xs, K: 3 / M };
+  }
+  function rysujWz() {
+    const { W, k, a, xs, K } = wielomian(), zn = $("wz-znak").value;
+    const z = zbior(x => POR[zn](W(x)), xs);
+    const od = w1.z0.xmax - (w1.z0.xmax - w1.z0.xmin) * postep;
+    w1.rysuj(g => {
+      g.funkcja(x => W(x) * K, 1, { od });
+      if (postep >= 1) z.forEach(p => { if (p.a < p.b) g.funkcja(x => W(x) * K, 2, { od: p.a, do: p.b, grubosc: 5 }); });
+      if (postep < 1) g.punkt(od, W(od) * K, "", 4);
+      naOsi(g, postep >= 1 ? z : [], 2);
+      pk.forEach((p, i) => g.punkt(p.x, 0, k[i] > 1 ? `×${k[i]}` : "", 4));
+    });
+    const czyn = xs.map((x, i) => (x === 0 ? "x" : `(x${znakTex(-x)})`) + (k[i] > 1 ? "^" + k[i] : "")).join("");
+    tex("wz-wynik", `W(x)=${a < 0 ? "-" : ""}${czyn}`);
+    tex("wz-zbior", `W(x)${ZNAK[zn]}0 \\iff x\\in ${zbiorTex(z)}`);
+    rysujTz();
+  }
+  w1.przeciagaj(pk, () => { if (stop) stop(); postep = 1; rysujWz(); });
+  ["wz-k1", "wz-k2", "wz-k3", "wz-a", "wz-znak"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); postep = 1; rysujWz(); }));
+  $("wz-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(3500, t => { postep = Math.max(0.002, t); rysujWz(); });
+  });
+
+  // --- 4. Tabela znaków ---
+  const w2 = new Wykres($("tz-plot"), { xmin: -6, xmax: 6, ymin: -0.4, ymax: 5.8, krokY: 10, osie: false });
+  const kursor = [{ x: 1.5, y: 0, siatka: 0.1, ogranicz: p => ({ x: Math.max(-5.9, Math.min(5.9, p.x)), y: 0 }) }];
+  function rysujTz() {
+    const { W, k, a, xs } = wielomian(), x = kursor[0].x;
+    const rzedy = [
+      { opis: a > 0 ? "a = 1" : "a = −1", f: () => a, zera: [] },
+      ...xs.map((xi, i) => ({ opis: (xi === 0 ? "x" : `(x ${xi > 0 ? "−" : "+"} ${ladna(Math.abs(xi))})`) + (k[i] > 1 ? "^" + k[i] : ""), f: t => (t - xi) ** k[i], zera: [xi] })),
+      { opis: "W(x)", f: W, zera: xs },
+    ];
+    let ujemne = 0;
+    w2.rysuj(g => {
+      rzedy.forEach((r, i) => {
+        const y = 5.2 - i * 1.1, ost = i === rzedy.length - 1;
+        g.odcinek(g.z.xmin, y, g.z.xmax, y, "--plot-axis", false);
+        naOsi(g, zbior(t => r.f(t) > 0, r.zera), 3, y);
+        naOsi(g, zbior(t => r.f(t) < 0, r.zera), 2, y);
+        g.tekst(g.z.xmin, y, r.opis, ost ? 4 : 1, { dx: 4, dy: -9, gruby: ost });
+        const v = r.f(x);
+        if (!ost && v < 0) ujemne++;
+        g.tekst(x, y, v > 1e-12 ? "+" : v < -1e-12 ? "−" : "0", v > 1e-12 ? 3 : 2, { dx: 8, dy: 16, gruby: true, rozmiar: 15 });
+      });
+      g.odcinek(x, 0, x, 5.6, 4);
+      g.punkt(x, 0, "x", 4);
+    });
+    const v = W(x);
+    tex("tz-wynik", `x=${ladnaTex(x)}:\\;\\text{ujemnych czynników: }${ujemne}\\;\\Rightarrow\\;W(x)${Math.abs(v) < 1e-12 ? "=0" : v > 0 ? ">0" : "<0"}`);
+  }
+  w2.przeciagaj(kursor, rysujTz);
+  rysujWz();
+});
+</script>
+</body>
+</html>

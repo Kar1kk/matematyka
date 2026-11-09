@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Przekroje sześcianu i ostrosłupów prawidłowych</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/bryly3d.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Przekroje sześcianu i ostrosłupów prawidłowych</h1>
+  <p class="lead">Płaszczyzna tnie bryłę wzdłuż wielokąta. Jego boki leżą na ścianach bryły, więc przekrój budujesz ściana po ścianie: łączysz punkty leżące na tej samej ścianie, a na ścianach równoległych prowadzisz odcinki równoległe.</p>
+  <p class="wymagania">X.R.2 (przekrój prostopadłościanu usunięto z podstawy, zostały sześcian i ostrosłupy prawidłowe)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="zasady">1. Jak wyznaczyć przekrój</h2>
+  <ol>
+    <li>Dwa punkty płaszczyzny leżące na <b>tej samej ścianie</b> łączysz odcinkiem: to bok przekroju.</li>
+    <li>Ściany <b>równoległe</b> płaszczyzna przecina wzdłuż odcinków <b>równoległych</b>.</li>
+    <li>Gdy brakuje punktu, przedłuż bok przekroju do przecięcia z prostą krawędzi tej samej ściany (punkt na przedłużeniu krawędzi, tzw. ślad), potem połącz z punktem na sąsiedniej ścianie.</li>
+    <li>Przekrój ma co najwyżej tyle boków, ile ścian ma bryła: w sześcianie od $3$ do $6$, w ostrosłupie czworokątnym od $3$ do $5$.</li>
+  </ol>
+  <table class="tabela">
+    <tr><th>przekrój sześcianu (krawędź $a$)</th><th>płaszczyzna przez</th><th>pole</th></tr>
+    <tr><td>trójkąt równoboczny</td><td>$B$, $D$, $E$</td><td>$\frac{a^2\sqrt3}{2}$</td></tr>
+    <tr><td>prostokąt (przekątny)</td><td>$A$, $C$, $G$</td><td>$a^2\sqrt2$</td></tr>
+    <tr><td>romb</td><td>$A$, $G$, środek $BF$</td><td>$\frac{a^2\sqrt6}{2}$</td></tr>
+    <tr><td>sześciokąt foremny</td><td>środki $6$ krawędzi</td><td>$\frac{3a^2\sqrt3}{4}$</td></tr>
+  </table>
+  <div class="uwaga">Oznaczenia: dolna podstawa $ABCD$, górna $EFGH$, $E$ nad $A$. Przekrój sześcianu nigdy nie jest siedmiokątem ani pięciokątem foremnym.</div>
+
+  <h2 id="demo">2. Interaktywnie: przekroje sześcianu</h2>
+  <div class="demo">
+    <p class="opis">Wybierz gotowy typ lub trzy własne punkty (wierzchołki i środki krawędzi). Suwak przesuwa płaszczyznę równolegle: zobacz, jak trójkąt przechodzi w sześciokąt. Obracaj sześcian palcem.</p>
+    <canvas id="pr-plot"></canvas>
+    <div class="sterowanie">
+      <button id="pr-t1" class="wtorny">trójkąt</button>
+      <button id="pr-t2" class="wtorny">prostokąt</button>
+      <button id="pr-t3" class="wtorny">kwadrat</button>
+      <button id="pr-t4" class="wtorny">trapez</button>
+      <button id="pr-t5" class="wtorny">romb</button>
+      <button id="pr-t6" class="wtorny">pięciokąt</button>
+      <button id="pr-t7" class="wtorny">sześciokąt</button>
+      <label>$P_1$ <select id="pr-p1"></select></label>
+      <label>$P_2$ <select id="pr-p2"></select></label>
+      <label>$P_3$ <select id="pr-p3"></select></label>
+      <label>przesuń <input type="range" id="pr-s" min="-1.6" max="1.6" step="0.02" value="0"></label>
+    </div>
+    <div class="wynik" id="pr-wynik"></div>
+  </div>
+
+  <h2 id="demo2">3. Interaktywnie: przekroje ostrosłupa</h2>
+  <div class="demo">
+    <p class="opis">Ostrosłup prawidłowy czworokątny ($a=4$, $H=4$). Wybierz rodzaj płaszczyzny i zmieniaj parametr. Przy płaszczyźnie przez krawędź $AB$ zobacz, kiedy trapez zamienia się w trójkąt.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="sterowanie">
+      <button id="po-m1" class="wtorny aktywny">przez krawędź AB</button>
+      <button id="po-m2" class="wtorny">równoległa do podstawy</button>
+      <button id="po-m3" class="wtorny">przez S i przekątną AC</button>
+      <label>parametr <input type="range" id="po-x" min="0.05" max="0.95" step="0.01" value="0.35"></label>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Ostrosłup prawidłowy czworokątny $ABCDS$ ma krawędź podstawy $6$ i wysokość $3\sqrt3$. Płaszczyzna przechodzi przez krawędź $AB$ i tworzy z podstawą kąt $30^\circ$. Oblicz pole przekroju.</p>
+    <ol>
+      <li>$M$, $N$ – środki $AB$ i $CD$. W trójkącie $MNS$: $|MN|=6$, $\tg\sphericalangle SMN=\frac{3\sqrt3}{3}=\sqrt3$, więc kąt przy $M$ to $60^\circ$, trójkąt $MNS$ jest równoboczny.</li>
+      <li>$AB\parallel CD$, więc $AB$ jest równoległa do płaszczyzny $CDS$ i płaszczyzna przekroju tnie ścianę $CDS$ wzdłuż $KL\parallel CD$. Przekrój to trapez $ABLK$.</li>
+      <li>Prosta pod kątem $30^\circ$ z $M$ to dwusieczna kąta $60^\circ$, więc trafia w środek $P$ odcinka $SN$; $|MP|=\frac{6\sqrt3}{2}=3\sqrt3$ (wysokość trójkąta równobocznego) i jest to wysokość trapezu.</li>
+      <li>$P$ jest środkiem $SN$, więc $KL$ to odcinek średni trójkąta $CDS$: $|KL|=3$.</li>
+    </ol>
+    <p class="odp">$P=\frac{6+3}{2}\cdot3\sqrt3=\frac{27\sqrt3}{2}$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="16sqrt(2)" data-odp-opis="pole"><span class="poziom">łatwe</span>
+      <div class="tresc">Sześcian ma krawędź $4$. Oblicz pole przekroju płaszczyzną przechodzącą przez przekątną podstawy $AC$ i wierzchołek $G$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Przekrój to prostokąt $ACGE$ o bokach $4\sqrt2$ i $4$. <b>$16\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2sqrt(3); sqrt(2)" data-odp-opis="pole; tg α"><span class="poziom">łatwe</span>
+      <div class="tresc">Sześcian ma krawędź $2$. Oblicz pole przekroju płaszczyzną $BDE$ i tangens kąta między tą płaszczyzną a podstawą.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Boki $BD$, $DE$, $EB$ to przekątne ścian: trójkąt równoboczny o boku $2\sqrt2$, $P=\frac{8\sqrt3}{4}$. Kąt: $\tg=\frac{|AE|}{|AO|}=\frac{2}{\sqrt2}$. <b>$P=2\sqrt3$, $\tg\alpha=\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12sqrt(3)" data-odp-opis="pole"><span class="poziom">średnie</span>
+      <div class="tresc">Płaszczyzna przechodzi przez środki krawędzi $BC$, $DH$ i $EF$ sześcianu o krawędzi $4$. Wyznacz kształt i pole przekroju.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Płaszczyzna przechodzi przez środki sześciu krawędzi (także $CD$, $HE$, $BF$): sześciokąt foremny o boku $\frac{4\sqrt2}{2}=2\sqrt2$. $P=6\cdot\frac{8\sqrt3}{4}$. <b>Sześciokąt foremny, $P=12\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12sqrt(2)" data-odp-opis="pole"><span class="poziom">średnie</span>
+      <div class="tresc">Ostrosłup prawidłowy czworokątny ma krawędź podstawy $6$ i wysokość $4$. Oblicz pole przekroju płaszczyzną przechodzącą przez wierzchołek $S$ i przekątną podstawy.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąt $ACS$: podstawa $6\sqrt2$, wysokość $H=4$. <b>$12\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="18" data-odp-opis="pole"><span class="poziom">maturalne</span>
+      <div class="tresc">Sześcian ma krawędź $4$. Płaszczyzna przechodzi przez wierzchołki $B$, $D$ i środek $M$ krawędzi $EF$. Wyznacz przekrój i oblicz jego pole.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Ściany $ABCD$ i $EFGH$ są równoległe, więc w górnej ścianie bok przekroju $MN\parallel BD$; $N$ to środek $EH$. Przekrój: trapez równoramienny $BDNM$, $|BD|=4\sqrt2$, $|MN|=2\sqrt2$, ramię $|BM|=\sqrt{16+4}=2\sqrt5$. Wysokość: $\sqrt{20-(\sqrt2)^2}=\sqrt{18}=3\sqrt2$. $P=\frac{4\sqrt2+2\sqrt2}{2}\cdot3\sqrt2$. <b>Trapez, $P=18$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3sqrt(11)" data-odp-opis="pole"><span class="poziom">maturalne</span>
+      <div class="tresc">Wszystkie krawędzie ostrosłupa prawidłowego czworokątnego $ABCDS$ mają długość $4$. Oblicz pole przekroju płaszczyzną przechodzącą przez krawędź $AB$ i środek krawędzi $SC$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $AB\parallel CD$, więc płaszczyzna tnie ścianę $CDS$ wzdłuż $KL\parallel CD$, gdzie $K$, $L$ – środki $SC$, $SD$: $|KL|=2$. Trapez $ABKL$. $H=\sqrt{16-8}=2\sqrt2$. Wysokość trapezu w płaszczyźnie symetrii: $M=(0,-2,0)$, środek $KL$: $P=(0,1,\sqrt2)$, $|MP|=\sqrt{9+2}=\sqrt{11}$. $P=\frac{4+2}{2}\cdot\sqrt{11}$. <b>$3\sqrt{11}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Najpierw <b>uzasadnij kształt</b> przekroju (równoległość odcinków na ścianach równoległych, równe boki z symetrii), potem licz pole.</li>
+    <li>Pole trapezu: wysokość trapezu leży zwykle w płaszczyźnie symetrii bryły; licz ją z trójkąta w tej płaszczyźnie.</li>
+    <li>Pole przekroju z kątem: $P_{\text{rzutu}}=P\cdot\cos\varphi$, gdzie $\varphi$ to kąt między płaszczyzną przekroju a podstawą (trzeba pamiętać, przydaje się do sprawdzenia).</li>
+    <li>Płaszczyzna przez krawędź podstawy ostrosłupa: gdy jest nachylona do podstawy tak samo jak ściana boczna, przekrój to ta ściana (trójkąt); gdy bardziej, nie wchodzi w ostrosłup (zostaje sama krawędź).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const { odj, dod, razy, il, wek, dl, norm } = V3;
+  // przekrój wielościanu wypukłego płaszczyzną n·x = c (krawędzie: pary indeksów)
+  function przekroj(W, KR, n, c) {
+    const pts = [], dodaj = p => { if (!pts.some(q => dl(odj(p, q)) < 1e-7)) pts.push(p); };
+    KR.forEach(([i, j]) => {
+      const fi = il(n, W[i]) - c, fj = il(n, W[j]) - c;
+      if (Math.abs(fi) < 1e-9) dodaj(W[i]);
+      if (Math.abs(fj) < 1e-9) dodaj(W[j]);
+      if (fi * fj < -1e-18) dodaj(V3.lerp(W[i], W[j], fi / (fi - fj)));
+    });
+    if (pts.length < 3) return { pts: [], pole: 0 };
+    const s = V3.sr(...pts), u = norm(odj(pts[0], s)), v = wek(norm(n), u);
+    pts.sort((p, q) => Math.atan2(il(odj(p, s), v), il(odj(p, s), u)) - Math.atan2(il(odj(q, s), v), il(odj(q, s), u)));
+    let x = [0, 0, 0];
+    pts.forEach((p, i) => { x = dod(x, wek(p, pts[(i + 1) % pts.length])); });
+    return { pts, pole: Math.abs(il(x, norm(n))) / 2 };
+  }
+  function nazwa(p) {
+    const n = p.length, bok = i => dl(odj(p[(i + 1) % n], p[i])), b = [...Array(n).keys()].map(bok);
+    const rowne = b.every(x => Math.abs(x - b[0]) < 1e-6);
+    if (n === 3) return rowne ? "trójkąt równoboczny" : (Math.abs(b[0] - b[1]) < 1e-6 || Math.abs(b[1] - b[2]) < 1e-6 || Math.abs(b[0] - b[2]) < 1e-6) ? "trójkąt równoramienny" : "trójkąt";
+    if (n === 4) {
+      const kier = i => odj(p[(i + 1) % 4], p[i]), rown = (i, j) => dl(wek(kier(i), kier(j))) < 1e-6;
+      const prosty = Math.abs(il(kier(0), kier(1))) < 1e-6;
+      if (rown(0, 2) && rown(1, 3)) return rowne ? (prosty ? "kwadrat" : "romb") : (prosty ? "prostokąt" : "równoległobok");
+      if (rown(0, 2) || rown(1, 3)) return (rown(0, 2) ? Math.abs(b[1] - b[3]) : Math.abs(b[0] - b[2])) < 1e-6 ? "trapez równoramienny" : "trapez";
+      return "czworokąt";
+    }
+    const s = V3.sr(...p), r = p.map(q => dl(odj(q, s)));
+    if (n === 5) return "pięciokąt";
+    return rowne && r.every(x => Math.abs(x - r[0]) < 1e-6) ? "sześciokąt foremny" : "sześciokąt";
+  }
+
+  // --- 2. sześcian ---
+  const NZ = "ABCDEFGH", W = [[0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 2], [2, 0, 2], [2, 2, 2], [0, 2, 2]];
+  const KRN = ["AB", "BC", "CD", "DA", "EF", "FG", "GH", "HE", "AE", "BF", "CG", "DH"];
+  const KR = KRN.map(k => [NZ.indexOf(k[0]), NZ.indexOf(k[1])]);
+  const SC = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]];
+  const PKT = {};
+  NZ.split("").forEach((k, i) => { PKT[k] = W[i]; });
+  KRN.forEach((k, i) => { PKT["śr. " + k] = V3.lerp(W[KR[i][0]], W[KR[i][1]], 0.5); });
+  ["pr-p1", "pr-p2", "pr-p3"].forEach(id => Object.keys(PKT).forEach(k => { const o = document.createElement("option"); o.value = k; o.textContent = k; $(id).appendChild(o); }));
+  const PS = ["pr-p1", "pr-p2", "pr-p3"].map(id => $(id));
+  const TYPY = { "pr-t1": ["B", "D", "E"], "pr-t2": ["A", "C", "G"], "pr-t3": ["śr. AE", "śr. BF", "śr. CG"], "pr-t4": ["B", "D", "śr. EF"],
+    "pr-t5": ["A", "G", "śr. BF"], "pr-t6": ["śr. AB", "śr. DA", "G"], "pr-t7": ["śr. BC", "śr. DH", "śr. EF"] };
+  const s3 = new Scena3D($("pr-plot"), { zakres: 2.3, srodek: [1, 1, 1], kat: [-0.9, 0.55] });
+  function rysuj() {
+    const q = ["pr-p1", "pr-p2", "pr-p3"].map(id => PKT[$(id).value]), sh = +$("pr-s").value;
+    const n0 = wek(odj(q[1], q[0]), odj(q[2], q[0])), ok = dl(n0) > 1e-9, n = ok ? norm(n0) : [0, 0, 1];
+    const c = il(n, q[0]) + sh, wyn = ok ? przekroj(W, KR, n, c) : { pts: [], pole: 0 };
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.04 });
+      if (wyn.pts.length) g.wielokat(wyn.pts, 2, { wypelnij: 0.35, grubosc: 2.5 });
+      NZ.split("").forEach((k, i) => g.tekst(W[i], k, "--muted", { dx: 5, dy: -6, gruby: true }));
+      if (Math.abs(sh) < 1e-9) q.forEach(p => g.punkt(p, "", 4, { r: 5 }));
+    });
+    let opis = "";
+    if (!ok) opis = "\\text{punkty współliniowe: nie wyznaczają płaszczyzny}";
+    else if (!wyn.pts.length) opis = "\\text{płaszczyzna nie przecina sześcianu}";
+    else opis = `\\text{${nazwa(wyn.pts)}},\\quad P=${ladnaTex(wyn.pole, 3)}\\ \\ (a=2)`;
+    tex("pr-wynik", opis);
+  }
+  Object.keys(TYPY).forEach(id => $(id).addEventListener("click", () => {
+    TYPY[id].forEach((p, i) => { PS[i].value = p; });
+    $("pr-s").value = 0;
+    Object.keys(TYPY).forEach(j => $(j).classList.toggle("aktywny", j === id));
+    rysuj();
+  }));
+  ["pr-p1", "pr-p2", "pr-p3"].forEach(id => $(id).addEventListener("change", rysuj));
+  $("pr-s").addEventListener("input", rysuj);
+  TYPY["pr-t7"].forEach((p, i) => { PS[i].value = p; });
+  $("pr-t7").classList.add("aktywny");
+  rysuj();
+
+  // --- 3. ostrosłup ---
+  const WO = [[-2, -2, 0], [2, -2, 0], [2, 2, 0], [-2, 2, 0], [0, 0, 4]], NO = "ABCDS";
+  const KO = [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4], [1, 4], [2, 4], [3, 4]];
+  const SO = [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]];
+  const MO = { "po-m1": 1, "po-m2": 2, "po-m3": 3 };
+  let tryb = 1;
+  const s4 = new Scena3D($("po-plot"), { zakres: 3, srodek: [0, 0, 1.6] });
+  function rysuj2() {
+    const x = +$("po-x").value;
+    let n, c, opis;
+    if (tryb === 1) { const f = x * Math.PI / 2; n = [0, -Math.sin(f), Math.cos(f)]; c = 2 * Math.sin(f); opis = `\\varphi=${ladnaTex(x * 90, 1)}^\\circ`; }
+    else if (tryb === 2) { n = [0, 0, 1]; c = 4 * x; opis = `h=${ladnaTex(4 * x)}`; }
+    else { n = norm([1, -1, 0]); c = 0; opis = "ACS"; }
+    const wyn = przekroj(WO, KO, n, c);
+    s4.rysuj(g => {
+      g.bryla(WO, SO, 1, { wypelnij: 0.04 });
+      if (wyn.pts.length) g.wielokat(wyn.pts, 2, { wypelnij: 0.35, grubosc: 2.5 });
+      NO.split("").forEach((k, i) => g.tekst(WO[i], k, "--muted", { dx: 5, dy: -6, gruby: true }));
+    });
+    tex("po-wynik", wyn.pts.length ? `${opis}:\\ \\text{${nazwa(wyn.pts)}},\\quad P=${ladnaTex(wyn.pole, 3)}` : `${opis}:\\ \\text{brak przekroju}`);
+  }
+  Object.keys(MO).forEach(id => $(id).addEventListener("click", () => {
+    tryb = MO[id]; Object.keys(MO).forEach(j => $(j).classList.toggle("aktywny", j === id)); rysuj2();
+  }));
+  $("po-x").addEventListener("input", rysuj2);
+  rysuj2();
+});
+</script>
+</body>
+</html>

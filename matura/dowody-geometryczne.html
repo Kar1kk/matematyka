@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dowody geometryczne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Dowody geometryczne</h1>
+  <p class="lead">Dowód geometryczny to łańcuch krótkich kroków, z których każdy ma podane „bo…”. Rysunek podsuwa pomysł, ale niczego nie dowodzi – zależność musi zachodzić dla <i>każdej</i> figury spełniającej założenia, także tej, której nie narysowałeś.</p>
+  <p class="wymagania">VIII.11 (narzędzia: VIII.4–VIII.10)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="zapis">1. Jak zapisać dowód</h2>
+  <div class="przyklad">
+    <ol>
+      <li><b>Rysunek</b> z oznaczeniami (wierzchołki, kąty $\alpha,\beta$, długości $x$). Oznaczenia wprowadź słowami: „niech $|\angle BAC|=\alpha$”.</li>
+      <li><b>Założenie</b> – co wiemy. <b>Teza</b> – co mamy wykazać. Przepisz je symbolami.</li>
+      <li><b>Dowód</b>: każde zdanie = fakt + uzasadnienie w nawiasie: „$|AS|=|SC|$ (przekątne równoległoboku dzielą się na połowy)”.</li>
+      <li><b>Zakończenie</b>: wróć do tezy słowami – „co należało wykazać”.</li>
+    </ol>
+  </div>
+  <div class="uwaga">Nie wolno zaczynać od tezy („załóżmy, że $|AK|=|BL|$, wtedy…”) ani korzystać z czegoś, co tylko „widać na rysunku” (że kąt jest prosty, że punkty są współliniowe).</div>
+
+  <h2 id="narzedzia">2. Skrzynka z narzędziami</h2>
+  <table class="tabela">
+    <tr><th>Chcesz wykazać</th><th>Typowe narzędzie</th></tr>
+    <tr><td>równość odcinków</td><td>trójkąty przystające (bbb, bkb, kbk – w tablicach), trójkąt równoramienny, odcinki stycznych, symetralna</td></tr>
+    <tr><td>równość kątów</td><td>kąty wierzchołkowe, odpowiadające i naprzemianległe przy prostych równoległych, kąty wpisane na tym samym łuku, trójkąt równoramienny</td></tr>
+    <tr><td>równoległość</td><td>równe kąty odpowiadające, <a href="tales.html">tw. odwrotne do Talesa</a>, linia środkowa</td></tr>
+    <tr><td>prostopadłość</td><td>kąt wpisany oparty na półokręgu, tw. odwrotne do Pitagorasa, przekątne rombu, styczna i promień</td></tr>
+    <tr><td>proporcje, iloczyny odcinków</td><td><a href="podobienstwo.html">trójkąty podobne</a>, tw. o dwusiecznej, Tales</td></tr>
+    <tr><td>zależności pól</td><td>wspólna podstawa lub wysokość, $P=\frac12ab\sin\gamma$, stosunek pól $k^2$</td></tr>
+    <tr><td>nierówności</td><td>nierówność trójkąta, naprzeciw większego kąta dłuższy bok, $\sin\alpha\le1$</td></tr>
+  </table>
+
+  <h2 id="demo">3. Interaktywnie: zawsze, nie tylko na rysunku</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki dowolnego czworokąta – nawet wklęsłego. Środki boków zawsze tworzą równoległobok, którego boki są równoległe do przekątnych i mają połowę ich długości (twierdzenie Varignona, dowód niżej).</p>
+    <canvas id="va-plot"></canvas>
+    <div class="wynik" id="va-wynik"></div>
+  </div>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt $P$ wewnątrz trójkąta równobocznego. Suma odległości od boków jest stała i równa wysokości – mimo że każda z nich się zmienia. Kolorowe trójkąty to dowód „z pól” (przykład 2).</p>
+    <canvas id="vi-plot" style="height:300px"></canvas>
+    <div class="wynik" id="vi-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykłady krok po kroku</h2>
+  <div class="przyklad">
+    <p><b>Przykład 1.</b> Wykaż, że środki boków dowolnego czworokąta są wierzchołkami równoległoboku.</p>
+    <p><b>Założenie:</b> $K$, $L$, $M$, $N$ – środki boków $AB$, $BC$, $CD$, $DA$ czworokąta $ABCD$. <b>Teza:</b> $KLMN$ jest równoległobokiem.</p>
+    <ol>
+      <li>W trójkącie $ABC$ odcinek $KL$ łączy środki boków, więc $KL\parallel AC$ i $|KL|=\frac12|AC|$ (linia środkowa trójkąta; dowód: <a href="tales.html">tw. odwrotne do Talesa</a>).</li>
+      <li>Tak samo w trójkącie $ACD$: $NM\parallel AC$ i $|NM|=\frac12|AC|$.</li>
+      <li>Zatem $KL\parallel NM$ i $|KL|=|NM|$. Czworokąt, w którym dwa przeciwległe boki są równoległe i równe, jest równoległobokiem.</li>
+    </ol>
+    <p class="odp">$KLMN$ jest równoległobokiem, co należało wykazać.</p>
+  </div>
+  <div class="przyklad">
+    <p><b>Przykład 2.</b> Wykaż, że suma odległości dowolnego punktu $P$ leżącego wewnątrz trójkąta równobocznego od jego boków jest równa wysokości $h$ tego trójkąta.</p>
+    <p><b>Założenie:</b> $ABC$ równoboczny o boku $a$ i wysokości $h$, $P$ wewnątrz, $d_1,d_2,d_3$ – odległości $P$ od $BC$, $CA$, $AB$. <b>Teza:</b> $d_1+d_2+d_3=h$.</p>
+    <ol>
+      <li>Odcinki $PA$, $PB$, $PC$ dzielą trójkąt na trzy trójkąty: $P_{ABC}=P_{PBC}+P_{PCA}+P_{PAB}$.</li>
+      <li>Każdy ma podstawę $a$ i wysokość $d_i$: $\frac12ah=\frac12ad_1+\frac12ad_2+\frac12ad_3$.</li>
+      <li>Dzielimy przez $\frac12a&gt;0$: $h=d_1+d_2+d_3$.</li>
+    </ol>
+    <p class="odp">$d_1+d_2+d_3=h$, co należało wykazać.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykaż, że dwusieczne dwóch kątów przyległych są prostopadłe.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kąty przyległe: $\alpha+\beta=180^\circ$. Dwusieczne tworzą z ramieniem wspólnym kąty $\frac\alpha2$ i $\frac\beta2$, więc kąt między nimi to $\frac{\alpha+\beta}{2}=90^\circ$. <b>Dwusieczne są prostopadłe.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Przekątne równoległoboku $ABCD$ przecinają się w punkcie $S$. Prosta przechodząca przez $S$ przecina boki $AB$ i $CD$ w punktach $K$ i $L$. Wykaż, że $|SK|=|SL|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąty $ASK$ i $CSL$: $|AS|=|SC|$ (przekątne równoległoboku dzielą się na połowy), $|\angle KAS|=|\angle LCS|$ (naprzemianległe, $AB\parallel CD$), $|\angle ASK|=|\angle CSL|$ (wierzchołkowe). Z cechy kbk są przystające, więc <b>$|SK|=|SL|$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">W trójkącie $ABC$ wysokości $AD$ i $BE$ mają równe długości. Wykaż, że $|AC|=|BC|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Pole na dwa sposoby: $\frac12|BC|\cdot|AD|=\frac12|AC|\cdot|BE|$. Skoro $|AD|=|BE|&gt;0$, dzielimy przez $\frac12|AD|$: <b>$|BC|=|AC|$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">$AD$ i $BE$ są wysokościami trójkąta ostrokątnego $ABC$. Wykaż, że trójkąty $CDE$ i $CAB$ są podobne.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Niech $|\angle ACB|=\gamma$. W trójkącie prostokątnym $ADC$: $|CD|=|CA|\cos\gamma$. W trójkącie prostokątnym $BEC$: $|CE|=|CB|\cos\gamma$. Zatem $\frac{|CD|}{|CA|}=\frac{|CE|}{|CB|}=\cos\gamma$, a kąt $\gamma$ jest wspólny i leży między tymi bokami. Z cechy bkb <b>$\triangle CDE\sim\triangle CAB$</b> (w skali $\cos\gamma$).
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Przekątne trapezu $ABCD$ ($AB\parallel CD$) przecinają się w punkcie $S$. Wykaż, że trójkąty $ASD$ i $BSC$ mają równe pola.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąty $ABD$ i $ABC$ mają wspólną podstawę $AB$, a $D$ i $C$ leżą na prostej równoległej do $AB$ – wysokości są równe, więc $P_{ABD}=P_{ABC}$. Odejmujemy od obu pole trójkąta $ABS$: <b>$P_{ASD}=P_{BSC}$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Na bokach $AC$ i $BC$ trójkąta ostrokątnego $ABC$ zbudowano na zewnątrz kwadraty $ACDE$ i $BCFG$. Wykaż, że $|AF|=|BD|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trójkąty $ACF$ i $DCB$: $|AC|=|DC|$ (boki kwadratu $ACDE$), $|CF|=|CB|$ (boki kwadratu $BCFG$), $|\angle ACF|=\gamma+90^\circ=|\angle DCB|$. Z cechy bkb są przystające, więc <b>$|AF|=|BD|$</b>. (Bonus: $AF\perp BD$, bo jeden trójkąt to obrót drugiego o $90^\circ$ wokół $C$.)
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Pełne punkty wymagają uzasadnienia <b>każdego</b> kroku. Przy przystawaniu/podobieństwie podaj nazwę cechy i wszystkie trzy równości.</li>
+    <li>Nie zakładaj szczególnego przypadku (trójkąt równoramienny, kąt prosty), jeśli nie ma go w założeniach.</li>
+    <li>Gdy w tezie jest stosunek lub iloczyn odcinków – szukaj trójkątów podobnych; gdy równość pól – wspólnej podstawy lub wysokości.</li>
+    <li>Dowód „od tezy” jest dopuszczalny tylko jako ciąg <b>równoważności</b> ($\iff$) zakończony prawdą – bezpieczniej pisać od założenia do tezy.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 3a. Twierdzenie Varignona ---
+  const w1 = new Wykres($("va-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const ogr = wPolu(5.5, 4);
+  const pv = w1.przeciagaj([{ x: -4, y: -2.5, ogranicz: ogr }, { x: 3, y: -3, ogranicz: ogr }, { x: 4, y: 2.5, ogranicz: ogr }, { x: -2, y: 3, ogranicz: ogr }], rysujVa);
+  function rysujVa() {
+    const [A, B, C, D] = pv;
+    const K = sr(A, B), L = sr(B, C), M = sr(C, D), N = sr(D, A);
+    const S = { x: (A.x + B.x + C.x + D.x) / 4, y: (A.y + B.y + C.y + D.y) / 4 };
+    w1.rysuj(g => {
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y], [D.x, D.y]], 1, { wypelnij: 0.08 });
+      g.odcinek(A.x, A.y, C.x, C.y, 3); g.odcinek(B.x, B.y, D.x, D.y, 4);
+      g.wielokat([[K.x, K.y], [L.x, L.y], [M.x, M.y], [N.x, N.y]], 2, { wypelnij: 0.18 });
+      g.odcinek(K.x, K.y, L.x, L.y, 3, false); g.odcinek(N.x, N.y, M.x, M.y, 3, false);
+      g.odcinek(L.x, L.y, M.x, M.y, 4, false); g.odcinek(K.x, K.y, N.x, N.y, 4, false);
+      [[A, "A"], [B, "B"], [C, "C"], [D, "D"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 1); etykieta(g, P, S, s, 1); });
+      [[K, "K"], [L, "L"], [M, "M"], [N, "N"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2, { r: 3.5 }); etykieta(g, P, S, s, 2); });
+    });
+    const f = ladnaTex;
+    tex("va-wynik", `\\begin{aligned}|KL|&=|NM|=${f(odl(K, L))}=\\tfrac12\\cdot${f(odl(A, C))}=\\tfrac12|AC|\\\\|LM|&=|KN|=${f(odl(L, M))}=\\tfrac12\\cdot${f(odl(B, D))}=\\tfrac12|BD|\\end{aligned}`);
+  }
+  rysujVa();
+
+  // --- 3b. Suma odległości w trójkącie równobocznym ---
+  const a = 6, h = a * Math.sqrt(3) / 2;
+  const TA = { x: -3, y: -1.6 }, TB = { x: 3, y: -1.6 }, TC = { x: 0, y: -1.6 + h };
+  const w2 = new Wykres($("vi-plot"), { xmin: -4.5, xmax: 4.5, ymin: -2.3, ymax: 4.3, rowneSkale: true });
+  // odległość ze znakiem od prostej PQ (dodatnia po stronie wnętrza trójkąta)
+  const dz = (X, P, Q) => ((Q.x - P.x) * (X.y - P.y) - (Q.y - P.y) * (X.x - P.x)) / odl(P, Q);
+  const pp = w2.przeciagaj([{ x: -0.6, y: 0.4, ogranicz: p => {
+    let d = [dz(p, TB, TC), dz(p, TC, TA), dz(p, TA, TB)].map(v => Math.max(0.05, v));
+    const s = d[0] + d[1] + d[2]; d = d.map(v => v * h / s);
+    return { x: (d[0] * TA.x + d[1] * TB.x + d[2] * TC.x) / h, y: (d[0] * TA.y + d[1] * TB.y + d[2] * TC.y) / h };
+  } }], rysujVi);
+  function rysujVi() {
+    const P = pp[0];
+    const boki = [[TB, TC, 1], [TC, TA, 3], [TA, TB, 4]];
+    const d = boki.map(([Q, R]) => dz(P, Q, R));
+    w2.rysuj(g => {
+      boki.forEach(([Q, R, nr]) => g.wielokat([[P.x, P.y], [Q.x, Q.y], [R.x, R.y]], nr, { wypelnij: 0.15, bezObrysu: true }));
+      g.wielokat([[TA.x, TA.y], [TB.x, TB.y], [TC.x, TC.y]], 1);
+      boki.forEach(([Q, R, nr], i) => {
+        const F = rzut(P, Q, R);
+        g.odcinek(P.x, P.y, F.x, F.y, nr === 1 ? 2 : nr, false);
+        katProsty(g, F, P, R, 0.22, nr === 1 ? 2 : nr);
+        g.tekst((P.x + F.x) / 2, (P.y + F.y) / 2, "d" + (i + 1), nr === 1 ? 2 : nr, { dx: 5, dy: -3, gruby: true });
+      });
+      g.punkt(P.x, P.y, "P", 2);
+      const S = { x: 0, y: -1.6 + h / 3 };
+      [[TA, "A"], [TB, "B"], [TC, "C"]].forEach(([Q, s]) => etykieta(g, Q, S, s, 1));
+    });
+    tex("vi-wynik", `d_1+d_2+d_3=${ladnaTex(d[0])}+${ladnaTex(d[1])}+${ladnaTex(d[2])}=${ladnaTex(d[0] + d[1] + d[2])}=h=3\\sqrt3`);
+  }
+  rysujVi();
+});
+</script>
+</body>
+</html>

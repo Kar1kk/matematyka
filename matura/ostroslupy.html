@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ostrosłupy</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/bryly3d.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Ostrosłupy</h1>
+  <p class="lead">Wszystko kręci się wokół wysokości $H$ i jej spodka $O$. Z $H$ i odcinka w podstawie ($R$ albo $r$) budujesz dwa trójkąty prostokątne: jeden daje krawędź boczną, drugi wysokość ściany bocznej.</p>
+  <p class="wymagania">X.3, X.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="pojecia">1. Spodek wysokości i dwa trójkąty</h2>
+  <div class="definicja"><b>Ostrosłup prawidłowy</b> ma podstawę będącą wielokątem foremnym, a spodek wysokości w środku tej podstawy. Czworościan foremny: wszystkie $6$ krawędzi równych.</div>
+  <div class="twierdzenie"><b>Gdzie jest spodek wysokości?</b>
+    <ul>
+      <li>Wszystkie <b>krawędzie boczne równe</b> (lub równo nachylone do podstawy) $\Rightarrow$ $O$ to środek <b>okręgu opisanego</b> na podstawie.</li>
+      <li>Wszystkie <b>ściany boczne równo nachylone</b> do podstawy (spodek wewnątrz podstawy) $\Rightarrow$ $O$ to środek <b>okręgu wpisanego</b>.</li>
+    </ul>
+    <details class="rozwin"><summary>Dlaczego?</summary><div>
+      Trójkąty $SOA_i$ są prostokątne ze wspólną przyprostokątną $SO=H$. Równe przeciwprostokątne $|SA_i|$ (albo równe kąty przy $A_i$) dają równe $|OA_i|$, więc $O$ jest równo odległy od wierzchołków. Przy ścianach: z tw. o trzech prostopadłych spodki wysokości ścian rzutują się na odcinki $OM_i\perp$ krawędzi, a równe kąty dają równe $|OM_i|$, więc $O$ jest równo odległy od boków.
+    </div></details></div>
+  <div class="wzor">
+    <div class="tytul">Ostrosłup prawidłowy (trzeba pamiętać)</div>
+    $$b^2=H^2+R^2,\qquad h_b^2=H^2+r^2$$
+    $$\tg\alpha=\frac{H}{R},\qquad \tg\beta=\frac{H}{r}$$
+    <dl><dt>$R$, $r$</dt><dd>promień okręgu opisanego / wpisanego w podstawę ($r$ = odległość środka od boku)</dd>
+        <dt>$\alpha$</dt><dd>kąt krawędzi bocznej $b$ z podstawą</dd>
+        <dt>$\beta$</dt><dd>kąt ściany bocznej z podstawą; $h_b$ – wysokość ściany bocznej</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Objętość <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> i pole</div>
+    $$V=\frac13 P_p\cdot H,\qquad P_c=P_p+P_b$$
+    <dl><dt>$P_b$</dt><dd>w prawidłowym: $n\cdot\frac12 a\,h_b$</dd>
+        <dt>kwadrat</dt><dd>$R=\frac{a\sqrt2}{2}$, $r=\frac a2$; trójkąt równoboczny: $R=\frac{a\sqrt3}{3}$, $r=\frac{a\sqrt3}{6}$ (z tablic: $R=\frac23h$, $r=\frac13h$)</dd></dl>
+  </div>
+
+  <h2 id="demo">2. Interaktywnie: ostrosłup prawidłowy</h2>
+  <div class="demo">
+    <p class="opis">Wybierz kąt: krawędzi bocznej (trójkąt $SOA$, okrąg opisany) albo ściany bocznej (trójkąt $SOM$, okrąg wpisany). Zmieniaj $n$ i $H$, obracaj bryłę. Na dole wybrany trójkąt w prawdziwym kształcie.</p>
+    <canvas id="os-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="os-n" min="3" max="8" step="1" value="4"> <span id="os-n-v"></span></label>
+      <label>$H$ <input type="range" id="os-h" min="0.5" max="4" step="0.1" value="2.5"></label>
+      <button id="os-sciana" class="wtorny aktywny">kąt ściany β</button>
+      <button id="os-kraw" class="wtorny">kąt krawędzi α</button>
+    </div>
+    <canvas id="os-2d" style="height:150px"></canvas>
+    <div class="wynik" id="os-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Ostrosłup prawidłowy czworokątny ma krawędź podstawy $6$, a ściana boczna jest nachylona do podstawy pod kątem $60^\circ$. Oblicz $V$ i $P_c$.</p>
+    <ol>
+      <li>Trójkąt $SOM$: $r=|OM|=3$, kąt przy $M$ wynosi $60^\circ$.</li>
+      <li>$H=3\tg60^\circ=3\sqrt3$, $\;h_b=\frac{3}{\cos60^\circ}=6$.</li>
+      <li>$V=\frac13\cdot36\cdot3\sqrt3=36\sqrt3$, $\;P_c=36+4\cdot\frac12\cdot6\cdot6=36+72$.</li>
+    </ol>
+    <p class="odp">$V=36\sqrt3$, $P_c=108$</p>
+  </div>
+
+  <h2 id="zadania">4. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="64; 144" data-odp-opis="V; P_c"><span class="poziom">łatwe</span>
+      <div class="tresc">Ostrosłup prawidłowy czworokątny ma krawędź podstawy $8$ i wysokość $3$. Oblicz $V$ i $P_c$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $V=\frac13\cdot64\cdot3=64$. $r=4$, $h_b=\sqrt{9+16}=5$, $P_c=64+4\cdot\frac12\cdot8\cdot5$. <b>$V=64$, $P_c=144$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2sqrt(6); 18sqrt(2)" data-odp-opis="H; V"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz wysokość i objętość czworościanu foremnego o krawędzi $6$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Spodek to środek trójkąta równobocznego: $R=\frac{6\sqrt3}{3}=2\sqrt3$. $H=\sqrt{36-12}=\sqrt{24}=2\sqrt6$. $V=\frac13\cdot\frac{36\sqrt3}{4}\cdot2\sqrt6=6\sqrt{18}$. <b>$H=2\sqrt6$, $V=18\sqrt2$</b> (ogólnie $H=\frac{a\sqrt6}{3}$, $V=\frac{a^3\sqrt2}{12}$).
+      </div></details></li>
+    <li class="zadanie" data-odp="18" data-odp-opis="V"><span class="poziom">średnie</span>
+      <div class="tresc">W ostrosłupie prawidłowym trójkątnym krawędź podstawy ma długość $6$, a krawędź boczna tworzy z podstawą kąt $45^\circ$. Oblicz objętość.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $R=2\sqrt3$, kąt $45^\circ$, więc $H=R=2\sqrt3$. $P_p=9\sqrt3$, $V=\frac13\cdot9\sqrt3\cdot2\sqrt3$. <b>$V=18$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="144sqrt(3); 18sqrt(91)" data-odp-opis="V; P_b"><span class="poziom">maturalne</span>
+      <div class="tresc">Ostrosłup prawidłowy sześciokątny ma krawędź boczną $10$ i wysokość $8$. Oblicz objętość i pole powierzchni bocznej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $R=\sqrt{100-64}=6$, a w sześciokącie foremnym $R=a$, więc $a=6$. $P_p=\frac{3\cdot36\sqrt3}{2}=54\sqrt3$, $V=\frac13\cdot54\sqrt3\cdot8=144\sqrt3$. Wysokość ściany z trójkąta $b$, $\frac a2$: $h_b=\sqrt{100-9}=\sqrt{91}$, $P_b=6\cdot\frac12\cdot6\sqrt{91}$. <b>$V=144\sqrt3$, $P_b=18\sqrt{91}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="96; 16sqrt(3)" data-odp-opis="a); b)"><span class="poziom">maturalne</span>
+      <div class="tresc">Podstawą ostrosłupa jest trójkąt prostokątny o przyprostokątnych $6$ i $8$. a) Każda krawędź boczna ma długość $13$. b) Każda ściana boczna jest nachylona do podstawy pod kątem $60^\circ$. Oblicz objętość w każdym przypadku.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P_p=24$, przeciwprostokątna $10$. a) Spodek = środek okręgu opisanego = środek przeciwprostokątnej, $R=5$, $H=\sqrt{169-25}=12$, $V=\frac13\cdot24\cdot12=96$. b) Spodek = środek okręgu wpisanego, $r=\frac{6+8-10}{2}=2$, $H=2\tg60^\circ=2\sqrt3$, $V=\frac13\cdot24\cdot2\sqrt3$. <b>a) $96$, b) $16\sqrt3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. Na maturze</h2>
+  <ul>
+    <li>Zawsze <b>uzasadnij położenie spodka wysokości</b> (prawidłowy, równe krawędzie, równe kąty ścian).</li>
+    <li>Nie myl $h_b$ (wysokość ściany, do $P_b$) z $H$ (wysokość bryły, do $V$) ani $\alpha$ (krawędź) z $\beta$ (ściana).</li>
+    <li>Kąt ściany z podstawą: ramiona prostopadłe do krawędzi podstawy, czyli $OM$ i $SM$, gdzie $M$ – środek krawędzi (w prawidłowym).</li>
+    <li>Nie zapomnij $\frac13$ w objętości.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("os-plot"), { zakres: 2.9, srodek: [0, 0, 1.2] });
+  const w2 = new Wykres($("os-2d"), { xmin: -0.5, xmax: 3.2, ymin: -0.5, ymax: 4.4, rowneSkale: true, siatka: false, osie: false });
+  let tryb = "sciana";
+  function rysuj() {
+    const n = +$("os-n").value, H = +$("os-h").value, a = 2;
+    $("os-n-v").textContent = n;
+    const R = a / (2 * Math.sin(Math.PI / n)), r = a / (2 * Math.tan(Math.PI / n)), f0 = -Math.PI / 2 - Math.PI / n;
+    const W = [];
+    for (let i = 0; i < n; i++) W.push([R * Math.cos(f0 + 2 * Math.PI * i / n), R * Math.sin(f0 + 2 * Math.PI * i / n), 0]);
+    const S = [0, 0, H], O = [0, 0, 0], M = V3.lerp(W[0], W[1], 0.5);
+    W.push(S);
+    const SC = [[...Array(n).keys()]];
+    for (let i = 0; i < n; i++) SC.push([i, (i + 1) % n, n]);
+    const sc = tryb === "sciana", X = sc ? M : W[0], d = sc ? r : R, kat = Math.atan2(H, d) * 180 / Math.PI;
+    const hb = Math.hypot(H, r), b = Math.hypot(H, R), Pp = n * a * r / 2;
+    s3.o.srodek = [0, 0, H / 2];
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.05 });
+      g.okrag(O, [0, 0, 1], d, 4, { przerywana: true });
+      g.wielokat([S, O, X], 3, { wypelnij: 0.25, grubosc: 2.5 });
+      if (sc) g.odcinek(S, M, 2, { grubosc: 3 }); else g.odcinek(S, W[0], 2, { grubosc: 3 });
+      g.kat(O, S, X, 0.25, 3, { prosty: true });
+      g.kat(X, O, S, 0.4, 2, { wypelnij: 0.3 });
+      g.punkt(S, "S", 1); g.punkt(O, "O", 3); g.punkt(X, sc ? "M" : "A", 2);
+    });
+    // wysokość płótna dopasowana do trójkąta (skala x stała) – bez pustego pasa nad nim
+    const c2 = $("os-2d");
+    w2.zakres({ ymax: H + 0.4 });
+    c2.style.height = Math.round(Math.min(220, Math.max(90, c2.clientWidth * (H + 0.4 + 0.5) / 3.7))) + "px";
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [d, 0], [d, H]], 3, { wypelnij: 0.15 });
+      g.odcinek(0, 0, d, H, 2, false);
+      g.luk(0, 0, 0.45, 0, Math.atan2(H, d), 2, { wypelnij: 0.3 });
+      g.wielokat([[d - 0.2, 0], [d - 0.2, 0.2], [d, 0.2]], 3, { zamknij: false, grubosc: 1.5 });
+      g.tekst(d / 2, 0, (sc ? "r = " : "R = ") + ladna(d), 3, { dy: 16, wyrownanie: "center" });
+      g.tekst(d, H / 2, "H = " + ladna(H), 3, { dx: 6 });
+      g.tekst(d / 2, H / 2, (sc ? "hb = " : "b = ") + ladna(sc ? hb : b), 2, { dx: -10, wyrownanie: "right" });
+      g.tekst(0.5, 0.05, sc ? "β" : "α", 2, { dy: -4, gruby: true });
+    });
+    tex("os-wynik", `${sc ? "\\beta" : "\\alpha"}=${ladnaTex(kat, 1)}^\\circ,\\ h_b=${ladnaTex(hb)},\\ b=${ladnaTex(b)},\\ V=${ladnaTex(Pp * H / 3)},\\ P_c=${ladnaTex(Pp + n * a * hb / 2)}`);
+  }
+  const ustaw = t => { tryb = t; $("os-sciana").classList.toggle("aktywny", t === "sciana"); $("os-kraw").classList.toggle("aktywny", t !== "sciana"); rysuj(); };
+  $("os-sciana").addEventListener("click", () => ustaw("sciana"));
+  $("os-kraw").addEventListener("click", () => ustaw("kraw"));
+  ["os-n", "os-h"].forEach(id => $(id).addEventListener("input", rysuj));
+  rysuj();
+});
+</script>
+</body>
+</html>

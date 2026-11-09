@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procenty, procent składany, lokaty i kredyty</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Procenty, procent składany, lokaty i kredyty</h1>
+  <p class="lead">Zmiana o $p\%$ to <b>mnożenie</b> przez $1\pm\frac{p}{100}$. Kolejne zmiany się mnoży, a nie dodaje — stąd procent składany, czyli zwykły ciąg geometryczny.</p>
+  <p class="wymagania">I.8 (z VI.6: ciąg geometryczny)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="procenty">1. Procenty i punkty procentowe</h2>
+  <div class="wzor">
+    <div class="tytul">Zmiana o $p\%$ (do zapamiętania)</div>
+    $$\text{wzrost: } a\cdot\left(1+\tfrac{p}{100}\right)$$
+    $$\text{spadek: } a\cdot\left(1-\tfrac{p}{100}\right)$$
+    <dl><dt>o ile %</dt><dd>$\frac{\text{nowa}-\text{stara}}{\text{stara}}\cdot100\%$ — zawsze względem wartości <b>wyjściowej</b></dd></dl>
+  </div>
+  <div class="definicja"><b>Punkty procentowe</b> mierzą różnicę dwóch wielkości wyrażonych w procentach. Oprocentowanie z $5\%$ do $7\%$: wzrost o $2$ <b>punkty procentowe</b>, ale o $\frac{2}{5}=40\%$.</div>
+  <div class="uwaga">Po obniżce o $20\%$ trzeba podnieść cenę o $25\%$, a nie o $20\%$, żeby wrócić: $0{,}8\cdot1{,}25=1$.</div>
+
+  <h2 id="plus-minus">2. Interaktywnie: $+p\%$, potem $-p\%$</h2>
+  <div class="demo">
+    <p class="opis">Cena $100$ zł rośnie o $p\%$, potem spada o $p\%$. Kliknij „▶ Odtwórz” i zobacz, że nie wraca do $100$. Strata to zawsze $\frac{p^2}{100}\%$, a kolejność zmian nie ma znaczenia.</p>
+    <canvas id="pm-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$p$ <input type="range" id="pm-p" min="0" max="90" step="5" value="20"> <span id="pm-p-v"></span></label>
+      <button id="pm-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="pm-wynik"></div>
+  </div>
+
+  <h2 id="skladany">3. Procent składany i lokaty</h2>
+  <div class="wzor">
+    <div class="tytul">Procent składany <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$K_n=K_0\left(1+\frac{p}{100}\right)^n$$
+    <dl><dt>$K_0$</dt><dd>kapitał początkowy</dd>
+        <dt>$p$</dt><dd>oprocentowanie roczne w %, kapitalizacja co rok</dd>
+        <dt>$n$</dt><dd>liczba lat</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Kapitalizacja $m$ razy w roku <span class="cke nie" title="Tego wzoru nie ma w karcie CKE – trzeba go pamiętać lub wyprowadzić">poza kartą CKE</span></div>
+    $$K=K_0\left(1+\frac{p}{100m}\right)^{mn}$$
+    <dl><dt>skąd</dt><dd>jeden okres to $\frac1m$ roku: stopa za okres $\frac pm\%$, okresów jest $mn$</dd></dl>
+  </div>
+  <div class="uwaga"><b>Podatek Belki</b> (realia): $19\%$ od <b>odsetek</b>, pobierany przy każdej kapitalizacji. Z odsetek zostaje $81\%$, więc w praktyce stopa za okres to $0{,}81\cdot\frac{p}{m}\%$.</div>
+  <div class="demo">
+    <p class="opis">Słupki: kapitał na koniec każdego roku. Czerwone kropki: ta sama lokata z kapitalizacją roczną. Zwiększ $m$: zysk rośnie, ale coraz wolniej. Zaznacz podatek i porównaj.</p>
+    <canvas id="ks-plot"></canvas>
+    <div class="sterowanie">
+      <label>$K_0$ <input type="range" id="ks-K" min="1000" max="20000" step="1000" value="10000"> <span id="ks-K-v"></span></label>
+      <label>$p$ <input type="range" id="ks-p" min="1" max="15" step="0.5" value="8"> <span id="ks-p-v"></span></label>
+      <label>$n$ <input type="range" id="ks-n" min="1" max="30" step="1" value="10"> <span id="ks-n-v"></span></label>
+      <label>$m$ <select id="ks-m">
+        <option value="1">1 (rok)</option><option value="2">2 (pół roku)</option>
+        <option value="4" selected>4 (kwartał)</option><option value="12">12 (miesiąc)</option>
+      </select></label>
+      <label><input type="checkbox" id="ks-belka"> podatek 19%</label>
+    </div>
+    <div class="wynik" id="ks-wynik"></div>
+  </div>
+
+  <h2 id="kredyt">4. Kredyt w równych ratach</h2>
+  <p>Dług rośnie co miesiąc o odsetki (mnożenie przez $q=1+\frac{r}{100}$), a rata $R$ go zmniejsza. Po $n$ ratach dług ma wynosić $0$.</p>
+  <div class="wzor">
+    <div class="tytul">Rata <span class="cke nie" title="Tego wzoru nie ma w karcie CKE – trzeba go pamiętać lub wyprowadzić">poza kartą CKE – wyprowadź</span></div>
+    $$K q^n=R\left(1+q+\dots+q^{n-1}\right)$$
+    $$R=\frac{K q^n (q-1)}{q^n-1}$$
+    <dl><dt>$K$, $r$</dt><dd>kwota kredytu, oprocentowanie za okres (np. miesiąc) w %</dd>
+        <dt>koszt</dt><dd>$nR-K$ (suma rat minus pożyczona kwota)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Skąd to równanie?</summary><div>
+    <p>Dług po $k$ miesiącach: $D_k=D_{k-1}\cdot q-R$, $D_0=K$. Rozpisując:</p>
+    $$D_n=Kq^n-R(q^{n-1}+\dots+q+1)$$
+    <p>Warunek $D_n=0$ i suma ciągu geometrycznego (jest w tablicach, zob. <a href="ciag-geometryczny.html">ciąg geometryczny</a>) dają wzór na $R$. Intuicja: każda rata „zwraca” część długu razem z odsetkami narosłymi do końca.</p>
+  </div></details>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Lokata $10\,000$ zł na $2$ lata, $4\%$ w skali roku, kapitalizacja kwartalna, podatek $19\%$ od odsetek przy każdej kapitalizacji. Ile wypłacimy?</p>
+    <ol>
+      <li>Stopa za kwartał: $\frac{4\%}{4}=1\%$; po podatku zostaje $0{,}81\cdot1\%=0{,}81\%$.</li>
+      <li>Liczba kwartałów: $4\cdot2=8$.</li>
+      <li>$K=10\,000\cdot1{,}0081^8\approx10\,666{,}67$.</li>
+    </ol>
+    <p class="odp">ok. $10\,666{,}67$ zł (bez podatku byłoby $10\,828{,}57$ zł)</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="246.4"><span class="poziom">łatwe</span>
+      <div class="tresc">Cena $250$ zł wzrosła o $12\%$, a potem spadła o $12\%$. Jaka jest cena końcowa?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $250\cdot1{,}12\cdot0{,}88=$ <b>$246{,}40$ zł</b> (spadek o $1{,}44\%$)
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 100/3" data-odp-opis="p.p.; %"><span class="poziom">łatwe</span>
+      <div class="tresc">Oprocentowanie kredytu wzrosło z $6\%$ do $8\%$. O ile punktów procentowych, a o ile procent?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Różnica $8-6=2$, względnie $\frac26=\frac13$. <b>O $2$ p.p., czyli o $33\frac13\%$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="450; 25" data-odp-opis="cena; podwyżka w %"><span class="poziom">średnie</span>
+      <div class="tresc">Po obniżce o $20\%$ kurtka kosztuje $360$ zł. Ile kosztowała przed obniżką i o ile procent trzeba by podnieść nową cenę, żeby wrócić do starej?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $0{,}8x=360\Rightarrow x=450$. $\frac{450}{360}=1{,}25$. <b>$450$ zł, podwyżka o $25\%$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8.39" data-odp-opis="różnica w zł"><span class="poziom">średnie</span>
+      <div class="tresc">$5000$ zł na rok, $6\%$ w skali roku. Ile więcej da kapitalizacja miesięczna niż roczna (bez podatku)?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Miesięcznie: $5000\cdot1{,}005^{12}\approx5308{,}39$ zł. Rocznie: $5000\cdot1{,}06=5300$ zł. <b>ok. $8{,}39$ zł więcej</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="15"><span class="poziom">maturalne</span>
+      <div class="tresc">Lokata $5\%$ rocznie z kapitalizacją roczną. Po ilu pełnych latach kapitał po raz pierwszy co najmniej się podwoi?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $1{,}05^n\ge2\iff n\ge\frac{\log 2}{\log1{,}05}\approx14{,}2$ (zob. <a href="logarytmy.html">logarytmy</a>). Sprawdzenie: $1{,}05^{14}\approx1{,}98$, $1{,}05^{15}\approx2{,}08$. <b>Po $15$ latach</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1066.19; 794.28" data-odp-opis="rata; koszt"><span class="poziom">maturalne</span>
+      <div class="tresc">Kredyt $12\,000$ zł spłacany w $12$ równych ratach miesięcznych (pierwsza po miesiącu), oprocentowanie $1\%$ miesięcznie. Oblicz ratę i koszt kredytu.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $q=1{,}01$: $R=\frac{12\,000\cdot1{,}01^{12}\cdot0{,}01}{1{,}01^{12}-1}\approx1066{,}19$ zł. Koszt: $12\cdot1066{,}19-12\,000\approx794{,}28$ zł. <b>Rata ok. $1066{,}19$ zł, koszt ok. $794$ zł</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Kolejne zmiany mnożysz:</b> $+10\%$ i $+10\%$ to $\cdot1{,}21$, czyli $+21\%$, nie $+20\%$.</li>
+    <li><b>Punkty procentowe ≠ procenty.</b> Czytaj, o co pytają.</li>
+    <li><b>Kapitalizacja $m$ razy w roku:</b> stopa $\frac pm$, wykładnik $mn$. Typowy błąd: $\left(1+\frac{p}{100}\right)^{mn}$.</li>
+    <li><b>Zaokrąglaj na końcu</b>, do groszy; pośrednie potęgi trzymaj dokładnie (w kalkulatorze).</li>
+    <li>„Po ilu latach…” to nierówność wykładnicza: logarytm albo sprawdzenie kolejnych $n$. Podaj liczbę <b>pełnych</b> lat.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. +p%, potem -p% ---
+  const w1 = new Wykres($("pm-plot"), { xmin: 0, xmax: 4, ymin: -15, ymax: 200, krokX: 10, krokY: 20 });
+  let stopPm = null;
+  function klatkaPm(t) {
+    const p = +$("pm-p").value / 100;
+    $("pm-p-v").textContent = $("pm-p").value + "%";
+    const t1 = Math.min(1, t * 2), t2 = Math.max(0, t * 2 - 1);
+    const h1 = 100, h2 = 100 + 100 * p * t1, hk = 100 * (1 + p), h3 = hk - hk * p * t2;
+    w1.rysuj(g => {
+      g.odcinek(0, 100, 4, 100, 3, true);
+      g.prostokat(0.6, 0, 0.8, h1, 1);
+      g.prostokat(1.6, 0, 0.8, h2, 1);
+      if (t2 > 0) g.prostokat(2.6, 0, 0.8, h3, 4);
+      if (t2 >= 1 && p > 0) g.prostokat(2.6, h3, 0.8, 100 - h3, 2, { wypelnij: 0.5 });
+      g.tekst(1, h1, "100", 1, { dy: -6, wyrownanie: "center", gruby: true });
+      g.tekst(2, h2, ladna(h2), 1, { dy: -6, wyrownanie: "center", gruby: true });
+      if (t2 > 0) g.tekst(3, h3, ladna(h3), 4, { dy: -6, wyrownanie: "center", gruby: true });
+      g.tekst(1, 0, "start", 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(2, 0, "+" + ladna(p * 100) + "%", 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(3, 0, "−" + ladna(p * 100) + "%", 4, { dy: 14, wyrownanie: "center" });
+    });
+    const a = ladnaTex(1 + p), b = ladnaTex(1 - p), w = ladnaTex((1 + p) * (1 - p), 4);
+    tex("pm-wynik", `${a}\\cdot${b}=1-${ladnaTex(p, 4)}^2=${w}\\ \\Rightarrow\\ \\text{zmiana } ${ladnaTex(-p * p * 100)}\\%`);
+  }
+  $("pm-start").addEventListener("click", () => { if (stopPm) stopPm(); stopPm = animuj(2400, klatkaPm); });
+  $("pm-p").addEventListener("input", () => { if (stopPm) stopPm(); klatkaPm(1); });
+  klatkaPm(0);
+
+  // --- 3. Procent składany ---
+  const w2 = new Wykres($("ks-plot"), { xmin: -0.8, xmax: 11, ymin: 0, ymax: 25000, formatY: v => ladna(v / 1000) + " tys." });
+  const ladnyKrok = v => { const e = 10 ** Math.floor(Math.log10(v)), m = v / e; return (m < 2 ? 1 : m < 5 ? 2 : 5) * e; };
+  function rysujKs() {
+    const K0 = +$("ks-K").value, p = +$("ks-p").value, n = +$("ks-n").value, m = +$("ks-m").value;
+    const belka = $("ks-belka").checked, wsp = belka ? 0.81 : 1;
+    $("ks-K-v").textContent = K0 + " zł"; $("ks-p-v").textContent = ladna(p) + "%"; $("ks-n-v").textContent = n;
+    const K = k => K0 * (1 + wsp * p / (100 * m)) ** (m * k);
+    const Kr = k => K0 * (1 + wsp * p / 100) ** k;
+    const ymax = K(n) * 1.15;
+    w2.zakres({ xmax: n + 0.8, ymax, krokY: ladnyKrok(ymax / 5), krokX: n > 15 ? 5 : n > 6 ? 2 : 1 });
+    w2.rysuj(g => {
+      const s = Math.min(0.7, 0.7 * 12 / n);
+      for (let k = 0; k <= n; k++) g.prostokat(k - s / 2, 0, s, K(k), 1, { wypelnij: 0.35 });
+      g.odcinek(-0.8, K0, n + 0.8, K0, 3, true);
+      for (let k = 1; k <= n; k++) g.punkt(k, Kr(k), "", 2, { r: 3.5 });
+    });
+    const ef = ((1 + wsp * p / (100 * m)) ** m - 1) * 100;
+    tex("ks-wynik", `K_{${n}}\\approx${ladnaTex(K(n))}\\text{ zł},\\ \\text{odsetki}\\approx${ladnaTex(K(n) - K0)}\\text{ zł},\\ \\text{roczna kapit.: }${ladnaTex(Kr(n))}\\text{ zł},\\ \\text{stopa efektywna } ${ladnaTex(ef, 3)}\\%`);
+  }
+  ["ks-K", "ks-p", "ks-n", "ks-m", "ks-belka"].forEach(id => { $(id).addEventListener("input", rysujKs); $(id).addEventListener("change", rysujKs); });
+  rysujKs();
+});
+</script>
+</body>
+</html>

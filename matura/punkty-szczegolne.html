@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Punkty szczególne trójkąta, twierdzenie o dwusiecznej</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Punkty szczególne trójkąta, twierdzenie o dwusiecznej</h1>
+  <p class="lead">Cztery „środki” trójkąta: równo daleko od wierzchołków (okrąg opisany), równo daleko od boków (okrąg wpisany), przecięcie wysokości i środek ciężkości. To, że trzy proste zawsze trafiają w jeden punkt, wcale nie jest oczywiste – i trzeba umieć to udowodnić.</p>
+  <p class="wymagania">VIII.10</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="punkty">1. Cztery punkty szczególne</h2>
+  <table class="tabela">
+    <tr><th>Punkt</th><th>Przecięcie</th><th>Co warto wiedzieć</th></tr>
+    <tr><td>$O$ – środek okręgu opisanego</td><td>symetralnych boków</td><td>$|OA|=|OB|=|OC|=R$; wewnątrz trójkąta ostrokątnego, w środku przeciwprostokątnej prostokątnego, na zewnątrz rozwartokątnego</td></tr>
+    <tr><td>$I$ – środek okręgu wpisanego</td><td>dwusiecznych kątów</td><td>jednakowo odległy od boków (o $r$), zawsze wewnątrz</td></tr>
+    <tr><td>$H$ – ortocentrum</td><td>prostych zawierających wysokości</td><td>w rozwartokątnym na zewnątrz, w prostokątnym w wierzchołku kąta prostego</td></tr>
+    <tr><td>$G$ – środek ciężkości</td><td>środkowych</td><td>dzieli każdą środkową w stosunku $2:1$ licząc od wierzchołka</td></tr>
+  </table>
+  <div class="wzor"><div class="tytul">Promienie <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$R=\frac{abc}{4P},\qquad \frac{a}{\sin\alpha}=2R$$
+    $$r=\frac{P}{p},\qquad p=\frac{a+b+c}{2}$$
+    <dl><dt>równoboczny</dt><dd>wszystkie cztery punkty się pokrywają: $r=\frac13h$, $R=\frac23h$ (bo $G$ dzieli wysokość $2:1$)</dd>
+        <dt>prostokątny</dt><dd>$R=\frac c2$, $r=\frac{a+b-c}{2}$</dd></dl>
+  </div>
+
+  <h2 id="demo">2. Interaktywnie: cztery środki</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki, włączaj punkty. Zobacz, kiedy $O$ i $H$ wychodzą poza trójkąt (kąt rozwarty) i że $G$ zawsze dzieli środkową $2:1$.</p>
+    <canvas id="ps-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="ps-o" checked> $O$: symetralne i okrąg opisany</label>
+      <label><input type="checkbox" id="ps-i"> $I$: dwusieczne i okrąg wpisany</label>
+      <label><input type="checkbox" id="ps-h"> $H$: wysokości</label>
+      <label><input type="checkbox" id="ps-g"> $G$: środkowe</label>
+      <label><input type="checkbox" id="ps-e"> prosta Eulera (poza podstawą)</label>
+    </div>
+    <div class="wynik" id="ps-wynik"></div>
+    <div class="wynik" id="ps-opis"></div>
+  </div>
+  <p>Ciekawostka (poza podstawą): $O$, $G$, $H$ zawsze leżą na jednej prostej (prosta Eulera) i $|HG|=2|GO|$.</p>
+
+  <h2 id="dowody">3. Dlaczego te proste się przecinają?</h2>
+  <div class="twierdzenie"><b>Symetralne boków przecinają się w jednym punkcie</b>
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Symetralna odcinka to zbiór punktów równo oddalonych od jego końców.</p>
+      <ol>
+        <li>Symetralne $AB$ i $BC$ nie są równoległe (bo $AB$ i $BC$ nie są), więc przecinają się w punkcie $O$.</li>
+        <li>$O$ leży na symetralnej $AB$: $|OA|=|OB|$. $O$ leży na symetralnej $BC$: $|OB|=|OC|$.</li>
+        <li>Zatem $|OA|=|OC|$, czyli $O$ leży też na symetralnej $AC$. $\blacksquare$</li>
+      </ol>
+      <p>Przy okazji: $O$ jest środkiem okręgu opisanego. Tak samo (dwusieczna = punkty równo oddalone od ramion kąta) dowodzi się, że dwusieczne przecinają się w jednym punkcie.</p>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Wniosek: proste zawierające wysokości przecinają się w jednym punkcie</b>
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Przez każdy wierzchołek trójkąta $ABC$ poprowadź prostą równoległą do przeciwległego boku. Powstaje trójkąt $A'B'C'$ ($A'$ naprzeciw $A$ itd.).</p>
+      <ol>
+        <li>$ABA'C$ i $AC'BC$ to równoległoboki (boki parami równoległe), więc $|BA'|=|AC|=|BC'|$. Zatem $B$ jest środkiem $A'C'$.</li>
+        <li>Wysokość z $B$ jest prostopadła do $AC$, więc także do $A'C'\parallel AC$, i przechodzi przez środek $B$ odcinka $A'C'$ – jest jego <b>symetralną</b>.</li>
+        <li>Tak samo pozostałe wysokości są symetralnymi boków $A'B'C'$. Symetralne przecinają się w jednym punkcie, więc wysokości też. $\blacksquare$</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Środkowe przecinają się w jednym punkcie i dzielą się w stosunku $2:1$</b>
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>$K$ – środek $BC$, $L$ – środek $AC$; środkowe $AK$ i $BL$ przecinają się w $G$.</p>
+      <ol>
+        <li>$LK$ to linia środkowa: $LK\parallel AB$, $|LK|=\frac12|AB|$ (<a href="tales.html">dowód z Talesa</a>).</li>
+        <li>$\triangle GAB\sim\triangle GKL$ (kkk: kąty wierzchołkowe przy $G$ i naprzemianległe przy równoległych $AB$, $KL$) w skali $\frac{|AB|}{|KL|}=2$. Stąd $|AG|=2|GK|$ i $|BG|=2|GL|$.</li>
+        <li>Czyli środkowa $BL$ przecina $AK$ w punkcie dzielącym $AK$ w stosunku $2:1$ od $A$. To samo rozumowanie dla środkowych $AK$ i $CM$ ($M$ – środek $AB$) pokazuje, że $CM$ przecina $AK$ w punkcie dzielącym $AK$ w stosunku $2:1$ od $A$, czyli <b>w tym samym punkcie</b> $G$. Wszystkie trzy środkowe przechodzą więc przez $G$. $\blacksquare$</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <h2 id="dwusieczna">4. Twierdzenie o dwusiecznej</h2>
+  <div class="twierdzenie"><b>Twierdzenie o dwusiecznej</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    Jeśli $CD$ jest dwusieczną kąta $ACB$ w trójkącie $ABC$ i $D$ leży na boku $AB$, to
+    $$\frac{|AD|}{|BD|}=\frac{|AC|}{|BC|}$$
+    Dwusieczna dzieli przeciwległy bok w stosunku sąsiednich boków.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Porównaj pola trójkątów $ACD$ i $BCD$ na dwa sposoby. Niech $|\angle ACD|=|\angle DCB|=\varphi$.</p>
+      <ol>
+        <li>Wspólna wysokość z $C$ na prostą $AB$: $\frac{P_{ACD}}{P_{BCD}}=\frac{|AD|}{|BD|}$.</li>
+        <li>Wzór $P=\frac12ab\sin\gamma$: $\frac{P_{ACD}}{P_{BCD}}=\frac{\frac12|AC|\cdot|CD|\sin\varphi}{\frac12|BC|\cdot|CD|\sin\varphi}=\frac{|AC|}{|BC|}$.</li>
+      </ol>
+      <p>Lewe strony są równe, więc prawe też. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki. Dwusieczna kąta $C$ dzieli $AB$ zawsze w stosunku $|AC|:|BC|$. Zielony i fioletowy trójkąt mają pola w tym samym stosunku – to jest cały dowód.</p>
+    <canvas id="dw-plot" style="height:300px"></canvas>
+    <div class="wynik" id="dw-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Trójkąt ma boki $13$, $14$, $15$. Oblicz promienie okręgów wpisanego i opisanego.</p>
+    <ol>
+      <li>$p=21$, wzór Herona: $P=\sqrt{21\cdot8\cdot7\cdot6}=\sqrt{7056}=84$.</li>
+      <li>$r=\frac{P}{p}=\frac{84}{21}=4$.</li>
+      <li>$R=\frac{abc}{4P}=\frac{13\cdot14\cdot15}{336}=\frac{2730}{336}=\frac{65}{8}$.</li>
+    </ol>
+    <p class="odp">$r=4$, $R=\frac{65}{8}=8{,}125$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="6; 9" data-odp-opis="długości AD; BD"><span class="poziom">łatwe</span>
+      <div class="tresc">W trójkącie $ABC$: $|AC|=8$, $|BC|=12$, $|AB|=15$. Dwusieczna kąta $C$ przecina $AB$ w punkcie $D$. Oblicz $|AD|$ i $|BD|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $|AD|:|BD|=8:12=2:3$, więc $|AD|=\frac25\cdot15$. <b>$|AD|=6$, $|BD|=9$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="sqrt(3); 2sqrt(3)" data-odp-opis="r; R"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz promienie okręgów wpisanego i opisanego na trójkącie równobocznym o boku $6$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $h=3\sqrt3$, $r=\frac13h$, $R=\frac23h$. <b>$r=\sqrt3$, $R=2\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5; 2; 10/3" data-odp-opis="R; r; odległość CG"><span class="poziom">średnie</span>
+      <div class="tresc">Przyprostokątne trójkąta mają długości $6$ i $8$. Oblicz $R$, $r$ oraz odległość środka ciężkości od wierzchołka kąta prostego.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $c=10$, $R=\frac c2=5$, $r=\frac{6+8-10}{2}=2$. Środkowa z kąta prostego idzie do środka przeciwprostokątnej (środka okręgu opisanego), więc ma długość $R=5$; $G$ dzieli ją $2:1$. <b>$R=5$, $r=2$, $|CG|=\frac{10}{3}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10/3; 169/24" data-odp-opis="r; R"><span class="poziom">średnie</span>
+      <div class="tresc">Trójkąt równoramienny ma podstawę $10$ i ramiona $13$. Oblicz $r$ i $R$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $h=\sqrt{169-25}=12$, $P=60$, $p=18$. $r=\frac{60}{18}=\frac{10}{3}$, $R=\frac{10\cdot13\cdot13}{4\cdot60}=\frac{1690}{240}$. <b>$r=\frac{10}{3}$, $R=\frac{169}{24}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Środkowe $AK$ i $BL$ trójkąta $ABC$ są prostopadłe, $|AK|=9$, $|BL|=12$. Oblicz $|AB|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $G$ dzieli środkowe $2:1$: $|AG|=6$, $|BG|=8$, a kąt $AGB$ jest prosty. $|AB|=\sqrt{36+64}$. <b>$|AB|=10$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że jeśli środek ciężkości trójkąta pokrywa się ze środkiem okręgu wpisanego, to trójkąt jest równoboczny.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Prosta $CG$ zawiera środkową z $C$, a prosta $CI$ – dwusieczną kąta $C$. Skoro $G=I$, to środkowa i dwusieczna z $C$ trafiają w ten sam punkt $D$ boku $AB$. Z tw. o dwusiecznej $\frac{|AC|}{|BC|}=\frac{|AD|}{|BD|}=1$, więc $|AC|=|BC|$. Tak samo z wierzchołka $A$: $|AB|=|AC|$. <b>Trójkąt jest równoboczny.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Nie myl punktów: okrąg <b>opisany</b> – symetralne, <b>wpisany</b> – dwusieczne. To najczęstsza pomyłka.</li>
+    <li>Środkowe $2:1$ licząc <b>od wierzchołka</b>; w trójkącie równobocznym stąd $r=\frac13h$, $R=\frac23h$.</li>
+    <li>Tw. o dwusiecznej: stosunek odcinków na boku = stosunek <b>sąsiednich</b> boków (przyległych do tych odcinków).</li>
+    <li>Gdy w zadaniu są $P$, $r$, $R$ – wypisz wszystkie wzory na pole z tablic i połącz: $P=pr=\frac{abc}{4R}$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Punkty szczególne ---
+  const w1 = new Wykres($("ps-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const ogr = wPolu(4.5, 3.3);
+  const pt = w1.przeciagaj([{ x: -3, y: -2, ogranicz: ogr }, { x: 3.5, y: -2, ogranicz: ogr }, { x: -0.5, y: 2.8, ogranicz: ogr }], rysujPs);
+  const okragOpisany = (A, B, C) => {
+    const d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y)), s = P => P.x * P.x + P.y * P.y;
+    return { x: (s(A) * (B.y - C.y) + s(B) * (C.y - A.y) + s(C) * (A.y - B.y)) / d, y: (s(A) * (C.x - B.x) + s(B) * (A.x - C.x) + s(C) * (B.x - A.x)) / d };
+  };
+  function rysujPs() {
+    const [A, B, C] = pt;
+    const a = odl(B, C), b = odl(A, C), c = odl(A, B);
+    const pole = Math.abs((B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x)) / 2;
+    const ok = pole > 0.3 && Math.min(a, b, c) > 0.3;
+    const pkt = [[A, "A"], [B, "B"], [C, "C"]];
+    const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+    let O = G, R = 0, I = G, r = 0, H = G;
+    if (ok) {
+      O = okragOpisany(A, B, C); R = odl(O, A);
+      I = { x: (a * A.x + b * B.x + c * C.x) / (a + b + c), y: (a * A.y + b * B.y + c * C.y) / (a + b + c) }; r = 2 * pole / (a + b + c);
+      H = { x: A.x + B.x + C.x - 2 * O.x, y: A.y + B.y + C.y - 2 * O.y };
+    }
+    w1.rysuj(g => {
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1, { wypelnij: 0.1 });
+      if (ok && $("ps-o").checked) {
+        [[A, B], [B, C], [C, A]].forEach(([P, Q]) => { const M = sr(P, Q); g.prosta(M.x, M.y, M.x - (Q.y - P.y), M.y + (Q.x - P.x), 3, true); katProsty(g, M, Q, O, 0.2, 3); });
+        g.okrag(O.x, O.y, R, 3); g.punkt(O.x, O.y, "O", 3);
+      }
+      if (ok && $("ps-i").checked) {
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(([W, P, Q]) => { const D = przeciecie(W, I, P, Q); if (D) g.odcinek(W.x, W.y, D.x, D.y, 4); });
+        g.okrag(I.x, I.y, r, 4); g.punkt(I.x, I.y, "I", 4);
+      }
+      if (ok && $("ps-h").checked) {
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(([W, P, Q]) => { const D = rzut(W, P, Q); g.prosta(W.x, W.y, D.x, D.y, 2, true); g.odcinek(W.x, W.y, D.x, D.y, 2, false); });
+        g.punkt(H.x, H.y, "H", 2);
+      }
+      if (ok && $("ps-g").checked) {
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(([W, P, Q]) => { const M = sr(P, Q); g.odcinek(W.x, W.y, M.x, M.y, 1); g.punkt(M.x, M.y, "", 1, { r: 3 }); });
+        g.punkt(G.x, G.y, "G", 1);
+      }
+      if (ok && $("ps-e").checked && odl(O, H) > 0.05) { g.prosta(O.x, O.y, H.x, H.y, 4, false); g.punkt(O.x, O.y, "O", 3, { r: 3.5 }); g.punkt(H.x, H.y, "H", 2, { r: 3.5 }); g.punkt(G.x, G.y, "G", 1, { r: 3.5 }); }
+      pkt.forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, G, s, 2); });
+    });
+    if (!ok) { tex("ps-wynik", "\\text{rozsuń wierzchołki}"); $("ps-opis").textContent = ""; return; }
+    const kw = [a * a, b * b, c * c].sort((u, v) => u - v), roz = kw[2] - kw[0] - kw[1];
+    const K = sr(B, C);
+    tex("ps-wynik", `R=${ladnaTex(R)},\\ \\ r=${ladnaTex(r)},\\ \\ |AG|:|GK|=${ladnaTex(odl(A, G))}:${ladnaTex(odl(G, K))}=2:1`);
+    $("ps-opis").textContent = Math.abs(roz) < 0.05 * kw[2] ? "Trójkąt (prawie) prostokątny: O w środku przeciwprostokątnej, H w wierzchołku kąta prostego." :
+      roz < 0 ? "Trójkąt ostrokątny: O i H leżą wewnątrz." : "Trójkąt rozwartokątny: O i H leżą na zewnątrz.";
+  }
+  ["ps-o", "ps-i", "ps-h", "ps-g", "ps-e"].forEach(id => $(id).addEventListener("change", rysujPs));
+  rysujPs();
+
+  // --- 4. Dwusieczna ---
+  const w2 = new Wykres($("dw-plot"), { xmin: -5, xmax: 5, ymin: -3, ymax: 3.6, rowneSkale: true });
+  const ogr2 = wPolu(4.7, 3.3);
+  const pd = w2.przeciagaj([{ x: -4, y: -2.2, ogranicz: ogr2 }, { x: 4, y: -2.2, ogranicz: ogr2 }, { x: -2, y: 2.8, ogranicz: ogr2 }], rysujDw);
+  function rysujDw() {
+    const [A, B, C] = pd;
+    const a = odl(B, C), b = odl(A, C);
+    const ok = a > 0.2 && b > 0.2 && odl(A, B) > 0.2;
+    const D = ok ? { x: (a * A.x + b * B.x) / (a + b), y: (a * A.y + b * B.y) / (a + b) } : sr(A, B);
+    const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+    w2.rysuj(g => {
+      g.wielokat([[A.x, A.y], [D.x, D.y], [C.x, C.y]], 3, { wypelnij: 0.2, bezObrysu: true });
+      g.wielokat([[D.x, D.y], [B.x, B.y], [C.x, C.y]], 4, { wypelnij: 0.2, bezObrysu: true });
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1);
+      g.odcinek(C.x, C.y, D.x, D.y, 2, false);
+      if (ok) { lukKata(g, C, A, D, 0.6, 2); lukKata(g, C, D, B, 0.75, 2); }
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, G, s, 2); });
+      g.punkt(D.x, D.y, "", 2, { r: 3.5 }); etykieta(g, D, C, "D", 2);
+    });
+    if (!ok) { tex("dw-wynik", "\\text{rozsuń wierzchołki}"); return; }
+    tex("dw-wynik", `\\frac{|AD|}{|BD|}=\\frac{${ladnaTex(odl(A, D))}}{${ladnaTex(odl(B, D))}}=${ladnaTex(odl(A, D) / odl(B, D))},\\qquad \\frac{|AC|}{|BC|}=\\frac{${ladnaTex(b)}}{${ladnaTex(a)}}=${ladnaTex(b / a)}`);
+  }
+  rysujDw();
+});
+</script>
+</body>
+</html>

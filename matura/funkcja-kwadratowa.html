@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funkcja kwadratowa</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Funkcja kwadratowa</h1>
+  <p class="lead">Wykres to zawsze ta sama parabola $y=x^2$, tylko rozciągnięta i przesunięta. Cała sztuka to znaleźć wierzchołek i kierunek ramion.</p>
+  <p class="wymagania">V.7–V.11, XIII (optymalizacja)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Trzy postaci i wzory</h2>
+  <div class="wzor">
+    <div class="tytul">Postać ogólna</div>
+    $$f(x)=ax^2+bx+c,\quad a\neq 0$$
+    <dl><dt>$a$</dt><dd>$a&gt;0$: ramiona w górę, $a&lt;0$: w dół. Im większe $|a|$, tym węższa parabola</dd>
+        <dt>$c$</dt><dd>przecięcie z osią $Oy$, bo $f(0)=c$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Postać kanoniczna</div>
+    $$f(x)=a(x-p)^2+q$$
+    $$p=\frac{-b}{2a},\qquad q=\frac{-\Delta}{4a}$$
+    <dl><dt>$(p,q)$</dt><dd>wierzchołek: parabola $y=ax^2$ przesunięta o wektor $[p,q]$</dd>
+        <dt>$x=p$</dt><dd>oś symetrii</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Postać iloczynowa (gdy $\Delta\ge 0$)</div>
+    $$f(x)=a(x-x_1)(x-x_2)$$
+    $$x_{1,2}=\frac{-b\mp\sqrt{\Delta}}{2a},\qquad \Delta=b^2-4ac$$
+    <dl><dt>$\Delta$</dt><dd>$\Delta&gt;0$: dwa miejsca zerowe, $\Delta=0$: jedno, $\Delta&lt;0$: brak</dd>
+        <dt>$p$</dt><dd>dokładnie w połowie między pierwiastkami: $p=\frac{x_1+x_2}{2}$</dd></dl>
+  </div>
+  <div class="uwaga">$q=f(p)$. Zamiast liczyć $-\Delta/4a$, zwykle szybciej podstawić $p$ do wzoru.</div>
+
+  <details class="rozwin"><summary>Skąd się bierze wzór na $x_{1,2}$? (dowód z podstawy)</summary><div>
+    <p>Wyłącz $a$ i uzupełnij do pełnego kwadratu:</p>
+    $$ax^2+bx+c=a\left[x^2+\frac{b}{a}x+\frac{c}{a}\right]$$
+    $$=a\left[\left(x+\frac{b}{2a}\right)^2-\frac{\Delta}{4a^2}\right]$$
+    <p>Gdy $\Delta\ge0$, nawias to różnica kwadratów, więc $f(x)=0 \iff x+\frac{b}{2a}=\pm\frac{\sqrt\Delta}{2a}$. Gdy $\Delta&lt;0$, nawias jest zawsze dodatni, więc pierwiastków nie ma. Przy okazji widać postać kanoniczną: $p=-\frac{b}{2a}$, $q=-\frac{\Delta}{4a}$.</p>
+  </div></details>
+
+  <h2 id="wykres">2. Interaktywny wykres</h2>
+  <div class="demo">
+    <p class="opis">Przesuwaj suwaki: zobacz, jak $a$, $b$, $c$ przesuwają wierzchołek i zmieniają $\Delta$.</p>
+    <canvas id="kw-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="kw-a" min="-3" max="3" step="0.1" value="1"> <span id="kw-a-v"></span></label>
+      <label>$b$ <input type="range" id="kw-b" min="-6" max="6" step="0.1" value="-2"> <span id="kw-b-v"></span></label>
+      <label>$c$ <input type="range" id="kw-c" min="-5" max="5" step="0.1" value="-3"> <span id="kw-c-v"></span></label>
+    </div>
+    <div class="wynik" id="kw-wynik"></div>
+  </div>
+
+  <h2 id="animacja">3. Animacja: skąd się bierze parabola</h2>
+  <div class="demo">
+    <p class="opis">$y=x^2$ (przerywana) → rozciągnięcie przez $a$ → przesunięcie o wektor $[p,q]$.</p>
+    <canvas id="an-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="an-a" min="-2" max="2" step="0.5" value="-0.5"></label>
+      <label>$p$ <input type="range" id="an-p" min="-4" max="4" step="0.5" value="2"></label>
+      <label>$q$ <input type="range" id="an-q" min="-3" max="5" step="0.5" value="3"></label>
+      <button id="an-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="an-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Zapisz $f(x)=x^2-2x-3$ w postaci kanonicznej i iloczynowej.</p>
+    <ol>
+      <li>$\Delta=(-2)^2-4\cdot1\cdot(-3)=16$, więc $\sqrt\Delta=4$.</li>
+      <li>$x_1=\frac{2-4}{2}=-1$, $\;x_2=\frac{2+4}{2}=3$.</li>
+      <li>$p=\frac{x_1+x_2}{2}=1$, $\;q=f(1)=1-2-3=-4$.</li>
+    </ol>
+    <p class="odp">$f(x)=(x-1)^2-4=(x+1)(x-3)$</p>
+    <p>To jest dokładnie parabola z wykresu w punkcie 2 (ustawienia startowe).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="2; -3" data-odp-opis="p; q"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz wierzchołek paraboli $f(x)=2x^2-8x+5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $p=\frac{8}{4}=2$, $q=f(2)=8-16+5=-3$. <b>$W=(2,-3)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; -4; -2" data-odp-opis="a; b; c w postaci ogólnej"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz wzór funkcji kwadratowej, której wykres ma wierzchołek $W=(1,-4)$ i przechodzi przez punkt $(3,4)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x)=a(x-1)^2-4$. Podstaw $(3,4)$: $4=4a-4$, więc $a=2$. <b>$f(x)=2(x-1)^2-4=2x^2-4x-2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5; -4" data-odp-opis="największa; najmniejsza wartość"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz najmniejszą i największą wartość $f(x)=-x^2+4x+1$ w przedziale $\lp -1,3\rp$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $p=2\in\lp-1,3\rp$ i $a&lt;0$, więc największa wartość to $f(2)=5$. Najmniejsza jest na którymś końcu: $f(-1)=-4$, $f(3)=4$.
+        <b>Największa $5$, najmniejsza $-4$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="50" data-odp-opis="najmniejsza suma kwadratów"><span class="poziom">maturalne</span>
+      <div class="tresc">Suma dwóch liczb rzeczywistych wynosi $10$. Wyznacz te liczby, dla których suma ich kwadratów jest najmniejsza, i oblicz tę sumę.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Liczby $x$ i $10-x$. $S(x)=x^2+(10-x)^2=2x^2-20x+100$, $x\in\R$. Parabola ma ramiona w górę, więc minimum jest w wierzchołku: $p=5$, $S(5)=50$.
+        <b>Liczby $5$ i $5$, najmniejsza suma kwadratów to $50$.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Wartość największa/najmniejsza w przedziale:</b> najpierw sprawdź, czy $p$ leży w przedziale. Jeśli nie, liczysz tylko końce.</li>
+    <li><b>Optymalizacja:</b> zawsze zapisz dziedzinę funkcji (np. długość $&gt;0$). Wierzchołek musi do niej należeć.</li>
+    <li><b>Nierówność kwadratowa:</b> naszkicuj parabolę zamiast „tabelki znaków”. Uważaj na końce przedziałów przy $\ge$ i $&gt;$.</li>
+    <li>Na rozszerzeniu najwięcej punktów dają <b>zadania z parametrem</b> (warunki na $\Delta$, $a$, wzory Viète'a).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Interaktywny wykres ---
+  const w1 = new Wykres($("kw-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 8 });
+  function rysujKw() {
+    let a = +$("kw-a").value; const b = +$("kw-b").value, c = +$("kw-c").value;
+    if (Math.abs(a) < 0.05) a = 0.1; // a ≠ 0
+    $("kw-a-v").textContent = ladna(a); $("kw-b-v").textContent = ladna(b); $("kw-c-v").textContent = ladna(c);
+    const d = b * b - 4 * a * c, p = -b / (2 * a), q = -d / (4 * a);
+    w1.rysuj(g => {
+      g.odcinek(p, g.z.ymin, p, g.z.ymax, 3);
+      g.funkcja(x => a * x * x + b * x + c, 1);
+      g.punkt(p, q, "W");
+      if (d >= 0) {
+        const s = Math.sqrt(d);
+        const xs = d > 0 ? [(-b - s) / (2 * a), (-b + s) / (2 * a)].sort((u, v) => u - v) : [p];
+        xs.forEach((x, i) => g.punkt(x, 0, d > 0 ? `x${i + 1}` : "x₀", 3));
+      }
+    });
+    const opis = d > 1e-9 ? "\\text{dwa miejsca zerowe}" : Math.abs(d) <= 1e-9 ? "\\text{jedno miejsce zerowe}" : "\\text{brak miejsc zerowych}";
+    tex("kw-wynik", `\\Delta=${ladnaTex(d)}\\;\\Rightarrow\\;${opis},\\quad W=(${ladnaTex(p)};\\,${ladnaTex(q)})`);
+  }
+  ["kw-a", "kw-b", "kw-c"].forEach(id => $(id).addEventListener("input", rysujKw));
+  rysujKw();
+
+  // --- 3. Animacja przekształceń ---
+  const w2 = new Wykres($("an-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 8 });
+  let stop = null;
+  function klatka(t) {
+    const a = +$("an-a").value, p = +$("an-p").value, q = +$("an-q").value;
+    // t ∈ [0, .5]: rozciąganie 1 → a;  t ∈ [.5, 1]: przesuwanie (0,0) → (p,q)
+    const t1 = Math.min(1, t * 2), t2 = Math.max(0, t * 2 - 1);
+    const ak = 1 + (a - 1) * t1, pk = p * t2, qk = q * t2;
+    w2.rysuj(g => {
+      g.funkcja(x => x * x, 3, { przerywana: true });
+      if (t2 > 0) g.strzalka(0, 0, pk, qk, 2);
+      g.funkcja(x => ak * (x - pk) ** 2 + qk, 1);
+      g.punkt(pk, qk, "W");
+    });
+    tex("an-wynik", `y=${ladnaTex(ak)}\\left(x${znakTex(-pk)}\\right)^2${znakTex(qk)}`);
+  }
+  $("an-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2400, klatka); });
+  ["an-a", "an-p", "an-q"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatka(1); }));
+  klatka(0);
+});
+</script>
+</body>
+</html>

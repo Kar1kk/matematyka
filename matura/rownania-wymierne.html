@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Równania i nierówności wymierne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Równania i nierówności wymierne</h1>
+  <p class="lead">Ułamek jest zerem, gdy zeruje się licznik, a mianownik nie. Ułamek jest dodatni, gdy licznik i mianownik mają ten sam znak, czyli dokładnie wtedy, gdy ich iloczyn jest dodatni. Zawsze zaczynasz od dziedziny.</p>
+  <p class="wymagania">III.R.2, III.R.7, II.4, II.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="dziedzina">1. Dziedzina i działania na ułamkach</h2>
+  <div class="definicja"><b>Dziedzina</b> wyrażenia wymiernego $\frac{V(x)}{W(x)}$: wszystkie $x$, dla których $W(x)\neq0$. Wypisz ją <b>przed</b> jakimkolwiek przekształceniem, bo po skróceniu ułamka informacja ginie.</div>
+  <ul>
+    <li><b>Mnożenie, dzielenie:</b> rozłóż na czynniki i skróć: $\frac{x^2-4}{x}\cdot\frac{x^2}{x+2}=x(x-2)$ dla $x\notin\{-2,0\}$.</li>
+    <li><b>Dodawanie, odejmowanie:</b> wspólny mianownik: $\frac{1}{x+1}-\frac1x=\frac{x-(x+1)}{x(x+1)}=\frac{-1}{x(x+1)}$.</li>
+  </ul>
+
+  <h2 id="rownania">2. Równania</h2>
+  <div class="wzor">
+    <div class="tytul">Ułamek równy zero</div>
+    $$\frac{V(x)}{W(x)}=0\iff V(x)=0\ \wedge\ W(x)\neq0$$
+    <dl><dt>pułapka</dt><dd>pierwiastek licznika, który zeruje też mianownik, <b>nie</b> jest rozwiązaniem</dd></dl>
+  </div>
+  <p>Równanie $\frac{A}{B}=\frac{C}{D}$: po wypisaniu dziedziny mnożysz „na krzyż”, $AD=BC$, i rozwiązujesz równanie liniowe lub kwadratowe. Na końcu odrzuć wyniki spoza dziedziny.</p>
+
+  <h2 id="nierownosci">3. Nierówności: nie mnóż przez mianownik!</h2>
+  <div class="wzor">
+    <div class="tytul">Zamiana na iloczyn</div>
+    $$\frac{V}{W}&gt;0\iff V\cdot W&gt;0$$
+    $$\frac{V}{W}\ge0\iff V\cdot W\ge0\ \wedge\ W\neq0$$
+    <dl><dt>dlaczego</dt><dd>$\frac VW$ i $V\cdot W=\frac VW\cdot W^2$ mają ten sam znak, bo $W^2&gt;0$</dd></dl>
+  </div>
+  <ol>
+    <li>Dziedzina.</li>
+    <li>Wszystko na jedną stronę, wspólny mianownik: $\frac{V}{W}\;?\;0$.</li>
+    <li>Zamień na $V\cdot W\;?\;0$ i rozwiąż (parabola albo wężyk).</li>
+    <li>Wyrzuć z wyniku zera mianownika.</li>
+  </ol>
+  <div class="uwaga">Mnożenie obu stron przez $W(x)$ jest błędem: nie znasz znaku $W$, więc nie wiesz, czy zmienić zwrot. Zobacz demo 5.</div>
+
+  <h2 id="demo">4. Interaktywnie: wykres i dziedzina</h2>
+  <div class="demo">
+    <p class="opis">$f(x)=\frac{(x-p)(x-q)}{x-r}$. Przerywana pionowa linia: $x=r$ poza dziedziną (asymptota). Ustaw $p=r$: ułamek się skraca, ale w $x=r$ zostaje „dziura” (puste kółko). Włącz $V\cdot W$: ma ten sam znak co $f$ wszędzie w dziedzinie.</p>
+    <canvas id="wm-plot"></canvas>
+    <div class="sterowanie">
+      <label>$p$ <input type="range" id="wm-p" min="-5" max="5" step="0.5" value="-2"> <span id="wm-p-v"></span></label>
+      <label>$q$ <input type="range" id="wm-q" min="-5" max="5" step="0.5" value="3"> <span id="wm-q-v"></span></label>
+      <label>$r$ <input type="range" id="wm-r" min="-5" max="5" step="0.5" value="1"> <span id="wm-r-v"></span></label>
+      <label>$f(x)$ <select id="wm-znak"><option value="ge">≥ 0</option><option value="gt">&gt; 0</option><option value="le">≤ 0</option><option value="lt">&lt; 0</option></select></label>
+      <label><input type="checkbox" id="wm-vw"> pokaż $V\cdot W$</label>
+    </div>
+    <div class="wynik" id="wm-wynik"></div>
+  </div>
+
+  <h2 id="blad">5. Interaktywnie: błąd mnożenia przez mianownik</h2>
+  <div class="demo">
+    <p class="opis">Nierówność $\frac{x}{x-1}\ge k$. Zielony pasek: poprawne rozwiązanie (tam, gdzie wykres jest nad linią $y=k$). Czerwony: wynik „rozwiązania” przez pomnożenie obu stron przez $x-1$. Na lewo od $x=1$ mianownik jest ujemny i błędna metoda daje tam coś zupełnie innego.</p>
+    <canvas id="bl-plot" style="height:280px"></canvas>
+    <canvas id="bl-osie" style="height:90px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="bl-k" min="-3" max="4" step="0.5" value="2"> <span id="bl-k-v"></span></label>
+    </div>
+    <div class="wynik" id="bl-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">6. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż równanie $\frac{(x-2)(x+3)}{(x+3)(x-1)}=0$.</p>
+    <ol>
+      <li>Dziedzina: $x\neq-3$, $x\neq1$.</li>
+      <li>Licznik zeruje się dla $x=2$ i $x=-3$.</li>
+      <li>$x=-3$ nie należy do dziedziny.</li>
+    </ol>
+    <p class="odp">$x=2$</p>
+  </div>
+  <div class="przyklad">
+    <p>Rozwiąż nierówność $\frac{x+1}{x-2}\ge2$.</p>
+    <ol>
+      <li>Dziedzina: $x\neq2$.</li>
+      <li>$\frac{x+1}{x-2}-2\ge0 \iff \frac{x+1-2x+4}{x-2}\ge0 \iff \frac{5-x}{x-2}\ge0$.</li>
+      <li>$(5-x)(x-2)\ge0$ i $x\neq2$. Parabola z ramionami w dół, pierwiastki $2$ i $5$: $x\in\lp2,5\rp$, bez $2$.</li>
+    </ol>
+    <p class="odp">$x\in(2,5\rp$</p>
+  </div>
+
+  <h2 id="zadania">7. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-1"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równanie $\frac{(x-3)(x+1)}{x(x-3)}=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Dziedzina: $x\notin\{0,3\}$. Licznik: $x=3$ (poza dziedziną) lub $x=-1$. <b>$x=-1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-8"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równanie $\frac{3}{x-1}=\frac{2}{x+2}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Dziedzina: $x\notin\{-2,1\}$. Na krzyż: $3(x+2)=2(x-1)$, $3x+6=2x-2$. <b>$x=-8$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-3; 4)"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż nierówność $\frac{2x-1}{x+3}&lt;1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x\neq-3$. $\frac{2x-1-(x+3)}{x+3}&lt;0 \iff \frac{x-4}{x+3}&lt;0 \iff (x-4)(x+3)&lt;0$. <b>$x\in(-3,4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż równanie $\frac{x}{x-1}-\frac{3}{x+1}=\frac{6}{x^2-1}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Dziedzina: $x\neq\pm1$. Mnożymy przez $(x-1)(x+1)$: $x(x+1)-3(x-1)=6 \iff x^2-2x-3=0$, $x=3$ lub $x=-1$. Ale $-1\notin D$. <b>$x=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-oo; -3&gt; u (0; 2&gt;"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż nierówność $\frac6x\ge x+1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x\neq0$. $\frac{6-x^2-x}{x}\ge0 \iff \frac{-(x+3)(x-2)}{x}\ge0 \iff \frac{(x+3)(x-2)}{x}\le0$.
+        Iloczyn $x(x+3)(x-2)\le0$, wężyk z prawej z góry, pierwiastki $-3,0,2$; usuwamy $0$.
+        <b>$x\in(-\infty,-3\rp\cup(0,2\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; -3/2" data-odp-opis="rozwiązania x"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż równanie $\frac1x+\frac1{x+2}=\frac43$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x\notin\{-2,0\}$. Razy $3x(x+2)$: $3(x+2)+3x=4x(x+2)$, czyli $4x^2+2x-6=0$, $2x^2+x-3=0$, $\Delta=25$.
+        <b>$x=1$ lub $x=-\frac32$</b> (oba w dziedzinie).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">8. Na maturze</h2>
+  <ul>
+    <li><b>Dziedzina na początku</b>, sprawdzenie z dziedziną na końcu. Rozwiązanie spoza dziedziny w odpowiedzi to utrata punktu.</li>
+    <li><b>Nierówności:</b> przenieś na jedną stronę i zamień na iloczyn. Mnożenie przez mianownik o nieznanym znaku to błąd rzeczowy.</li>
+    <li>Przy $\ge$, $\le$: miejsca zerowe licznika należą do zbioru, zera mianownika <b>nigdy</b>.</li>
+    <li>Wspólny mianownik: rozłóż mianowniki na czynniki, np. $x^2-1=(x-1)(x+1)$, zamiast mnożyć wszystkie.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{,}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "\\lp" : "("}${A}${s}${B}${p.zb ? "\\rp" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{,}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 4. Wykres i dziedzina ---
+  const w1 = new Wykres($("wm-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+  function rysujWm() {
+    const p = +$("wm-p").value, q = +$("wm-q").value, r = +$("wm-r").value, zn = $("wm-znak").value, vw = $("wm-vw").checked;
+    $("wm-p-v").textContent = ladna(p); $("wm-q-v").textContent = ladna(q); $("wm-r-v").textContent = ladna(r);
+    const V = x => (x - p) * (x - q), W = x => x - r;
+    const f = x => W(x) === 0 ? NaN : V(x) / W(x);
+    const z = zbior(x => W(x) !== 0 && POR[zn](V(x) / W(x)), [p, q, r]);
+    const skrot = p === r || q === r; // licznik i mianownik mają wspólny czynnik
+    w1.rysuj(g => {
+      if (!skrot) g.odcinek(r, g.z.ymin, r, g.z.ymax, 4);
+      if (vw) g.funkcja(x => V(x) * W(x) / 6, 3, { przerywana: true });
+      g.funkcja(f, 1);
+      z.forEach(s => { if (s.a < s.b) g.funkcja(f, 2, { od: s.a, do: s.b, grubosc: 5 }); });
+      if (skrot) { const inny = p === r ? q : p; g.punkt(r, r - inny, "", 1, { pusty: true }); }
+      naOsi(g, z, 2);
+      g.punkt(r, 0, "", 4, { pusty: true });
+    });
+    tex("wm-wynik", `D=\\R\\setminus\\{${ladnaTex(r)}\\},\\quad f(x)${ZNAK[zn]}0\\iff x\\in ${zbiorTex(z)}`);
+  }
+  ["wm-p", "wm-q", "wm-r", "wm-znak", "wm-vw"].forEach(id => { $(id).addEventListener("input", rysujWm); $(id).addEventListener("change", rysujWm); });
+  rysujWm();
+
+  // --- 5. Błąd mnożenia przez mianownik ---
+  const w2 = new Wykres($("bl-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 6 });
+  const w3 = new Wykres($("bl-osie"), { xmin: -6, xmax: 6, ymin: 0.2, ymax: 2.6, krokY: 10, osie: false });
+  function rysujBl() {
+    const k = +$("bl-k").value;
+    $("bl-k-v").textContent = ladna(k);
+    const f = x => x === 1 ? NaN : x / (x - 1);
+    const kryt = [1]; if (k !== 1) kryt.push(k / (k - 1));
+    const dobry = zbior(x => x !== 1 && x / (x - 1) - k >= -1e-9, kryt);
+    const zly = zbior(x => (1 - k) * x + k >= -1e-9, kryt);
+    w2.rysuj(g => {
+      g.odcinek(1, g.z.ymin, 1, g.z.ymax, 4);
+      g.prosta(0, k, 1, k, 3, true);
+      g.funkcja(f, 1);
+      dobry.forEach(s => { if (s.a < s.b) g.funkcja(f, 3, { od: s.a, do: s.b, grubosc: 5 }); });
+    });
+    w3.rysuj(g => {
+      [[2, dobry, 3, "poprawnie"], [1, zly, 2, "mnożenie przez x − 1"]].forEach(([y, z, nr, opis]) => {
+        g.odcinek(g.z.xmin, y, g.z.xmax, y, "--plot-axis", false);
+        naOsi(g, z, nr, y);
+        g.tekst(g.z.xmin, y, opis, nr, { dx: 4, dy: -9, gruby: true });
+      });
+    });
+    tex("bl-wynik", `\\text{poprawnie: } ${zbiorTex(dobry)},\\quad \\text{błędnie: } ${zbiorTex(zly)}`);
+  }
+  $("bl-k").addEventListener("input", rysujBl);
+  rysujBl();
+});
+</script>
+</body>
+</html>

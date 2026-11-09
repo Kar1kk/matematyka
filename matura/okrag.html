@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Równanie okręgu</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Równanie okręgu</h1>
+  <p class="lead">Okrąg to wszystkie punkty odległe od środka $S$ dokładnie o $r$. Równanie okręgu to po prostu wzór na odległość $|SP|=r$, podniesiony do kwadratu.</p>
+  <p class="wymagania">IX.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzor">1. Równanie okręgu</h2>
+  <div class="wzor">
+    <div class="tytul">Okrąg o środku $S=(a,b)$ i promieniu $r&gt;0$</div>
+    $$(x-a)^2+(y-b)^2=r^2$$
+    <dl><dt>skąd</dt><dd>$|SP|=r\iff\sqrt{(x-a)^2+(y-b)^2}=r$, obie strony do kwadratu. Jest w tablicach.</dd>
+        <dt>koło</dt><dd>$(x-a)^2+(y-b)^2\le r^2$ (okrąg + wnętrze)</dd></dl>
+  </div>
+  <div class="uwaga">Znaki w nawiasach są „odwrotne”: $(x+3)^2+(y-1)^2=5$ to $S=(-3,1)$, $r=\sqrt5$ (nie $5$!). Gdy po prawej stoi $0$, to tylko punkt $S$; gdy liczba ujemna, to zbiór pusty.</div>
+  <p>Postać rozwinięta $x^2+y^2-2ax-2by+c=0$ jest <b>poza wymaganiami</b> 2024, ale jest w karcie wzorów CKE (z warunkiem $a^2+b^2-c>0$, gdzie środek to $(a,b)$), więc możesz jej używać (gdyby się pojawiła: uzupełnij do pełnych kwadratów).</p>
+
+  <h2 id="polozenie">2. Punkt a okrąg, typowe okręgi</h2>
+  <div class="wzor">
+    <div class="tytul">Położenie punktu $P=(x_0,y_0)$</div>
+    $$d=|SP|,\qquad d^2=(x_0-a)^2+(y_0-b)^2$$
+    <dl><dt>$d&lt;r$</dt><dd>wewnątrz okręgu</dd><dt>$d=r$</dt><dd>na okręgu</dd><dt>$d&gt;r$</dt><dd>na zewnątrz</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>Okrąg</th><th>środek i promień</th></tr>
+    <tr><td>o średnicy $AB$</td><td>$S$ = środek $AB$, $r=\frac12|AB|$</td></tr>
+    <tr><td>przez punkt $A$</td><td>$r=|SA|$</td></tr>
+    <tr><td>styczny do osi $Ox$</td><td>$r=|b|$</td></tr>
+    <tr><td>styczny do osi $Oy$</td><td>$r=|a|$</td></tr>
+  </table>
+
+  <h2 id="demo">3. Interaktywnie: równanie na żywo</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj środek $S$ i punkt $A$ na okręgu. Potem ▶: punkt $M$ obiega okrąg, a przyprostokątne $|x-a|$, $|y-b|$ się zmieniają, ale ich kwadraty zawsze sumują się do $r^2$.</p>
+    <canvas id="ok-plot"></canvas>
+    <div class="sterowanie"><button id="ok-start">▶ Obiegnij okrąg</button></div>
+    <div class="wynik" id="ok-wynik"></div>
+    <div class="wynik" id="ok-wynik2"></div>
+  </div>
+
+  <h2 id="demo-punkt">4. Interaktywnie: gdzie leży punkt?</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj $P$ (i zmieniaj $r$). Porównaj $d^2=|SP|^2$ z $r^2$. Na okręgu o $r=5$ leży aż 12 punktów kratowych, spróbuj je znaleźć.</p>
+    <canvas id="pp-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="pp-r" min="1" max="6" step="1" value="5"> <span id="pp-r-v"></span></label>
+    </div>
+    <div class="wynik" id="pp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wyznacz równanie okręgu o średnicy $AB$, gdzie $A=(-1,2)$, $B=(5,-6)$. Czy punkt $P=(5,2)$ leży na tym okręgu?</p>
+    <ol>
+      <li>Środek: $S=\left(\frac{-1+5}{2},\frac{2-6}{2}\right)=(2,-2)$.</li>
+      <li>$|AB|=\sqrt{6^2+8^2}=10$, więc $r=5$.</li>
+      <li>Równanie: $(x-2)^2+(y+2)^2=25$.</li>
+      <li>$P$: $(5-2)^2+(2+2)^2=9+16=25$ ✓.</li>
+    </ol>
+    <p class="odp">$(x-2)^2+(y+2)^2=25$, punkt $P$ leży na okręgu</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-4; 3; 2sqrt(3)" data-odp-opis="x_S; y_S; r"><span class="poziom">łatwe</span>
+      <div class="tresc">Podaj środek i promień okręgu $(x+4)^2+(y-3)^2=12$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a=-4$, $b=3$, $r=\sqrt{12}=2\sqrt3$. <b>$S=(-4,3)$, $r=2\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; -1; 5" data-odp-opis="x_S; y_S; r"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz równanie okręgu o środku $S=(3,-1)$ przechodzącego przez $A=(-1,2)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $r^2=|SA|^2=(-4)^2+3^2=25$. <b>$(x-3)^2+(y+1)^2=25$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Okrąg: $(x-2)^2+(y+1)^2=20$. Określ położenie punktów $P=(1,1)$, $Q=(6,3)$, $R=(6,1)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P$: $1+4=5&lt;20$; $Q$: $16+16=32&gt;20$; $R$: $16+4=20$.
+        <b>$P$ wewnątrz, $Q$ na zewnątrz, $R$ na okręgu</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; 3" data-odp-opis="r (styczny do Ox); r (styczny do Oy)"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz równanie okręgu o środku $S=(-3,4)$ stycznego do osi $Ox$, a potem stycznego do osi $Oy$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Odległość $S$ od $Ox$ to $|4|=4$, od $Oy$ to $|-3|=3$.
+        <b>$(x+3)^2+(y-4)^2=16$ oraz $(x+3)^2+(y-4)^2=9$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 3; sqrt(10)" data-odp-opis="x_S; y_S; r"><span class="poziom">maturalne</span>
+      <div class="tresc">Środek okręgu leży na prostej $y=x+1$, a okrąg przechodzi przez $A=(1,0)$ i $B=(5,2)$. Wyznacz jego równanie.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $S=(t,t+1)$ i $|SA|^2=|SB|^2$: $(t-1)^2+(t+1)^2=(t-5)^2+(t-1)^2$, czyli $(t+1)^2=(t-5)^2$, $2t+1=-10t+25$, $t=2$. $S=(2,3)$, $r^2=1+9=10$; kontrola $B$: $9+1=10$ ✓.
+        <b>$(x-2)^2+(y-3)^2=10$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 4" data-odp-opis="wartości a"><span class="poziom">maturalne</span>
+      <div class="tresc">Dla jakich $a$ punkt $P=(1,-2)$ leży na okręgu $(x-a)^2+(y-2)^2=25$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $(1-a)^2+16=25$, $(1-a)^2=9$, $1-a=\pm3$. <b>$a=-2$ lub $a=4$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li>Najczęstszy błąd: <b>$r$ zamiast $r^2$</b>. Po prawej stronie stoi kwadrat promienia: $=12$ oznacza $r=2\sqrt3$.</li>
+    <li>Znaki: $(x+3)^2$ to $a=-3$. Zapisz $S$ jawnie, zanim zaczniesz liczyć dalej.</li>
+    <li>„Środek leży na prostej” → zapisz $S$ z jednym parametrem, np. $S=(t,t+1)$, i ułóż jedno równanie.</li>
+    <li>Rozróżniaj <b>okrąg</b> (równanie, „$=$”) i <b>koło</b> (nierówność, „$\le$”).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function pierw(n) {
+    let k = 1, m = n;
+    for (let i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; }
+    return m === 1 ? `${k}` : m === 0 ? "0" : `${k === 1 ? "" : k}\\sqrt{${m}}`;
+  }
+  // (x-a)^2 z poprawnym znakiem; a = 0 → x^2
+  const kw = (zm, a) => a === 0 ? `${zm}^2` : `(${zm}${a > 0 ? "-" : "+"}${ladnaTex(Math.abs(a))})^2`;
+  const rownanie = (a, b, r2) => `${kw("x", a)}+${kw("y", b)}=${ladnaTex(r2)}`;
+
+  // --- 3. Równanie na żywo + obieganie ---
+  const w1 = new Wykres($("ok-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) });
+  const pk = w1.przeciagaj([{ x: -1, y: 0, siatka: 1, ogranicz: ogr }, { x: 2, y: 4, siatka: 1, ogranicz: ogr }], () => { if (stop) stop(); kat = null; rysujOk(); });
+  let stop = null, kat = null; // kat: położenie M (radiany) w czasie animacji
+  function rysujOk() {
+    const [S, A] = pk, r2 = (A.x - S.x) ** 2 + (A.y - S.y) ** 2, r = Math.sqrt(r2);
+    const k0 = Math.atan2(A.y - S.y, A.x - S.x);
+    const M = kat === null ? A : { x: S.x + r * Math.cos(kat), y: S.y + r * Math.sin(kat) };
+    w1.rysuj(g => {
+      if (r2) g.okrag(S.x, S.y, r, 1, { wypelnij: 0.06 });
+      if (kat !== null) g.luk(S.x, S.y, r, k0, kat, 2, { grubosc: 4 });
+      g.odcinek(S.x, S.y, M.x, S.y, 3, false); g.odcinek(M.x, S.y, M.x, M.y, 3, false);
+      g.odcinek(S.x, S.y, M.x, M.y, 4, false);
+      g.tekst((S.x + M.x) / 2, S.y, "|x−a|", 3, { dy: M.y >= S.y ? 15 : -6, wyrownanie: "center" });
+      g.tekst(M.x, (S.y + M.y) / 2, "|y−b|", 3, { dx: M.x >= S.x ? 6 : -6, wyrownanie: M.x >= S.x ? "left" : "right" });
+      g.punkt(S.x, S.y, "S", 1);
+      if (kat !== null) { g.punkt(A.x, A.y, "A", 2, { pusty: true }); g.punkt(M.x, M.y, "M", 2); }
+      else g.punkt(A.x, A.y, "A", 2);
+    });
+    if (!r2) { tex("ok-wynik", "A=S\\;\\text{— odsuń punkt }A"); tex("ok-wynik2", ""); return; }
+    tex("ok-wynik", `S=(${S.x},\\,${S.y}),\\ r=${pierw(r2)}:\\quad ${rownanie(S.x, S.y, r2)}`);
+    const u = Math.round((M.x - S.x) ** 2 * 100) / 100; // tak, by zaokrąglone składniki sumowały się do r²
+    tex("ok-wynik2", `${M === A ? "A" : "M"}=(${ladnaTex(M.x)},\\,${ladnaTex(M.y)})\\colon\\ ${ladnaTex(u)}+${ladnaTex(r2 - u)}=${ladnaTex(r2)}`);
+  }
+  $("ok-start").addEventListener("click", () => {
+    if (stop) stop();
+    const [S, A] = pk, k0 = Math.atan2(A.y - S.y, A.x - S.x);
+    stop = animuj(4000, t => { kat = k0 + 2 * Math.PI * t; rysujOk(); }, () => { kat = null; rysujOk(); });
+  });
+  rysujOk();
+
+  // --- 4. Położenie punktu ---
+  const S2 = { x: 1, y: 1 };
+  const w2 = new Wykres($("pp-plot"), { xmin: -7, xmax: 8, ymin: -6, ymax: 7, rowneSkale: true });
+  const pk2 = w2.przeciagaj([{ x: 4, y: -2, siatka: 1, ogranicz: p => ({ x: Math.max(-7, Math.min(8, p.x)), y: Math.max(-6, Math.min(7, p.y)) }) }], rysujPP);
+  function rysujPP() {
+    const r = +$("pp-r").value, P = pk2[0];
+    $("pp-r-v").textContent = r;
+    const d2 = (P.x - S2.x) ** 2 + (P.y - S2.y) ** 2;
+    const nr = d2 < r * r ? 3 : d2 === r * r ? 2 : 4;
+    w2.rysuj(g => {
+      g.okrag(S2.x, S2.y, r, 1, { wypelnij: 0.08 });
+      g.odcinek(S2.x, S2.y, P.x, P.y, nr, false);
+      g.punkt(S2.x, S2.y, "S", 1);
+      g.punkt(P.x, P.y, "P", nr, { r: 6 });
+    });
+    const [zn, opis] = d2 < r * r ? ["<", "wewnątrz"] : d2 === r * r ? ["=", "na okręgu"] : [">", "na zewnątrz"];
+    tex("pp-wynik", `(x-1)^2+(y-1)^2=${r * r}:\\quad d^2=(${P.x}-1)^2+(${P.y}-1)^2=${d2}\\ ${zn}\\ ${r * r}\\ \\Rightarrow\\ \\textbf{${opis}}`);
+  }
+  $("pp-r").addEventListener("input", rysujPP);
+  rysujPP();
+});
+</script>
+</body>
+</html>

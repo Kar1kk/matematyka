@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statystyka: średnia, średnia ważona, mediana, dominanta</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Statystyka: średnia, średnia ważona, mediana, dominanta</h1>
+  <p class="lead">Średnia to punkt, w którym dane leżące na listwie by się zrównoważyły. Mediana to „środkowy” element po ustawieniu danych w kolejności. Jedna skrajna wartość mocno przesuwa średnią, a medianę prawie wcale.</p>
+  <p class="wymagania">XII.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Cztery miary i wzory</h2>
+  <div class="wzor">
+    <div class="tytul">Średnia arytmetyczna <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\bar{x}=\frac{x_1+x_2+\ldots+x_n}{n}$$
+    <dl><dt>$n$</dt><dd>liczba danych</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Średnia ważona <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\bar{x}_w=\frac{w_1x_1+\ldots+w_nx_n}{w_1+\ldots+w_n}$$
+    <dl><dt>$w_i$</dt><dd>waga wartości $x_i$ (liczba dodatnia). Dla tabeli liczebności wagą jest <b>liczebność</b></dd></dl>
+  </div>
+  <div class="definicja"><b>Mediana</b> $Me$: ustaw dane <b>niemalejąco</b>. Dla $n$ nieparzystego to wyraz środkowy $x_{\frac{n+1}{2}}$, dla $n$ parzystego średnia dwóch środkowych:
+    $$Me=\frac{x_{n/2}+x_{n/2+1}}{2}$$
+  </div>
+  <div class="definicja"><b>Dominanta</b> (moda) $Do$: wartość, która występuje najczęściej. Może być ich kilka. Gdy wszystkie wartości występują tyle samo razy, mówimy, że dominanty nie ma.</div>
+  <div class="twierdzenie"><b>Własność „równowagi”</b> Suma odchyleń od średniej jest zerem: $\;(x_1-\bar x)+\ldots+(x_n-\bar x)=0$.
+    <details class="rozwin"><summary>Dlaczego?</summary><div>
+      $\sum (x_i-\bar x)=\sum x_i - n\bar x = n\bar x-n\bar x=0$. Fizycznie: równe ciężarki w punktach $x_i$ na nieważkiej listwie są w równowadze dokładnie na podporze w $\bar x$ (momenty sił z lewej i prawej się znoszą).
+    </div></details></div>
+  <div class="uwaga">Wariancja i odchylenie standardowe wypadły z podstawy 2024 Nie ma ich w wymaganiach 2024, ale wzory są w karcie CKE (więcej: <a href="usuniete.html">usunięte z podstawy</a>).</div>
+
+  <h2 id="dzwignia">2. Interaktywnie: średnia jako punkt równowagi</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj klocki (dane) po listwie. Trójkąt to podpora w $\bar x$ (zielona), czerwona kreska to mediana. Kliknij „Wartość odstająca”: zobacz, jak daleko ucieka średnia, a mediana stoi.</p>
+    <canvas id="dz-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <button id="dz-odst">▶ Wartość odstająca</button>
+      <button id="dz-reset">↺ Dane startowe</button>
+    </div>
+    <div class="wynik" id="dz-wynik"></div>
+  </div>
+
+  <h2 id="wazona">3. Interaktywnie: średnia ważona</h2>
+  <div class="demo">
+    <p class="opis">Oceny $2$, $5$, $6$. Waga to liczba „odważników” nad oceną. Zmieniaj wagi i patrz, jak podpora (średnia ważona) wędruje w stronę cięższej oceny. Przerywana kreska: zwykła średnia $\frac{2+5+6}{3}$.</p>
+    <canvas id="sw-plot" style="height:280px"></canvas>
+    <div class="sterowanie">
+      <label>waga $2$ <input type="range" id="sw-w1" min="1" max="5" step="1" value="3"> <span id="sw-w1-v"></span></label>
+      <label>waga $5$ <input type="range" id="sw-w2" min="1" max="5" step="1" value="2"> <span id="sw-w2-v"></span></label>
+      <label>waga $6$ <input type="range" id="sw-w3" min="1" max="5" step="1" value="1"> <span id="sw-w3-v"></span></label>
+    </div>
+    <div class="wynik" id="sw-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Zapytano $20$ uczniów o liczbę rodzeństwa. Oblicz średnią, medianę i dominantę.</p>
+    <table class="tabela">
+      <tr><th>liczba rodzeństwa</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><th>liczba uczniów</th><td>4</td><td>9</td><td>5</td><td>1</td><td>1</td></tr>
+    </table>
+    <ol>
+      <li>Średnia to średnia ważona liczebnościami: $\bar x=\frac{0\cdot4+1\cdot9+2\cdot5+3\cdot1+4\cdot1}{20}=\frac{26}{20}=1{,}3$.</li>
+      <li>$n=20$ jest parzyste, więc mediana to średnia 10. i 11. wyrazu. Liczebności skumulowane: $4,\ 13,\ldots$, czyli wyrazy 5.–13. są równe $1$. Stąd $Me=\frac{1+1}{2}=1$.</li>
+      <li>Najczęstsza wartość (9 razy) to $1$.</li>
+    </ol>
+    <p class="odp">$\bar x=1{,}3$, $\;Me=1$, $\;Do=1$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="11/2; 11/2; 3" data-odp-opis="średnia; mediana; dominanta"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz średnią, medianę i dominantę danych: $7,\ 3,\ 9,\ 3,\ 5,\ 8,\ 3,\ 6$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Suma $44$, więc $\bar x=\frac{44}{8}=5{,}5$. Po uporządkowaniu: $3,3,3,5,6,7,8,9$, środkowe to $5$ i $6$. <b>$\bar x=5{,}5$, $Me=5{,}5$, $Do=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="88/25; 3; 48" data-odp-opis="średnia; mediana; procent uczniów"><span class="poziom">łatwe</span>
+      <div class="tresc">Diagram pokazuje oceny z klasówki w klasie. Oblicz średnią i medianę ocen oraz jaki procent uczniów dostał co najmniej $4$.
+        <canvas id="st-diag" style="width:100%;height:220px;display:block;margin-top:8px"></canvas></div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Liczebności $2,3,8,6,4,2$, razem $n=25$. Suma ocen $2+6+24+24+20+12=88$, więc $\bar x=\frac{88}{25}=3{,}52$. Mediana to 13. wyraz: skumulowane $2,5,13$, więc 13. ocena to $3$. Co najmniej $4$ ma $6+4+2=12$ osób, $\frac{12}{25}=48\%$.
+        <b>$\bar x=3{,}52$, $Me=3$, $48\%$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; 9/2" data-odp-opis="x; mediana"><span class="poziom">średnie</span>
+      <div class="tresc">Średnia arytmetyczna liczb $2,\ 5,\ x,\ 7,\ 9,\ 3$ wynosi $5$. Wyznacz $x$ i medianę tych liczb.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac{26+x}{6}=5$, więc $x=4$. Uporządkowane: $2,3,4,5,7,9$, środkowe $4$ i $5$. <b>$x=4$, $Me=4{,}5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6" data-odp-opis="ocena"><span class="poziom">średnie</span>
+      <div class="tresc">Oceny Tomka: sprawdziany (waga 3): $4,\ 5$; kartkówki (waga 2): $3$ i jeszcze jedna; odpowiedź (waga 1): $5$. Jaką ocenę (od 1 do 6) musi dostać z ostatniej kartkówki, żeby średnia ważona była co najmniej $4{,}5$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Suma wag $3+3+2+2+1=11$. Warunek: $\frac{12+15+6+2x+5}{11}\ge4{,}5$, czyli $38+2x\ge49{,}5$, $x\ge5{,}75$. Sprawdzenie: $x=6$ daje $\frac{50}{11}\approx4{,}55$, a $x=5$ tylko $\frac{48}{11}\approx4{,}36$. <b>Musi dostać $6$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Zestaw pięciu liczb naturalnych ma średnią $6$, medianę $7$ i dokładnie jedną dominantę, równą $8$. Wyznacz wszystkie takie zestawy.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Uporządkuj: $a\le b\le 7\le d\le e$, suma $30$. Liczba $8$ musi wystąpić co najmniej dwa razy, a jest większa od mediany, więc $d=e=8$. Wtedy $a+b=30-7-16=7$. Żadna inna liczba nie może wystąpić dwa razy (byłyby dwie dominanty), więc $a&lt;b&lt;7$. Pary: $(1,6),(2,5),(3,4)$ (para $(0,7)$ odpada: $7$ wystąpiłaby dwa razy).
+        <b>$\{1,6,7,8,8\}$, $\{2,5,7,8,8\}$, $\{3,4,7,8,8\}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Mediana:</b> zawsze najpierw <b>uporządkuj</b> dane. Najczęstszy błąd to wzięcie środkowej liczby z nieposortowanej listy.</li>
+    <li><b>Tabela / diagram liczebności:</b> średnia to średnia ważona (mnożysz wartość przez liczebność). Medianę znajdziesz z liczebności skumulowanych, nie wypisuj wszystkich danych.</li>
+    <li><b>$n$ parzyste:</b> mediana to średnia <b>dwóch</b> środkowych, może nie być żadną z danych.</li>
+    <li><b>Zmiana danych:</b> dopisanie liczby $x$ zmienia sumę o $x$ i liczbę danych o $1$. Licz przez sumę: $S=n\cdot\bar x$.</li>
+    <li>Dominant może być kilka. Wtedy wypisz wszystkie.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sr = a => a.reduce((s, v) => s + v, 0) / a.length;
+  const med = a => { const b = [...a].sort((u, v) => u - v), n = b.length; return n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2; };
+  // podpora (trójkąt) i listwa z podziałką
+  function listwa(g, a, b, krok, opis) {
+    g.odcinek(a, 0, b, 0, "--plot-axis", false);
+    for (let x = a; x <= b + 1e-9; x += 1) {
+      g.odcinek(x, -0.12, x, 0.12, "--plot-axis", false);
+      if ((x - a) % krok === 0) g.tekst(x, 0, String(x), "--plot-axis", { dy: 18, wyrownanie: "center", rozmiar: 12 });
+    }
+    if (opis) g.tekst(b, 0, opis, "--plot-axis", { dy: 34, wyrownanie: "right", rozmiar: 12 });
+  }
+  function podpora(g, x, h, sz) {
+    g.wielokat([[x, -0.05], [x - sz, -h], [x + sz, -h]], 3, { wypelnij: 0.6 });
+  }
+
+  // --- 2. Dźwignia ---
+  const START = [3, 4, 4, 5, 6, 7, 8];
+  const w1 = new Wykres($("dz-plot"), { xmin: -0.8, xmax: 20.8, ymin: -2.4, ymax: 5, siatka: false, osie: false });
+  const ogr = q => ({ x: Math.min(20, Math.max(0, Math.round(q.x * 2) / 2)), y: q.y });
+  const pk = START.map(x => ({ x, y: 0.5, ogranicz: ogr }));
+  function ustaw() { // klocki o tej samej wartości stawiamy jeden na drugim
+    const ile = {};
+    pk.forEach(p => { const k = p.x.toFixed(1); ile[k] = (ile[k] || 0) + 1; p.y = 0.45 + 0.85 * (ile[k] - 1); });
+  }
+  function rysujDz() {
+    ustaw();
+    const xs = pk.map(p => p.x), m = sr(xs), me = med(xs);
+    let lewo = 0, prawo = 0;
+    xs.forEach(x => { if (x < m) lewo += m - x; else prawo += x - m; });
+    w1.rysuj(g => {
+      listwa(g, 0, 20, 2);
+      pk.forEach(p => g.odcinek(m, p.y, p.x, p.y, p.x < m ? 2 : 1, true));
+      g.odcinek(me, -0.1, me, 4.6, 2, false);
+      g.tekst(me, 4.6, "Me", 2, { dx: 4, dy: 4, gruby: true });
+      podpora(g, m, 1.1, 0.45);
+      g.tekst(m, -1.1, "x̄", 3, { dy: 16, wyrownanie: "center", gruby: true });
+      pk.forEach(p => g.prostokat(p.x - 0.32, p.y - 0.35, 0.64, 0.7, 1, { wypelnij: 0.5 }));
+    });
+    tex("dz-wynik", `\\bar x=${ladnaTex(m)},\\; Me=${ladnaTex(me)},\\;\\text{odchylenia: }${ladnaTex(lewo)}\\text{ (lewo)}=${ladnaTex(prawo)}\\text{ (prawo)}`);
+  }
+  w1.przeciagaj(pk, () => { if (stopDz) stopDz(); rysujDz(); });
+  let stopDz = null;
+  $("dz-odst").addEventListener("click", () => {
+    if (stopDz) stopDz();
+    const p = pk.reduce((a, b) => (b.x > a.x ? b : a)), x0 = p.x;
+    stopDz = animuj(1400, t => { p.x = Math.round((x0 + (20 - x0) * t) * 2) / 2; rysujDz(); });
+  });
+  $("dz-reset").addEventListener("click", () => { if (stopDz) stopDz(); pk.forEach((p, i) => { p.x = START[i]; }); rysujDz(); });
+  rysujDz();
+
+  // --- 3. Średnia ważona ---
+  const OC = [2, 5, 6];
+  const w2 = new Wykres($("sw-plot"), { xmin: 0.3, xmax: 6.7, ymin: -1.6, ymax: 5.6, siatka: false, osie: false });
+  function rysujSw() {
+    const w = ["sw-w1", "sw-w2", "sw-w3"].map(id => +$(id).value);
+    ["sw-w1", "sw-w2", "sw-w3"].forEach((id, i) => { $(id + "-v").textContent = w[i]; });
+    const W = w[0] + w[1] + w[2], S = OC.reduce((s, x, i) => s + w[i] * x, 0), m = S / W;
+    w2.rysuj(g => {
+      listwa(g, 1, 6, 1, "ocena");
+      OC.forEach((x, i) => { for (let j = 0; j < w[i]; j++) g.prostokat(x - 0.3, 0.08 + j * 0.95, 0.6, 0.85, i === 0 ? 2 : 1, { wypelnij: 0.45 }); });
+      g.odcinek(13 / 3, -0.1, 13 / 3, 5.2, "--plot-axis", true);
+      podpora(g, m, 0.9, 0.22);
+      g.tekst(m, -0.9, "x̄w", 3, { dy: 16, wyrownanie: "center", gruby: true });
+    });
+    tex("sw-wynik", `\\bar x_w=\\frac{${w[0]}\\cdot2+${w[1]}\\cdot5+${w[2]}\\cdot6}{${W}}=\\frac{${S}}{${W}}\\approx${ladnaTex(m)}`);
+  }
+  ["sw-w1", "sw-w2", "sw-w3"].forEach(id => $(id).addEventListener("input", rysujSw));
+  rysujSw();
+
+  // --- Diagram do zadania 2 ---
+  const LICZ = [2, 3, 8, 6, 4, 2];
+  const w3 = new Wykres($("st-diag"), { xmin: -0.2, xmax: 6.9, ymin: -1.3, ymax: 9.5, krokY: 2, siatka: true });
+  w3.rysuj(g => {
+    LICZ.forEach((c, i) => {
+      g.prostokat(i + 1 - 0.3, 0, 0.6, c, 1);
+      g.tekst(i + 1, c, String(c), 1, { dy: -5, wyrownanie: "center", gruby: true });
+    });
+  });
+});
+</script>
+</body>
+</html>

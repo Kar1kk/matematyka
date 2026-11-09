@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Przekształcenia wykresów: f(x−a)+b, −f(x), f(−x)</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Przekształcenia wykresów: f(x−a)+b, −f(x), f(−x)</h1>
+  <p class="lead">Zmiana <b>na zewnątrz</b> $f$ rusza wykres w pionie, zmiana <b>w środku</b> (przy $x$) rusza go w poziomie, i to „na odwrót”: $f(x-3)$ jedzie w <b>prawo</b>. Minus na zewnątrz odbija względem $Ox$, minus przy $x$ względem $Oy$.</p>
+  <p class="wymagania">V.12, V.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Cztery przekształcenia</h2>
+  <table class="tabela">
+    <tr><th>Wzór</th><th>Co się dzieje z wykresem $f$</th><th>Punkt $(x,y)$ przechodzi w</th></tr>
+    <tr><td>$y=f(x-a)$</td><td>przesunięcie o $[a,0]$ (dla $a&gt;0$ w prawo)</td><td>$(x+a,\ y)$</td></tr>
+    <tr><td>$y=f(x)+b$</td><td>przesunięcie o $[0,b]$</td><td>$(x,\ y+b)$</td></tr>
+    <tr><td>$y=-f(x)$</td><td>symetria względem osi $Ox$</td><td>$(x,\ -y)$</td></tr>
+    <tr><td>$y=f(-x)$</td><td>symetria względem osi $Oy$</td><td>$(-x,\ y)$</td></tr>
+  </table>
+  <div class="wzor">
+    <div class="tytul">Złożenie przesunięć</div>
+    $$y=f(x-a)+b$$
+    <dl><dt>$[a,b]$</dt><dd>wektor przesunięcia; np. $f(x+2)-1$ to wektor $[-2,-1]$</dd>
+        <dt>$D$, $ZW$</dt><dd>dziedzina przesuwa się o $a$, zbiór wartości o $b$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Dlaczego $f(x-a)$ to przesunięcie w prawo?</summary><div>
+    <p>Niech $g(x)=f(x-a)$. Wtedy $g(x_0+a)=f(x_0)$: wartość, którą $f$ ma w $x_0$, funkcja $g$ osiąga dopiero w $x_0+a$, czyli $a$ jednostek dalej w prawo. Każdy punkt $(x_0,y_0)$ wykresu $f$ przechodzi w $(x_0+a,\,y_0)$. Zobacz demo w punkcie 3.</p>
+  </div></details>
+  <div class="uwaga">Kolejność ma znaczenie. $-f(x)+b$: najpierw odbij, potem przesuń. $f(-x+a)=f(-(x-a))$: najpierw odbij względem $Oy$, potem przesuń o $[a,0]$ (a nie o $[-a,0]$!).</div>
+  <p class="opis">Wykresy $y=|f(x)|$ i $y=f(|x|)$ są <b>poza podstawą</b> 2024 (&#124;f(x)&#124; usunięto z wymagań), ale łatwo je zrozumieć jako odbicie części wykresu.</p>
+
+  <h2 id="demo">2. Interaktywnie: przekształć wykres</h2>
+  <div class="demo">
+    <p class="opis">Wybierz funkcję, ustaw $a$, $b$ i odbicia, kliknij „▶ Przekształć”. Najpierw odbicia (wykres „przewraca się” przez oś), potem przesunięcie o czerwony wektor $[a,b]$. Przerywana: wykres $f$.</p>
+    <canvas id="pw-plot"></canvas>
+    <div class="sterowanie">
+      <label>$f(x)=$ <select id="pw-f">
+        <option value="kw">x²</option>
+        <option value="pi" selected>√x</option>
+        <option value="hip">1/x</option>
+        <option value="wyk">2^x</option>
+      </select></label>
+      <label>$a$ <input type="range" id="pw-a" min="-4" max="4" step="0.5" value="2"> <span id="pw-a-v"></span></label>
+      <label>$b$ <input type="range" id="pw-b" min="-4" max="4" step="0.5" value="1"> <span id="pw-b-v"></span></label>
+      <label><input type="checkbox" id="pw-ox"> $-f(x)$ (odbicie wzgl. $Ox$)</label>
+      <label><input type="checkbox" id="pw-oy"> $f(-x)$ (odbicie wzgl. $Oy$)</label>
+      <button id="pw-start">▶ Przekształć</button>
+    </div>
+    <div class="wynik" id="pw-wynik"></div>
+  </div>
+
+  <h2 id="dlaczego">3. Dlaczego „minus” przesuwa w prawo</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt na niebieskim wykresie $f(x)=\frac12x^2$. Czerwony wykres to $g(x)=f(x-a)$. Ta sama wysokość pojawia się na $g$ o $a$ jednostek dalej w prawo.</p>
+    <canvas id="pp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="pp-a" min="-4" max="4" step="0.5" value="3"> <span id="pp-a-v"></span></label>
+    </div>
+    <div class="wynik" id="pp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Naszkicuj $g(x)=-\sqrt{x+2}+3$ na podstawie $f(x)=\sqrt x$. Podaj dziedzinę, zbiór wartości i miejsce zerowe.</p>
+    <ol>
+      <li>$\sqrt{x+2}=f(x+2)$: przesunięcie o $[-2,0]$, początek w $(-2,0)$.</li>
+      <li>$-\sqrt{x+2}$: odbicie względem $Ox$, wykres idzie w dół.</li>
+      <li>$+3$: przesunięcie o $[0,3]$, początek w $(-2,3)$.</li>
+      <li>$D=\lp-2,\infty)$, $ZW=(-\infty,3\rp$. Zero: $\sqrt{x+2}=3\iff x=7$.</li>
+    </ol>
+    <p class="odp">$D_g=\lp-2,\infty)$, $\;ZW_g=(-\infty,3\rp$, $\;x_0=7$</p>
+    <p>Sprawdź w demo: $\sqrt x$, $a=-2$, $b=3$, zaznacz $-f(x)$.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykres $f(x)=x^2$ przesunięto o wektor $[-3,2]$. Podaj wzór otrzymanej funkcji.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(x-(-3))+2$. <b>$g(x)=(x+3)^2+2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 6" data-odp-opis="miejsca zerowe g"><span class="poziom">łatwe</span>
+      <div class="tresc">Funkcja $f$ ma dziedzinę $\lp-2,5\rp$, zbiór wartości $\lp-1,4\rp$ i miejsca zerowe $-1$ oraz $3$. Podaj dziedzinę, zbiór wartości i miejsca zerowe funkcji $g(x)=f(x-3)$ oraz zbiór wartości $h(x)=-f(x)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $g$: wszystko o $3$ w prawo, wartości bez zmian. $h$: wartości z przeciwnym znakiem.
+        <b>$D_g=\lp1,8\rp$, $ZW_g=\lp-1,4\rp$, zera $g$: $2$ i $6$; $\;ZW_h=\lp-4,1\rp$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Podaj wzory funkcji, których wykresy są symetryczne do wykresu $f(x)=2^x$ względem osi $Oy$ oraz względem osi $Ox$. Podaj ich zbiory wartości.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Względem $Oy$: $f(-x)=2^{-x}=\left(\frac12\right)^x$, $ZW=(0,\infty)$. Względem $Ox$: $-f(x)=-2^x$, $ZW=(-\infty,0)$.
+        <b>$y=\left(\frac12\right)^x$, $ZW=(0,\infty)$; $\;y=-2^x$, $ZW=(-\infty,0)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-2; oo)" data-odp-opis="przedział, w którym g rośnie"><span class="poziom">średnie</span>
+      <div class="tresc">Dla $f(x)=x^2-4x$ wyznacz wzór $g(x)=f(-x)$ i przedział, w którym $g$ jest rosnąca.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $g(x)=(-x)^2-4(-x)=x^2+4x$, wierzchołek $p=-2$ (odbicie $p_f=2$), ramiona w górę.
+        <b>$g(x)=x^2+4x$, rosnąca w $\lp-2,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1" data-odp-opis="miejsce zerowe g"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykres $f(x)=\log_2 x$ przesunięto o wektor $[a,b]$ i otrzymano wykres funkcji $g$, który ma asymptotę $x=-1$ i przechodzi przez punkt $A=(3,1)$. Wyznacz $a$, $b$ i miejsce zerowe $g$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $g(x)=\log_2(x-a)+b$, asymptota $x=a$, więc $a=-1$. $g(3)=\log_2 4+b=2+b=1$, więc $b=-1$. $\log_2(x+1)=1\iff x+1=2$.
+        <b>$a=-1$, $b=-1$, miejsce zerowe $x=1$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>$f(x+3)$ to przesunięcie w <b>lewo</b> o $3$. Zapisz wektor jawnie: $[-3,0]$.</li>
+    <li>Przy szkicowaniu przesuwaj <b>charakterystyczne punkty</b> (wierzchołek, początek, punkt $(0,1)$ dla $a^x$) i <b>asymptoty</b>.</li>
+    <li>$-f(x)$: miejsca zerowe się nie zmieniają. $f(-x)$: punkt przecięcia z $Oy$ się nie zmienia.</li>
+    <li>Na rozszerzeniu wzór bywa „ukryty”: $f(2-x)=f(-(x-2))$ to odbicie względem $Oy$, a potem przesunięcie o $[2,0]$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Przekształcenia: każdy punkt (u, f(u)) → (εx·u + a, εy·f(u) + b) ---
+  const BAZY = {
+    kw: { f: u => u * u, galezie: [[-4, 4]], K: [0, 0], tex: s => `\\left(${s}\\right)^2` },
+    pi: { f: u => Math.sqrt(u), galezie: [[0, 16]], K: [0, 0], tex: s => `\\sqrt{${s}}` },
+    hip: { f: u => 1 / u, galezie: [[-12, -0.12], [0.12, 12]], K: [1, 1], tex: s => `\\frac{1}{${s}}`, pion: 0, poz: 0 },
+    wyk: { f: u => 2 ** u, galezie: [[-12, 3.2]], K: [0, 1], tex: s => `2^{${s}}`, poz: 0 },
+  };
+  const w1 = new Wykres($("pw-plot"), { xmin: -8, xmax: 8, ymin: -7, ymax: 7, rowneSkale: true });
+  let stop = null;
+  function klatka(t) {
+    const B = BAZY[$("pw-f").value], a = +$("pw-a").value, b = +$("pw-b").value;
+    const ex = $("pw-oy").checked ? -1 : 1, ey = $("pw-ox").checked ? -1 : 1;
+    $("pw-a-v").textContent = ladna(a); $("pw-b-v").textContent = ladna(b);
+    // t ∈ [0, .5]: odbicia (współczynnik 1 → ε), t ∈ [.5, 1]: przesunięcie
+    const t1 = Math.min(1, t * 2), t2 = Math.max(0, t * 2 - 1);
+    const kx = 1 + (ex - 1) * t1, ky = 1 + (ey - 1) * t1, ak = a * t2, bk = b * t2;
+    const T = (u, v) => [kx * u + ak, ky * v + bk];
+    w1.rysuj(g => {
+      B.galezie.forEach(([u0, u1]) => g.parametryczna(u => u, B.f, u0, u1, 3, { przerywana: true }));
+      if (B.pion !== undefined) g.odcinek(ak + kx * B.pion, g.z.ymin, ak + kx * B.pion, g.z.ymax, 4);
+      if (B.poz !== undefined) g.odcinek(g.z.xmin, bk + ky * B.poz, g.z.xmax, bk + ky * B.poz, 4);
+      B.galezie.forEach(([u0, u1]) => g.parametryczna(u => T(u, B.f(u))[0], u => T(u, B.f(u))[1], u0, u1, 1));
+      const K1 = [ex * B.K[0], ey * B.K[1]], K = T(B.K[0], B.K[1]);
+      if (t2 > 0 && (a || b)) g.strzalka(K1[0], K1[1], K[0], K[1], 2, "[a, b]");
+      g.punkt(B.K[0], B.K[1], "", 3, { r: 4 });
+      g.punkt(K[0], K[1], "", 2);
+    });
+    // wzór (zawsze stan docelowy)
+    const sx = a ? `x${znakTex(-a)}` : "x";
+    const wew = ex < 0 ? (a ? `-(${sx})` : "-x") : sx;
+    const zew = (ey < 0 ? "-" : "") + B.tex(wew) + (b ? znakTex(b) : "");
+    const ogolny = (ey < 0 ? "-" : "") + `f(${wew})` + (b ? znakTex(b) : "");
+    tex("pw-wynik", `y=${ogolny}=${zew},\\qquad \\text{wektor } [${ladnaTex(a)},\\,${ladnaTex(b)}]`);
+  }
+  $("pw-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2800, klatka); });
+  ["pw-a", "pw-b"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatka(1); }));
+  ["pw-f", "pw-ox", "pw-oy"].forEach(id => $(id).addEventListener("change", () => { if (stop) stop(); klatka(0); }));
+  klatka(0);
+
+  // --- 3. Dlaczego w prawo ---
+  const f = x => x * x / 2;
+  const w2 = new Wykres($("pp-plot"), { xmin: -7, xmax: 7, ymin: -1, ymax: 7 });
+  const P = w2.przeciagaj([{ x: -1.5, y: f(-1.5), ogranicz: p => { const x = Math.max(-3.5, Math.min(3.5, Math.round(p.x * 10) / 10)); return { x, y: f(x) }; } }], rysujPp);
+  function rysujPp() {
+    const a = +$("pp-a").value, x0 = P[0].x, y0 = f(x0);
+    $("pp-a-v").textContent = ladna(a);
+    w2.rysuj(g => {
+      g.funkcja(f, 1);
+      g.funkcja(x => f(x - a), 2);
+      g.odcinek(x0, 0, x0, y0, 1); g.odcinek(x0 + a, 0, x0 + a, y0, 2);
+      if (a) g.strzalka(x0, y0, x0 + a, y0, 3, `o ${ladna(a)}`);
+      g.punkt(x0, y0, "", 1); g.punkt(x0 + a, y0, "", 2);
+      g.tekst(x0, 0, "x₀", 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(x0 + a, 0, "x₀+a", 2, { dy: 14, wyrownanie: "center" });
+    });
+    tex("pp-wynik", `g(x_0+a)=f\\big((x_0+a)-a\\big)=f(x_0):\\quad g(${ladnaTex(x0 + a)})=f(${ladnaTex(x0)})=${ladnaTex(y0)}`);
+  }
+  $("pp-a").addEventListener("input", rysujPp);
+  rysujPp();
+});
+</script>
+</body>
+</html>

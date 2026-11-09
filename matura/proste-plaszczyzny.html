@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proste i płaszczyzny w przestrzeni</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/bryly3d.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Proste i płaszczyzny w przestrzeni</h1>
+  <p class="lead">Na płaszczyźnie dwie proste albo się przecinają, albo są równoległe. W przestrzeni jest trzecia możliwość: proste <b>skośne</b>, które się mijają. Mogą przy tym być prostopadłe, choć nie mają punktu wspólnego.</p>
+  <p class="wymagania">X.1 (wstęp do X.2, X.R.1)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="proste">1. Dwie proste</h2>
+  <table class="tabela">
+    <tr><th>położenie</th><th>punkty wspólne</th><th>wspólna płaszczyzna</th></tr>
+    <tr><td>przecinające się</td><td>dokładnie 1</td><td>tak</td></tr>
+    <tr><td>równoległe</td><td>0 (albo pokrywają się)</td><td>tak</td></tr>
+    <tr><td><b>skośne</b></td><td>0</td><td><b>nie</b></td></tr>
+  </table>
+  <div class="definicja"><b>Kąt między prostymi skośnymi</b> Przez dowolny punkt jednej prostej poprowadź prostą równoległą do drugiej. Kąt między tymi przecinającymi się prostymi (z przedziału $(0^\circ, 90^\circ\rangle$) to kąt między prostymi skośnymi. Gdy wynosi $90^\circ$, proste są <b>prostopadłe</b>, choć się nie przecinają.</div>
+  <div class="uwaga">„Prostopadłe” w przestrzeni nie znaczy „przecinające się pod kątem prostym”. Krawędzie $AB$ i $CG$ sześcianu są prostopadłe i skośne.</div>
+
+  <h2 id="plaszczyzny">2. Prosta i płaszczyzna, dwie płaszczyzny</h2>
+  <div class="dwie">
+    <div><p><b>Prosta i płaszczyzna:</b></p><ul>
+      <li>prosta <b>leży</b> w płaszczyźnie (nieskończenie wiele punktów wspólnych),</li>
+      <li>prosta jest <b>równoległa</b> do płaszczyzny (brak punktów wspólnych),</li>
+      <li>prosta <b>przebija</b> płaszczyznę (1 punkt), szczególny przypadek: jest do niej <b>prostopadła</b>.</li></ul></div>
+    <div><p><b>Dwie płaszczyzny:</b> są równoległe (lub się pokrywają) albo przecinają się wzdłuż prostej.</p>
+      <p><b>Płaszczyznę wyznaczają:</b> 3 punkty niewspółliniowe, prosta i punkt spoza niej, dwie proste przecinające się, dwie proste równoległe.</p></div>
+  </div>
+  <div class="definicja"><b>Prosta prostopadła do płaszczyzny</b> to prosta prostopadła do <b>każdej</b> prostej tej płaszczyzny. Wystarczy sprawdzić dwie przecinające się proste płaszczyzny: to twierdzenie z <a href="trzy-prostopadle.html">tematu o trzech prostopadłych</a>.</div>
+
+  <h2 id="demo">3. Interaktywnie: położenie w sześcianie</h2>
+  <div class="demo">
+    <p class="opis">Wybierz prostą (czerwona) i drugą prostą albo płaszczyznę (fioletowa). Obracaj sześcian palcem lub myszą. Przy prostych skośnych zielona przerywana to równoległa kopia, która pokazuje kąt.</p>
+    <canvas id="pp-plot"></canvas>
+    <div class="sterowanie">
+      <label>prosta <select id="pp-a"></select></label>
+      <label>z <select id="pp-b"></select></label>
+      <button id="pp-los" class="wtorny">Losuj parę</button>
+    </div>
+    <div class="wynik" id="pp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>W sześcianie $ABCDEFGH$ (dolna podstawa $ABCD$, nad $A$ leży $E$) wyznacz kąt między prostymi $AC$ i $BG$.</p>
+    <ol>
+      <li>$AC$ leży w dolnej podstawie, $BG$ w ścianie $BCGF$; nie są równoległe i nie mają punktu wspólnego, więc są <b>skośne</b>.</li>
+      <li>Przesuń $BG$ równolegle do punktu $A$: $BG\parallel AH$ (przekątne przeciwległych ścian).</li>
+      <li>Trójkąt $ACH$ ma boki będące przekątnymi ścian, czyli $a\sqrt2$: jest równoboczny.</li>
+    </ol>
+    <p class="odp">Kąt między $AC$ i $BG$ wynosi $60^\circ$.</p>
+    <p>Ustaw w demo: prosta $AC$, z $BG$.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Określ wzajemne położenie prostych w sześcianie $ABCDEFGH$: a) $AB$ i $GH$, b) $AB$ i $CG$, c) $AB$ i $BF$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) $GH\parallel CD\parallel AB$: <b>równoległe</b>. b) Brak punktu wspólnego, różne kierunki: <b>skośne, prostopadłe</b>. c) Wspólny punkt $B$: <b>przecinające się, prostopadłe</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Ile krawędzi sześcianu jest skośnych do ustalonej krawędzi?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Z $12$ krawędzi: sama krawędź ($1$), równoległe ($3$), mające z nią wspólny wierzchołek ($4$, po $2$ na każdym końcu). Zostaje $12-1-3-4$. <b>4 krawędzie</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz kąt między prostymi $AB$ i $CH$ w sześcianie $ABCDEFGH$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Proste są skośne. $AB\parallel DC$, więc szukany kąt to kąt $DCH$ w ścianie $CDHG$. $CH$ jest przekątną kwadratu, więc tworzy z bokiem kąt <b>$45^\circ$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Określ położenie względem płaszczyzny $ABC$: a) prostej $EG$, b) prostej $AG$, c) prostej $CG$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        a) $EG\parallel AC$, a $AC$ leży w $ABC$: <b>równoległa</b>. b) $A$ leży w płaszczyźnie, $G$ nie: <b>przebija w punkcie $A$</b> (nie prostopadle). c) $CG\perp AB$ i $CG\perp BC$: <b>prostopadła</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że w czworościanie foremnym $ABCD$ krawędzie $AB$ i $CD$ są prostopadłe.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Niech $M$ będzie środkiem $AB$. Trójkąty $ABC$ i $ABD$ są równoboczne, więc środkowe $CM$ i $DM$ są wysokościami: $CM\perp AB$, $DM\perp AB$. Prosta $AB$ jest prostopadła do dwóch przecinających się prostych $CM$, $DM$ płaszczyzny $CDM$, więc jest prostopadła do całej płaszczyzny $CDM$, a zatem do leżącej w niej prostej $CD$. <b>$AB\perp CD$</b> (proste skośne prostopadłe).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Kąt między prostymi skośnymi:</b> zawsze przesuń jedną równolegle (np. krawędź na przeciwległą ścianę) i licz kąt w trójkącie.</li>
+    <li>Kąt między prostymi ma miarę z $(0^\circ,90^\circ\rangle$. Jeśli z tw. cosinusów wyjdzie kąt rozwarty, odpowiedzią jest $180^\circ$ minus ten kąt.</li>
+    <li>Prostopadłość prostej do płaszczyzny uzasadniaj <b>dwiema przecinającymi się prostymi</b> tej płaszczyzny, nie jedną.</li>
+    <li>Rysunek: krawędzie niewidoczne przerywaną linią, oznaczenia wierzchołków jak w treści zadania.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const P = { A: [0, 0, 0], B: [2, 0, 0], C: [2, 2, 0], D: [0, 2, 0], E: [0, 0, 2], F: [2, 0, 2], G: [2, 2, 2], H: [0, 2, 2] };
+  const W = Object.values(P), SC = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]];
+  const PROSTE = ["AB", "BC", "CD", "DA", "EF", "FG", "GH", "HE", "AE", "BF", "CG", "DH", "AC", "BD", "EG", "AF", "BG", "CH", "AH", "AG", "BH"];
+  const PLASZ = ["ABCD", "EFGH", "ABFE", "BCGF", "ACGE", "BDE"];
+  const opcja = (sel, t, v) => { const o = document.createElement("option"); o.value = v; o.textContent = t; sel.appendChild(o); };
+  PROSTE.forEach(s => { opcja($("pp-a"), s, s); opcja($("pp-b"), "prosta " + s, s); });
+  PLASZ.forEach(s => opcja($("pp-b"), "płaszczyzna " + s, s));
+  $("pp-a").value = "AC"; $("pp-b").value = "BG";
+  const { odj, dod, wek, il, dl, razy } = V3;
+  const st = a => Math.acos(Math.min(1, Math.abs(a))) * 180 / Math.PI;
+  const s3 = new Scena3D($("pp-plot"), { zakres: 2.4, srodek: [1, 1, 1] });
+
+  function rysuj() {
+    const a = $("pp-a").value, b = $("pp-b").value;
+    const p1 = P[a[0]], d1 = odj(P[a[1]], p1);
+    let opis = "", rys = null, pkt = null, kopia = null;
+    if (b.length === 2) {
+      const q1 = P[b[0]], d2 = odj(P[b[1]], q1), x = wek(d1, d2), kat = st(il(d1, d2) / dl(d1) / dl(d2));
+      if (dl(x) < 1e-9) opis = dl(wek(odj(q1, p1), d1)) < 1e-9 ? "\\text{ta sama prosta}" : "\\text{równoległe}";
+      else if (Math.abs(il(odj(q1, p1), x)) < 1e-9) {
+        opis = "\\text{przecinające się}";
+        pkt = dod(p1, razy(d1, il(wek(odj(q1, p1), d2), x) / il(x, x)));
+      } else { opis = "\\text{skośne}"; kopia = [p1, dod(p1, d2)]; }
+      if (dl(x) > 1e-9) opis += kat > 89.99 ? ",\\ \\text{prostopadłe}" : `,\\ \\text{kąt } ${ladnaTex(kat, 1)}^\\circ`;
+      rys = g => g.odcinek(V3.lerp(q1, P[b[1]], -0.3), V3.lerp(q1, P[b[1]], 1.3), 4, { grubosc: 3 });
+    } else {
+      const pts = b.split("").map(c => P[c]), n = wek(odj(pts[1], pts[0]), odj(pts[2], pts[0])), dn = il(d1, n);
+      if (Math.abs(dn) < 1e-9) opis = Math.abs(il(odj(p1, pts[0]), n)) < 1e-9 ? "\\text{prosta leży w płaszczyźnie}" : "\\text{prosta równoległa do płaszczyzny}";
+      else {
+        const kat = 90 - st(dn / dl(d1) / dl(n));
+        pkt = dod(p1, razy(d1, il(odj(pts[0], p1), n) / dn));
+        opis = kat > 89.99 ? "\\text{prosta prostopadła do płaszczyzny}" : `\\text{prosta przebija płaszczyznę pod kątem } ${ladnaTex(kat, 1)}^\\circ`;
+      }
+      rys = g => g.wielokat(pts, 4, { wypelnij: 0.25, grubosc: 1.5 });
+    }
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.05 });
+      rys(g);
+      g.odcinek(V3.lerp(p1, P[a[1]], -0.3), V3.lerp(p1, P[a[1]], 1.3), 2, { grubosc: 3 });
+      if (kopia) { g.odcinek(kopia[0], kopia[1], 3, { przerywana: true, grubosc: 2 }); g.kat(p1, P[a[1]], kopia[1], 0.45, 3); }
+      if (pkt) g.punkt(pkt, "", 2, { r: 5 });
+      Object.keys(P).forEach((k, i) => g.tekst(W[i], k, "--muted", { dx: 5, dy: -5, gruby: true }));
+    });
+    tex("pp-wynik", `${a},\\ ${b}:\\ ${opis}`);
+  }
+  $("pp-a").addEventListener("change", rysuj); $("pp-b").addEventListener("change", rysuj);
+  $("pp-los").addEventListener("click", () => {
+    $("pp-a").value = PROSTE[Math.floor(Math.random() * PROSTE.length)];
+    const wsz = PROSTE.concat(PLASZ); $("pp-b").value = wsz[Math.floor(Math.random() * wsz.length)]; rysuj();
+  });
+  rysuj();
+});
+</script>
+</body>
+</html>

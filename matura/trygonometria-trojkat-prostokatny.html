@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trygonometria w trójkącie prostokątnym</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Trygonometria w trójkącie prostokątnym</h1>
+  <p class="lead">Wszystkie trójkąty prostokątne z tym samym kątem ostrym $\alpha$ są podobne, więc stosunki ich boków są takie same. Te stosunki to właśnie $\sin\alpha$, $\cos\alpha$, $\tg\alpha$: zależą tylko od kąta, nie od wielkości trójkąta.</p>
+  <p class="wymagania">VII.4, VIII.12 (także VII.1)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definicje</h2>
+  <div class="definicja"><b>Definicja</b> W trójkącie prostokątnym o przeciwprostokątnej $c$ i kącie ostrym $\alpha$, naprzeciw którego leży przyprostokątna $a$, a przy którym leży przyprostokątna $b$:
+    $$\sin\alpha=\frac{a}{c},\quad \cos\alpha=\frac{b}{c},\quad \tg\alpha=\frac{a}{b}$$
+    Słownie: sinus = naprzeciwległa / przeciwprostokątna, cosinus = przyległa / przeciwprostokątna, tangens = naprzeciwległa / przyległa.</div>
+  <div class="wzor">
+    <div class="tytul">Związki <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\sin^2\alpha+\cos^2\alpha=1$$
+    $$\tg\alpha=\frac{\sin\alpha}{\cos\alpha}$$
+    <dl><dt>dowód</dt><dd>$\frac{a^2+b^2}{c^2}=\frac{c^2}{c^2}=1$ (Pitagoras); $\;\frac{a/c}{b/c}=\frac{a}{b}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Kąty dopełniające ($\alpha+\beta=90^\circ$)</div>
+    $$\sin(90^\circ-\alpha)=\cos\alpha$$
+    $$\cos(90^\circ-\alpha)=\sin\alpha$$
+    $$\tg\alpha\cdot\tg(90^\circ-\alpha)=1$$
+    <dl><dt>dlaczego</dt><dd>dla drugiego kąta ostrego role przyprostokątnych $a$ i $b$ się zamieniają</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>$\alpha$</th><th>$30^\circ$</th><th>$45^\circ$</th><th>$60^\circ$</th></tr>
+    <tr><td>$\sin\alpha$</td><td>$\frac12$</td><td>$\frac{\sqrt2}{2}$</td><td>$\frac{\sqrt3}{2}$</td></tr>
+    <tr><td>$\cos\alpha$</td><td>$\frac{\sqrt3}{2}$</td><td>$\frac{\sqrt2}{2}$</td><td>$\frac12$</td></tr>
+    <tr><td>$\tg\alpha$</td><td>$\frac{\sqrt3}{3}$</td><td>$1$</td><td>$\sqrt3$</td></tr>
+  </table>
+  <p>Wartości dla $30^\circ, 45^\circ, 60^\circ$ są w tablicach; skąd się biorą (pół kwadratu, pół trójkąta równobocznego), zobacz w temacie <a href="trygonometria-0-180.html">kąty 0°–180°</a>.</p>
+  <div class="uwaga">Dla kąta ostrego $0&lt;\sin\alpha&lt;1$ i $0&lt;\cos\alpha&lt;1$ (przyprostokątna jest krótsza od przeciwprostokątnej), a $\tg\alpha$ może być dowolną liczbą dodatnią.</div>
+
+  <h2 id="demo">2. Interaktywnie: stosunki zależą tylko od kąta</h2>
+  <div class="demo">
+    <p class="opis">Przeciągnij wierzchołek $B$ (zmienia kąt i rozmiar) oraz punkt $D$ (mniejszy trójkąt podobny). Stosunki boków w obu trójkątach są zawsze równe.</p>
+    <canvas id="tp-plot"></canvas>
+    <div class="wynik" id="tp-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">Gdy przeciwprostokątna ma długość $1$, przyprostokątne <i>są</i> sinusem i cosinusem. Tangens to odcinek na stycznej $x=1$ (trójkąt podobny z przyprostokątną $1$). To most do okręgu jednostkowego.</p>
+    <canvas id="tj-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$\alpha$ <input type="range" id="tj-a" min="1" max="80" step="1" value="37"> <span id="tj-a-v"></span></label>
+    </div>
+    <div class="wynik" id="tj-wynik"></div>
+  </div>
+
+  <h2 id="metoda">3. Metoda</h2>
+  <ol>
+    <li>Zaznacz kąt prosty i kąt, o który pytają. Nazwij boki względem <b>tego</b> kąta: naprzeciwległa, przyległa, przeciwprostokątna.</li>
+    <li>Wybierz funkcję, która łączy bok znany i bok szukany (bez przeciwprostokątnej → $\tg$).</li>
+    <li>Gdy dana jest jedna funkcja, a trzeba innej: narysuj trójkąt z bokami z ułamka i dolicz trzeci bok z Pitagorasa.</li>
+  </ol>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Kąt ostry $\alpha$ spełnia $\sin\alpha=\frac{5}{13}$. Oblicz $\cos\alpha$ i $\tg\alpha$.</p>
+    <ol>
+      <li>Trójkąt z naprzeciwległą $5$ i przeciwprostokątną $13$.</li>
+      <li>Przyległa: $\sqrt{13^2-5^2}=\sqrt{144}=12$.</li>
+      <li>$\cos\alpha=\frac{12}{13}$, $\;\tg\alpha=\frac{5}{12}$.</li>
+    </ol>
+    <p class="odp">$\cos\alpha=\frac{12}{13},\ \tg\alpha=\frac{5}{12}$</p>
+    <p>To samo z jedynki: $\cos\alpha=\sqrt{1-\frac{25}{169}}$ (pierwiastek dodatni, bo kąt ostry).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="24" data-odp-opis="obwód"><span class="poziom">łatwe</span>
+      <div class="tresc">W trójkącie prostokątnym $ABC$ kąt przy $C$ jest prosty, $|AC|=6$ i $\tg\angle BAC=\frac43$. Oblicz obwód trójkąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\tg\angle A=\frac{|BC|}{|AC|}$, więc $|BC|=6\cdot\frac43=8$, $|AB|=\sqrt{36+64}=10$. <b>Obwód $24$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5; 5sqrt(3); 25sqrt(3)/2" data-odp-opis="przyprostokątne; pole"><span class="poziom">łatwe</span>
+      <div class="tresc">Przeciwprostokątna trójkąta prostokątnego ma długość $10$, a jeden z kątów ostrych $30^\circ$. Oblicz długości przyprostokątnych i pole.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Naprzeciw $30^\circ$: $10\sin30^\circ=5$; przy nim: $10\cos30^\circ=5\sqrt3$. Pole $\frac12\cdot5\cdot5\sqrt3$. <b>$5$, $5\sqrt3$, $P=\frac{25\sqrt3}{2}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="25sqrt(3)"><span class="poziom">średnie</span>
+      <div class="tresc">Ramię trójkąta równoramiennego ma długość $10$, a kąt przy podstawie $30^\circ$. Oblicz pole trójkąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wysokość dzieli go na dwa trójkąty prostokątne: $h=10\sin30^\circ=5$, połowa podstawy $10\cos30^\circ=5\sqrt3$, podstawa $10\sqrt3$. $P=\frac12\cdot10\sqrt3\cdot5$. <b>$P=25\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że dla każdego kąta ostrego $\alpha$ zachodzi $\sin\alpha+\cos\alpha&gt;1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        W trójkącie prostokątnym z kątem $\alpha$: $\sin\alpha+\cos\alpha=\frac{a+b}{c}$. Z nierówności trójkąta $a+b&gt;c$, więc <b>$\sin\alpha+\cos\alpha&gt;1$</b>. (Algebraicznie: $(\sin\alpha+\cos\alpha)^2=1+2\sin\alpha\cos\alpha&gt;1$.)
+      </div></details></li>
+    <li class="zadanie" data-odp="10sqrt(3)" data-odp-opis="wysokość w m"><span class="poziom">maturalne</span>
+      <div class="tresc">Z punktu $A$ szczyt wieży widać pod kątem $30^\circ$ do poziomu. Po podejściu $20$ m w stronę wieży (po poziomym terenie) kąt wynosi $60^\circ$. Oblicz wysokość wieży.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Niech $h$ – wysokość, $x$ – odległość drugiego punktu od podstawy wieży. $\tg60^\circ=\frac{h}{x}$, $\tg30^\circ=\frac{h}{x+20}$, czyli $x=\frac{h}{\sqrt3}$ i $x+20=h\sqrt3$.
+        Odejmując: $20=h\sqrt3-\frac{h}{\sqrt3}=\frac{2h}{\sqrt3}$, stąd $h=10\sqrt3\approx17{,}3$. <b>$h=10\sqrt3$ m</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Względem którego kąta?</b> „Naprzeciwległa” zmienia się, gdy zmieniasz kąt. Najczęstszy błąd: $\sin$ policzony dla złego kąta ostrego.</li>
+    <li>Wartość innej funkcji licz z trójkąta pomocniczego albo z jedynki, zawsze z <b>uzasadnieniem znaku</b> („kąt ostry, więc $\cos\alpha&gt;0$”).</li>
+    <li>Wynik zostaw dokładny ($10\sqrt3$), nie zaokrąglaj, chyba że treść każe. Karta wzorów CKE zawiera tablicę wartości funkcji trygonometrycznych, ale w zadaniach zwykle wystarczą wartości dokładne.</li>
+    <li>W zadaniach z figurami (romb, trapez, wysokość) szukaj trójkąta prostokątnego: wysokość lub przekątna zwykle go tworzy.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const st = r => r * 180 / Math.PI;
+  // znacznik kąta prostego w punkcie (x,y), ramiona w kierunkach u i v (wektory jednostkowe)
+  const prosty = (g, x, y, u, v, s, nr) => g.wielokat([[x + u[0] * s, y + u[1] * s], [x + (u[0] + v[0]) * s, y + (u[1] + v[1]) * s], [x + v[0] * s, y + v[1] * s]], nr, { zamknij: false, grubosc: 1.5 });
+
+  // --- 2a. Dwa trójkąty podobne ---
+  const w1 = new Wykres($("tp-plot"), { xmin: -0.6, xmax: 8, ymin: -0.8, ymax: 5.4, rowneSkale: true });
+  let s = 0.5;
+  const pk = w1.przeciagaj([
+    { x: 6, y: 4, ogranicz: p => ({ x: Math.min(7.5, Math.max(1.2, p.x)), y: Math.min(5, Math.max(0.4, p.y)) }) },
+    { x: 3, y: 2, ogranicz: p => { const B = pk[0], t = Math.min(0.9, Math.max(0.15, (p.x * B.x + p.y * B.y) / (B.x ** 2 + B.y ** 2))); return { x: t * B.x, y: t * B.y }; } },
+  ], rysujTp);
+  function rysujTp() {
+    const [B, D] = pk;
+    if (Math.abs(D.x * B.y - D.y * B.x) < 1e-6) s = D.x / B.x; else { D.x = s * B.x; D.y = s * B.y; }
+    const a = B.y, b = B.x, c = Math.hypot(a, b), a2 = D.y, b2 = D.x, c2 = Math.hypot(a2, b2), al = Math.atan2(a, b);
+    w1.rysuj(g => {
+      g.wielokat([[0, 0], [b, 0], [b, a]], 1, { wypelnij: 0.12 });
+      g.wielokat([[0, 0], [b2, 0], [b2, a2]], 4, { wypelnij: 0.2 });
+      prosty(g, b, 0, [-1, 0], [0, 1], 0.3, 1); prosty(g, b2, 0, [-1, 0], [0, 1], 0.25, 4);
+      g.luk(0, 0, 0.8, 0, al, 2, { wypelnij: 0.2 });
+      g.tekst(0.9, 0.15, "α", 2, { gruby: true });
+      g.tekst(b, a / 2, "a", 1, { dx: 6, gruby: true }); g.tekst(b / 2, 0, "b", 1, { dy: 16, gruby: true });
+      g.tekst(b / 2, a / 2, "c", 1, { dx: -14, dy: -6, gruby: true });
+      g.tekst(b2, a2 / 2, "a′", 4, { dx: 6, gruby: true });
+      g.punkt(0, 0, "A", 1); g.punkt(b, 0, "C", 1); g.punkt(B.x, B.y, "B"); g.punkt(D.x, D.y, "D", 4);
+    });
+    const L = (x, y) => ladnaTex(x / y, 3);
+    tex("tp-wynik", `\\begin{array}{lll}\\alpha\\approx${ladnaTex(st(al), 1)}^\\circ & \\text{duży} & \\text{mały}\\\\ \\sin\\alpha & \\frac{a}{c}=${L(a, c)} & \\frac{a'}{c'}=${L(a2, c2)}\\\\ \\cos\\alpha & \\frac{b}{c}=${L(b, c)} & \\frac{b'}{c'}=${L(b2, c2)}\\\\ \\tg\\alpha & \\frac{a}{b}=${L(a, b)} & \\frac{a'}{b'}=${L(a2, b2)}\\end{array}`, true);
+  }
+  rysujTp();
+
+  // --- 2b. Przeciwprostokątna 1 ---
+  const w2 = new Wykres($("tj-plot"), { xmin: -0.25, xmax: 1.6, ymin: -0.25, ymax: 1.7, rowneSkale: true });
+  function rysujTj() {
+    const d = +$("tj-a").value, al = d * Math.PI / 180, cs = Math.cos(al), sn = Math.sin(al), tg = Math.tan(al);
+    $("tj-a-v").textContent = d + "°";
+    w2.rysuj(g => {
+      g.luk(0, 0, 1, 0, Math.PI / 2, 3, { przerywana: true, grubosc: 1.5 });
+      g.odcinek(1, -5, 1, 50, 3);
+      g.odcinek(0, 0, 1, tg, 4);
+      g.wielokat([[0, 0], [cs, 0], [cs, sn]], 1, { wypelnij: 0.12 });
+      g.odcinek(cs, 0, cs, sn, 2, false); g.odcinek(0, 0, cs, 0, 3, false);
+      g.odcinek(1, 0, 1, tg, 4, false);
+      g.luk(0, 0, 0.22, 0, al, 2);
+      g.tekst(cs, sn / 2, "sin α", 2, { dx: 5, gruby: true });
+      g.tekst(cs / 2, 0, "cos α", 3, { dy: 16, wyrownanie: "center", gruby: true });
+      g.tekst(1, Math.min(tg, g.z.ymax - 0.2) / 2 + 0.05, "tg α", 4, { dx: 6, gruby: true });
+      g.tekst(cs / 2, sn / 2, "1", 1, { dx: -12, dy: -4, gruby: true });
+      g.punkt(cs, sn, "", 2);
+    });
+    tex("tj-wynik", `\\sin\\alpha=${ladnaTex(sn, 3)},\\ \\cos\\alpha=${ladnaTex(cs, 3)},\\ \\tg\\alpha=${ladnaTex(tg, 3)},\\ \\sin^2\\alpha+\\cos^2\\alpha=1`);
+  }
+  $("tj-a").addEventListener("input", rysujTj);
+  rysujTj();
+});
+</script>
+</body>
+</html>

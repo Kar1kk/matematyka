@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciąg arytmetyczny</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Ciąg arytmetyczny</h1>
+  <p class="lead">Co krok dodajesz tę samą liczbę $r$, więc punkty $(n,a_n)$ leżą na jednej prostej. Sumę liczysz sztuczką Gaussa: dwie kopie „schodków” składają się w prostokąt.</p>
+  <p class="wymagania">VI.4, VI.5, VI.7</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definicja i wzory</h2>
+  <div class="definicja"><b>Definicja</b> Ciąg $(a_n)$ jest <b>arytmetyczny</b>, gdy różnica $a_{n+1}-a_n=r$ jest stała (ta sama dla każdego $n$). Liczbę $r$ nazywamy <b>różnicą</b> ciągu.</div>
+  <div class="wzor">
+    <div class="tytul">$n$-ty wyraz <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$a_n=a_1+(n-1)r$$
+    $$a_n=a_k+(n-k)r$$
+    <dl><dt>$r$</dt><dd>$r&gt;0$: rosnący, $r&lt;0$: malejący, $r=0$: stały</dd>
+        <dt>wykres</dt><dd>punkty na prostej $y=rx+(a_1-r)$: ciąg arytmetyczny to „funkcja liniowa na $\N_+$”</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Suma $n$ początkowych wyrazów <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$S_n=\frac{a_1+a_n}{2}\cdot n$$
+    $$S_n=\frac{2a_1+(n-1)r}{2}\cdot n$$
+    <dl><dt>sens</dt><dd>średnia pierwszego i ostatniego wyrazu razy liczba wyrazów</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Średnia arytmetyczna sąsiadów <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$a_n=\frac{a_{n-1}+a_{n+1}}{2}$$
+    <dl><dt>$x,y,z$</dt><dd>tworzą (w tej kolejności) ciąg arytmetyczny $\iff 2y=x+z$</dd></dl>
+  </div>
+
+  <div class="twierdzenie"><b>Twierdzenie</b> W ciągu arytmetycznym $a_n=a_1+(n-1)r$ oraz $S_n=\frac{a_1+a_n}{2}\cdot n$.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p><b>Wzór na $a_n$.</b> Z definicji $a_{k+1}-a_k=r$ dla $k=1,2,\ldots,n-1$. Dodaj te $n-1$ równości stronami:</p>
+      $$(a_2-a_1)+(a_3-a_2)+\ldots$$
+      $$\ldots+(a_n-a_{n-1})=(n-1)r$$
+      <p>Po lewej wszystko się skraca oprócz $a_n-a_1$, więc $a_n=a_1+(n-1)r$.</p>
+      <p><b>Wzór na $S_n$ (sposób Gaussa).</b> Zapisz sumę dwa razy, raz od końca:</p>
+      $$\begin{aligned}S_n&amp;=a_1+a_2+\ldots+a_n\\ S_n&amp;=a_n+a_{n-1}+\ldots+a_1\end{aligned}$$
+      <p>Wyrazy stojące jeden pod drugim to $a_k$ i $a_{n+1-k}$. Ich suma jest zawsze taka sama:</p>
+      $$a_k+a_{n+1-k}=$$
+      $$=a_1+(k-1)r+a_1+(n-k)r$$
+      $$=2a_1+(n-1)r=a_1+a_n$$
+      <p>Dodając oba wiersze, dostajesz $n$ par, każda równa $a_1+a_n$: $2S_n=n(a_1+a_n)$, czyli $S_n=\frac{a_1+a_n}{2}\cdot n$. Podstawiając $a_n=a_1+(n-1)r$, dostajesz drugą postać.</p>
+      <p>To właśnie pokazuje animacja w punkcie 3: odwrócona kopia „schodków” dopełnia je do prostokąta $n\times(a_1+a_n)$.</p>
+    </div></details></div>
+
+  <h2 id="prosta">2. Punkty na prostej</h2>
+  <div class="demo">
+    <p class="opis">Zmieniaj $a_1$ i $r$. Każdy krok w prawo o $1$ to krok w górę o $r$ (czerwone strzałki), więc wszystkie punkty leżą na prostej o współczynniku kierunkowym $r$.</p>
+    <canvas id="ap-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="ap-a1" min="-6" max="6" step="0.5" value="-3"> <span id="ap-a1-v"></span></label>
+      <label>$r$ <input type="range" id="ap-r" min="-2" max="2" step="0.25" value="1"> <span id="ap-r-v"></span></label>
+    </div>
+    <div class="wynik" id="ap-wynik"></div>
+  </div>
+
+  <h2 id="gauss">3. Animacja: suma sposobem Gaussa</h2>
+  <div class="demo">
+    <p class="opis">Słupki o wysokościach $a_1,\ldots,a_n$ (niebieskie) to $S_n$. Kliknij ▶: czerwona kopia obraca się o $180^\circ$ i dokłada na górę. Powstaje prostokąt $n\times(a_1+a_n)$, czyli $2S_n$.</p>
+    <canvas id="ga-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="ga-n" min="2" max="10" step="1" value="6"> <span id="ga-n-v"></span></label>
+      <label>$a_1$ <input type="range" id="ga-a1" min="1" max="4" step="1" value="1"> <span id="ga-a1-v"></span></label>
+      <label>$r$ <input type="range" id="ga-r" min="0" max="2" step="0.5" value="1"> <span id="ga-r-v"></span></label>
+      <button id="ga-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="ga-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>W ciągu arytmetycznym $a_2=5$ i $a_6=17$. Oblicz $S_{10}$.</p>
+    <ol>
+      <li>$a_6=a_2+4r$, więc $17=5+4r$ i $r=3$.</li>
+      <li>$a_1=a_2-r=2$.</li>
+      <li>$S_{10}=\frac{2a_1+9r}{2}\cdot10=\frac{4+27}{2}\cdot10=155$.</li>
+    </ol>
+    <p class="odp">$S_{10}=155$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykaż, że ciąg $a_n=5-3n$ jest arytmetyczny, i oblicz sumę jego $20$ początkowych wyrazów.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_{n+1}-a_n=5-3(n+1)-(5-3n)=-3$, stała, więc ciąg jest arytmetyczny, $r=-3$. $a_1=2$, $a_{20}=-55$, $S_{20}=\frac{2-55}{2}\cdot20$. <b>$S_{20}=-530$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 1/2"><span class="poziom">średnie</span>
+      <div class="tresc">Liczby $x-1$, $x^2$, $4x-1$ tworzą (w tej kolejności) ciąg arytmetyczny. Wyznacz $x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $2x^2=(x-1)+(4x-1)$, czyli $2x^2-5x+2=0$, $\Delta=9$, $x=\frac{5\mp3}{4}$.
+        Sprawdzenie: $x=2$: $1,4,7$; $x=\frac12$: $-\frac12,\frac14,1$. <b>$x=2$ lub $x=\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="17157"><span class="poziom">średnie</span>
+      <div class="tresc">Oblicz sumę wszystkich liczb naturalnych z przedziału $\lp 100, 500\rp$ podzielnych przez $7$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Najmniejsza $105=7\cdot15$, największa $497=7\cdot71$. Ciąg arytmetyczny, $r=7$, liczba wyrazów $n=71-15+1=57$.
+        $S=\frac{105+497}{2}\cdot57=301\cdot57$. <b>$17\,157$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Suma $n$ początkowych wyrazów ciągu $(a_n)$ wynosi $S_n=n^2+2n$. Wyznacz $a_n$ i wykaż, że ciąg jest arytmetyczny.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_1=S_1=3$. Dla $n\ge2$: $a_n=S_n-S_{n-1}=n^2+2n-(n-1)^2-2(n-1)=2n+1$; wzór działa też dla $n=1$.
+        $a_{n+1}-a_n=2$. <b>$a_n=2n+1$, ciąg arytmetyczny o różnicy $r=2$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="120; 20" data-odp-opis="obie możliwe wartości S_10"><span class="poziom">maturalne</span>
+      <div class="tresc">W ciągu arytmetycznym $a_1+a_5=14$ oraz $a_2\cdot a_4=45$. Oblicz $S_{10}$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_1+a_5=2a_3$, więc $a_3=7$. Wtedy $a_2=7-r$, $a_4=7+r$, $49-r^2=45$, $r=\pm2$.
+        Dla $r=2$: $a_1=3$, $S_{10}=\frac{6+18}{2}\cdot10=120$. Dla $r=-2$: $a_1=11$, $S_{10}=\frac{22-18}{2}\cdot10=20$.
+        <b>$S_{10}=120$ lub $S_{10}=20$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="18; 52" data-odp-opis="liczba rzędów; miejsca w ostatnim"><span class="poziom">maturalne</span>
+      <div class="tresc">W pierwszym rzędzie sali jest $18$ miejsc, a w każdym następnym o $2$ więcej niż w poprzednim. Sala ma łącznie $630$ miejsc. Ile jest rzędów i ile miejsc w ostatnim?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $S_n=\frac{36+2(n-1)}{2}\cdot n=n(n+17)=630$, więc $n^2+17n-630=0$, $\Delta=2809=53^2$, $n=\frac{-17+53}{2}=18$ (drugi pierwiastek ujemny).
+        $a_{18}=18+17\cdot2=52$. <b>$18$ rzędów, w ostatnim $52$ miejsca.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Dwa dane wyrazy</b> ($a_k$, $a_m$): od razu $a_m-a_k=(m-k)r$. Nie musisz układać układu z $a_1$.</li>
+    <li><b>Trzy liczby</b> w ciągu arytmetycznym: wygodnie $a-r,\ a,\ a+r$ (suma $3a$). Przy warunku $2y=x+z$ <b>sprawdź</b> otrzymane liczby.</li>
+    <li><b>Liczba wyrazów</b>: od $a_k$ do $a_m$ jest $m-k+1$ wyrazów, nie $m-k$. To najczęstszy błąd w zadaniach typu „suma liczb podzielnych przez 7”.</li>
+    <li><b>$S_n$ dane wzorem</b>: $a_n=S_n-S_{n-1}$ tylko dla $n\ge2$; $a_1=S_1$ sprawdź osobno.</li>
+    <li>Dowód wzoru na $S_n$ jest na liście twierdzeń z podstawy: umiej go zapisać (sumowanie od przodu i od tyłu).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  // --- 2. Punkty na prostej ---
+  const w1 = new Wykres($("ap-plot"), { xmin: -0.5, xmax: 10.5, ymin: -12, ymax: 14, krokY: 2 });
+  function rysujAp() {
+    const a1 = +$("ap-a1").value, r = +$("ap-r").value, N = 10;
+    $("ap-a1-v").textContent = ladna(a1); $("ap-r-v").textContent = ladna(r);
+    const a = n => a1 + (n - 1) * r;
+    const lo = Math.min(a(1), a(N), 0), hi = Math.max(a(1), a(N), 0), pad = Math.max(1, 0.12 * (hi - lo));
+    w1.zakres({ ymin: lo - pad, ymax: hi + pad, krokY: ladnyKrok(hi - lo + 2 * pad) });
+    w1.rysuj(g => {
+      g.funkcja(a, 3, { przerywana: true });
+      for (let n = 1; n < N; n++) {
+        g.odcinek(n, a(n), n + 1, a(n), 4);                 // krok w prawo o 1
+        if (Math.abs(r) > 1e-9) g.strzalka(n + 1, a(n), n + 1, a(n + 1), 2); // krok w górę o r
+      }
+      for (let n = 1; n <= N; n++) g.punkt(n, a(n), n <= 3 ? `a${"₀₁₂₃"[n]}` : "", 1);
+    });
+    const typ = r > 0 ? "rosnący" : r < 0 ? "malejący" : "stały";
+    const rT = r < 0 ? `(${ladnaTex(r)})` : ladnaTex(r);
+    const lin = Math.abs(r) < 1e-9 ? ladnaTex(a1)
+      : `${r === 1 ? "" : r === -1 ? "-" : ladnaTex(r)}n${Math.abs(a1 - r) < 1e-9 ? "" : znakTex(a1 - r)}`;
+    tex("ap-wynik", `a_n=${ladnaTex(a1)}+(n-1)\\cdot${rT}=${lin},\\quad a_{10}=${ladnaTex(a(10))}\\ (\\text{${typ}})`);
+  }
+  ["ap-a1", "ap-r"].forEach(id => $(id).addEventListener("input", rysujAp));
+  rysujAp();
+
+  // --- 3. Gauss ---
+  const w2 = new Wykres($("ga-plot"), { xmin: -0.5, xmax: 13, ymin: -1, ymax: 15, rowneSkale: false });
+  let stop = null;
+  function klatka(t) {
+    const n = +$("ga-n").value, a1 = +$("ga-a1").value, r = +$("ga-r").value;
+    $("ga-n-v").textContent = n; $("ga-a1-v").textContent = a1; $("ga-r-v").textContent = ladna(r);
+    const a = k => a1 + (k - 1) * r, H = a1 + a(n), D = n + 1;
+    Object.assign(w2.z0, { xmin: -0.5, xmax: 2 * n + 1.5, ymin: -0.22 * H - 0.3, ymax: H * 1.25 + 0.3, krokY: ladnyKrok(H * 1.2) });
+    const cx = n / 2, cy = H / 2;
+    // u: 0 → kopia stoi obok (przesunięta o D), 1 → obrócona o 180° na górze
+    const u = Math.min(1, Math.max(0, (t - 0.15) / 0.85));
+    // obrót liczony we współrzędnych znormalizowanych do prostokąta n × H (osie mają różne skale)
+    const kat = Math.PI * u, cos = Math.cos(kat), sin = Math.sin(kat), sx = n / 2, sy = H / 2;
+    const tr = ([x, y]) => {
+      const dx = (x - cx) / sx, dy = (y - cy) / sy;
+      return [cx + D * (1 - u) + sx * (cos * dx - sin * dy), cy + sy * (sin * dx + cos * dy)];
+    };
+    const S = n * (a1 + a(n)) / 2;
+    w2.rysuj(g => {
+      if (t >= 1) g.prostokat(0, 0, n, H, 3, { wypelnij: 0.08, przerywana: true });
+      for (let k = 1; k <= n; k++) g.prostokat(k - 1, 0, 1, a(k), 1, { wypelnij: 0.45 });
+      if (t > 0) for (let k = 1; k <= n; k++)
+        g.wielokat([[k - 1, 0], [k, 0], [k, a(k)], [k - 1, a(k)]].map(tr), 2, { wypelnij: 0.35 * Math.min(1, t / 0.15) });
+      g.tekst(0.5, a1 / 2, "a₁", 1, { wyrownanie: "center", dy: 5, gruby: true });
+      if (t >= 1) {
+        g.tekst(n / 2, H, `${n} · (a₁ + aₙ) = ${ladna(2 * S)} = 2Sₙ`, 3, { wyrownanie: "center", dy: -8, gruby: true });
+      }
+    });
+    tex("ga-wynik", t >= 1
+      ? `2S_{${n}}=${n}\\cdot(${ladnaTex(a1)}+${ladnaTex(a(n))})=${ladnaTex(2 * S)}\\;\\Rightarrow\\;S_{${n}}=${ladnaTex(S)}`
+      : `S_{${n}}=` + (n <= 5 ? Array.from({ length: n }, (_, i) => ladnaTex(a(i + 1))).join("+")
+          : `${ladnaTex(a(1))}+${ladnaTex(a(2))}+\\ldots+${ladnaTex(a(n))}`) + `=\\,?`);
+  }
+  $("ga-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(3000, klatka); });
+  ["ga-n", "ga-a1", "ga-r"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatka(0); }));
+  klatka(0);
+});
+</script>
+</body>
+</html>

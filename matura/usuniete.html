@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Usunięte z podstawy programowej</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav>› <a href="index.html">Matura rozszerzona</a> › Usunięte z podstawy</nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Usunięte z podstawy programowej</h1>
+  <p class="lead">Tematy, które były w podstawie 2018 (i na maturach 2015–2024), a w podstawie 2024 (matura od 2025) ich nie ma. <b>Na maturze 2025+ nie są wymagane.</b> Przydają się na olimpiadzie, na studiach i przy starszych arkuszach i zbiorach.</p>
+  <div class="uwaga">Część tych treści nie jest już wymagana, ale ich wzory nadal są w karcie wzorów CKE (edycja 2023, obowiązuje też na maturach 2026–2027), więc na maturze możesz z nich korzystać: odległość punktu od prostej, wariancja i odchylenie standardowe, wartość oczekiwana, twierdzenie o kącie między styczną a cięciwą, postać ogólna równania okręgu oraz tablica wartości funkcji trygonometrycznych.</div>
+  <p>Źródła: podstawa 2018 (Dz.U. 2018 poz. 467) i podstawa 2024 (Dz.U. 2024 poz. 1019). Szczegółowe porównanie z cytatami: <code>docs/usuniete-z-podstawy.md</code>.</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="geometria">1. Geometria analityczna</h2>
+
+  <h3>Odległość punktu od prostej <span class="znacznik">w karcie CKE</span></h3>
+  <p>Wzór jest w karcie wzorów CKE — na maturze możesz go użyć.</p>
+  <p>Gotowy wzór na odległość punktu $P=(x_0,y_0)$ od prostej w postaci ogólnej. W 2024 nie ma go w wymaganiach (ani P, ani R), ale jest w karcie wzorów CKE, więc możesz go używać. Można go też wyprowadzić w kilku linijkach (niżej). Alternatywnie ten sam wynik dają metody z obecnej podstawy: prosta prostopadła przez $P$, punkt przecięcia, długość odcinka.</p>
+  <div class="wzor">
+    <div class="tytul">Odległość punktu od prostej $Ax+By+C=0$</div>
+    $$d=\frac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$$
+    <dl><dt>$[A,B]$</dt><dd>wektor prostopadły do prostej</dd>
+        <dt>licznik</dt><dd>to lewa strona równania prostej po podstawieniu $P$; równa $0$ dokładnie wtedy, gdy $P$ leży na prostej</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Wyprowadzenie</summary><div>
+    <p>Prosta przez $P$ prostopadła do $Ax+By+C=0$ ma kierunek $[A,B]$, więc jej punkty to $(x_0+At,\;y_0+Bt)$. Podstaw do równania prostej:</p>
+    $$A(x_0+At)+B(y_0+Bt)+C=0$$
+    $$t=-\frac{Ax_0+By_0+C}{A^2+B^2}$$
+    <p>Rzut $H$ odpowiada temu $t$, a $|PH|=|t|\cdot|[A,B]|=|t|\sqrt{A^2+B^2}$. Po skróceniu zostaje $d=\frac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$.</p>
+  </div></details>
+  <details class="rozwin"><summary>Przykład</summary><div>
+    <p>Odległość $P=(3,4)$ od prostej $3x+4y-5=0$:</p>
+    $$d=\frac{|9+16-5|}{\sqrt{9+16}}=\frac{20}{5}$$
+    <p><b>$d=4$</b></p>
+  </div></details>
+
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt $P$ oraz punkty $K$, $L$ wyznaczające prostą. Czerwony odcinek to rzut prostopadły, $d$ liczone ze wzoru.</p>
+    <canvas id="od-plot"></canvas>
+    <div class="wynik" id="od-wynik"></div>
+  </div>
+
+  <h3>Równanie okręgu w postaci ogólnej <span class="znacznik">w karcie CKE</span></h3>
+  <p>Wzór jest w karcie wzorów CKE — na maturze możesz go użyć.</p>
+  <p>Po wymnożeniu $(x-a)^2+(y-b)^2=r^2$ dostaje się postać ogólną. W 2024 wymagana jest tylko postać kanoniczna, ale postać ogólna (z warunkiem $a^2+b^2-c>0$) jest w karcie wzorów CKE. Z ogólnej i tak wrócisz do niej, uzupełniając do pełnych kwadratów.</p>
+  <div class="wzor">
+    <div class="tytul">Postać ogólna okręgu</div>
+    $$x^2+y^2-2ax-2by+c=0$$
+    $$S=(a,b),\quad r=\sqrt{a^2+b^2-c}$$
+    <dl><dt>warunek</dt><dd>$a^2+b^2-c&gt;0$; w przeciwnym razie równanie nie opisuje okręgu</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Przykład</summary><div>
+    <p>$x^2+y^2-6x+4y-12=0$: $-2a=-6$, $-2b=4$, więc $a=3$, $b=-2$, $c=-12$.</p>
+    <p>$r^2=9+4+12=25$. <b>$S=(3,-2)$, $r=5$</b></p>
+  </div></details>
+
+  <h3>Punkty wspólne prostej i paraboli</h3>
+  <p>Wymaganie z geometrii analitycznej zniknęło, ale technika żyje dalej: to układ równań, z których jedno jest kwadratowe (IV.R w 2024). Podstawiasz $y$ z prostej do paraboli i patrzysz na $\Delta$: $\Delta&gt;0$ dwa punkty, $\Delta=0$ prosta styczna, $\Delta&lt;0$ brak.</p>
+  <details class="rozwin"><summary>Przykład</summary><div>
+    <p>$y=x+1$ i $y=x^2-1$: $x^2-1=x+1$, czyli $x^2-x-2=0$, $x=2$ lub $x=-1$.</p>
+    <p><b>$(2,3)$ i $(-1,0)$</b></p>
+  </div></details>
+
+  <h2 id="funkcje">2. Wielomiany i funkcje</h2>
+
+  <h3>Pierwiastki wymierne wielomianu</h3>
+  <p>W 2024 zostały tylko pierwiastki <i>całkowite</i> (dzielniki wyrazu wolnego). Twierdzenie o pierwiastkach wymiernych daje skończoną listę kandydatów także na ułamki.</p>
+  <div class="twierdzenie"><b>Twierdzenie</b> Jeśli wielomian $W(x)=a_nx^n+\ldots+a_1x+a_0$ ma współczynniki całkowite i ułamek nieskracalny $\frac{p}{q}$ jest jego pierwiastkiem, to $p\mid a_0$ i $q\mid a_n$.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>Podstaw $\frac pq$ i pomnóż przez $q^n$:</p>
+      $$a_np^n+a_{n-1}p^{n-1}q+\ldots+a_0q^n=0$$
+      <p>Wszystkie składniki oprócz $a_0q^n$ dzielą się przez $p$, więc $p\mid a_0q^n$. Ponieważ $p$ i $q$ są względnie pierwsze, $p\mid a_0$. Tak samo wszystkie oprócz $a_np^n$ dzielą się przez $q$, więc $q\mid a_n$.</p>
+    </div></details></div>
+  <details class="rozwin"><summary>Przykład</summary><div>
+    <p>$W(x)=2x^3+x^2+x-1$. Kandydaci: $p\in\{\pm1\}$, $q\in\{1,2\}$, czyli $\pm1,\pm\frac12$.</p>
+    <p>$W(1)=3$, $W(-1)=-3$, $W(-\frac12)=-\frac32$, $W(\frac12)=0$. Dzielenie: $W(x)=(2x-1)(x^2+x+1)$, a $x^2+x+1$ ma $\Delta=-3&lt;0$.</p>
+    <p><b>Jedyny pierwiastek: $x=\frac12$</b> (całkowitych pierwiastków brak, więc metoda z 2024 nic by nie znalazła).</p>
+  </div></details>
+
+  <h3>Wykres $y=|f(x)|$ (oraz $y=f(|x|)$)</h3>
+  <p>$|f(x)|$: część wykresu nad osią $Ox$ zostaje, część pod osią odbijasz symetrycznie względem $Ox$. $f(|x|)$: zostaje część dla $x\ge0$, a lewą połowę zastępuje jej odbicie względem $Oy$. Formalnie w 2018 był tylko $|f(x)|$; $f(|x|)$ chodzi z nim w parze w zbiorach zadań.</p>
+  <div class="wzor">
+    <div class="tytul">Dwa przekształcenia</div>
+    $$|f(x)|=\begin{cases}f(x), & f(x)\ge0\\-f(x), & f(x)&lt;0\end{cases}$$
+    $$f(|x|)=\begin{cases}f(x), & x\ge0\\f(-x), & x&lt;0\end{cases}$$
+  </div>
+  <details class="rozwin"><summary>Przykład: liczba rozwiązań $|x^2-4|=m$</summary><div>
+    <p>Wykres $|x^2-4|$ to parabola z „odbitym” dołkiem: minimum $0$ w $x=\pm2$, lokalne maksimum $4$ w $x=0$. Prosta $y=m$ przecina go:</p>
+    <p><b>$m&lt;0$: 0 rozwiązań; $m=0$: 2; $0&lt;m&lt;4$: 4; $m=4$: 3; $m&gt;4$: 2.</b></p>
+  </div></details>
+  <details class="rozwin"><summary>Przykład: $x^2-4|x|+3=0$</summary><div>
+    <p>To $f(|x|)=0$ dla $f(x)=x^2-4x+3=(x-1)(x-3)$. Więc $|x|=1$ lub $|x|=3$.</p>
+    <p><b>$x\in\{-3,-1,1,3\}$</b></p>
+  </div></details>
+
+  <div class="demo">
+    <p class="opis">Wybierz funkcję i przekształcenie, potem „▶ Odtwórz”: zobacz, jak część wykresu „przewraca się” na drugą stronę osi. Przerywana zielona: wykres $f$.</p>
+    <canvas id="ab-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="radio" name="ab-f" value="0" checked> $x^2-2x-3$</label>
+      <label><input type="radio" name="ab-f" value="1"> $x^3-3x$</label>
+      <label><input type="radio" name="ab-f" value="2"> $\log_2 x$</label>
+    </div>
+    <div class="sterowanie">
+      <label><input type="radio" name="ab-t" value="mod" checked> $|f(x)|$</label>
+      <label><input type="radio" name="ab-t" value="arg"> $f(|x|)$</label>
+      <button id="ab-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="ab-wynik"></div>
+  </div>
+
+  <h2 id="trygonometria">3. Trygonometria</h2>
+
+  <h3>Nierówności trygonometryczne</h3>
+  <p>W 2024 zostały tylko równania trygonometryczne. Nierówność rozwiązujesz tak samo, a potem odczytujesz przedziały z wykresu lub z okręgu jednostkowego. Pamiętaj o okresie: rozwiązanie w $\R$ to suma przedziałów „$+2k\pi$” (lub „$+k\pi$”).</p>
+  <div class="wzor">
+    <div class="tytul">Schemat (np. $\sin x&gt;a$, $|a|&lt;1$)</div>
+    $$\sin x=a\ \Rightarrow\ x_1,\ x_2\in\lp0,2\pi)$$
+    <dl><dt>1.</dt><dd>rozwiąż równanie w jednym okresie</dd>
+        <dt>2.</dt><dd>z wykresu wybierz przedziały, gdzie $\sin x$ jest nad prostą $y=a$</dd>
+        <dt>3.</dt><dd>dopisz okres $2k\pi$, $k\in\Z$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Przykład: $2\sin^2x\le1$ w $\lp0,2\pi\rp$</summary><div>
+    <p>$\sin^2x\le\frac12 \iff |\sin x|\le\frac{\sqrt2}{2}$. Równość dla $x=\frac\pi4,\frac{3\pi}4,\frac{5\pi}4,\frac{7\pi}4$; między nimi wykres $|\sin x|$ jest nisko przy $0$, $\pi$, $2\pi$.</p>
+    <p><b>$x\in\lp0,\frac\pi4\rp\cup\lp\frac{3\pi}4,\frac{5\pi}4\rp\cup\lp\frac{7\pi}4,2\pi\rp$</b></p>
+    <p>Sprawdzenie innym sposobem: $2\sin^2x=1-\cos2x$, więc nierówność to $\cos2x\ge0$, czyli w $\R$: $x\in\lp-\frac\pi4+k\pi,\frac\pi4+k\pi\rp$.</p>
+  </div></details>
+
+  <h3>Tablice i kalkulator <span class="znacznik">w karcie CKE</span></h3>
+  <p>Wzór jest w karcie wzorów CKE — na maturze możesz go użyć.</p>
+  <p>Odczytywanie przybliżonych wartości $\sin$, $\cos$, $\tg$ z tablic (np. $\sin 37^\circ\approx0{,}6018$) i odwrotnie: kąta z wartości funkcji. W podstawie 2024 tego wymagania nie ma, ale karta wzorów CKE nadal zawiera tablicę wartości funkcji trygonometrycznych co $1^\circ$, więc możesz z niej korzystać.</p>
+
+  <h2 id="planimetria">4. Planimetria i stereometria</h2>
+
+  <h3>Kąt między styczną a cięciwą <span class="znacznik">w karcie CKE</span></h3>
+  <p>Wzór jest w karcie wzorów CKE — na maturze możesz go użyć.</p>
+  <p>Kąt między styczną w punkcie $A$ a cięciwą $AB$ jest równy kątowi wpisanemu opartemu na łuku $AB$ (leżącym wewnątrz tego kąta). W 2024 nie ma go w wymaganiach ani na liście dowodów, ale da się go szybko uzasadnić z kąta środkowego.</p>
+  <div class="wzor">
+    <div class="tytul">Kąt dopisany</div>
+    $$\angle(\text{styczna},AB)=\tfrac12\angle AOB$$
+    <dl><dt>$O$</dt><dd>środek okręgu; $\angle AOB$ to kąt środkowy, więc szukany kąt jest równy każdemu kątowi wpisanemu $\angle ACB$ opartemu na łuku $AB$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Uzasadnienie i przykład</summary><div>
+    <p>Niech kąt między styczną a $AB$ to $\alpha$ (ostry). $OA\perp$ styczna, więc $\angle OAB=90^\circ-\alpha$. Trójkąt $AOB$ jest równoramienny, więc $\angle AOB=180^\circ-2(90^\circ-\alpha)=2\alpha$. Kąt wpisany na tym łuku to połowa: $\alpha$.</p>
+    <p>Przykład: styczna tworzy z cięciwą $AB$ kąt $50^\circ$. Wtedy <b>$\angle AOB=100^\circ$, a kąt wpisany $\angle ACB=50^\circ$</b>.</p>
+  </div></details>
+
+  <h3>Przekrój prostopadłościanu płaszczyzną</h3>
+  <p>Rozpoznawanie, jaką figurą (trójkąt, czworokąt, pięciokąt, sześciokąt) jest przekrój prostopadłościanu. W 2024 zostały tylko przekroje sześcianu i ostrosłupów prawidłowych.</p>
+
+  <h2 id="statystyka">5. Statystyka i prawdopodobieństwo</h2>
+
+  <h3>Wariancja i odchylenie standardowe <span class="znacznik">w karcie CKE</span></h3>
+  <p>Wzór jest w karcie wzorów CKE — na maturze możesz go użyć.</p>
+  <p>Średnia mówi, gdzie są dane; odchylenie standardowe mówi, jak bardzo są rozrzucone wokół średniej. W 2024 zostały tylko średnia (też ważona), mediana i dominanta.</p>
+  <div class="wzor">
+    <div class="tytul">Wariancja i odchylenie standardowe</div>
+    $$\sigma^2=\frac{(x_1-\bar x)^2+\ldots+(x_n-\bar x)^2}{n}$$
+    $$\sigma=\sqrt{\sigma^2}$$
+    <dl><dt>wygodniej</dt><dd>$\sigma^2=\overline{x^2}-\bar x^2$ (średnia kwadratów minus kwadrat średniej)</dd>
+        <dt>dane pogrupowane</dt><dd>wartość $x_i$ z liczebnością $n_i$: każdy kwadrat odchylenia mnożysz przez $n_i$ (średnia ważona)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Przykład</summary><div>
+    <p>Dane: $2,4,4,4,5,5,7,9$. Średnia $\bar x=\frac{40}{8}=5$.</p>
+    <p>Kwadraty odchyleń: $9,1,1,1,0,0,4,16$, suma $32$, więc $\sigma^2=\frac{32}{8}=4$. (Inaczej: $\overline{x^2}=\frac{232}{8}=29$, $29-25=4$.)</p>
+    <p><b>$\sigma^2=4$, $\sigma=2$</b></p>
+  </div></details>
+
+  <h3>Wartość oczekiwana <span class="znacznik">w karcie CKE</span></h3>
+  <p>Wzór jest w karcie wzorów CKE — na maturze możesz go użyć.</p>
+  <p>Średnia wygrana „na dłuższą metę”: każdą możliwą wartość mnożysz przez jej prawdopodobieństwo i sumujesz. Gra jest sprawiedliwa, gdy wartość oczekiwana zysku wynosi $0$.</p>
+  <div class="wzor">
+    <div class="tytul">Wartość oczekiwana</div>
+    $$E=p_1x_1+p_2x_2+\ldots+p_nx_n$$
+    <dl><dt>$x_i$</dt><dd>możliwe wyniki (np. wygrane w zł)</dd>
+        <dt>$p_i$</dt><dd>ich prawdopodobieństwa, $p_1+\ldots+p_n=1$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Przykład</summary><div>
+    <p>Rzut kostką kosztuje 3 zł. Za szóstkę dostajesz 12 zł, za piątkę 3 zł, poza tym nic.</p>
+    <p>Średnia wypłata: $\frac16\cdot12+\frac16\cdot3=2{,}5$ zł. Zysk: $2{,}5-3$.</p>
+    <p><b>$E=-0{,}5$ zł na grę</b> (sprawiedliwa cena gry: 2,50 zł).</p>
+  </div></details>
+
+  <h3>Skala centylowa</h3>
+  <p>$k$-ty centyl to wartość, poniżej której leży $k\%$ danych (np. siatki centylowe wzrostu dzieci: „50. centyl” to mediana). Usunięte.</p>
+
+  <h2 id="zawezone">6. Zawężone</h2>
+  <table class="tabela">
+    <tr><th>Było (2018)</th><th>Jest (2024)</th></tr>
+    <tr><td>Nierówności z $|x|$ w P (np. $|x-2|&lt;3$)</td><td>w P tylko równania; nierówności w R</td></tr>
+    <tr><td>Dowolne równania i nierówności wymierne (R)</td><td>tylko sprowadzalne do liniowych/kwadratowych + $\frac{V(x)}{W(x)}=0$</td></tr>
+    <tr><td>Parametr: rozwiązania o „żądanej własności”</td><td>tylko: określone znaki lub należenie do przedziału</td></tr>
+    <tr><td>Równania sprzeczne i tożsamościowe (dowolne)</td><td>tylko liniowe</td></tr>
+    <tr><td>Twierdzenie o dwusiecznej w wymaganiach</td><td>tylko na liście dowodów (P)</td></tr>
+    <tr><td>Kombinatoryka „ze złożonym modelem zliczania”</td><td>dopisek usunięty</td></tr>
+    <tr><td>Darboux: istnienie i przybliżanie miejsca zerowego</td><td>tylko istnienie (bez bisekcji)</td></tr>
+  </table>
+
+  <h2 id="przeniesione">7. Przeniesione z podstawy do rozszerzenia</h2>
+  <p>Dla Ciebie (rozszerzenie) nic tu nie znika: to dalej obowiązuje, tylko już nie w zakresie podstawowym.</p>
+  <table class="tabela">
+    <tr><th>Było w P (2018)</th><th>Teraz w R (2024)</th></tr>
+    <tr><td>$(a\pm b)^3$, $a^3-b^3$, $a^n-b^n$</td><td>II.R5</td></tr>
+    <tr><td>Rozkład, dzielenie wielomianów, pierwiastki całkowite</td><td>II.R1–R3</td></tr>
+    <tr><td>Dodawanie i odejmowanie wyrażeń wymiernych</td><td>II.R6</td></tr>
+    <tr><td>Równania dwukwadratowe, $\frac{V(x)}{W(x)}=0$</td><td>III.R6, III.R7</td></tr>
+    <tr><td>Układ: prosta + okrąg lub parabola</td><td>IV.R</td></tr>
+    <tr><td>Wykresy $-f(x)$, $f(-x)$</td><td>V.R1</td></tr>
+    <tr><td>Twierdzenie sinusów, dowolne trójkąty</td><td>VII.R7, VII.R8</td></tr>
+    <tr><td>Twierdzenie odwrotne do Talesa</td><td>VIII.R2</td></tr>
+    <tr><td>Prosta prostopadła, styczna do okręgu, prosta ∩ okrąg</td><td>IX.R1, IX.R4</td></tr>
+  </table>
+
+  <h2 id="matura">8. Jak z tego korzystać</h2>
+  <ul>
+    <li><b>Starsze arkusze (2015–2024) i starsze wydania zbiorów:</b> zadania z tych tematów możesz pomijać, nie dostaniesz ich na maturze 2025+.</li>
+    <li><b>Olimpiada i studia:</b> pierwiastki wymierne, odległość punktu od prostej, kąt dopisany, wartość oczekiwana i wariancja to standardowe narzędzia, warto je znać.</li>
+    <li><b>Na maturze</b> wzorów z karty CKE wolno używać (np. odległość punktu od prostej skraca zadania prosta–okrąg i odległości). Zadania nie będą jednak wymagały treści spoza podstawy, więc zawsze da się je rozwiązać także metodami z obecnej podstawy.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Spis treści (site.js generuje go tylko dla stron z dzialy.js)
+  const spis = document.querySelector(".spis[data-auto]");
+  if (spis && !spis.innerHTML.trim()) {
+    const h2 = [...document.querySelectorAll("main h2[id]")];
+    spis.innerHTML = `<b>Na tej stronie</b><ol>${h2.map(h => `<li><a href="#${h.id}">${h.textContent.replace(/^\d+\.\s*/, "")}</a></li>`).join("")}</ol>`;
+  }
+
+  // --- 1. Odległość punktu od prostej ---
+  const w1 = new Wykres($("od-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  const nwd = (a, b) => b ? nwd(b, a % b) : Math.abs(a);
+  const pk = w1.przeciagaj([
+    { x: -4, y: -2, siatka: 1 },
+    { x: 4, y: 2, siatka: 1 },
+    { x: 1, y: 3, siatka: 0.5 },
+  ], rysujOd);
+  function rysujOd() {
+    const [K, L, P] = pk;
+    if (K.x === L.x && K.y === L.y) L.x += 1; // prosta musi mieć dwa różne punkty
+    // prosta Ax + By + C = 0 przez K i L (współczynniki całkowite, skrócone)
+    let A = L.y - K.y, B = K.x - L.x, C = L.x * K.y - K.x * L.y;
+    const g = nwd(nwd(A, B), C) || 1;
+    A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    const N = A * A + B * B, v = A * P.x + B * P.y + C, d = Math.abs(v) / Math.sqrt(N);
+    const H = { x: P.x - v / N * A, y: P.y - v / N * B };
+    w1.rysuj(gr => {
+      gr.prosta(K.x, K.y, L.x, L.y, 1);
+      if (d > 0.35) {
+        // znacznik kąta prostego w H
+        const u = Math.hypot(B, A), ux = -B / u, uy = A / u;
+        const nx = (P.x - H.x) / d, ny = (P.y - H.y) / d, s = 0.3;
+        gr.wielokat([[H.x + s * ux, H.y + s * uy], [H.x + s * ux + s * nx, H.y + s * uy + s * ny], [H.x + s * nx, H.y + s * ny]], 3, { zamknij: false });
+      }
+      gr.odcinek(P.x, P.y, H.x, H.y, 2, false);
+      gr.punkt(H.x, H.y, "H", 3, { r: 4 });
+      gr.punkt(K.x, K.y, "K", 1);
+      gr.punkt(L.x, L.y, "L", 1);
+      gr.punkt(P.x, P.y, "P", 2);
+    });
+    const czlon = (k, s, pierwszy) => k === 0 ? "" : (k > 0 && !pierwszy ? "+" : "") + (k === 1 && s ? "" : k === -1 && s ? "-" : k) + s;
+    let rown = czlon(A, "x", true) + czlon(B, "y", A === 0) + czlon(C, "", false);
+    const pierw = Number.isInteger(Math.sqrt(N)) ? String(Math.sqrt(N)) : `\\sqrt{${N}}`;
+    tex("od-wynik", `${rown}=0,\\quad P=(${ladnaTex(P.x)},${ladnaTex(P.y)}),\\quad d=\\frac{${ladnaTex(Math.abs(v))}}{${pierw}}\\approx${ladnaTex(d)}`);
+  }
+  rysujOd();
+
+  // --- 2. Wykres |f(x)| i f(|x|) ---
+  const FUN = [
+    { f: x => x * x - 2 * x - 3, t: "x^2-2x-3", ta: "|x|^2-2|x|-3", od: -Infinity },
+    { f: x => x ** 3 - 3 * x, t: "x^3-3x", ta: "|x|^3-3|x|", od: -Infinity },
+    { f: x => Math.log2(x), t: "\\log_2 x", ta: "\\log_2|x|", od: 0.01 },
+  ];
+  const w2 = new Wykres($("ab-plot"), { xmin: -5, xmax: 5, ymin: -5, ymax: 5 });
+  const wybor = name => document.querySelector(`input[name="${name}"]:checked`).value;
+  let stop = null;
+  function klatkaAb(t) {
+    const F = FUN[+wybor("ab-f")], f = F.f, tryb = wybor("ab-t");
+    w2.rysuj(g => {
+      g.funkcja(f, 3, { przerywana: true });
+      if (tryb === "mod") {
+        // część pod osią Ox „przewraca się” w górę: y → y·(1 − 2t)
+        g.funkcja(x => { const y = f(x); return y >= 0 ? y : y * (1 - 2 * t); }, 1);
+      } else {
+        // prawa połowa zostaje, jej kopia składa się na lewą stronę: x → x·(1 − 2t)
+        const a = Math.max(F.od, 0), b = g.z.xmax;
+        g.funkcja(f, 1, { od: a });
+        if (t > 0) g.parametryczna(s => s * (1 - 2 * t), f, a, b, 2);
+      }
+    });
+    const wz = tryb === "mod" ? `y=\\left|${F.t}\\right|` : `y=${F.ta}`;
+    tex("ab-wynik", `f(x)=${F.t},\\quad ${wz}`);
+  }
+  $("ab-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(1800, klatkaAb); });
+  document.querySelectorAll('input[name="ab-f"], input[name="ab-t"]').forEach(el =>
+    el.addEventListener("change", () => { if (stop) stop(); stop = animuj(1800, klatkaAb); }));
+  klatkaAb(0);
+});
+</script>
+</body>
+</html>

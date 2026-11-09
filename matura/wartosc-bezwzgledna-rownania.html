@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Równania i nierówności z wartością bezwzględną</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Równania i nierówności z wartością bezwzględną</h1>
+  <p class="lead">$|x-a|$ to odległość $x$ od $a$ na osi. $|x-a|=r$: punkty w odległości $r$ od $a$; $|x-a|&lt;r$: bliżej niż $r$. Gdy modułów jest kilka, dzielisz oś na przedziały i w każdym opuszczasz moduły.</p>
+  <p class="wymagania">I.7, III.R.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definicja i interpretacja</h2>
+  <div class="definicja"><b>Definicja</b> $|x|=x$ dla $x\ge0$ oraz $|x|=-x$ dla $x&lt;0$. Liczba $|x-a|$ to odległość punktów $x$ i $a$ na osi liczbowej.</div>
+  <div class="wzor">
+    <div class="tytul">Podstawowe typy ($r&gt;0$)</div>
+    $$|x-a|=r\iff x=a-r\ \vee\ x=a+r$$
+    $$|x-a|&lt;r\iff a-r&lt;x&lt;a+r$$
+    $$|x-a|&gt;r\iff x&lt;a-r\ \vee\ x&gt;a+r$$
+    <dl><dt>$r=0$</dt><dd>$|x-a|=0\iff x=a$</dd>
+        <dt>$r&lt;0$</dt><dd>$|x-a|=r$ i $|x-a|&lt;r$ są sprzeczne, $|x-a|&gt;r$ zachodzi dla każdego $x$</dd></dl>
+  </div>
+  <div class="uwaga">$|x+4|=|x-(-4)|$: to odległość od $-4$, nie od $4$.</div>
+
+  <h2 id="metoda">2. Metoda przedziałów</h2>
+  <ol>
+    <li>Znajdź zera wyrażeń pod modułami: dzielą oś na przedziały.</li>
+    <li>W każdym przedziale ustal znak każdego wyrażenia i opuść moduły: $|A|=A$ gdy $A\ge0$, $|A|=-A$ gdy $A&lt;0$.</li>
+    <li>Rozwiąż otrzymane równanie (nierówność) liniowe lub kwadratowe.</li>
+    <li><b>Przetnij wynik z przedziałem</b>, w którym liczyłeś. Na końcu suma wyników z przedziałów.</li>
+  </ol>
+  <p>Skróty: $|A|=|B|\iff A=B\ \vee\ A=-B$. $\;|A|=B$ wymaga $B\ge0$. Obie strony nieujemne? Można podnieść do kwadratu: $|A|&lt;|B|\iff A^2&lt;B^2$.</p>
+
+  <h2 id="demo">3. Interaktywnie: odległość od $a$</h2>
+  <div class="demo">
+    <p class="opis">Przeciągnij punkt $a$ po osi, zmieniaj $r$. Strzałki pokazują odległość $r$ w obie strony. Wykres $y=|x-a|$ to „V” z wierzchołkiem w $a$; rozwiązanie to te $x$, gdzie V jest pod/nad poziomem $y=r$.</p>
+    <canvas id="wb-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="wb-r" min="-1" max="4" step="0.5" value="2"> <span id="wb-r-v"></span></label>
+      <label>$|x-a|$ <select id="wb-znak"><option value="eq">= r</option><option value="lt">&lt; r</option><option value="le">≤ r</option><option value="gt">&gt; r</option><option value="ge">≥ r</option></select></label>
+    </div>
+    <div class="wynik" id="wb-wynik"></div>
+  </div>
+
+  <h2 id="suma">4. Interaktywnie: suma dwóch modułów</h2>
+  <div class="demo">
+    <p class="opis">$y=|x-a|+|x-b|$ to suma odległości od $a$ i od $b$. Trzy kolory to trzy przedziały, w każdym wzór jest liniowy. Między $a$ i $b$ suma jest stała i równa $|a-b|$ (płaskie dno). Poziom $c$ i znak wyznaczają zbiór rozwiązań.</p>
+    <canvas id="sm-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="sm-a" min="-4" max="4" step="0.5" value="-1"> <span id="sm-a-v"></span></label>
+      <label>$b$ <input type="range" id="sm-b" min="-4" max="4" step="0.5" value="2"> <span id="sm-b-v"></span></label>
+      <label>$c$ <input type="range" id="sm-c" min="0" max="8" step="0.5" value="5"> <span id="sm-c-v"></span></label>
+      <label>znak <select id="sm-znak"><option value="eq">= c</option><option value="le">≤ c</option><option value="lt">&lt; c</option><option value="ge">≥ c</option><option value="gt">&gt; c</option></select></label>
+    </div>
+    <div class="wynik" id="sm-wzory"></div>
+    <div class="wynik" id="sm-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż nierówność $|2x-3|\le5$.</p>
+    <ol>
+      <li>$-5\le2x-3\le5$.</li>
+      <li>$-2\le2x\le8 \iff -1\le x\le4$.</li>
+    </ol>
+    <p class="odp">$x\in\lp-1,4\rp$</p>
+  </div>
+  <div class="przyklad">
+    <p>Rozwiąż równanie $|x+1|+|x-2|=5$.</p>
+    <ol>
+      <li>Zera: $-1$ i $2$. Trzy przedziały.</li>
+      <li>$x&lt;-1$: $-x-1-x+2=5 \iff x=-2$. Należy do przedziału ✓.</li>
+      <li>$-1\le x&lt;2$: $x+1-x+2=3=5$, sprzeczne.</li>
+      <li>$x\ge2$: $2x-1=5 \iff x=3$ ✓.</li>
+    </ol>
+    <p class="odp">$x\in\{-2,3\}$</p>
+    <p>Odległość $-1$ od $2$ to $3$; suma odległości $5$ wymaga wyjścia o $1$ poza odcinek w każdą stronę. To ustawienie startowe demo 4.</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-9; 1" data-odp-opis="rozwiązania x"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równanie $|x+4|=5$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Punkty w odległości $5$ od $-4$. <b>$x=-9$ lub $x=1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-oo; -1) u (5; oo)"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż nierówność $|x-2|&gt;3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Dalej niż $3$ od $2$. <b>$x\in(-\infty,-1)\cup(5,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-2; 5)"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż nierówność $|3-2x|&lt;7$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $-7&lt;3-2x&lt;7 \iff -10&lt;-2x&lt;4 \iff -2&lt;x&lt;5$. <b>$x\in(-2,5)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="0"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż równanie $|x-1|=2x+1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x\ge1$: $x-1=2x+1$, $x=-2\notin\lp1,\infty)$, odrzucamy.
+        $x&lt;1$: $1-x=2x+1$, $x=0$ ✓. <b>$x=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-2; 4&gt;"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż nierówność $|x-3|+|x+1|\le6$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x&lt;-1$: $-2x+2\le6$, $x\ge-2$, więc $x\in\lp-2,-1)$.
+        $-1\le x&lt;3$: $4\le6$ zawsze, $x\in\lp-1,3)$.
+        $x\ge3$: $2x-2\le6$, $x\le4$, więc $x\in\lp3,4\rp$.
+        <b>$x\in\lp-2,4\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; 4" data-odp-opis="rozwiązania x"><span class="poziom">maturalne</span>
+      <div class="tresc">Rozwiąż równanie $|x^2-4|=3x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Lewa strona $\ge0$, więc $x\ge0$. Wtedy $x^2-4=3x$ lub $x^2-4=-3x$.
+        $x^2-3x-4=0$: $x=4$ lub $x=-1$ (odpada). $\;x^2+3x-4=0$: $x=1$ lub $x=-4$ (odpada).
+        <b>$x\in\{1,4\}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Wynik z przedziału musi do niego należeć:</b> sprawdź i napisz to. Brak sprawdzenia to najczęstsza strata punktu.</li>
+    <li><b>Końce przedziałów:</b> każdy punkt podziału przypisz do dokładnie jednego przedziału (np. $x&lt;-1$, $-1\le x&lt;2$, $x\ge2$).</li>
+    <li>$|A|=B$ z $B$ zależnym od $x$: najpierw warunek $B\ge0$.</li>
+    <li>Proste typy rozwiązuj interpretacją odległości: szybciej i bez przedziałów.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{,}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "\\lp" : "("}${A}${s}${B}${p.zb ? "\\rp" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{,}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 3. Odległość od a ---
+  const w1 = new Wykres($("wb-plot"), { xmin: -7, xmax: 7, ymin: -2, ymax: 6 });
+  const pa = [{ x: 1, y: 0, siatka: 0.5, ogranicz: p => ({ x: Math.max(-5, Math.min(5, p.x)), y: 0 }) }];
+  function rysujWb() {
+    const a = pa[0].x, r = +$("wb-r").value, zn = $("wb-znak").value;
+    $("wb-r-v").textContent = ladna(r);
+    const f = x => Math.abs(x - a);
+    const z = zbior(x => POR[zn](f(x) - r), r >= 0 ? [a - r, a + r] : [a]);
+    w1.rysuj(g => {
+      g.prosta(0, r, 1, r, 3, true);
+      g.funkcja(f, 1);
+      z.forEach(s => { if (s.a < s.b) g.funkcja(f, 2, { od: s.a, do: s.b, grubosc: 5 }); else g.punkt(s.a, f(s.a), "", 2); });
+      if (r > 0) { g.strzalka(a, -1, a - r, -1, 4, ""); g.strzalka(a, -1, a + r, -1, 4, ""); g.tekst(a, -1, `r = ${ladna(r)}`, 4, { dy: 16, wyrownanie: "center" }); }
+      naOsi(g, z, 2);
+      g.punkt(a, 0, "a", 4);
+    });
+    const L = { eq: "=", lt: "<", le: "\\le", gt: ">", ge: "\\ge" }[zn];
+    tex("wb-wynik", `|${a === 0 ? "x" : "x" + znakTex(-a)}|${L}${ladnaTex(r)}\\iff x\\in ${zbiorTex(z)}`);
+  }
+  w1.przeciagaj(pa, rysujWb);
+  ["wb-r", "wb-znak"].forEach(id => $(id).addEventListener("input", rysujWb));
+  rysujWb();
+
+  // --- 4. Suma dwóch modułów ---
+  const w2 = new Wykres($("sm-plot"), { xmin: -7, xmax: 7, ymin: -1, ymax: 10 });
+  function rysujSm() {
+    const a = +$("sm-a").value, b = +$("sm-b").value, c = +$("sm-c").value, zn = $("sm-znak").value;
+    $("sm-a-v").textContent = ladna(a); $("sm-b-v").textContent = ladna(b); $("sm-c-v").textContent = ladna(c);
+    const L = Math.min(a, b), R = Math.max(a, b), f = x => Math.abs(x - a) + Math.abs(x - b);
+    const z = zbior(x => POR[zn](f(x) - c), [L, R, (L + R - c) / 2, (L + R + c) / 2]);
+    w2.rysuj(g => {
+      g.funkcja(f, 1, { do: L }); g.funkcja(f, 3, { od: L, do: R }); g.funkcja(f, 4, { od: R });
+      z.forEach(s => { if (s.a < s.b) g.funkcja(f, 2, { od: s.a, do: s.b, grubosc: 5 }); else g.punkt(s.a, f(s.a), "", 2); });
+      g.prosta(0, c, 1, c, 2, true);
+      g.odcinek(L, 0, L, f(L), 3); g.odcinek(R, 0, R, f(R), 3);
+      naOsi(g, z, 2);
+      g.punkt(a, 0, "a", 4, { r: 4 }); g.punkt(b, 0, "b", 4, { r: 4 });
+    });
+    const S = { eq: "=", lt: "<", le: "\\le", gt: ">", ge: "\\ge" }[zn];
+    tex("sm-wzory", `x<${ladnaTex(L)}:\\,-2x${znakTex(L + R)};\\;\\; ${ladnaTex(L)}\\le x<${ladnaTex(R)}:\\,${ladnaTex(R - L)};\\;\\; x\\ge${ladnaTex(R)}:\\,2x${znakTex(-(L + R))}`);
+    tex("sm-wynik", `|${a === 0 ? "x" : "x" + znakTex(-a)}|+|${b === 0 ? "x" : "x" + znakTex(-b)}|${S}${ladnaTex(c)}\\iff x\\in ${zbiorTex(z)}`);
+  }
+  ["sm-a", "sm-b", "sm-c", "sm-znak"].forEach(id => $(id).addEventListener("input", rysujSm));
+  rysujSm();
+});
+</script>
+</body>
+</html>

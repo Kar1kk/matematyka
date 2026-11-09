@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Styczna do wykresu funkcji</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Styczna do wykresu funkcji</h1>
+  <p class="lead">Styczna to prosta, która w punkcie styczności ma to samo nachylenie co wykres. Jej współczynnik kierunkowy to $f'(x_0)$. Każde zadanie sprowadza się do znalezienia punktu styczności $x_0$.</p>
+  <p class="wymagania">XIII.R.3, XIII.R.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzor">1. Równanie stycznej</h2>
+  <div class="wzor">
+    <div class="tytul">Styczna w punkcie $(x_0,f(x_0))$ <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$y=f'(x_0)(x-x_0)+f(x_0)$$
+    <dl><dt>$f'(x_0)$</dt><dd>współczynnik kierunkowy, $f'(x_0)=\tg\alpha$</dd>
+        <dt>$x_0$</dt><dd>pierwsza współrzędna punktu styczności</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>Dane</th><th>Szukasz $x_0$ z równania</th></tr>
+    <tr><td>punkt styczności $x_0$</td><td>gotowe, podstaw do wzoru</td></tr>
+    <tr><td>styczna $\parallel y=mx+k$</td><td>$f'(x_0)=m$</td></tr>
+    <tr><td>styczna $\perp y=mx+k$ ($m\neq0$)</td><td>$f'(x_0)=-\frac1m$</td></tr>
+    <tr><td>styczna przez $P=(p,q)$</td><td>$q=f'(x_0)(p-x_0)+f(x_0)$</td></tr>
+  </table>
+  <div class="uwaga">Punkt $P$ spoza wykresu <b>nie jest</b> punktem styczności. Nie licz $f'(p)$. Niewiadomą jest $x_0$, a $P$ podstawiasz do równania stycznej.</div>
+
+  <h2 id="ruchoma">2. Interaktywnie: styczna na żywo</h2>
+  <div class="demo">
+    <p class="opis">Przeciągnij punkt po wykresie. Równanie stycznej liczy się na bieżąco. Włącz „nachylenie $m$”, żeby zobaczyć wszystkie punkty, w których styczna jest równoległa do prostej $y=mx$.</p>
+    <canvas id="st-plot" style="height:340px"></canvas>
+    <div class="sterowanie">
+      <label>funkcja <select id="st-fun">
+        <option value="0">x³ − 3x</option>
+        <option value="1">x²/2</option>
+        <option value="2">1/x</option>
+        <option value="3">√x</option>
+      </select></label>
+      <label><input type="checkbox" id="st-rown"> nachylenie $m$</label>
+      <label>$m$ <input type="range" id="st-m" min="-3" max="3" step="0.25" value="1"> <span id="st-m-v"></span></label>
+    </div>
+    <div class="wynik" id="st-wynik"></div>
+  </div>
+
+  <h2 id="przez-punkt">3. Interaktywnie: styczne przez punkt spoza wykresu</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkt $P$. Pod parabolą $y=\frac12x^2$ są dwie styczne, na paraboli jedna, nad nią żadnej. Liczba stycznych to liczba rozwiązań równania kwadratowego z $x_0$.</p>
+    <canvas id="sp-plot" style="height:320px"></canvas>
+    <div class="wynik" id="sp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wyznacz równanie stycznej do wykresu $f(x)=x^3-2x$ w punkcie o odciętej $x_0=1$.</p>
+    <ol>
+      <li>$f(1)=1-2=-1$.</li>
+      <li>$f'(x)=3x^2-2$, $\;f'(1)=1$.</li>
+      <li>$y=1\cdot(x-1)+(-1)$.</li>
+    </ol>
+    <p class="odp">$y=x-2$</p>
+  </div>
+  <div class="przyklad">
+    <p>Wyznacz styczne do wykresu $f(x)=x^2$ przechodzące przez $P=(1,-3)$.</p>
+    <ol>
+      <li>Styczna w nieznanym $x_0$: $y=2x_0(x-x_0)+x_0^2=2x_0x-x_0^2$.</li>
+      <li>Przechodzi przez $P$: $-3=2x_0-x_0^2$, czyli $x_0^2-2x_0-3=0$.</li>
+      <li>$x_0=3$ lub $x_0=-1$. Podstaw do pkt 1: $y=6x-9$ oraz $y=-2x-1$.</li>
+    </ol>
+    <p class="odp">$y=6x-9$ i $y=-2x-1$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1; -3" data-odp-opis="a; b w y = ax + b"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz równanie stycznej do wykresu $f(x)=x^2-3x+1$ w punkcie o odciętej $2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f(2)=-1$, $f'(x)=2x-3$, $f'(2)=1$. $y=(x-2)-1$. <b>$y=x-3$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz styczne do wykresu $f(x)=\frac1x$ równoległe do prostej $y=-4x+1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x_0)=-\frac{1}{x_0^2}=-4$, więc $x_0=\pm\frac12$. Punkty $\left(\frac12,2\right)$ i $\left(-\frac12,-2\right)$.
+        <b>$y=-4x+4$ oraz $y=-4x-4$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; -2" data-odp-opis="b w y = b (obie styczne)"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz styczne do wykresu $f(x)=x^3-3x^2+2$ równoległe do osi $Ox$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $f'(x)=3x^2-6x=3x(x-2)=0$: $x_0=0$ lub $x_0=2$. $f(0)=2$, $f(2)=-2$. <b>$y=2$ oraz $y=-2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 7" data-odp-opis="a; b w y = ax + b"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz styczną do wykresu $f(x)=\frac{x+1}{x-1}$ w punkcie $A=(2,3)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $$f'(x)=\frac{(x-1)-(x+1)}{(x-1)^2}=\frac{-2}{(x-1)^2}$$
+        $f'(2)=-2$, $y=-2(x-2)+3$. <b>$y=-2x+7$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz styczne do wykresu $f(x)=x^2+1$ przechodzące przez początek układu współrzędnych.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Styczna w $x_0$: $y=2x_0(x-x_0)+x_0^2+1$. Punkt $(0,0)$: $0=-2x_0^2+x_0^2+1$, czyli $x_0^2=1$.
+        <b>$y=2x$ oraz $y=-2x$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2" data-odp-opis="wartości b"><span class="poziom">maturalne</span>
+      <div class="tresc">Dla jakich $b$ prosta $y=2x+b$ jest styczna do wykresu $f(x)=x^3-x$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Nachylenie: $f'(x_0)=3x_0^2-1=2$, więc $x_0=\pm1$. $f(1)=0$: styczna $y=2(x-1)$, czyli $b=-2$. $f(-1)=0$: $y=2(x+1)$, $b=2$.
+        <b>$b=-2$ lub $b=2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Zawsze zaczynaj od pytania: <b>jakie jest $x_0$?</b> Reszta to podstawienie do wzoru z tablic.</li>
+    <li>„Styczna przez punkt $P$”: sprawdź, czy $P$ leży na wykresie. Jeśli nie, rozwiązujesz równanie z niewiadomą $x_0$ (często kwadratowe, czasem z dwoma rozwiązaniami).</li>
+    <li>Równoległa: równe współczynniki kierunkowe. Prostopadła: iloczyn równy $-1$.</li>
+    <li>Kąt nachylenia stycznej: $\tg\alpha=f'(x_0)$; np. $45^\circ$ to $f'(x_0)=1$.</li>
+    <li>Podaj odpowiedź w postaci $y=ax+b$. Gdy rozwiązań $x_0$ jest kilka, podaj <b>wszystkie</b> styczne.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // równanie prostej y = a x + b w TeX-u
+  const prostaTex = (a, b) => {
+    const A = Math.abs(a) < 0.005 ? "" : (Math.abs(a - 1) < 0.005 ? "" : Math.abs(a + 1) < 0.005 ? "-" : ladnaTex(a)) + "x";
+    const B = Math.abs(b) < 0.005 ? (A ? "" : "0") : (A ? znakTex(b) : ladnaTex(b));
+    return "y=" + A + B;
+  };
+
+  // --- 2. Styczna na żywo ---
+  const FUN = [
+    { f: x => x ** 3 - 3 * x, d: x => 3 * x * x - 3, od: -2.3, do: 2.3, x0: 1.6 },
+    { f: x => x * x / 2, d: x => x, od: -3.5, do: 3.5, x0: 1 },
+    { f: x => 1 / x, d: x => -1 / (x * x), od: -4, do: 4, x0: 1, br: 0 },
+    { f: x => Math.sqrt(x), d: x => 1 / (2 * Math.sqrt(x)), od: 0.05, do: 4.5, x0: 1 },
+  ];
+  const st = new Wykres($("st-plot"), { xmin: -4.5, xmax: 4.5, ymin: -4, ymax: 5 });
+  let F = FUN[0];
+  const P = st.przeciagaj([{ x: 1.6, y: 0, ogranicz: p => {
+    let x = Math.min(Math.max(p.x, F.od), F.do);
+    if (F.br !== undefined && Math.abs(x) < 0.25) x = x < 0 ? -0.25 : 0.25;
+    return { x, y: F.f(x) };
+  } }], rysujSt);
+  // rozwiązania f'(x) = m: zmiany znaku na siatce + bisekcja
+  function rozw(m) {
+    const g = x => F.d(x) - m, w = [], n = 600;
+    for (let i = 0; i < n; i++) {
+      let u = F.od + (F.do - F.od) * i / n, v = F.od + (F.do - F.od) * (i + 1) / n;
+      if (F.br !== undefined && u < F.br && F.br < v) continue;
+      if (g(u) === 0) w.push(u);
+      else if (g(u) * g(v) < 0) { for (let k = 0; k < 50; k++) { const s = (u + v) / 2; g(u) * g(s) <= 0 ? v = s : u = s; } w.push(u); }
+    }
+    return w;
+  }
+  function rysujSt() {
+    const x0 = P[0].x, y0 = F.f(x0), a = F.d(x0), b = y0 - a * x0;
+    P[0].y = y0;
+    const m = +$("st-m").value, rown = $("st-rown").checked;
+    $("st-m-v").textContent = ladna(m);
+    const sol = rown ? rozw(m) : [];
+    st.rysuj(g => {
+      if (F.br !== undefined) { g.funkcja(F.f, 1, { od: F.od, do: -0.01 }); g.funkcja(F.f, 1, { od: 0.01, do: F.do }); }
+      else g.funkcja(F.f, 1, { od: F.od, do: F.do });
+      if (rown) {
+        g.prosta(0, 0, 1, m, 4, true);
+        sol.forEach(x => { g.prosta(x, F.f(x), x + 1, F.f(x) + m, 3); g.punkt(x, F.f(x), "", 3); });
+      }
+      g.prosta(x0, y0, x0 + 1, y0 + a, 2);
+      g.punkt(x0, y0, "", 2);
+    });
+    let s = `x_0=${ladnaTex(x0)},\\ f(x_0)=${ladnaTex(y0)},\\ f'(x_0)=${ladnaTex(a)}:\\quad ${prostaTex(a, b)}`;
+    if (rown) s += `\\qquad f'(x_0)=${ladnaTex(m)}:\\ ` + (sol.length ? sol.map(x => "x_0=" + ladnaTex(x)).join(",\\ ") : "\\text{brak}");
+    tex("st-wynik", s);
+  }
+  $("st-fun").addEventListener("change", () => { F = FUN[+$("st-fun").value]; P[0].x = F.x0; rysujSt(); });
+  ["st-m", "st-rown"].forEach(id => $(id).addEventListener("input", rysujSt));
+  $("st-rown").addEventListener("change", rysujSt);
+  rysujSt();
+
+  // --- 3. Styczne przez punkt P do y = x^2/2 ---
+  // styczna w t: y = t x - t^2/2; przez (p, q): t^2 - 2 p t + 2 q = 0
+  const f = x => x * x / 2;
+  const sp = new Wykres($("sp-plot"), { xmin: -5, xmax: 5, ymin: -4, ymax: 6, rowneSkale: true });
+  const Q = sp.przeciagaj([{ x: 1, y: -1.5 }], rysujSp);
+  function rysujSp() {
+    let { x: p, y: q } = Q[0];
+    const D = p * p - 2 * q;
+    if (Math.abs(D) < 0.08) { q = p * p / 2; Q[0].y = q; }   // przyciąganie do paraboli
+    const ts = Math.abs(p * p - 2 * q) < 1e-9 ? [p] : D > 0 ? [p - Math.sqrt(D), p + Math.sqrt(D)] : [];
+    sp.rysuj(g => {
+      g.funkcja(f, 1);
+      ts.forEach(t => { g.prosta(t, f(t), t + 1, f(t) + t, 2); g.punkt(t, f(t), "", 3); });
+      g.punkt(p, q, "P", 4, { r: 7 });
+    });
+    const rown = ts.map(t => prostaTex(t, -t * t / 2)).join(",\\ \\ ");
+    const lin = Math.abs(p) < 0.005 ? "" : znakTex(-2 * p) + "x_0", wol = Math.abs(q) < 0.005 ? "" : znakTex(2 * q);
+    const ile = ["\\text{brak stycznych}", "\\text{1 styczna}", "\\text{2 styczne}"][ts.length];
+    tex("sp-wynik", `x_0^2${lin}${wol}=0:\\ \\ \\Delta=${ladnaTex(4 * (p * p - 2 * q))}` +
+      `\\ \\Rightarrow\\ ${ile}${ts.length ? ":\\ \\ " + rown : ""}`);
+  }
+  rysujSp();
+});
+</script>
+</body>
+</html>

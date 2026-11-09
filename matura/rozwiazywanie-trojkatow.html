@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozwiązywanie trójkątów: twierdzenia sinusów i cosinusów</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Rozwiązywanie trójkątów: twierdzenia sinusów i cosinusów</h1>
+  <p class="lead">Twierdzenie cosinusów to Pitagoras z poprawką $-2ab\cos\gamma$: dla kąta ostrego bok jest krótszy, dla rozwartego dłuższy niż „z Pitagorasa”. Twierdzenie sinusów mówi, że bok podzielony przez sinus kąta naprzeciw to zawsze średnica okręgu opisanego.</p>
+  <p class="wymagania">VII.3, VII.R.7, VII.R.8, VIII.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenia">1. Twierdzenia</h2>
+  <p>Oznaczenia: boki $a,b,c$ leżą naprzeciw kątów $\alpha,\beta,\gamma$ (przy wierzchołkach $A,B,C$), $R$ – promień okręgu opisanego.</p>
+
+  <div class="twierdzenie"><b>Pole trójkąta</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    $$P=\frac12ab\sin\gamma$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>$P=\frac12a\cdot h$, gdzie $h$ – wysokość z $A$ na prostą $BC$, $D$ – jej spodek. W trójkącie prostokątnym $ADC$ przeciwprostokątna to $b$.</p>
+      <ul>
+        <li>$\gamma$ ostry: kąt przy $C$ w trójkącie $ADC$ to $\gamma$, więc $h=b\sin\gamma$.</li>
+        <li>$\gamma$ rozwarty: $D$ leży na przedłużeniu $BC$ za $C$, kąt przy $C$ to $180^\circ-\gamma$, więc $h=b\sin(180^\circ-\gamma)=b\sin\gamma$.</li>
+        <li>$\gamma=90^\circ$: $h=b=b\sin90^\circ$.</li>
+      </ul>
+      <p>Zawsze $h=b\sin\gamma$, czyli $P=\frac12ab\sin\gamma$. $\blacksquare$</p>
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Twierdzenie cosinusów</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    $$c^2=a^2+b^2-2ab\cos\gamma$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Umieść trójkąt w układzie: $C=(0,0)$, $B=(a,0)$. Punkt $A$ leży na ramieniu kąta $\gamma$ w odległości $b$ od $C$, więc z definicji funkcji trygonometrycznych (działa dla każdego $\gamma\in(0^\circ,180^\circ)$): $A=(b\cos\gamma,\,b\sin\gamma)$. Wtedy</p>
+      $$c^2=|AB|^2=(b\cos\gamma-a)^2+b^2\sin^2\gamma$$
+      $$=b^2(\cos^2\gamma+\sin^2\gamma)-2ab\cos\gamma+a^2$$
+      $$=a^2+b^2-2ab\cos\gamma\quad\blacksquare$$
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Twierdzenie odwrotne do twierdzenia Pitagorasa</b> Jeśli $c^2=a^2+b^2$, to $\gamma=90^\circ$. Ogólniej:
+    $$c^2&lt;a^2+b^2\iff\gamma\text{ ostry}$$
+    $$c^2&gt;a^2+b^2\iff\gamma\text{ rozwarty}$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Z twierdzenia cosinusów $a^2+b^2-c^2=2ab\cos\gamma$, a $2ab&gt;0$. Więc znak $a^2+b^2-c^2$ to znak $\cos\gamma$. Gdy $c^2=a^2+b^2$, to $\cos\gamma=0$, a jedyny taki kąt w $(0^\circ,180^\circ)$ to $90^\circ$. Podobnie $\cos\gamma&gt;0\iff\gamma$ ostry, $\cos\gamma&lt;0\iff\gamma$ rozwarty. $\blacksquare$</p>
+      <p>Naprzeciw najdłuższego boku leży największy kąt (VIII.2), więc o typie trójkąta decyduje porównanie <b>kwadratu najdłuższego boku</b> z sumą kwadratów pozostałych.</p>
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Twierdzenie sinusów</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    $$\frac{a}{\sin\alpha}=\frac{b}{\sin\beta}=\frac{c}{\sin\gamma}=2R$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Wystarczy pokazać $a=2R\sin\alpha$ (dla $b$, $c$ tak samo). Niech $O$ – środek okręgu opisanego, $BD$ – jego średnica, $|BD|=2R$. Kąt $BCD$ jest wpisany i oparty na średnicy, więc $\angle BCD=90^\circ$ i $a=|BC|=2R\sin\angle BDC$.</p>
+      <ul>
+        <li>$\alpha$ ostry: $A$ i $D$ leżą po tej samej stronie $BC$, kąty wpisane $BAC$ i $BDC$ są oparte na tym samym łuku: $\angle BDC=\alpha$, więc $a=2R\sin\alpha$.</li>
+        <li>$\alpha$ rozwarty: $A$ i $D$ leżą po przeciwnych stronach $BC$, czworokąt $ABDC$ jest wpisany w okrąg: $\angle BDC=180^\circ-\alpha$, więc $a=2R\sin(180^\circ-\alpha)=2R\sin\alpha$.</li>
+        <li>$\alpha=90^\circ$: $BC$ jest średnicą, $a=2R=2R\sin90^\circ$. $\blacksquare$</li>
+      </ul>
+    </div></details></div>
+  <div class="uwaga">Wniosek z obu wzorów: $\sin\gamma=\frac{c}{2R}$, więc $P=\frac{abc}{4R}$ <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>.</div>
+
+  <h2 id="demo">2. Interaktywnie</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki. Trzy ilorazy „bok / sinus kąta naprzeciw” są zawsze równe średnicy okręgu opisanego. Zaznacz „dowód”, żeby zobaczyć średnicę $BD$ i kąt $\angle BDC=\alpha$ (albo $180^\circ-\alpha$).</p>
+    <canvas id="ts-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="ts-dowod"> pokaż dowód (średnica $BD$)</label>
+    </div>
+    <div class="wynik" id="ts-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">Bok $c$ (czerwony) wobec boku „z Pitagorasa” (przerywany, jak gdyby $\gamma=90^\circ$). Zielony odcinek to rzut $b$ na prostą $BC$, o długości $|b\cos\gamma|$: poprawka $-2a\cdot b\cos\gamma$ zmniejsza $c^2$ przy kącie ostrym i zwiększa przy rozwartym.</p>
+    <canvas id="tc-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="tc-a" min="1" max="6" step="0.5" value="5"> <span id="tc-a-v"></span></label>
+      <label>$b$ <input type="range" id="tc-b" min="1" max="6" step="0.5" value="4"> <span id="tc-b-v"></span></label>
+      <label>$\gamma$ <input type="range" id="tc-g" min="10" max="170" step="5" value="60"> <span id="tc-g-v"></span></label>
+    </div>
+    <div class="wynik" id="tc-wynik"></div>
+  </div>
+
+  <h2 id="metoda">3. Które twierdzenie?</h2>
+  <table class="tabela">
+    <tr><th>dane</th><th>użyj</th></tr>
+    <tr><td>trzy boki</td><td>tw. cosinusów → kąty</td></tr>
+    <tr><td>dwa boki i kąt <b>między</b> nimi</td><td>tw. cosinusów → trzeci bok; pole $\frac12ab\sin\gamma$</td></tr>
+    <tr><td>bok i dwa kąty</td><td>suma kątów, potem tw. sinusów</td></tr>
+    <tr><td>dwa boki i kąt naprzeciw jednego</td><td>tw. sinusów (uwaga: $0$, $1$ lub $2$ trójkąty) albo tw. cosinusów jako równanie kwadratowe</td></tr>
+    <tr><td>trójkąt wpisany w okrąg</td><td>tw. sinusów z $2R$</td></tr>
+  </table>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>W trójkącie $a=5$, $b=8$, $\gamma=60^\circ$. Oblicz $c$, pole i promień okręgu opisanego.</p>
+    <ol>
+      <li>$c^2=25+64-2\cdot5\cdot8\cdot\frac12=49$, więc $c=7$.</li>
+      <li>$P=\frac12\cdot5\cdot8\cdot\frac{\sqrt3}2=10\sqrt3$.</li>
+      <li>$2R=\frac{c}{\sin\gamma}=\frac{7}{\sqrt3/2}=\frac{14}{\sqrt3}$, czyli $R=\frac{7\sqrt3}{3}$.</li>
+    </ol>
+    <p class="odp">$c=7,\ P=10\sqrt3,\ R=\frac{7\sqrt3}{3}$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozstrzygnij, czy trójkąt o bokach a) $4,5,6$, b) $4,5,7$ jest ostrokątny, prostokątny czy rozwartokątny.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Porównaj kwadrat najdłuższego boku z sumą kwadratów pozostałych: $16+25=41$. a) $36&lt;41$; b) $49&gt;41$. <b>a) ostrokątny, b) rozwartokątny</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz pole trójkąta, w którym $a=6$, $b=10$, $\gamma=150^\circ$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P=\frac12\cdot6\cdot10\cdot\sin150^\circ=30\cdot\frac12$. <b>$P=15$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="120" data-odp-opis="kąt w stopniach"><span class="poziom">średnie</span>
+      <div class="tresc">Boki trójkąta mają długości $7$, $8$, $13$. Oblicz miarę największego kąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Największy kąt leży naprzeciw boku $13$: $\cos\gamma=\frac{49+64-169}{2\cdot7\cdot8}=\frac{-56}{112}=-\frac12$. <b>$\gamma=120^\circ$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6sqrt(2); 6" data-odp-opis="b; R"><span class="poziom">średnie</span>
+      <div class="tresc">W trójkącie $a=6$, $\alpha=30^\circ$, $\beta=45^\circ$. Oblicz $b$ i promień okręgu opisanego.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $2R=\frac{6}{\sin30^\circ}=12$, $b=2R\sin45^\circ=12\cdot\frac{\sqrt2}2$. <b>$b=6\sqrt2$, $R=6$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">W trójkącie $ABC$: $|BC|=2$, $|AC|=2\sqrt3$, $\angle BAC=30^\circ$. Wyznacz pozostałe kąty (rozważ wszystkie możliwości).</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Tw. sinusów: $\frac{2}{\sin30^\circ}=\frac{2\sqrt3}{\sin\beta}$, więc $\sin\beta=\frac{\sqrt3}{2}$, $\beta=60^\circ$ lub $\beta=120^\circ$. Oba są możliwe, bo $30^\circ+120^\circ&lt;180^\circ$ (tu $a&lt;b$, więc $\alpha&lt;\beta$ – brak sprzeczności).
+        <b>$\beta=60^\circ,\ \gamma=90^\circ$ albo $\beta=120^\circ,\ \gamma=30^\circ$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2sqrt(7); 2sqrt(19); 12sqrt(3)" data-odp-opis="przekątne; pole"><span class="poziom">maturalne</span>
+      <div class="tresc">Równoległobok ma boki $4$ i $6$ oraz kąt ostry $60^\circ$. Oblicz długości jego przekątnych i pole.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Krótsza przekątna leży naprzeciw kąta $60^\circ$: $d_1^2=16+36-2\cdot4\cdot6\cdot\frac12=28$. Dłuższa naprzeciw $120^\circ$: $d_2^2=16+36+24=76$. Pole $=4\cdot6\cdot\sin60^\circ$.
+        <b>$d_1=2\sqrt7$, $d_2=2\sqrt{19}$, $P=12\sqrt3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Kąt z sinusa ma dwie wartości</b> ($\beta$ i $180^\circ-\beta$). Sprawdź obie: suma kątów $&lt;180^\circ$ i większy kąt naprzeciw dłuższego boku. Kąt z cosinusa jest jednoznaczny.</li>
+    <li>Rozpoznając typ trójkąta, porównuj <b>najdłuższy</b> bok – wystarczy jedno sprawdzenie.</li>
+    <li>W tw. cosinusów kąt musi leżeć <b>między</b> bokami $a$ i $b$, a $c$ naprzeciw niego. Dla kąta rozwartego $-2ab\cos\gamma$ jest dodatnie – uważaj na znak.</li>
+    <li>Dowody tw. sinusów, cosinusów i wzoru na pole są wymagane – na maturze może być polecenie „udowodnij”.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const st = 180 / Math.PI;
+  // łuk kąta w wierzchołku P między ramionami PQ i PR (mniejszy kąt)
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  const kat = (P, Q, R) => Math.acos(Math.max(-1, Math.min(1, ((Q.x - P.x) * (R.x - P.x) + (Q.y - P.y) * (R.y - P.y)) / (Math.hypot(Q.x - P.x, Q.y - P.y) * Math.hypot(R.x - P.x, R.y - P.y)))));
+
+  // --- 2a. Twierdzenie sinusów ---
+  const w1 = new Wykres($("ts-plot"), { xmin: -5, xmax: 5, ymin: -4.2, ymax: 4.2, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-4.8, Math.min(4.8, p.x)), y: Math.max(-4, Math.min(4, p.y)) });
+  const pk = w1.przeciagaj([{ x: -1, y: 2.6, ogranicz: ogr }, { x: -2.6, y: -1.6, ogranicz: ogr }, { x: 2.8, y: -1.4, ogranicz: ogr }], rysujTs);
+  function rysujTs() {
+    const [A, B, C] = pk;
+    const d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
+    const a = Math.hypot(B.x - C.x, B.y - C.y), b = Math.hypot(A.x - C.x, A.y - C.y), c = Math.hypot(A.x - B.x, A.y - B.y);
+    const al = kat(A, B, C), be = kat(B, A, C), ga = kat(C, A, B);
+    const ok = Math.abs(d) > 0.3 && a > 0.2 && b > 0.2 && c > 0.2;
+    let O = null, R = 0;
+    if (ok) {
+      const s = p => p.x * p.x + p.y * p.y;
+      O = { x: (s(A) * (B.y - C.y) + s(B) * (C.y - A.y) + s(C) * (A.y - B.y)) / d, y: (s(A) * (C.x - B.x) + s(B) * (A.x - C.x) + s(C) * (B.x - A.x)) / d };
+      R = Math.hypot(A.x - O.x, A.y - O.y);
+    }
+    w1.rysuj(g => {
+      if (ok) { g.okrag(O.x, O.y, R, 3); g.punkt(O.x, O.y, "O", 3, { r: 3 }); }
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1, { wypelnij: 0.1 });
+      lukKata(g, A, B, C, 0.55, 2);
+      if (ok && $("ts-dowod").checked) {
+        const D = { x: 2 * O.x - B.x, y: 2 * O.y - B.y };
+        g.odcinek(B.x, B.y, D.x, D.y, 4, false); g.odcinek(D.x, D.y, C.x, C.y, 4, false);
+        lukKata(g, D, B, C, 0.55, 4);
+        g.punkt(D.x, D.y, "D", 4);
+      }
+      g.tekst((B.x + C.x) / 2, (B.y + C.y) / 2, "a", 1, { dx: 4, dy: 14, gruby: true });
+      g.tekst((A.x + C.x) / 2, (A.y + C.y) / 2, "b", 1, { dx: 6, gruby: true });
+      g.tekst((A.x + B.x) / 2, (A.y + B.y) / 2, "c", 1, { dx: -14, gruby: true });
+      g.punkt(A.x, A.y, "A"); g.punkt(B.x, B.y, "B"); g.punkt(C.x, C.y, "C");
+    });
+    if (!ok) { tex("ts-wynik", "\\text{trójkąt zdegenerowany – rozsuń wierzchołki}"); return; }
+    const f = v => ladnaTex(v, 2);
+    tex("ts-wynik", `\\alpha\\approx${Math.round(al * st)}^\\circ:\\ \\frac{a}{\\sin\\alpha}\\approx${f(a / Math.sin(al))},\\ \\frac{b}{\\sin\\beta}\\approx${f(b / Math.sin(be))},\\ \\frac{c}{\\sin\\gamma}\\approx${f(c / Math.sin(ga))},\\ 2R\\approx${f(2 * R)}`);
+  }
+  $("ts-dowod").addEventListener("change", rysujTs);
+  rysujTs();
+
+  // --- 2b. Twierdzenie cosinusów ---
+  const w2 = new Wykres($("tc-plot"), { xmin: -6.3, xmax: 7, ymin: -0.9, ymax: 6.4, rowneSkale: true });
+  function rysujTc() {
+    const a = +$("tc-a").value, b = +$("tc-b").value, dg = +$("tc-g").value, g0 = dg / st;
+    $("tc-a-v").textContent = ladna(a); $("tc-b-v").textContent = ladna(b); $("tc-g-v").textContent = dg + "°";
+    const A = { x: b * Math.cos(g0), y: b * Math.sin(g0) }, c2 = a * a + b * b - 2 * a * b * Math.cos(g0);
+    w2.rysuj(g => {
+      g.odcinek(0, b, a, 0, "--plot-axis"); g.odcinek(0, 0, 0, b, "--plot-axis");
+      g.wielokat([[0, 0], [a, 0], [A.x, A.y]], 1, { wypelnij: 0.1, bezObrysu: true });
+      g.odcinek(0, 0, a, 0, 1, false); g.odcinek(0, 0, A.x, A.y, 1, false);
+      g.odcinek(A.x, A.y, a, 0, 2, false);
+      g.odcinek(A.x, A.y, A.x, 0, 3); g.odcinek(0, 0.06, A.x, 0.06, 3, false);
+      g.luk(0, 0, 0.6, 0, g0, 4, { wypelnij: 0.2 });
+      g.tekst(a / 2, 0, "a", 1, { dy: 16, gruby: true }); g.tekst(A.x / 2, A.y / 2, "b", 1, { dx: -14, gruby: true });
+      g.tekst((A.x + a) / 2, A.y / 2, "c", 2, { dx: 8, gruby: true });
+      g.tekst(A.x / 2, 0, "b cos γ", 3, { dy: -8, wyrownanie: "center", rozmiar: 12 });
+      g.punkt(0, 0, "C", 1); g.punkt(a, 0, "B", 1); g.punkt(A.x, A.y, "A");
+    });
+    const p = a * a + b * b, typ = dg < 90 ? "\\gamma\\text{ ostry: }c^2<a^2+b^2" : dg > 90 ? "\\gamma\\text{ rozwarty: }c^2>a^2+b^2" : "\\gamma=90^\\circ:\\ c^2=a^2+b^2";
+    tex("tc-wynik", `c^2=${ladnaTex(p)}${znakTex(-2 * a * b * Math.cos(g0))}\\approx${ladnaTex(c2)};\\quad ${typ}`);
+  }
+  ["tc-a", "tc-b", "tc-g"].forEach(id => $(id).addEventListener("input", rysujTc));
+  rysujTc();
+});
+</script>
+</body>
+</html>

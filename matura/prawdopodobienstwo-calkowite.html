@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prawdopodobieństwo całkowite</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Prawdopodobieństwo całkowite</h1>
+  <p class="lead">Gdy doświadczenie ma dwa etapy (najpierw wybór urny, potem kuli), rozbij świat na przypadki $B_1, B_2,\ldots$ i dodaj wkłady każdego z nich. $P(A)$ to <b>średnia ważona</b> prawdopodobieństw $P(A|B_i)$ z wagami $P(B_i)$.</p>
+  <p class="wymagania">XII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenie">1. Układ zupełny i twierdzenie</h2>
+  <div class="definicja"><b>Układ zupełny zdarzeń</b> $B_1,\ldots,B_n$: zdarzenia parami rozłączne, o dodatnich prawdopodobieństwach, które razem dają $\Omega$. Zawsze zachodzi <b>dokładnie jedno</b> z nich (np. „wylosowano urnę I”, „urnę II”).</div>
+  <div class="twierdzenie"><b>Twierdzenie o prawdopodobieństwie całkowitym</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    $$P(A)=P(A|B_1)P(B_1)+\ldots$$
+    $$\ldots+P(A|B_n)P(B_n)$$
+    <details class="rozwin"><summary>Dowód</summary><div>
+      $A=(A\cap B_1)\cup\ldots\cup(A\cap B_n)$, a te zbiory są parami rozłączne (bo $B_i$ są). Stąd $P(A)=\sum P(A\cap B_i)$, a z definicji prawdopodobieństwa warunkowego $P(A\cap B_i)=P(A|B_i)\,P(B_i)$.
+    </div></details></div>
+  <div class="wzor">
+    <div class="tytul">Na drzewku</div>
+    $$P(A)=\sum_{\text{gałęzie do }A}\text{iloczyn}$$
+    <dl><dt>wzdłuż</dt><dd>mnożysz (to jest $P(B_i)\cdot P(A|B_i)$)</dd>
+        <dt>w poprzek</dt><dd>dodajesz gałęzie kończące się w $A$</dd>
+        <dt>kontrola</dt><dd>z każdego węzła prawdopodobieństwa wychodzących gałęzi sumują się do $1$</dd></dl>
+  </div>
+
+  <h2 id="drzewo">2. Interaktywnie: drzewo z kulkami</h2>
+  <div class="demo">
+    <p class="opis">Trzy przypadki $B_1, B_2, B_3$ (np. trzy maszyny). Grubość gałęzi to prawdopodobieństwo dojścia nią z korzenia. Czerwone liście to $A$. Puść kulki: każda losowo wybiera drogę, a częstość trafień w $A$ zbliża się do $P(A)$.</p>
+    <canvas id="ca-plot" style="height:340px"></canvas>
+    <div class="sterowanie">
+      <label>$P(B_1)$ <input type="range" id="ca-b1" min="0.05" max="0.9" step="0.05" value="0.5"> <span id="ca-b1-v"></span></label>
+      <label>$P(B_2)$ <input type="range" id="ca-b2" min="0.05" max="0.9" step="0.05" value="0.3"> <span id="ca-b2-v"></span></label>
+      <label>$P(A|B_1)$ <input type="range" id="ca-a1" min="0" max="1" step="0.05" value="0.4"> <span id="ca-a1-v"></span></label>
+      <label>$P(A|B_2)$ <input type="range" id="ca-a2" min="0" max="1" step="0.05" value="0.7"> <span id="ca-a2-v"></span></label>
+      <label>$P(A|B_3)$ <input type="range" id="ca-a3" min="0" max="1" step="0.05" value="0.9"> <span id="ca-a3-v"></span></label>
+      <button id="ca-pusc">▶ Puść 100 kulek</button>
+      <button id="ca-reset">↺ Zeruj licznik</button>
+    </div>
+    <div class="wynik" id="ca-wynik"></div>
+    <div class="wynik" id="ca-licznik"></div>
+  </div>
+
+  <h2 id="srednia">3. Animacja: $P(A)$ to wyrównany poziom</h2>
+  <div class="demo">
+    <p class="opis">Szerokość słupka to $P(B_i)$, wysokość $P(A|B_i)$, więc pole niebieskie to $P(A)$. „Wyrównaj”: poziomy się wyrównują jak woda w naczyniach połączonych, pole się nie zmienia. Wspólny poziom to $P(A)$. Ustawienia z drzewa powyżej.</p>
+    <canvas id="wo-plot" style="height:280px"></canvas>
+    <div class="sterowanie">
+      <button id="wo-start">▶ Wyrównaj</button>
+      <button id="wo-wroc">↺ Od nowa</button>
+    </div>
+    <div class="wynik" id="wo-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rzucamy kostką. Gdy wypadnie $1$ lub $2$, losujemy kulę z urny I ($2$ białe, $3$ czarne), w przeciwnym razie z urny II ($4$ białe, $1$ czarna). Oblicz prawdopodobieństwo wylosowania kuli białej.</p>
+    <ol>
+      <li>Układ zupełny: $U_1$ (urna I), $P(U_1)=\frac26=\frac13$; $U_2$, $P(U_2)=\frac23$.</li>
+      <li>Gałęzie do „biała”: $\frac13\cdot\frac25=\frac{2}{15}$ oraz $\frac23\cdot\frac45=\frac{8}{15}$.</li>
+      <li>$P(A)=\frac{2}{15}+\frac{8}{15}=\frac{10}{15}$.</li>
+    </ol>
+    <p class="odp">$P(A)=\frac23$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="3/5" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">łatwe</span>
+      <div class="tresc">Urna I: $4$ białe i $1$ czarna, urna II: $2$ białe i $3$ czarne. Rzucamy monetą i losujemy kulę z urny I (orzeł) lub II (reszka). Oblicz prawdopodobieństwo wylosowania kuli białej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P(A)=\frac12\cdot\frac45+\frac12\cdot\frac25=\frac{6}{10}$. <b>$P(A)=\frac35$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="29/1000" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">średnie</span>
+      <div class="tresc">Trzy linie produkcyjne wytwarzają odpowiednio $50\%$, $30\%$ i $20\%$ wyrobów. Odsetek braków wynosi na nich $2\%$, $3\%$ i $5\%$. Oblicz prawdopodobieństwo, że losowy wyrób jest wadliwy.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P(W)=0{,}5\cdot0{,}02+0{,}3\cdot0{,}03+0{,}2\cdot0{,}05=0{,}01+0{,}009+0{,}01$. <b>$P(W)=0{,}029=\frac{29}{1000}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="13/25" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">średnie</span>
+      <div class="tresc">Urna I: $3$ białe i $2$ czarne, urna II: $2$ białe i $2$ czarne. Losujemy jedną kulę z urny I i wrzucamy ją do urny II, a potem losujemy kulę z urny II. Oblicz prawdopodobieństwo, że jest biała.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Przełożona biała ($\frac35$): w urnie II $3$ białe z $5$. Przełożona czarna ($\frac25$): $2$ białe z $5$. $P(A)=\frac35\cdot\frac35+\frac25\cdot\frac25=\frac{9+4}{25}$. <b>$P(A)=\frac{13}{25}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4/7" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">maturalne</span>
+      <div class="tresc">W urnie są $4$ kule białe i $3$ czarne. Losujemy kolejno dwie kule bez zwracania. Oblicz prawdopodobieństwo, że <b>druga</b> jest biała.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Układ zupełny: pierwsza biała / pierwsza czarna. $P(A)=\frac47\cdot\frac36+\frac37\cdot\frac46=\frac{12+12}{42}=\frac{24}{42}$. Wynik równy $P(\text{pierwsza biała})$ to nie przypadek: bez wiedzy o pierwszej kuli druga jest „tak samo losowa”. <b>$P(A)=\frac47$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="107/128" data-odp-opis="prawdopodobieństwo (ułamek)"><span class="poziom">maturalne</span>
+      <div class="tresc">Rzucamy kostką, a potem tyle razy monetą, ile oczek wypadło. Oblicz prawdopodobieństwo, że wypadnie co najmniej jeden orzeł.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $B_k$: na kostce $k$, $P(B_k)=\frac16$. $P(A|B_k)=1-\left(\frac12\right)^k$ (przeciwne: same reszki). $P(A')=\frac16\left(\frac12+\frac14+\ldots+\frac1{64}\right)=\frac16\cdot\frac{63}{64}=\frac{21}{128}$. <b>$P(A)=\frac{107}{128}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6" data-odp-opis="n"><span class="poziom">maturalne</span>
+      <div class="tresc">Urna I zawiera $n$ kul białych i $2$ czarne, urna II: $3$ białe i $1$ czarną. Wybieramy losowo urnę (rzut monetą) i z niej kulę. Prawdopodobieństwo wylosowania białej wynosi $\frac34$. Wyznacz $n$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\frac12\cdot\frac{n}{n+2}+\frac12\cdot\frac34=\frac34$, więc $\frac{n}{n+2}=\frac34$, $4n=3n+6$. <b>$n=6$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Nazwij układ zupełny</b> („$B_1$: wylosowano urnę I, $B_2$: …”) i zapisz wzór z konkretnymi liczbami. Opisane drzewko (zdarzenia przy węzłach, liczby przy gałęziach) też jest dobrym zapisem.</li>
+    <li><b>Kontrola drzewka:</b> gałęzie z jednego węzła sumują się do $1$. Częsty błąd: liczba kul w urnie po przełożeniu kuli (zmienia się mianownik!).</li>
+    <li>Gdy po $P(A)$ pada pytanie „wiedząc, że zaszło $A$, jakie jest prawdopodobieństwo $B_1$?”, to jest <a href="prawdopodobienstwo-warunkowe.html">wzór Bayesa</a>: $\frac{P(A|B_1)P(B_1)}{P(A)}$.</li>
+    <li>Wynik jako ułamek nieskracalny lub dokładny ułamek dziesiętny.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const zaokr = x => Math.round(x * 100) / 100;
+  function galaz(g, x1, y1, x2, y2, nr, px) { // odcinek o zadanej grubości (px)
+    const c = g.ctx;
+    c.strokeStyle = g.kolor(nr); c.lineWidth = px; c.lineCap = "round"; c.setLineDash([]);
+    c.beginPath(); c.moveTo(g.sx(x1), g.sy(y1)); c.lineTo(g.sx(x2), g.sy(y2)); c.stroke(); c.lineCap = "butt";
+  }
+  function stan() {
+    const b1 = +$("ca-b1").value, b2 = +$("ca-b2").value;
+    return { pb: [b1, b2, zaokr(1 - b1 - b2)], pa: [+$("ca-a1").value, +$("ca-a2").value, +$("ca-a3").value] };
+  }
+  // P(B1)+P(B2) ≤ 0,95, żeby P(B3) ≥ 0,05
+  function pilnuj(ja, inny) {
+    const a = +$(ja).value;
+    if (a + +$(inny).value > 0.95) $(inny).value = zaokr(0.95 - a);
+  }
+
+  // --- 2. Drzewo ---
+  const w1 = new Wykres($("ca-plot"), { xmin: 0, xmax: 10, ymin: 0, ymax: 10, siatka: false, osie: false });
+  const KOR = [0.5, 5], BW = [[3.8, 8.6], [3.8, 5], [3.8, 1.4]];
+  const lisc = (i, a) => [7.3, BW[i][1] + (a ? 0.85 : -0.85)];
+  let kulki = [], doszlo = 0, wA = 0, ptl = null, czas = 0;
+  function rysujCa() {
+    const { pb, pa } = stan();
+    ["ca-b1", "ca-b2", "ca-a1", "ca-a2", "ca-a3"].forEach(id => { $(id + "-v").textContent = ladna(+$(id).value); });
+    const px = v => 1 + 18 * v;
+    const PA = pb.reduce((s, b, i) => s + b * pa[i], 0);
+    w1.rysuj(g => {
+      BW.forEach((B, i) => {
+        galaz(g, ...KOR, ...B, 1, px(pb[i]));
+        galaz(g, ...B, ...lisc(i, true), 2, px(pb[i] * pa[i]));
+        galaz(g, ...B, ...lisc(i, false), "--plot-axis", px(pb[i] * (1 - pa[i])));
+        g.tekst((KOR[0] + B[0]) / 2, (KOR[1] + B[1]) / 2, ladna(pb[i]), 1, { dx: -4, dy: i === 2 ? 16 : -8, wyrownanie: "center", rozmiar: 12 });
+        g.punkt(...B, `B${i + 1}`, 1);
+        const [xa, ya] = lisc(i, true), [xn, yn] = lisc(i, false);
+        g.tekst((B[0] + xa) / 2, (B[1] + ya) / 2, ladna(pa[i]), 2, { dy: -8, wyrownanie: "center", rozmiar: 12 });
+        g.punkt(xa, ya, "", 2); g.punkt(xn, yn, "", "--plot-axis");
+        g.tekst(xa, ya, `A: ${ladna(pb[i] * pa[i], 4)}`, 2, { dx: 9, dy: 5, gruby: true, rozmiar: 12 });
+        g.tekst(xn, yn, "A′", "--plot-axis", { dx: 9, dy: 5, rozmiar: 12 });
+      });
+      g.punkt(...KOR, "", 1);
+      kulki.forEach(k => { const [x, y] = polozenie(k); g.punkt(x, y, "", 4, { r: 3.5 }); });
+    });
+    tex("ca-wynik", `P(A)=${pb.map((b, i) => `${ladnaTex(b)}\\cdot${ladnaTex(pa[i])}`).join("+")}=${ladnaTex(PA, 4)}`);
+    tex("ca-licznik", doszlo ? `\\text{kulek: }${doszlo},\\;\\text{w }A\\text{: }${wA},\\;\\text{częstość}\\approx${ladnaTex(wA / doszlo, 3)}` : "\\text{kulek: }0");
+    return { pb, pa, PA };
+  }
+  const T = 1.4; // czas lotu kulki (s)
+  function polozenie(k) {
+    const u = Math.min(1, Math.max(0, (czas - k.t0) / T));
+    const B = BW[k.i], L = lisc(k.i, k.a);
+    if (u < 0.5) { const v = u / 0.5; return [KOR[0] + (B[0] - KOR[0]) * v, KOR[1] + (B[1] - KOR[1]) * v]; }
+    const v = (u - 0.5) / 0.5; return [B[0] + (L[0] - B[0]) * v, B[1] + (L[1] - B[1]) * v];
+  }
+  function losuj(t0) {
+    const { pb, pa } = stan();
+    let r = Math.random(), i = 0;
+    while (i < 2 && r >= pb[i]) { r -= pb[i]; i++; }
+    return { t0, i, a: Math.random() < pa[i] };
+  }
+  $("ca-pusc").addEventListener("click", () => {
+    for (let j = 0; j < 100; j++) kulki.push(losuj(czas + j * 0.04));
+    if (ptl) return;
+    let poprz = null;
+    ptl = petla(s => {
+      czas += poprz === null ? 0 : s - poprz; poprz = s;
+      kulki = kulki.filter(k => { if (czas - k.t0 >= T) { doszlo++; if (k.a) wA++; return false; } return true; });
+      rysujCa();
+      if (!kulki.length) { ptl.stop(); ptl = null; }
+    });
+  });
+  function zeruj() { kulki = []; doszlo = 0; wA = 0; if (ptl) { ptl.stop(); ptl = null; } }
+  $("ca-reset").addEventListener("click", () => { zeruj(); rysujCa(); });
+  [["ca-b1", "ca-b2"], ["ca-b2", "ca-b1"]].forEach(([ja, inny]) => $(ja).addEventListener("input", () => { pilnuj(ja, inny); zeruj(); wszystko(); }));
+  ["ca-a1", "ca-a2", "ca-a3"].forEach(id => $(id).addEventListener("input", () => { zeruj(); wszystko(); }));
+
+  // --- 3. Wyrównanie poziomu ---
+  const w2 = new Wykres($("wo-plot"), { xmin: -0.08, xmax: 1.06, ymin: -0.16, ymax: 1.1, krokX: 0.25, krokY: 0.25, siatka: true });
+  let tw = 0, stopW = null;
+  function rysujWo() {
+    const { pb, pa } = stan();
+    const PA = pb.reduce((s, b, i) => s + b * pa[i], 0);
+    w2.rysuj(g => {
+      let x = 0;
+      pb.forEach((b, i) => {
+        const h = pa[i] + (PA - pa[i]) * tw;
+        g.prostokat(x, 0, b, h, 1, { wypelnij: 0.45, grubosc: 1.5 });
+        g.tekst(x + b / 2, 0, `B${i + 1}`, 1, { dy: 30, wyrownanie: "center", gruby: true });
+        if (tw < 0.02) g.tekst(x + b / 2, h, ladna(pa[i]), 1, { dy: -5, wyrownanie: "center", rozmiar: 12 });
+        x += b;
+      });
+      g.odcinek(0, PA, 1, PA, 2, true);
+      g.tekst(1, PA, `P(A) = ${ladna(PA, 4)}`, 2, { dx: -4, dy: -6, wyrownanie: "right", gruby: true });
+    });
+    tex("wo-wynik", `P(A)=\\text{pole}=${ladnaTex(PA, 4)}\\;\\text{(średnia ważona }P(A|B_i)\\text{ z wagami }P(B_i))`);
+  }
+  $("wo-start").addEventListener("click", () => { if (stopW) stopW(); const t0 = tw; stopW = animuj(1800, t => { tw = t0 + (1 - t0) * t; rysujWo(); }); });
+  $("wo-wroc").addEventListener("click", () => { if (stopW) stopW(); tw = 0; rysujWo(); });
+
+  function wszystko() { rysujCa(); rysujWo(); }
+  wszystko();
+});
+</script>
+</body>
+</html>

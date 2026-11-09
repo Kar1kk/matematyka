@@ -1,0 +1,284 @@
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --text: #1d1f24;
+  --muted: #646a75;
+  --border: #e3e3dd;
+  --accent: #2f5bd3;
+  --accent-soft: #e8eefc;
+  --ok: #1f8a4c;
+  --warn: #b5650d;
+  --warn-soft: #fdf2e4;
+  --plot-grid: #ececec;
+  --plot-axis: #8a8f99;
+  --plot-1: #2f5bd3;
+  --plot-2: #d2452f;
+  --plot-3: #1f8a4c;
+  --plot-4: #8a3fc4;
+  --radius: 10px;
+  --max: 860px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161a; --surface: #1c1f24; --text: #e6e7ea; --muted: #9aa0ab;
+    --border: #2c3038; --accent: #7d9cf5; --accent-soft: #222b40;
+    --ok: #4cc07f; --warn: #e3a050; --warn-soft: #2e2416;
+    --plot-grid: #262a31; --plot-axis: #6b717c;
+    --plot-1: #7d9cf5; --plot-2: #f07a63; --plot-3: #4cc07f; --plot-4: #c08cf0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161a; --surface: #1c1f24; --text: #e6e7ea; --muted: #9aa0ab;
+  --border: #2c3038; --accent: #7d9cf5; --accent-soft: #222b40;
+  --ok: #4cc07f; --warn: #e3a050; --warn-soft: #2e2416;
+  --plot-grid: #262a31; --plot-axis: #6b717c;
+  --plot-1: #7d9cf5; --plot-2: #f07a63; --plot-3: #4cc07f; --plot-4: #c08cf0;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 17px/1.6 "Segoe UI", system-ui, sans-serif;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header.top {
+  border-bottom: 1px solid var(--border); background: var(--surface);
+  position: sticky; top: 0; z-index: 10;
+}
+header.top .in {
+  max-width: var(--max); margin: 0 auto; padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+header.top .logo { font-weight: 700; color: var(--text); }
+header.top nav { color: var(--muted); font-size: 15px; flex: 1; }
+header.top nav a { color: var(--muted); }
+#motyw { background: none; border: 1px solid var(--border); color: var(--text);
+  border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+
+main { max-width: var(--max); margin: 0 auto; padding: 24px 16px 80px; }
+h1 { font-size: 30px; line-height: 1.2; margin: 8px 0 6px; }
+h2 { font-size: 22px; margin: 40px 0 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+h3 { font-size: 18px; margin: 24px 0 8px; }
+.lead { color: var(--muted); margin-top: 0; }
+
+/* Karty poziomów / działów */
+.siatka { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.karta {
+  display: block; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px; color: var(--text);
+}
+a.karta:hover { border-color: var(--accent); text-decoration: none; }
+.karta h3 { margin: 0 0 4px; }
+.karta p { margin: 0; color: var(--muted); font-size: 15px; }
+.karta.wylaczona { opacity: .5; }
+.znacznik { font-size: 12px; padding: 1px 8px; border-radius: 99px;
+  background: var(--accent-soft); color: var(--accent); margin-left: 6px; vertical-align: middle; }
+
+/* Lista działów */
+.dzial { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  margin-bottom: 10px; }
+.dzial summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none;
+  display: flex; gap: 10px; align-items: baseline; }
+.dzial summary::-webkit-details-marker { display: none; }
+.dzial summary .nr { color: var(--muted); min-width: 34px; }
+.dzial summary .postep { margin-left: auto; font-weight: 400; font-size: 14px; color: var(--muted); }
+.dzial ul { margin: 0; padding: 0 16px 12px 60px; }
+.dzial li { padding: 2px 0; }
+.dzial li.brak { color: var(--muted); }
+.dzial li.brak::after { content: " — w przygotowaniu"; font-size: 13px; }
+.znacznik.r { background: var(--warn-soft); color: var(--warn); font-weight: 600; margin-left: 4px; }
+.legenda { font-size: 14px; color: var(--muted); }
+.twierdzenia { list-style: none; padding: 0; margin: 0; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.twierdzenia li { padding: 8px 16px; border-top: 1px solid var(--border); font-size: 15px; }
+.twierdzenia li:first-child { border-top: 0; }
+.twierdzenia .nr { display: inline-block; min-width: 44px; color: var(--muted); }
+
+/* Elementy tematu */
+.spis { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 10px 16px; font-size: 15px; }
+.spis ol { margin: 4px 0; padding-left: 20px; }
+.wzor { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: var(--radius); padding: 12px 16px; margin: 14px 0; }
+.wzor .tytul { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.wzor .katex-display { margin: 8px 0; }
+.wzor dl { margin: 6px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 15px; }
+.wzor dt { text-align: right; }
+.wzor dd { margin: 0; color: var(--muted); }
+.uwaga { background: var(--warn-soft); border-radius: var(--radius); padding: 10px 16px; margin: 14px 0; }
+.uwaga::before { content: "Uwaga: "; font-weight: 600; color: var(--warn); }
+
+.demo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px; margin: 16px 0; }
+.demo canvas { width: 100%; height: 360px; display: block; border-radius: 6px; }
+.demo .sterowanie { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px 16px; margin-top: 12px; font-size: 15px; }
+.demo label { display: flex; align-items: center; gap: 8px; }
+.demo input[type=range] { flex: 1; accent-color: var(--accent); }
+.demo .wynik { margin-top: 10px; font-size: 15px; color: var(--muted); min-height: 1.6em; }
+.demo button { background: var(--accent); color: #fff; border: 0; border-radius: 8px;
+  padding: 6px 14px; cursor: pointer; font: inherit; }
+.demo select { font: inherit; background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 4px 8px; }
+.demo input[type=radio], .demo input[type=checkbox] { accent-color: var(--accent); }
+.demo button.wtorny { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.demo button.aktywny { outline: 2px solid var(--accent); outline-offset: 1px; }
+.demo .opis { font-size: 14px; color: var(--muted); margin: 0 0 8px; }
+
+/* Definicja / twierdzenie */
+.definicja, .twierdzenie { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 16px; margin: 14px 0; }
+.definicja { border-left: 4px solid var(--ok); }
+.twierdzenie { border-left: 4px solid var(--plot-2); }
+.definicja > b:first-child, .twierdzenie > b:first-child { display: block; font-size: 13px; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
+
+/* Rozwijane: dowód, rozwiązanie, szczegóły */
+details.rozwin { margin: 8px 0; }
+details.rozwin > summary { cursor: pointer; color: var(--accent); font-size: 15px; user-select: none; }
+details.rozwin[open] > summary { margin-bottom: 6px; }
+details.rozwin > div { border-left: 2px solid var(--border); padding: 2px 0 2px 14px; }
+
+/* Przykład krok po kroku */
+.przyklad { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 16px; margin: 14px 0; }
+.przyklad > p:first-child { margin-top: 0; }
+.przyklad ol { padding-left: 22px; margin: 6px 0; }
+.przyklad li { margin: 4px 0; }
+.przyklad .odp { font-weight: 600; }
+
+/* Zadania */
+.zadania { counter-reset: zad; padding: 0; list-style: none; }
+.zadanie { counter-increment: zad; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 16px; margin: 10px 0; }
+.zadanie::before { content: "Zadanie " counter(zad); font-weight: 600; margin-right: 8px; }
+.zadanie .poziom { font-size: 12px; color: var(--muted); }
+.zadanie .tresc { margin: 4px 0; }
+
+/* Tabele */
+table.tabela { border-collapse: collapse; margin: 12px 0; font-size: 15px; background: var(--surface);
+  display: block; overflow-x: auto; max-width: 100%; }
+table.tabela th, table.tabela td { border: 1px solid var(--border); padding: 6px 10px; text-align: center; }
+table.tabela th { background: var(--accent-soft); font-weight: 600; }
+
+.katex.szeroki { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+main table { display: block; overflow-x: auto; max-width: 100%; }
+/* ukryty MathML KaTeX-a (position:absolute) ma zostać w przewijanym kontenerze */
+main table, .katex.szeroki, .katex-display { position: relative; }
+main { overflow-wrap: break-word; }
+
+.wymagania { font-size: 13px; color: var(--muted); margin: -2px 0 12px; }
+.wymagania::before { content: "Podstawa programowa: "; }
+.dwie { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.dwie > *, .sterowanie > * { min-width: 0; }
+
+/* Nawigacja i postęp */
+.opanowane { margin: 40px 0 0; text-align: center; }
+.opanowane button { background: var(--surface); border: 1px solid var(--border); color: var(--text);
+  border-radius: 99px; padding: 8px 18px; cursor: pointer; font: inherit; }
+.opanowane.tak button { background: var(--ok); border-color: var(--ok); color: #fff; }
+.sasiedzi { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; font-size: 15px; }
+.ok { color: var(--ok); font-weight: 700; }
+#podsumowanie { margin: 0 0 14px; font-size: 15px; color: var(--muted); }
+.pasek { height: 6px; background: var(--border); border-radius: 99px; margin-top: 6px; overflow: hidden; }
+.pasek > div { height: 100%; background: var(--ok); }
+
+.film { aspect-ratio: 16/9; background: var(--surface); border: 1px dashed var(--border);
+  border-radius: var(--radius); display: grid; place-items: center; color: var(--muted); }
+.film video { width: 100%; height: 100%; border-radius: var(--radius); }
+
+footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; }
+
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .demo canvas { height: 280px; }
+  .dzial ul { padding-left: 32px; }
+  .dwie { grid-template-columns: 1fr; }
+  .wzor dl { grid-template-columns: 1fr; }
+  .wzor dt { text-align: left; }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+}
+
+/* Zanim zaczniesz (wymagania wstępne tematu) */
+.wymaga { font-size: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; margin: 0 0 14px; }
+.odsylacz { font-size: 12px; color: var(--muted); }
+
+/* Panel „Twoja nauka” na stronach głównych */
+#kontynuuj { margin: 18px 0 26px; }
+#kontynuuj:empty { display: none; }
+.kontynuuj-naglowek { margin-bottom: 10px; }
+#kontynuuj .karta .znacznik { margin: 0 0 6px; display: inline-block; }
+#kontynuuj .karta h3 { margin-top: 2px; }
+
+/* Znaczek: wzór w karcie wzorów CKE / poza kartą */
+.cke { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .02em; text-transform: none;
+  padding: 1px 7px; border-radius: 99px; vertical-align: 2px; white-space: nowrap; cursor: help;
+  background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); border: 1px solid color-mix(in srgb, var(--ok) 40%, transparent); }
+.cke.nie { background: color-mix(in srgb, #d9822b 15%, transparent); color: #c06a14; border-color: color-mix(in srgb, #d9822b 45%, transparent); }
+
+/* Powtórki i zapis postępu */
+.powtorki { font-size: 14px; margin: 0 0 12px; }
+.powtorka-temat { background: color-mix(in srgb, #d9822b 10%, var(--surface)); border: 1px solid color-mix(in srgb, #d9822b 45%, transparent);
+  border-radius: 8px; padding: 10px 12px; margin: 0 0 14px; font-size: 14px; }
+.powtorka-temat div { margin-top: 8px; }
+.powtorka-temat button, .postep-plik button, .postep-plik label { font: inherit; font-size: 13px; cursor: pointer;
+  background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; }
+.postep-plik { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+.postep-plik .info { font-size: 13px; color: var(--muted); }
+
+/* Wynik pod demo: nie łam wzoru w środku relacji (np. „x <” | „2”);
+   zawijaj tylko w odstępach \quad, \qquad, „\ ” i po przecinku z odstępem.
+   Gdy kawałek i tak się nie mieści (site.js dał .szeroki), wróć do zwykłego łamania. */
+.demo .wynik .katex-html { white-space: nowrap; }
+.demo .wynik .katex-html > .base { display: inline; }
+.demo .wynik .base > :is(.mspace:is([style*="margin-right: 1em"], [style*="margin-right: 2em"], :not([style])), .mpunct + .mspace) { display: inline; }
+.demo .wynik .base > :is(.mspace:is([style*="margin-right: 1em"], [style*="margin-right: 2em"], :not([style])), .mpunct + .mspace)::after { content: " "; white-space: normal; font-size: 1px; }
+.demo .wynik .katex.szeroki .katex-html { white-space: normal; }
+
+/* Tryb „sprawdź się” przy zadaniach */
+.sprawdz { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; font-size: 14px; }
+.sprawdz input { flex: 1 1 160px; min-width: 0; font: inherit; padding: 6px 10px; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--bg, var(--surface)); color: var(--text); }
+.sprawdz button, .zeruj-zadania { font: inherit; font-size: 13px; cursor: pointer; background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; }
+.sprawdz .komunikat { flex-basis: 100%; font-size: 13px; }
+li.zadanie.dobrze { box-shadow: inset 4px 0 0 var(--ok); }
+li.zadanie.zle { box-shadow: inset 4px 0 0 #d9822b; }
+.wynik-zadan { font-size: 14px; font-weight: 600; margin-left: 10px; padding: 1px 9px; border-radius: 99px;
+  background: color-mix(in srgb, #d9822b 15%, transparent); color: #c06a14; vertical-align: 3px; }
+.wynik-zadan:empty { display: none; }
+.wynik-zadan.komplet { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
+.zeruj-zadania { font-size: 12px; padding: 2px 8px; color: var(--muted); margin: -6px 0 10px; }
+
+/* Brudnopis przy zadaniu */
+.brudnopis-przycisk { font: inherit; font-size: 13px; cursor: pointer; background: none; color: var(--accent);
+  border: 1px dashed var(--accent); border-radius: 6px; padding: 4px 10px; margin: 6px 0; }
+.brudnopis { margin: 6px 0 10px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.brudnopis .narzedzia { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border-bottom: 1px solid var(--border); }
+.brudnopis .narzedzia button { font: inherit; font-size: 12px; cursor: pointer; background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 3px 9px; }
+.brudnopis .narzedzia button.wl { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.brudnopis canvas { display: block; width: 100%; touch-action: none; cursor: crosshair; background: var(--bg); }
+
+/* Podpowiedź zapisu odpowiedzi */
+.sprawdz .jak-wpisac { flex-basis: 100%; font-size: 12px; color: var(--muted); }
+.sprawdz .jak-wpisac summary { cursor: pointer; }
+.sprawdz .jak-wpisac code { font-size: 12px; }
+
+/* Wyszukiwarka */
+#szukaj { background: none; border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 4px 9px; cursor: pointer; font-size: 14px; }
+header.top nav:empty { flex: 1; }
+#szukaj-okno { position: fixed; inset: 0; z-index: 50; background: rgb(0 0 0 / .35); display: flex; justify-content: center; align-items: flex-start; padding: 8vh 12px 12px; }
+#szukaj-okno[hidden] { display: none; }
+.szukaj-panel { width: min(640px, 100%); max-height: 80vh; display: flex; flex-direction: column; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 12px 40px rgb(0 0 0 / .25); overflow: hidden; }
+.szukaj-panel input { font: inherit; font-size: 17px; padding: 12px 14px; border: 0; border-bottom: 1px solid var(--border); background: var(--surface); color: var(--text); outline: none; }
+.szukaj-wyniki { list-style: none; margin: 0; padding: 4px; overflow-y: auto; }
+.szukaj-wyniki a { display: block; padding: 8px 10px; border-radius: 8px; color: var(--text); text-decoration: none; }
+.szukaj-wyniki a span { display: block; font-size: 12px; color: var(--muted); }
+.szukaj-wyniki a.akt, .szukaj-wyniki a:hover { background: var(--accent-soft); }
+.szukaj-pusto { margin: 0; padding: 12px 14px; font-size: 14px; color: var(--muted); }
+.brudnopis-info { flex-basis: 100%; font-size: 12px; color: #c0392b; }
+.brudnopis-info:empty { display: none; }

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Czworokąty wpisane w okrąg i opisane na okręgu</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Czworokąty wpisane w okrąg i opisane na okręgu</h1>
+  <p class="lead">Na czworokącie da się opisać okrąg, gdy kąty przeciwległe dopełniają się do $180^\circ$ – bo „widzą” razem cały okrąg. W czworokąt da się wpisać okrąg, gdy sumy przeciwległych boków są równe – bo każdy bok składa się z dwóch odcinków stycznych.</p>
+  <p class="wymagania">VIII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wpisany">1. Czworokąt wpisany w okrąg</h2>
+  <div class="twierdzenie"><b>Twierdzenie o czworokącie wpisanym w okrąg</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    Czworokąt wypukły $ABCD$ można wpisać w okrąg wtedy i tylko wtedy, gdy
+    $$\alpha+\gamma=\beta+\delta=180^\circ$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p><b>$\Rightarrow$</b> Kąt $\alpha$ (przy $A$) jest kątem wpisanym opartym na łuku $BCD$, a $\gamma$ – na łuku $BAD$. Te dwa łuki tworzą cały okrąg, więc odpowiadające im kąty środkowe dają $360^\circ$. Kąty wpisane są ich połowami (<a href="katy-w-okregu.html">tw. o kącie wpisanym</a>): $\alpha+\gamma=180^\circ$. Tak samo $\beta+\delta=180^\circ$ (lub z sumy $360^\circ$).</p>
+      <p><b>$\Leftarrow$</b> Niech $\alpha+\gamma=180^\circ$. Przez $A$, $B$, $D$ przechodzi dokładnie jeden okrąg. Półprosta $AC$ przecina go (po przejściu przez przekątną $BD$) w punkcie $C'$ na łuku $BD$ bez $A$, więc z części $\Rightarrow$: $|\angle BC'D|=180^\circ-\alpha=\gamma$.</p>
+      <ul>
+        <li>Gdyby $C$ leżał wewnątrz okręgu ($C$ między $A$ i $C'$): kąt $BCA$ jest zewnętrzny dla trójkąta $BCC'$, więc $|\angle BCA|&gt;|\angle BC'A|$; tak samo $|\angle ACD|&gt;|\angle AC'D|$. Po dodaniu $\gamma&gt;|\angle BC'D|=\gamma$ – sprzeczność.</li>
+        <li>Gdyby $C$ leżał na zewnątrz ($C'$ między $A$ i $C$): te same nierówności w drugą stronę, $\gamma&lt;\gamma$ – sprzeczność.</li>
+      </ul>
+      <p>Zatem $C=C'$ leży na okręgu. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <p>Wnioski: równoległobok wpisany w okrąg to prostokąt ($\alpha=\gamma$ i $\alpha+\gamma=180^\circ$); trapez wpisany w okrąg jest równoramienny (zadanie 5).</p>
+  <div class="demo">
+    <p class="opis">Przeciągaj wierzchołki po okręgu. Czerwony łuk „widzi” kąt $\alpha$, zielony – kąt $\gamma$; razem to cały okrąg, więc $\alpha+\gamma=180^\circ$. Zaznacz „$C$ swobodnie” i odciągnij $C$ od okręgu – suma przestaje wynosić $180^\circ$.</p>
+    <canvas id="co-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="co-wolny"> $C$ swobodnie (poza okręgiem)</label>
+    </div>
+    <div class="wynik" id="co-wynik"></div>
+  </div>
+
+  <h2 id="opisany">2. Czworokąt opisany na okręgu</h2>
+  <div class="twierdzenie"><b>Twierdzenie o czworokącie opisanym na okręgu</b> <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>
+    W czworokąt wypukły $ABCD$ można wpisać okrąg wtedy i tylko wtedy, gdy
+    $$|AB|+|CD|=|AD|+|BC|$$
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p><b>$\Rightarrow$</b> Z każdego wierzchołka wychodzą dwa równe odcinki stycznych (<a href="katy-w-okregu.html">tw. o odcinkach stycznych</a>): $x$ z $A$, $y$ z $B$, $z$ z $C$, $t$ z $D$. Wtedy</p>
+      $$|AB|+|CD|=(x+y)+(z+t)$$
+      $$|BC|+|AD|=(y+z)+(t+x)$$
+      <p>Prawe strony są równe. $\blacksquare$</p>
+      <p><b>$\Leftarrow$</b> Niech $|AB|+|CD|=|AD|+|BC|$. Dwusieczne kątów $A$ i $B$ przecinają się w punkcie równo odległym od $AD$, $AB$, $BC$ – jest okrąg styczny do tych trzech boków. Załóżmy, że nie jest styczny do $CD$. Poprowadź z $C$ drugą styczną; przetnie prostą $AD$ w $D'\ne D$. Czworokąt $ABCD'$ jest opisany, więc z części $\Rightarrow$: $|AB|+|CD'|=|AD'|+|BC|$. Odejmując od założenia:</p>
+      $$|CD|-|CD'|=|AD|-|AD'|=\pm|DD'|$$
+      <p>czyli w trójkącie $CDD'$ jeden bok równa się różnicy dwóch pozostałych – sprzeczność z nierównością trójkąta. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="wzor"><div class="tytul">Pole czworokąta opisanego <span class="cke nie" title="Tego wzoru nie ma w karcie CKE – trzeba go pamiętać lub wyprowadzić">poza kartą CKE</span></div>
+    $$P=p\cdot r,\qquad p=\tfrac12\text{Obw}$$
+    <dl><dt>skąd</dt><dd>podziel czworokąt na 4 trójkąty o wspólnym wierzchołku w środku okręgu; każdy ma wysokość $r$</dd>
+        <dt>trapez opisany</dt><dd>wysokość $h=2r$, a suma podstaw = suma ramion</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Przeciągaj zielone punkty styczności. Odcinki tego samego koloru (wychodzące z jednego wierzchołka) są zawsze równe – dlatego sumy przeciwległych boków się zgadzają.</p>
+    <canvas id="op-plot"></canvas>
+    <div class="wynik" id="op-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Trapez równoramienny o podstawach $8$ i $2$ jest opisany na okręgu. Oblicz ramię, promień okręgu i pole trapezu.</p>
+    <ol>
+      <li>Okrąg wpisany: $8+2=2c$, więc ramię $c=5$.</li>
+      <li>Rzut ramienia na dłuższą podstawę: $\frac{8-2}{2}=3$, więc $h=\sqrt{25-9}=4$ i $r=\frac h2=2$.</li>
+      <li>$P=\frac{8+2}{2}\cdot4=20$ (kontrola: $P=p\cdot r=10\cdot2$).</li>
+    </ol>
+    <p class="odp">$c=5$, $r=2$, $P=20$</p>
+  </div>
+
+  <h2 id="zadania">4. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Kolejne kąty czworokąta mają miary $80^\circ$, $110^\circ$, $100^\circ$, $70^\circ$. Czy można na nim opisać okrąg?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Przeciwległe: $80^\circ+100^\circ=180^\circ$ i $110^\circ+70^\circ=180^\circ$. <b>Tak.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Czworokąt $ABCD$ jest opisany na okręgu, $|AB|=7$, $|BC|=9$, $|CD|=8$. Oblicz $|AD|$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $7+8=9+|AD|$. <b>$|AD|=6$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Czworokąt opisany na okręgu o promieniu $2$ ma obwód $20$. Oblicz jego pole.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P=p\cdot r=10\cdot2$. <b>$P=20$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 15/2; 45" data-odp-opis="krótsza podstawa; ramię; pole"><span class="poziom">średnie</span>
+      <div class="tresc">Trapez równoramienny jest opisany na okręgu o promieniu $3$, a jego dłuższa podstawa ma długość $12$. Oblicz krótszą podstawę, ramię i pole.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $h=2r=6$. Ramię $c$, krótsza podstawa $b$: $12+b=2c$, rzut ramienia $\frac{12-b}{2}=12-c$. Z Pitagorasa $(12-c)^2+36=c^2$, czyli $144-24c+36=0$, $c=7{,}5$, $b=3$. $P=\frac{12+3}{2}\cdot6=45$. <b>$b=3$, $c=7{,}5$, $P=45$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że trapez wpisany w okrąg jest równoramienny.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Trapez $ABCD$, $AB\parallel CD$. Kąty przy ramieniu $AD$: $|\angle A|+|\angle D|=180^\circ$. Czworokąt jest wpisany, więc $|\angle A|+|\angle C|=180^\circ$. Stąd $|\angle C|=|\angle D|$ – kąty przy podstawie $CD$ są równe. Trapez, który ma równe kąty przy podstawie, jest równoramienny (wysokości z $C$ i $D$ dają przystające trójkąty prostokątne, kbk). <b>Co należało wykazać.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7; 16sqrt(3)" data-odp-opis="długość AC; pole"><span class="poziom">maturalne</span>
+      <div class="tresc">Czworokąt $ABCD$ jest wpisany w okrąg, $|AB|=3$, $|BC|=5$, $|\angle ABC|=120^\circ$, $|AD|=|CD|$. Oblicz $|AC|$ i pole czworokąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Tw. cosinusów: $|AC|^2=9+25-2\cdot15\cdot\cos120^\circ=49$, $|AC|=7$. Wpisany, więc $|\angle ADC|=60^\circ$, a $|AD|=|CD|$ – trójkąt $ACD$ jest równoboczny o boku $7$.
+        $$P=\tfrac12\cdot3\cdot5\cdot\tfrac{\sqrt3}{2}+\tfrac{49\sqrt3}{4}$$
+        <b>$|AC|=7$, $P=16\sqrt3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. Na maturze</h2>
+  <ul>
+    <li>Powołanie się na twierdzenie zapisuj z warunkiem: „czworokąt jest wpisany w okrąg, więc $\alpha+\gamma=180^\circ$” – to jest punktowane.</li>
+    <li>W czworokącie wpisanym szukaj kątów wpisanych opartych na tym samym łuku (np. $|\angle BAC|=|\angle BDC|$) – to najsilniejsze narzędzie.</li>
+    <li>Czworokąt opisany: od razu oznacz odcinki stycznych $x,y,z,t$. Trapez opisany: $h=2r$ i $a+b=c+d$.</li>
+    <li>Oba twierdzenia dotyczą czworokątów <b>wypukłych</b>.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 1. Czworokąt wpisany ---
+  const R = 3, O = { x: 0, y: 0 }, PI2 = 2 * Math.PI;
+  const w1 = new Wykres($("co-plot"), { xmin: -4, xmax: 4, ymin: -3.8, ymax: 3.8, rowneSkale: true });
+  const ang = P => Math.atan2(P.y - O.y, P.x - O.x);
+  const mod = t => ((t % PI2) + PI2) % PI2;
+  // punkt na okręgu, w łuku między sąsiadami (kolejność A, B, C, D przeciwnie do zegara)
+  const wLuku = i => p => {
+    if (i === 2 && $("co-wolny").checked) return wPolu(3.8, 3.6)(p);
+    const tp = ang(pc[(i + 3) % 4]), tn = ang(pc[(i + 1) % 4]);
+    const span = mod(tn - tp), d = Math.max(0.2, Math.min(span - 0.2, mod(Math.atan2(p.y, p.x) - tp)));
+    return { x: R * Math.cos(tp + d), y: R * Math.sin(tp + d) };
+  };
+  const pc = w1.przeciagaj([200, 290, 10, 110].map((s, i) => ({ x: R * Math.cos(s / st), y: R * Math.sin(s / st), ogranicz: wLuku(i) })), rysujCo);
+  function rysujCo() {
+    const [A, B, C, D] = pc;
+    if (!$("co-wolny").checked) { const n = wLuku(2)(C); C.x = n.x; C.y = n.y; }
+    const naOk = Math.abs(odl(O, C) - R) < 1e-6;
+    const al = kat(A, D, B), be = kat(B, A, C), ga = kat(C, B, D), de = kat(D, C, A);
+    const tB = ang(B), tD = ang(D);
+    w1.rysuj(g => {
+      g.okrag(0, 0, R, 1, { przerywana: true });
+      if (naOk) {
+        g.luk(0, 0, R, tB, tB + mod(tD - tB), 2, { grubosc: 5 });
+        g.luk(0, 0, R, tD, tD + mod(tB - tD), 3, { grubosc: 5 });
+      }
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y], [D.x, D.y]], 1, { wypelnij: 0.1 });
+      lukKata(g, A, D, B, 0.55, 2); lukKata(g, C, B, D, 0.55, 3);
+      lukKata(g, B, A, C, 0.45, 4); lukKata(g, D, C, A, 0.45, 4);
+      const S = { x: (A.x + B.x + C.x + D.x) / 4, y: (A.y + B.y + C.y + D.y) / 4 };
+      [[A, "A"], [B, "B"], [C, "C"], [D, "D"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+    });
+    tex("co-wynik", `\\alpha+\\gamma=${stopnie(al)}+${stopnie(ga)}=${stopnie(al + ga)},\\quad \\beta+\\delta=${stopnie(be + de)}`);
+  }
+  $("co-wolny").addEventListener("change", rysujCo);
+  rysujCo();
+
+  // --- 2. Czworokąt opisany ---
+  const r = 1.8, GMIN = 0.5, GMAX = 2.44;
+  const w2 = new Wykres($("op-plot"), { xmin: -5.6, xmax: 5.6, ymin: -5.6, ymax: 5.6, rowneSkale: true });
+  const sty = i => p => {
+    const tp = ang(pt[(i + 3) % 4]), tn = ang(pt[(i + 1) % 4]), span = mod(tn - tp);
+    const lo = Math.max(GMIN, span - GMAX), hi = Math.min(GMAX, span - GMIN);
+    let d = mod(Math.atan2(p.y, p.x) - tp);
+    d = lo <= hi ? Math.max(lo, Math.min(hi, d)) : span / 2;
+    return { x: r * Math.cos(tp + d), y: r * Math.sin(tp + d) };
+  };
+  const pt = w2.przeciagaj([0.3, 1.9, 3.3, 4.7].map((t, i) => ({ x: r * Math.cos(t), y: r * Math.sin(t), ogranicz: sty(i) })), rysujOp);
+  function rysujOp() {
+    const t = pt.map(ang);
+    // wierzchołek i leży między punktami styczności i oraz i+1
+    const V = [0, 1, 2, 3].map(i => {
+      const dl = mod(t[(i + 1) % 4] - t[i]), m = t[i] + dl / 2, d = r / Math.cos(dl / 2);
+      return { x: d * Math.cos(m), y: d * Math.sin(m), s: r * Math.tan(dl / 2) };
+    });
+    const nazwy = ["A", "B", "C", "D"];
+    const R = Math.max(3.2, ...V.map(W => Math.hypot(W.x, W.y))) + 0.7; // kadr dopasowany do czworokąta
+    w2.zakres({ xmin: -R, xmax: R, ymin: -R, ymax: R });
+    w2.rysuj(g => {
+      g.okrag(0, 0, r, 1, { wypelnij: 0.08 });
+      V.forEach((W, i) => {
+        const T1 = pt[i], T2 = pt[(i + 1) % 4], nr = i + 1;
+        g.odcinek(W.x, W.y, T1.x, T1.y, nr, false); g.odcinek(W.x, W.y, T2.x, T2.y, nr, false);
+        g.tekst((W.x + T1.x) / 2, (W.y + T1.y) / 2, ladna(W.s), nr, { dx: 4, dy: -4 });
+        g.tekst((W.x + T2.x) / 2, (W.y + T2.y) / 2, ladna(W.s), nr, { dx: 4, dy: -4 });
+      });
+      pt.forEach(T => { g.odcinek(0, 0, T.x, T.y, 3); g.punkt(T.x, T.y, "", 3); });
+      V.forEach((W, i) => { g.punkt(W.x, W.y, "", 2, { r: 3.5 }); etykieta(g, W, O, nazwy[i], 2); });
+    });
+    const bok = (i, j) => odl(V[i], V[j]);
+    const ab = bok(0, 1), bc = bok(1, 2), cd = bok(2, 3), da = bok(3, 0), f = ladnaTex;
+    tex("op-wynik", `\\begin{aligned}|AB|+|CD|&=${f(ab)}+${f(cd)}=${f(ab + cd)}\\\\|BC|+|AD|&=${f(bc)}+${f(da)}=${f(bc + da)}\\end{aligned}`);
+  }
+  rysujOp();
+});
+</script>
+</body>
+</html>

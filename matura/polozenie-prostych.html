@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wzajemne położenie prostych, prosta prostopadła</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Wzajemne położenie prostych, prosta prostopadła</h1>
+  <p class="lead">Dwie proste na płaszczyźnie albo się przecinają (jeden punkt wspólny), albo są równoległe. Wszystko rozstrzyga kierunek: ten sam to równoległe, obrócony o $90^\circ$ to prostopadłe.</p>
+  <p class="wymagania">IX.1, IX.2, IX.R.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="warunki">1. Warunki równoległości i prostopadłości</h2>
+  <table class="tabela">
+    <tr><th></th><th>$y=a_1x+b_1$<br>$y=a_2x+b_2$</th><th>$A_1x+B_1y+C_1=0$<br>$A_2x+B_2y+C_2=0$</th></tr>
+    <tr><td>równoległe</td><td>$a_1=a_2$</td><td>$A_1B_2-A_2B_1=0$</td></tr>
+    <tr><td>prostopadłe</td><td>$a_1\cdot a_2=-1$</td><td>$A_1A_2+B_1B_2=0$</td></tr>
+    <tr><td>przecinają się</td><td>$a_1\neq a_2$</td><td>$A_1B_2-A_2B_1\neq0$</td></tr>
+  </table>
+  <p>Wszystkie cztery warunki są w tablicach. Równoległe z $b_1=b_2$ (lub proporcjonalnymi $A,B,C$) to ta sama prosta, czyli <b>pokrywające się</b>.</p>
+  <div class="uwaga">Warunek $a_1a_2=-1$ nie obejmuje pary „pozioma + pionowa” ($x=c$ nie ma $a$). Postać ogólna działa zawsze.</div>
+  <div class="definicja"><b>Punkt przecięcia</b> to rozwiązanie układu równań obu prostych. Układ ma jedno rozwiązanie (przecinają się), brak rozwiązań (równoległe rozłączne) albo nieskończenie wiele (pokrywają się).</div>
+  <details class="rozwin"><summary>Skąd $a_1a_2=-1$?</summary><div>
+    <p>Przesuń obie proste tak, by przechodziły przez $O$: $y=a_1x$, $y=a_2x$. Leżą na nich $P=(1,a_1)$ i $Q=(1,a_2)$. Kąt $POQ$ jest prosty $\iff |OP|^2+|OQ|^2=|PQ|^2$:</p>
+    $$1+a_1^2+1+a_2^2=(a_1-a_2)^2$$
+    $$2=-2a_1a_2\iff a_1a_2=-1$$
+  </div></details>
+
+  <h2 id="demo">2. Interaktywnie: dwie proste</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj punkty: niebieska prosta przechodzi przez $P_1,Q_1$, fioletowa przez $P_2,Q_2$. Spróbuj ustawić proste równoległe i prostopadłe; obserwuj oba warunki.</p>
+    <canvas id="pp-plot"></canvas>
+    <div class="wynik" id="pp-w1"></div>
+    <div class="wynik" id="pp-w2"></div>
+    <div class="wynik" id="pp-w3"></div>
+  </div>
+
+  <h2 id="prostopadla">3. Prosta równoległa i prostopadła przez punkt</h2>
+  <div class="wzor">
+    <div class="tytul">Dana prosta $y=ax+b$ i punkt $P=(x_0,y_0)$</div>
+    $$\parallel:\ y-y_0=a(x-x_0)$$
+    $$\perp:\ y-y_0=-\tfrac{1}{a}(x-x_0)$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Dana prosta $Ax+By+C=0$</div>
+    $$\parallel:\ Ax+By+C'=0$$
+    $$\perp:\ Bx-Ay+C''=0$$
+    <dl><dt>$C',C''$</dt><dd>wyznacz, podstawiając współrzędne $P$</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Przeciągnij punkty prostej $l$ i punkt $P$, potem ▶. Kopia $l$ przesuwa się do $P$ (równoległa), a potem obraca o $90^\circ$ (prostopadła). $F$ to rzut $P$ na $l$.</p>
+    <canvas id="pk-plot"></canvas>
+    <div class="sterowanie"><button id="pk-start">▶ Konstruuj</button></div>
+    <div class="wynik" id="pk-w1"></div>
+    <div class="wynik" id="pk-w2"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wyznacz prostą prostopadłą do $l\colon y=2x-1$ przechodzącą przez $P=(-2,5)$ oraz punkt $F$, w którym przecina ona $l$.</p>
+    <ol>
+      <li>$a_\perp=-\frac12$, bo $2\cdot\left(-\frac12\right)=-1$.</li>
+      <li>$y-5=-\frac12(x+2)$, czyli $y=-\frac12x+4$.</li>
+      <li>Układ: $2x-1=-\frac12x+4$, więc $\frac52x=5$, $x=2$, $y=3$.</li>
+      <li>Kontrola: $F$ leży na obu prostych: $2\cdot2-1=3$, $-1+4=3$ ✓.</li>
+    </ol>
+    <p class="odp">$y=-\frac12x+4$, $F=(2,3)$</p>
+    <p>Przy okazji: $|PF|=\sqrt{16+4}=2\sqrt5$ to odległość $P$ od prostej $l$, policzona bez osobnego wzoru (można też wzorem z karty CKE: $l\colon 2x-y-1=0$, $d=\frac{|2\cdot(-2)-5-1|}{\sqrt{2^2+1}}=\frac{10}{\sqrt5}=2\sqrt5$).</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="3; 2/5" data-odp-opis="m (równoległe); m (prostopadłe)"><span class="poziom">łatwe</span>
+      <div class="tresc">Dla jakiego $m$ proste $y=(2m-1)x+3$ i $y=5x-2$ są równoległe, a dla jakiego prostopadłe?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Równoległe: $2m-1=5$. Prostopadłe: $(2m-1)\cdot5=-1$, czyli $2m-1=-\frac15$. <b>Równoległe dla $m=3$, prostopadłe dla $m=\frac25$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 1" data-odp-opis="x; y"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz punkt wspólny prostych $x+2y-4=0$ i $3x-y-5=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Z pierwszego $x=4-2y$. Do drugiego: $12-6y-y-5=0$, $y=1$, $x=2$. Kontrola: $6-1-5=0$ ✓. <b>$(2,1)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Przez $P=(2,-1)$ poprowadź prostą równoległą i prostą prostopadłą do $3x-4y+1=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Równoległa: $3x-4y+C=0$, $6+4+C=0$, $C=-10$. Prostopadła: $4x+3y+C=0$, $8-3+C=0$, $C=-5$.
+        <b>$3x-4y-10=0$ oraz $4x+3y-5=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2; 0" data-odp-opis="dwie wartości m (równoległe); m (prostopadłe)"><span class="poziom">średnie</span>
+      <div class="tresc">Proste $mx+2y-1=0$ i $2x+my+3=0$. Dla jakich $m$ są równoległe, a dla jakich prostopadłe?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Równoległe: $m\cdot m-2\cdot2=0$, $m=\pm2$. Pokrywają się? Dla $m=2$: $2x+2y-1=0$ i $2x+2y+3=0$, różne $C$; dla $m=-2$: $-2x+2y-1=0$ i $2x-2y+3=0$, czyli $x-y+\frac12=0$ i $x-y+\frac32=0$, też różne. Prostopadłe: $2m+2m=0$, $m=0$ (pozioma $y=\frac12$ i pionowa $x=-\frac32$).
+        <b>Równoległe dla $m\in\{-2,2\}$, prostopadłe dla $m=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6; 1" data-odp-opis="x; y punktu P'"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz punkt $P'$ symetryczny do $P=(-2,5)$ względem prostej $y=2x-1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Z przykładu: rzut $P$ na prostą to $F=(2,3)$ i $F$ jest środkiem $PP'$. $P'=(2\cdot2+2,\ 2\cdot3-5)$. <b>$P'=(6,1)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 8; 3; 2; 20" data-odp-opis="a; b wysokości y = ax + b; x; y punktu H; pole"><span class="poziom">maturalne</span>
+      <div class="tresc">Trójkąt ma wierzchołki $A=(-3,-1)$, $B=(5,3)$, $C=(1,6)$. Wyznacz równanie wysokości z $C$, jej spodek $H$ i pole trójkąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a_{AB}=\frac{4}{8}=\frac12$, więc wysokość: $a=-2$, $y-6=-2(x-1)$, $y=-2x+8$. Prosta $AB$: $y=\frac12x+\frac12$. Układ: $-2x+8=\frac12x+\frac12$, $x=3$, $y=2$. $|CH|=\sqrt{4+16}=2\sqrt5$, $|AB|=\sqrt{64+16}=4\sqrt5$, $P=\frac12\cdot4\sqrt5\cdot2\sqrt5=20$.
+        <b>$y=-2x+8$, $H=(3,2)$, pole $20$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Prosta prostopadła do <b>pionowej</b> $x=c$ jest pozioma: $y=y_0$ (i odwrotnie). Tu $-\frac1a$ nie zadziała.</li>
+    <li>W zadaniach z parametrem „równoległe” sprawdź, czy dla znalezionego $m$ proste się nie <b>pokrywają</b>, jeśli treść mówi o prostych różnych.</li>
+    <li>Punkt przecięcia zawsze sprawdź w <b>obu</b> równaniach. To 10 sekund, a łapie większość pomyłek.</li>
+    <li>Wysokość trójkąta, symetralna odcinka, rzut punktu na prostą: wszystko to prosta prostopadła przez punkt plus układ równań.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nwd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  function ulamek(p, q) {
+    if (q < 0) { p = -p; q = -q; }
+    const g = nwd(p, q) || 1; p /= g; q /= g;
+    if (q === 1) return `${p}`;
+    return `${p < 0 ? "-" : ""}\\frac{${Math.abs(p)}}{${q}}`;
+  }
+  function ogolna(A, B, C) {
+    const g = nwd(nwd(A, B), C) || 1; A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    let s = "";
+    const wyraz = (k, zm) => { if (!k) return; s += (k < 0 ? "-" : s ? "+" : "") + (zm && Math.abs(k) === 1 ? "" : Math.abs(k)) + zm; };
+    wyraz(A, "x"); wyraz(B, "y"); wyraz(C, "");
+    return s + "=0";
+  }
+  function kierunkowa(A, B, C) {
+    if (B === 0) return `x=${ulamek(-C, A)}`;
+    let s = "y=";
+    if (A !== 0) { const u = ulamek(-A, B); s += (u === "1" ? "" : u === "-1" ? "-" : u) + "x"; }
+    if (C !== 0 || A === 0) { const u = ulamek(-C, B); s += (A !== 0 && !u.startsWith("-") ? "+" : "") + u; }
+    return s;
+  }
+  // prosta przez dwa punkty całkowite → [A, B, C] skrócone
+  function wspolczynniki(P, Q) {
+    let A = Q.y - P.y, B = P.x - Q.x, C = -(A * P.x + B * P.y);
+    const g = nwd(nwd(A, B), C) || 1; A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    return [A, B, C];
+  }
+  // znaczek kąta prostego w (X,Y) między kierunkami u i v
+  function katProsty(g, X, Y, u, v, nr = 2) {
+    const s = 0.45, nu = Math.hypot(...u), nv = Math.hypot(...v);
+    const a = [u[0] / nu * s, u[1] / nu * s], b = [v[0] / nv * s, v[1] / nv * s];
+    g.wielokat([[X + a[0], Y + a[1]], [X + a[0] + b[0], Y + a[1] + b[1]], [X + b[0], Y + b[1]]], nr, { zamknij: false, grubosc: 1.5 });
+  }
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-4, Math.min(5, p.y)) });
+
+  // --- 2. Dwie proste ---
+  const w1 = new Wykres($("pp-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 6, rowneSkale: true });
+  const pk1 = w1.przeciagaj([[-4, -2], [2, 1], [-2, 4], [2, -2]].map(([x, y]) => ({ x, y, siatka: 1, ogranicz: ogr })), rysujPP);
+  function rysujPP() {
+    const [P1, Q1, P2, Q2] = pk1;
+    const zle = (P1.x === Q1.x && P1.y === Q1.y) || (P2.x === Q2.x && P2.y === Q2.y);
+    const [A1, B1, C1] = zle ? [0, 0, 0] : wspolczynniki(P1, Q1), [A2, B2, C2] = zle ? [0, 0, 0] : wspolczynniki(P2, Q2);
+    const W = A1 * B2 - A2 * B1, S = A1 * A2 + B1 * B2;
+    const pokryte = W === 0 && A1 * C2 - A2 * C1 === 0 && B1 * C2 - B2 * C1 === 0;
+    w1.rysuj(g => {
+      if (!zle) {
+        g.prosta(P1.x, P1.y, Q1.x, Q1.y, 1);
+        g.prosta(P2.x, P2.y, Q2.x, Q2.y, 4, pokryte);
+        if (W !== 0) {
+          const X = (B1 * C2 - B2 * C1) / W, Y = (A2 * C1 - A1 * C2) / W;
+          if (S === 0) katProsty(g, X, Y, [Q1.x - P1.x, Q1.y - P1.y], [Q2.x - P2.x, Q2.y - P2.y]);
+          g.punkt(X, Y, "", 2, { r: 6, pusty: true });
+        }
+      }
+      g.punkt(P1.x, P1.y, "P₁", 1); g.punkt(Q1.x, Q1.y, "Q₁", 1);
+      g.punkt(P2.x, P2.y, "P₂", 4); g.punkt(Q2.x, Q2.y, "Q₂", 4);
+    });
+    if (zle) { tex("pp-w1", "\\text{Rozsuń punkty: prosta wymaga dwóch różnych punktów}"); tex("pp-w2", ""); tex("pp-w3", ""); return; }
+    const op = (A, B, C, i) => `l_${i}\\colon ${ogolna(A, B, C)}` + (B ? `,\\ ${kierunkowa(A, B, C)}` : "\\ (\\text{pionowa})");
+    tex("pp-w1", op(A1, B1, C1, 1) + "\\qquad " + op(A2, B2, C2, 2));
+    let iloczyn = "";
+    if (B1 && B2) iloczyn = `,\\quad a_1a_2=${ulamek(A1 * A2, B1 * B2)}`;
+    tex("pp-w2", `A_1B_2-A_2B_1=${W},\\quad A_1A_2+B_1B_2=${S}${iloczyn}`);
+    let opis;
+    if (pokryte) opis = "\\textbf{pokrywają się}";
+    else if (W === 0) opis = "\\textbf{równoległe rozłączne}";
+    else {
+      const X = ulamek(B1 * C2 - B2 * C1, W), Y = ulamek(A2 * C1 - A1 * C2, W);
+      opis = `\\textbf{${S === 0 ? "prostopadłe" : "przecinają się"}}\\text{ w }\\left(${X},\\ ${Y}\\right)`;
+    }
+    tex("pp-w3", "\\Rightarrow\\ " + opis);
+  }
+  rysujPP();
+
+  // --- 3. Konstrukcja prostej równoległej i prostopadłej ---
+  const w2 = new Wykres($("pk-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 6, rowneSkale: true });
+  const pk2 = w2.przeciagaj([[-4, -3], [2, 1], [-3, 2]].map(([x, y]) => ({ x, y, siatka: 1, ogranicz: ogr })), () => { if (stop) stop(); klatka(tAkt); });
+  let stop = null, tAkt = 0;
+  function klatka(t) {
+    tAkt = t;
+    const [K, L, P] = pk2;
+    if (K.x === L.x && K.y === L.y) { w2.rysuj(g => { g.punkt(K.x, K.y, "K", 1); g.punkt(P.x, P.y, "P"); }); return; }
+    const [A, B, C] = wspolczynniki(K, L);
+    const n = A * P.x + B * P.y + C, m = A * A + B * B;
+    const F = { x: P.x - A * n / m, y: P.y - B * n / m };           // rzut P na l
+    const d = [L.x - K.x, L.y - K.y];                                 // kierunek l
+    const t1 = Math.min(1, t * 2), t2 = Math.max(0, t * 2 - 1);
+    const sx = (P.x - F.x) * t1, sy = (P.y - F.y) * t1;                // przesunięcie kopii
+    const fi = Math.PI / 2 * t2, r = [d[0] * Math.cos(fi) - d[1] * Math.sin(fi), d[0] * Math.sin(fi) + d[1] * Math.cos(fi)];
+    w2.rysuj(g => {
+      g.prosta(K.x, K.y, L.x, L.y, 1);
+      if (t > 0) {
+        if (t1 === 1) g.prosta(P.x, P.y, P.x + d[0], P.y + d[1], 3, true);
+        const ox = F.x + sx, oy = F.y + sy;
+        g.prosta(ox, oy, ox + r[0], oy + r[1], 2);
+        const k = 1.6 / Math.hypot(...r);
+        g.strzalka(ox, oy, ox + r[0] * k, oy + r[1] * k, 2);
+      }
+      if (t === 1) { katProsty(g, F.x, F.y, d, n ? [P.x - F.x, P.y - F.y] : [-d[1], d[0]], 3); g.punkt(F.x, F.y, "F", 3); }
+      g.punkt(K.x, K.y, "", 1); g.punkt(L.x, L.y, "l", 1); g.punkt(P.x, P.y, "P", 2);
+    });
+    tex("pk-w1", `l\\colon ${ogolna(A, B, C)}`);
+    if (t < 1) { tex("pk-w2", t ? "\\dots" : "\\text{Naciśnij Konstruuj}"); return; }
+    const par = ogolna(A, B, -(A * P.x + B * P.y)), prp = ogolna(B, -A, -(B * P.x - A * P.y));
+    const Fx = ulamek(P.x * m - A * n, m), Fy = ulamek(P.y * m - B * n, m);
+    tex("pk-w1", `l\\colon ${ogolna(A, B, C)},\\quad \\parallel\\colon ${par}`);
+    tex("pk-w2", `\\perp\\colon ${prp},\\quad F=\\left(${Fx},\\ ${Fy}\\right)`);
+  }
+  $("pk-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2600, klatka); });
+  klatka(0);
+});
+</script>
+</body>
+</html>

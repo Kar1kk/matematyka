@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pojęcie i własności funkcji (odczyt z wykresu)</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Pojęcie i własności funkcji (odczyt z wykresu)</h1>
+  <p class="lead">Funkcja przypisuje każdemu argumentowi <b>dokładnie jedną</b> wartość. Prawie wszystko, o co pyta matura, odczytasz z wykresu, rzutując go na osie: na $Ox$ widać argumenty, na $Oy$ wartości.</p>
+  <p class="wymagania">V.1–V.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Czym jest funkcja</h2>
+  <div class="definicja"><b>Definicja</b> Funkcja $f\colon X\to Y$ przyporządkowuje <b>każdemu</b> elementowi $x\in X$ <b>dokładnie jeden</b> element $f(x)\in Y$. Zbiór $X$ to <b>dziedzina</b> ($D_f$), a zbiór wszystkich przyjmowanych wartości to <b>zbiór wartości</b> ($ZW_f$).</div>
+  <p>Funkcję można zadać opisem słownym, tabelą, grafem, wykresem albo wzorem, także <b>różnymi wzorami na różnych przedziałach</b>:</p>
+  <div class="wzor">
+    <div class="tytul">Funkcja „klamrowa”</div>
+    $$f(x)=\begin{cases} x+3, &amp; x&lt;-1\\ x^2-1, &amp; x\ge -1\end{cases}$$
+    <dl><dt>$f(-2)$</dt><dd>$-2&lt;-1$, więc pierwszy wzór: $f(-2)=1$</dd>
+        <dt>$f(2)$</dt><dd>$2\ge-1$, więc drugi wzór: $f(2)=3$</dd></dl>
+  </div>
+  <div class="uwaga">Jeśli wzór ma ułamek, pierwiastek lub logarytm, a dziedziny nie podano, to dziedzina to <b>wszystkie $x$, dla których wzór ma sens</b>: mianownik $\neq0$, pod pierwiastkiem parzystego stopnia $\ge0$, pod logarytmem $&gt;0$.</div>
+
+  <h2 id="test">2. Czy to wykres funkcji?</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj czerwony punkt na osi $Ox$. Krzywa jest wykresem funkcji, gdy <b>każda</b> prosta pionowa przecina ją co najwyżej raz.</p>
+    <canvas id="tp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>krzywa <select id="tp-krzywa">
+        <option value="par">parabola y = x²/2 − 2</option>
+        <option value="okr">okrąg x² + y² = 9</option>
+        <option value="lez">„leżąca” parabola x = y²/2 − 2</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="tp-wynik"></div>
+  </div>
+
+  <h2 id="odczyt">3. Co odczytujesz z wykresu</h2>
+  <table class="tabela">
+    <tr><th>Pytanie</th><th>Jak odczytać</th></tr>
+    <tr><td>dziedzina</td><td>rzut wykresu na oś $Ox$</td></tr>
+    <tr><td>zbiór wartości</td><td>rzut wykresu na oś $Oy$</td></tr>
+    <tr><td>miejsca zerowe</td><td>pierwsze współrzędne punktów wspólnych z osią $Ox$</td></tr>
+    <tr><td>$f(x)&gt;c$</td><td>część wykresu <b>nad</b> prostą $y=c$, zrzutowana na $Ox$</td></tr>
+    <tr><td>max i min w $\lp a,b\rp$</td><td>najwyższy i najniższy punkt wykresu nad $\lp a,b\rp$</td></tr>
+  </table>
+  <div class="definicja"><b>Definicja</b> Funkcja $f$ jest <b>rosnąca</b> w zbiorze $A$, gdy dla dowolnych $x_1,x_2\in A$:
+    $$x_1&lt;x_2\ \Rightarrow\ f(x_1)&lt;f(x_2).$$
+    <b>Malejąca</b>: $f(x_1)&gt;f(x_2)$. <b>Niemalejąca</b>: $f(x_1)\le f(x_2)$, <b>nierosnąca</b>: $f(x_1)\ge f(x_2)$, <b>stała</b>: $f(x_1)=f(x_2)$.</div>
+  <div class="uwaga">Przedziałów monotoniczności <b>nie łącz</b> znakiem $\cup$. Funkcja z demo maleje w $\lp-6,-4\rp$ i w $\lp1,5\rp$, ale nie maleje w ich sumie: $-6&lt;1$, a $f(-6)=2&lt;f(1)=4$.</div>
+
+  <h2 id="wykres">4. Interaktywnie: odczyt z wykresu</h2>
+  <div class="demo">
+    <p class="opis">Włączaj kolejne własności. Przy $f(x)&gt;c$ przesuwaj prostą $y=c$, przy wartości największej i najmniejszej zmieniaj przedział $\lp a,b\rp$. Zwróć uwagę na pusty punkt w $x=7$: tam funkcja nie jest określona.</p>
+    <canvas id="wl-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="wl-dz" checked> dziedzina</label>
+      <label><input type="checkbox" id="wl-zw"> zbiór wartości</label>
+      <label><input type="checkbox" id="wl-mz"> miejsca zerowe</label>
+      <label><input type="checkbox" id="wl-mon"> monotoniczność</label>
+      <label><input type="checkbox" id="wl-wc"> $f(x)&gt;c$</label>
+      <label>$c$ <input type="range" id="wl-c" min="-5" max="5" step="0.5" value="1"> <span id="wl-c-v"></span></label>
+      <label><input type="checkbox" id="wl-mm"> max i min w $\lp a,b\rp$</label>
+      <label>$a$ <input type="range" id="wl-a" min="-6" max="6.5" step="0.5" value="-3"> <span id="wl-a-v"></span></label>
+      <label>$b$ <input type="range" id="wl-b" min="-6" max="6.5" step="0.5" value="4"> <span id="wl-b-v"></span></label>
+    </div>
+    <div class="wynik" id="wl-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wyznacz miejsca zerowe i zbiór wartości funkcji $f$ z punktu 1 (wzór „klamrowy”).</p>
+    <ol>
+      <li>Dla $x&lt;-1$: $x+3=0 \iff x=-3$, a $-3&lt;-1$, więc to miejsce zerowe.</li>
+      <li>Dla $x\ge-1$: $x^2-1=0\iff x=\pm1$. Oba spełniają $x\ge-1$, więc oba się liczą.</li>
+      <li>Wartości: dla $x&lt;-1$ mamy $x+3&lt;2$, czyli $(-\infty,2)$. Dla $x\ge-1$: $x^2\ge0$, więc $x^2-1\ge-1$, czyli $\lp-1,\infty)$.</li>
+      <li>Suma $(-\infty,2)\cup\lp-1,\infty)=\R$.</li>
+    </ol>
+    <p class="odp">Miejsca zerowe: $-3,\ -1,\ 1$; $\;ZW_f=\R$</p>
+    <p>Pułapka: przy każdym wzorze sprawdź, czy znalezione $x$ leży w <b>jego</b> przedziale.</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-5" data-odp-opis="f(4)"><span class="poziom">łatwe</span>
+      <div class="tresc">Wyznacz dziedzinę funkcji $f(x)=\sqrt{x+5}-2x$ i oblicz $f(4)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x+5\ge0\iff x\ge-5$. $f(4)=\sqrt9-8=3-8$. <b>$D_f=\lp-5,\infty)$, $f(4)=-5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Dla funkcji z demo w punkcie 4 podaj zbiór wszystkich $x$, dla których $f(x)\ge2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Prosta $y=2$ przecina wykres w $x=-2$ i $x=2$ (odcinki $y=2x+6$ i $y=-2x+6$). Między nimi wykres jest nad prostą. Ale jest jeszcze lewy koniec: $f(-6)=2$, a dalej wykres opada pod prostą. To <b>pojedynczy punkt</b>.
+        <b>$\{-6\}\cup\lp-2,2\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 1-sqrt(2); 1+sqrt(2)"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz miejsca zerowe funkcji $f(x)=\begin{cases}2x+4, &amp; x\le-1\\ x^2-2x-1, &amp; x&gt;-1\end{cases}$</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $2x+4=0\iff x=-2\le-1$ ✓. $x^2-2x-1=0$: $\Delta=8$, $x=1\pm\sqrt2$. Ponieważ $1-\sqrt2\approx-0{,}41&gt;-1$, oba pasują.
+        <b>$x\in\{-2,\ 1-\sqrt2,\ 1+\sqrt2\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; -2" data-odp-opis="największa; najmniejsza wartość"><span class="poziom">średnie</span>
+      <div class="tresc">Dla funkcji z demo w punkcie 4 podaj największą i najmniejszą wartość w przedziale $\lp-5,3\rp$ oraz argumenty, dla których są przyjmowane.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wartości w końcach i w punktach załamania: $f(-5)=0$, $f(-4)=-2$, $f(-1)=f(1)=4$, $f(3)=0$.
+        <b>Największa $4$ dla każdego $x\in\lp-1,1\rp$, najmniejsza $-2$ dla $x=-4$.</b> Sprawdź w demo: $a=-5$, $b=3$.
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-4; 5&gt;" data-odp-opis="zbiór wartości"><span class="poziom">maturalne</span>
+      <div class="tresc">Funkcja $f(x)=x^2-6x+5$ ma dziedzinę $\lp0,5\rp$. Podaj jej zbiór wartości i określ liczbę rozwiązań równania $f(x)=m$ w zależności od $m$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wierzchołek $W=(3,-4)$, $f(0)=5$, $f(5)=0$, więc $ZW_f=\lp-4,5\rp$. Prosta $y=m$ przecina wykres (łuk od $(0,5)$ przez $W$ do $(5,0)$):
+        dwa razy, gdy $-4&lt;m\le0$; raz, gdy $m=-4$ lub $0&lt;m\le5$; wcale poza $ZW$.
+        <b>2 rozwiązania dla $m\in(-4,0\rp$; 1 dla $m=-4$ lub $m\in(0,5\rp$; 0 dla $m&lt;-4$ lub $m&gt;5$.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Puste i pełne kółka</b> na końcach wykresu decydują o nawiasach: pełne $\lp\ \rp$, puste $(\ )$. Najczęstsza strata punktu.</li>
+    <li><b>Monotoniczność</b> podawaj jako osobne przedziały, nigdy jako sumę. Końce możesz domknąć, jeśli należą do dziedziny.</li>
+    <li><b>Wartość największa</b> to liczba ($y$), a <b>argument</b>, w którym jest przyjmowana, to $x$. Czytaj, o co pytają.</li>
+    <li>Przy $f(x)\ge c$ sprawdź <b>pojedyncze punkty</b> (koniec dziedziny, wierzchołek dotykający prostej $y=c$).</li>
+    <li>Funkcja „klamrowa”: rozwiązanie z każdego wzoru musi leżeć w jego przedziale.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const pr = (L, R, lz, pz) => `${lz ? "\\lp" : "("}${ladnaTex(L)},\\,${ladnaTex(R)}${pz ? "\\rp" : ")"}`;
+
+  // --- 2. Test pionowej prostej ---
+  const w0 = new Wykres($("tp-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const P = w0.przeciagaj([{ x: 1, y: 0, ogranicz: p => ({ x: Math.max(-5.5, Math.min(5.5, Math.round(p.x * 10) / 10)), y: 0 }) }], rysujTp);
+  function rysujTp() {
+    const k = $("tp-krzywa").value, t = P[0].x;
+    let ys = [];
+    if (k === "par") ys = [t * t / 2 - 2];
+    if (k === "okr") ys = Math.abs(t) < 3 ? [Math.sqrt(9 - t * t), -Math.sqrt(9 - t * t)] : Math.abs(t) === 3 ? [0] : [];
+    if (k === "lez") ys = t > -2 ? [Math.sqrt(2 * (t + 2)), -Math.sqrt(2 * (t + 2))] : t === -2 ? [0] : [];
+    w0.rysuj(g => {
+      if (k === "par") g.funkcja(x => x * x / 2 - 2, 1);
+      if (k === "okr") g.okrag(0, 0, 3, 1);
+      if (k === "lez") g.parametryczna(y => y * y / 2 - 2, y => y, -5, 5, 1);
+      g.odcinek(t, g.z.ymin, t, g.z.ymax, ys.length > 1 ? 2 : 3);
+      ys.forEach(y => g.punkt(t, y, "", ys.length > 1 ? 2 : 3));
+      g.punkt(t, 0, "x", 2);
+    });
+    const werdykt = k === "par" ? "\\text{każda pionowa prosta: 1 punkt} \\Rightarrow \\text{to wykres funkcji}"
+      : "\\text{są proste z 2 punktami} \\Rightarrow \\text{to nie jest wykres funkcji}";
+    tex("tp-wynik", `x=${ladnaTex(t)}:\\ ${ys.length}\\ \\text{pkt.}\\quad ${werdykt}`);
+  }
+  $("tp-krzywa").addEventListener("change", rysujTp);
+  rysujTp();
+
+  // --- 4. Odczyt z wykresu ---
+  const W = [[-6, 2], [-4, -2], [-1, 4], [1, 4], [5, -4], [7, -2]]; // łamana, x=7 poza dziedziną
+  const f = x => {
+    if (x < -6 || x >= 7) return NaN;
+    for (let i = 0; i < W.length - 1; i++) {
+      const [x1, y1] = W[i], [x2, y2] = W[i + 1];
+      if (x <= x2) return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+    }
+    return NaN;
+  };
+  // zbiór {x : f(x) > c} jako lista przedziałów
+  function zbiorWiekszych(c) {
+    const pts = W.map(p => p[0]);
+    for (let i = 0; i < W.length - 1; i++) {
+      const [x1, y1] = W[i], [x2, y2] = W[i + 1];
+      if ((y1 - c) * (y2 - c) < 0) pts.push(x1 + (c - y1) * (x2 - x1) / (y2 - y1));
+    }
+    pts.sort((u, v) => u - v);
+    const kaw = [];
+    for (let k = 0; k < pts.length - 1; k++) {
+      if (pts[k + 1] - pts[k] < 1e-9 || !(f((pts[k] + pts[k + 1]) / 2) > c)) continue;
+      const ost = kaw[kaw.length - 1];
+      if (ost && Math.abs(ost.R - pts[k]) < 1e-9 && f(pts[k]) > c) ost.R = pts[k + 1]; else kaw.push({ L: pts[k], R: pts[k + 1] });
+    }
+    return kaw.map(({ L, R }) => ({ L, R, lz: f(L) > c, pz: R < 7 && f(R) > c }));
+  }
+  // zbiór argumentów z [a,b], w których f = M (punkty lub przedziały)
+  function argumenty(a, b, M) {
+    const kaw = []; let start = null, poprz = null;
+    for (let i = 0; i <= Math.round((b - a) * 100); i++) {
+      const x = Math.round(a * 100 + i) / 100;
+      if (Math.abs(f(x) - M) < 1e-9) { if (start === null) start = x; poprz = x; }
+      else if (start !== null) { kaw.push([start, poprz]); start = null; }
+    }
+    if (start !== null) kaw.push([start, poprz]);
+    return kaw;
+  }
+  const argTex = kaw => kaw.map(([L, R]) => L === R ? `x=${ladnaTex(L)}` : `x\\in${pr(L, R, true, true)}`).join("\\text{ lub }");
+
+  const w = new Wykres($("wl-plot"), { xmin: -7.5, xmax: 8, ymin: -5.5, ymax: 5.5 });
+  function rysujWl() {
+    const c = +$("wl-c").value;
+    let a = +$("wl-a").value, b = +$("wl-b").value;
+    $("wl-c-v").textContent = ladna(c); $("wl-a-v").textContent = ladna(a); $("wl-b-v").textContent = ladna(b);
+    if (a > b) [a, b] = [b, a];
+    const on = id => $(id).checked, linie = [];
+    let M = 0, m = 0, argM = [], argm = [];
+    if (on("wl-mm")) {
+      const ys = [];
+      for (let i = 0; i <= Math.round((b - a) * 100); i++) ys.push(f(Math.round(a * 100 + i) / 100));
+      M = Math.max(...ys); m = Math.min(...ys); argM = argumenty(a, b, M); argm = argumenty(a, b, m);
+    }
+    w.rysuj(g => {
+      if (on("wl-mm")) g.prostokat(a, g.z.ymin, b - a, g.z.ymax - g.z.ymin, 4, { wypelnij: 0.12, bezObrysu: true });
+      if (on("wl-wc")) {
+        g.odcinek(g.z.xmin, c, g.z.xmax, c, 2);
+        zbiorWiekszych(c).forEach(({ L, R, lz, pz }) => {
+          g.funkcja(f, 3, { od: L, do: R, grubosc: 5 });
+          g.odcinek(L, 0, R, 0, 3, false);
+          g.punkt(L, 0, "", 3, { pusty: !lz, r: 4 }); g.punkt(R, 0, "", 3, { pusty: !pz, r: 4 });
+        });
+      }
+      if (on("wl-mon")) {
+        for (let i = 0; i < W.length - 1; i++) {
+          const [x1, y1] = W[i], [x2, y2] = W[i + 1];
+          g.odcinek(x1, y1, x2, y2, y2 > y1 ? 3 : y2 < y1 ? 2 : 4, false);
+        }
+      } else g.funkcja(f, 1, { od: -6, do: 7 });
+      g.punkt(-6, 2, "", 1); g.punkt(7, -2, "", 1, { pusty: true });
+      if (on("wl-dz")) {
+        g.odcinek(-6, 2, -6, 0, 3); g.odcinek(7, -2, 7, 0, 3);
+        g.odcinek(-6, 0, 7, 0, 3, false);
+        g.punkt(-6, 0, "", 3, { r: 4 }); g.punkt(7, 0, "", 3, { pusty: true, r: 4 });
+      }
+      if (on("wl-zw")) {
+        g.odcinek(-1, 4, 0, 4, 4); g.odcinek(5, -4, 0, -4, 4);
+        g.odcinek(0, -4, 0, 4, 4, false);
+        g.punkt(0, 4, "", 4, { r: 4 }); g.punkt(0, -4, "", 4, { r: 4 });
+      }
+      if (on("wl-mz")) [-5, -3, 3].forEach(x => g.punkt(x, 0, ladna(x), 2));
+      if (on("wl-mm")) {
+        [[argM, M, "max"], [argm, m, "min"]].forEach(([kaw, y, nazwa]) => kaw.forEach(([L, R], i) => {
+          if (R > L) g.odcinek(L, y, R, y, 2, false);
+          g.punkt(L, y, i ? "" : nazwa, 2); if (R > L) g.punkt(R, y, "", 2);
+        }));
+      }
+    });
+    if (on("wl-dz")) linie.push("D_f=\\lp -6,\\,7)");
+    if (on("wl-zw")) linie.push("ZW_f=\\lp -4,\\,4\\rp");
+    if (on("wl-mz")) linie.push("\\text{miejsca zerowe: } -5,\\ -3,\\ 3");
+    if (on("wl-mon")) linie.push("\\text{rośnie (zielony): } \\lp-4,-1\\rp,\\ \\lp5,7);\\quad \\text{maleje (czerwony): } \\lp-6,-4\\rp,\\ \\lp1,5\\rp;\\quad \\text{stała: } \\lp-1,1\\rp");
+    if (on("wl-wc")) {
+      const z = zbiorWiekszych(c);
+      linie.push(`f(x)>${ladnaTex(c)}\\iff x\\in ${z.length ? z.map(p => pr(p.L, p.R, p.lz, p.pz)).join("\\cup") : "\\emptyset"}`);
+    }
+    if (on("wl-mm")) {
+      linie.push(`\\text{w } \\lp ${ladnaTex(a)},${ladnaTex(b)}\\rp:\\ f_{\\max}=${ladnaTex(M)}\\ \\text{dla } ${argTex(argM)}`);
+      linie.push(`f_{\\min}=${ladnaTex(m)}\\ \\text{dla } ${argTex(argm)}`);
+    }
+    const box = $("wl-wynik"); box.innerHTML = "";
+    linie.forEach(s => { const d = document.createElement("div"); box.appendChild(d); tex(d, s); });
+  }
+  ["wl-dz", "wl-zw", "wl-mz", "wl-mon", "wl-wc", "wl-mm"].forEach(id => $(id).addEventListener("change", rysujWl));
+  ["wl-c", "wl-a", "wl-b"].forEach(id => $(id).addEventListener("input", rysujWl));
+  rysujWl();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reguła mnożenia i dodawania</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Reguła mnożenia i dodawania</h1>
+  <p class="lead">Każde zliczanie to budowanie obiektu: <b>etapami</b> (wtedy mnożysz) albo <b>w rozłącznych przypadkach</b> (wtedy dodajesz). Cała sztuka to dobra kolejność etapów i dobry podział na przypadki.</p>
+  <p class="wymagania">XI.1, XI.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="reguly">1. Dwie reguły i zdarzenie przeciwne</h2>
+  <div class="wzor">
+    <div class="tytul">Reguła mnożenia</div>
+    $$N=k_1\cdot k_2\cdot\ldots\cdot k_m$$
+    <dl><dt>$k_i$</dt><dd>liczba możliwości w $i$-tym etapie. Może zależeć od tego, <i>ile</i> elementów już wybrano (np. $9,8,7$), ale nie od tego, <i>które</i> wybrano</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Reguła dodawania (przypadki rozłączne)</div>
+    $$|A\cup B|=|A|+|B|,\quad A\cap B=\emptyset$$
+    <dl><dt>$A, B$</dt><dd>przypadki, które się nie nakładają (np. „ostatnia cyfra $0$” i „ostatnia cyfra $\ne 0$”)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Odejmowanie dopełnienia</div>
+    $$|A|=|\Omega|-|A'|$$
+    <dl><dt>$A'$</dt><dd>obiekty, które <b>nie</b> spełniają warunku. Używaj przy „co najmniej jeden”</dd></dl>
+  </div>
+  <div class="uwaga">Jeśli liczba opcji w jakimś etapie <b>zależy</b> od wcześniejszego wyboru (np. czy na końcu stoi $0$), to reguła mnożenia wprost nie działa. Rozbij na przypadki i dodaj.</div>
+  <p>Reguł mnożenia i dodawania nie ma w tablicach (to zdrowy rozsądek). Gotowe wzory (permutacje, wariacje, kombinacje) są w tablicach: zob. <a href="permutacje-kombinacje.html">Permutacje, wariacje, kombinacje</a> i skrót w <a href="prawdopodobienstwo-klasyczne.html#zliczanie">prawdopodobieństwie klasycznym</a>.</p>
+
+  <h2 id="drzewo">2. Interaktywnie: drzewo wyborów</h2>
+  <div class="demo">
+    <p class="opis">Ustaw liczbę etapów i opcji w każdym etapie, kliknij ▶. Każda ścieżka od korzenia do liścia to jeden wynik. Na każdym poziomie liczba węzłów mnoży się przez liczbę opcji.</p>
+    <canvas id="dr-plot"></canvas>
+    <div class="sterowanie">
+      <label>etapy <input type="range" id="dr-m" min="1" max="4" step="1" value="3"> <span id="dr-m-v"></span></label>
+      <label>opcje <input type="range" id="dr-k" min="1" max="4" step="1" value="3"> <span id="dr-k-v"></span></label>
+      <button id="dr-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="dr-wynik"></div>
+  </div>
+
+  <h2 id="pudelka">3. Metoda „pudełek”</h2>
+  <ol>
+    <li>Narysuj tyle pudełek, ile miejsc ma obiekt (np. 4 cyfry).</li>
+    <li><b>Zacznij od pudełek z warunkami</b> (pierwsza cyfra $\ne 0$, ostatnia nieparzysta…), dopiero potem wypełniaj resztę.</li>
+    <li>Gdy liczba opcji zależy od wcześniejszego wyboru, <b>rozbij na przypadki</b> i dodaj wyniki.</li>
+    <li>„Co najmniej jeden…”: policz wszystkie i odejmij te, które warunku nie spełniają.</li>
+  </ol>
+  <div class="demo">
+    <p class="opis">Wybierz warunek i kliknij ▶. Małe numery nad pudełkami to kolejność wypełniania. Przy liczbach parzystych o różnych cyfrach musisz rozbić na dwa przypadki, bo zero na końcu zmienia liczbę opcji dla pierwszej cyfry.</p>
+    <canvas id="pu-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>liczby czterocyfrowe <select id="pu-typ">
+        <option value="0">dowolne</option>
+        <option value="1">o różnych cyfrach</option>
+        <option value="2" selected>nieparzyste, różne cyfry</option>
+        <option value="3">parzyste, różne cyfry</option>
+        <option value="4">palindromy</option>
+      </select></label>
+      <button id="pu-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="pu-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku (z podstawy programowej)</h2>
+  <div class="przyklad">
+    <p>Ile jest czterocyfrowych liczb <b>nieparzystych</b>, w których zapisie występuje dokładnie jedna cyfra $1$ i dokładnie jedna cyfra $2$?</p>
+    <ol>
+      <li>Ostatnia cyfra jest nieparzysta. To, czy jest nią $1$, zmienia resztę, więc <b>dwa przypadki</b>. „Pozostałe cyfry” to $0,3,4,\ldots,9$: jest ich $8$.</li>
+      <li><b>Ostatnia $=1$.</b> Dwójka stoi na jednym z 3 pierwszych miejsc.
+        Dwójka na początku: dwa wolne miejsca, $8\cdot 8=64$.
+        Dwójka na 2. lub 3. miejscu: pierwsza cyfra $\ne 0$, więc $7$ opcji, wolne miejsce $8$: $2\cdot 7\cdot 8=112$. Razem $176$.</li>
+      <li><b>Ostatnia $\in\{3,5,7,9\}$</b> ($4$ opcje). Na 3 pierwszych miejscach stoją $1$, $2$ i jedna „inna” cyfra. Ustawienie $1$ i $2$: $3\cdot 2=6$ sposobów. W 2 z nich „inna” cyfra stoi na początku (wtedy $7$ opcji), w 4 nie (wtedy $8$): $2\cdot 7+4\cdot 8=46$. Razem $4\cdot 46=184$.</li>
+      <li>Przypadki są rozłączne, więc dodajesz: $176+184$.</li>
+    </ol>
+    <p class="odp">$360$ liczb</p>
+    <p>Wynik sprawdzony komputerowo (przejrzenie wszystkich $9000$ liczb czterocyfrowych). Drugi przykład z podstawy (parzyste z jednym $0$ i jedną $1$) jest w zadaniu 6.</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="10000; 5040" data-odp-opis="wszystkie; o różnych cyfrach"><span class="poziom">łatwe</span>
+      <div class="tresc">Ile jest czterocyfrowych kodów PIN (cyfry $0$–$9$, $0$ może być na początku)? Ile z nich ma wszystkie cyfry różne?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Każde miejsce: $10$ opcji, więc $10^4$. Różne cyfry: $10\cdot 9\cdot 8\cdot 7$. <b>$10000$ kodów, w tym $5040$ o różnych cyfrach.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3168"><span class="poziom">łatwe</span>
+      <div class="tresc">Ile jest liczb czterocyfrowych, w których zapisie występuje <b>co najmniej jedna</b> cyfra $7$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Wszystkich: $9\cdot 10^3=9000$. Bez siódemki: pierwsza cyfra z $8$ (bez $0$ i $7$), pozostałe z $9$: $8\cdot 9^3=5832$. <b>$9000-5832=3168$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="136"><span class="poziom">średnie</span>
+      <div class="tresc">Ile jest liczb trzycyfrowych o różnych cyfrach, podzielnych przez $5$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Ostatnia cyfra $0$ albo $5$, i to zmienia opcje dla pierwszej cyfry.
+        Ostatnia $0$: $9\cdot 8=72$. Ostatnia $5$: pierwsza $\ne 0, 5$, czyli $8$, środkowa $8$: $64$. <b>$72+64=136$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="459"><span class="poziom">średnie</span>
+      <div class="tresc">Ile jest liczb czterocyfrowych, w których zapisie występują dokładnie dwie cyfry $5$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Przypadek 1: piątka na początku. Druga piątka na jednym z 3 miejsc, dwa wolne miejsca po $9$ opcji: $3\cdot 81=243$.
+        Przypadek 2: obie piątki na miejscach 2–4 ($3$ sposoby), pierwsza cyfra $\ne 0, 5$ ($8$), wolne miejsce $9$: $3\cdot 72=216$.
+        <b>$243+216=459$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="738"><span class="poziom">średnie</span>
+      <div class="tresc">Ile jest liczb całkowitych dodatnich mniejszych od $1000$, których wszystkie cyfry są różne?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Reguła dodawania po liczbie cyfr. Jednocyfrowe: $9$. Dwucyfrowe: $9\cdot 9=81$. Trzycyfrowe: $9\cdot 9\cdot 8=648$. <b>$9+81+648=738$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="320"><span class="poziom">maturalne</span>
+      <div class="tresc">(Przykład z podstawy) Ile jest czterocyfrowych liczb <b>parzystych</b>, w których zapisie występuje dokładnie jedna cyfra $0$ i dokładnie jedna cyfra $1$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        „Inne” cyfry: $2,\ldots,9$, jest ich $8$. Ostatnia cyfra parzysta: przypadki „$0$ na końcu” i „$2,4,6,8$ na końcu”.<br>
+        <b>Ostatnia $0$.</b> Jedynka na jednym z 3 pierwszych miejsc, dwa wolne miejsca po $8$ opcji (zero już zużyte, więc początek jest bezpieczny): $3\cdot 64=192$.<br>
+        <b>Ostatnia $\in\{2,4,6,8\}$</b> ($4$). Zero nie może być na początku: stoi na 2. albo 3. miejscu ($2$), jedynka na jednym z dwóch pozostałych ($2$), ostatnie wolne miejsce: $8$. Razem $4\cdot 2\cdot 2\cdot 8=128$.<br>
+        <b>$192+128=320$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li><b>Najpierw warunki:</b> pudełka z ograniczeniami (pierwsza cyfra $\ne 0$, parzystość, podzielność) wypełniaj na początku. Odwrotna kolejność daje „to zależy” i błędy.</li>
+    <li><b>Zero na pierwszym miejscu</b> to najczęstsza pułapka w liczbach $n$-cyfrowych.</li>
+    <li><b>Przypadki muszą być rozłączne i wyczerpujące.</b> Napisz je wprost („ostatnia $0$” / „ostatnia $2,4,6,8$”), bo za to są punkty.</li>
+    <li><b>„Co najmniej jeden”</b> prawie zawsze szybciej przez dopełnienie: wszystkie minus żadnego.</li>
+    <li>Zapisz krótki opis każdego czynnika (np. „$8$: cyfra $\ne 0$ i różna od ostatniej”). Sam iloczyn bez komentarza bywa oceniany na $0$ pkt.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // pomocnik: rysowanie w pikselach na Wykresie z zakresem [0,1]x[0,1]
+  const px = g => ({
+    line(x1, y1, x2, y2, nr, przer) { g.odcinek(g.wx(x1), g.wy(y1), g.wx(x2), g.wy(y2), nr, !!przer); },
+    dot(x, y, nr, r) { g.punkt(g.wx(x), g.wy(y), "", nr, { r }); },
+    rect(x, y, w, h, nr, op) { g.prostokat(g.wx(x), g.wy(y + h), w / g.w, h / g.h, nr, op); },
+    txt(x, y, s, nr, op) { g.tekst(g.wx(x), g.wy(y), s, nr, op); }
+  });
+  const zakres = { xmin: 0, xmax: 1, ymin: 0, ymax: 1, siatka: false, osie: false };
+
+  // --- 2. Drzewo wyborów ---
+  const w1 = new Wykres($("dr-plot"), zakres);
+  let stop1 = null;
+  function drzewo(t) {
+    const m = +$("dr-m").value, k = +$("dr-k").value;
+    $("dr-m-v").textContent = m; $("dr-k-v").textContent = k;
+    const L = t * m;
+    w1.rysuj(g => {
+      const P = px(g), lewy = 14, prawy = 64, gora = 26, dol = 30;
+      const szer = g.w - lewy - prawy;
+      const yPoz = j => gora + j * (g.h - gora - dol) / m;
+      const xWez = (j, i) => lewy + (i + 0.5) * szer / Math.pow(k, j);
+      const rWez = j => Math.max(1.5, Math.min(6, szer / Math.pow(k, j) / 3));
+      for (let j = 1; j <= m; j++) {
+        const p = Math.max(0, Math.min(1, L - (j - 1)));
+        if (p <= 0) break;
+        const ile = Math.pow(k, j);
+        for (let i = 0; i < ile; i++) {
+          const ox = xWez(j - 1, Math.floor(i / k)), oy = yPoz(j - 1), cx = xWez(j, i), cy = yPoz(j);
+          P.line(ox, oy, ox + (cx - ox) * p, oy + (cy - oy) * p, j === m ? 2 : 1, false);
+        }
+      }
+      P.dot(xWez(0, 0), yPoz(0), 4, 6);
+      for (let j = 1; j <= m; j++) {
+        if (L < j) break;
+        const ile = Math.pow(k, j);
+        for (let i = 0; i < ile; i++) P.dot(xWez(j, i), yPoz(j), j === m ? 2 : 1, rWez(j));
+        P.txt(g.w - 6, yPoz(j), String(ile), j === m ? 2 : "--text", { wyrownanie: "right", dy: 5, gruby: true, rozmiar: 15 });
+        P.txt(g.w - 6, yPoz(j) - 16, "etap " + j, "--muted", { wyrownanie: "right", dy: 5, rozmiar: 11 });
+      }
+    });
+    const gotowe = Math.min(m, Math.floor(L + 1e-9));
+    const czynniki = Array(Math.max(gotowe, 1)).fill(k).join("\\cdot ");
+    tex("dr-wynik", gotowe === 0 ? `\\text{etapów: ${m}, opcji: ${k}. Ile liści?}`
+      : `\\text{liście po ${gotowe}. etapie: }${czynniki}=${Math.pow(k, gotowe)}`);
+  }
+  $("dr-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(900 * +$("dr-m").value, drzewo); });
+  ["dr-m", "dr-k"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); drzewo(1); }));
+  drzewo(1);
+
+  // --- 3. Pudełka cyfr ---
+  // pole: [liczba opcji, uzasadnienie, kolejność wypełniania]
+  const ZESTAWY = [
+    [{ nazwa: "", pola: [[9, "≠ 0", 1], [10, "dowolna", 2], [10, "dowolna", 3], [10, "dowolna", 4]] }],
+    [{ nazwa: "", pola: [[9, "≠ 0", 1], [9, "≠ 1. cyfra", 2], [8, "≠ dwie użyte", 3], [7, "≠ trzy użyte", 4]] }],
+    [{ nazwa: "", pola: [[8, "≠ 0, ≠ ostatnia", 2], [8, "≠ dwie użyte", 3], [7, "≠ trzy użyte", 4], [5, "1, 3, 5, 7, 9", 1]] }],
+    [{ nazwa: "przypadek I: na końcu 0", pola: [[9, "≠ 0", 2], [8, "≠ użyte", 3], [7, "≠ użyte", 4], [1, "0", 1]] },
+     { nazwa: "przypadek II: na końcu 2, 4, 6 lub 8", pola: [[8, "≠ 0, ≠ ostatnia", 2], [8, "≠ użyte", 3], [7, "≠ użyte", 4], [4, "2, 4, 6, 8", 1]] }],
+    [{ nazwa: "", pola: [[9, "≠ 0", 1], [10, "dowolna", 2], [1, "= 2. cyfra", 3], [1, "= 1. cyfra", 4]] }]
+  ];
+  const iloczyn = r => r.pola.reduce((s, p) => s * p[0], 1);
+  const w2 = new Wykres($("pu-plot"), zakres);
+  let stop2 = null;
+  function pudelka(t) {
+    const zest = ZESTAWY[+$("pu-typ").value];
+    const krok = t * 4; // ile pól w każdym wierszu już wypełnionych (wg kolejności)
+    w2.rysuj(g => {
+      const P = px(g), wys = g.h / zest.length;
+      const a = Math.min(64, (g.w - 40) / 5.2), odst = a * 0.4, start = (g.w - (4 * a + 3 * odst)) / 2;
+      zest.forEach((r, ri) => {
+        const y0 = ri * wys + (zest.length > 1 ? 30 : wys / 2 - a / 2 - 10);
+        if (r.nazwa) P.txt(g.w / 2, y0 - 12, r.nazwa, "--muted", { wyrownanie: "center", rozmiar: 12 });
+        r.pola.forEach(([v, why, kol], i) => {
+          const x = start + i * (a + odst), widac = krok >= kol - 0.5;
+          P.rect(x, y0, a, a, widac ? (kol === 1 ? 2 : 1) : "--muted", { wypelnij: widac ? 0.15 : 0.04 });
+          P.txt(x + a / 2, y0 - 4, kol + ".", "--muted", { wyrownanie: "center", rozmiar: 11 });
+          if (widac) {
+            P.txt(x + a / 2, y0 + a / 2, String(v), kol === 1 ? 2 : 1, { wyrownanie: "center", dy: 8, rozmiar: 24, gruby: true });
+            P.txt(x + a / 2, y0 + a + 14, why, "--muted", { wyrownanie: "center", rozmiar: 10 });
+          }
+          if (i < 3) P.txt(x + a + odst / 2, y0 + a / 2, "·", "--text", { wyrownanie: "center", dy: 6, rozmiar: 20 });
+        });
+        if (krok >= 3.5) P.txt(g.w / 2, y0 + a + 34, "= " + iloczyn(r), 3, { wyrownanie: "center", rozmiar: 15, gruby: true });
+      });
+    });
+    let opis = "";
+    if (krok >= 3.5) {
+      const czesci = zest.map(r => r.pola.map(p => p[0]).join("\\cdot "));
+      const suma = zest.reduce((s, r) => s + iloczyn(r), 0);
+      opis = zest.length > 1
+        ? `${czesci.join("+")}=${zest.map(iloczyn).join("+")}=${suma}`
+        : `${czesci[0]}=${suma}`;
+    } else opis = "\\text{wypełniam pudełka w kolejności 1, 2, 3, 4}";
+    tex("pu-wynik", opis);
+  }
+  $("pu-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(3200, pudelka); });
+  $("pu-typ").addEventListener("change", () => { if (stop2) stop2(); pudelka(1); });
+  pudelka(1);
+});
+</script>
+</body>
+</html>

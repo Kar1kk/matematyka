@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Równania i nierówności kwadratowe</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Równania i nierówności kwadratowe</h1>
+  <p class="lead">Nierówność kwadratowa to pytanie: gdzie parabola jest nad osią $Ox$, a gdzie pod nią? Wystarczą dwie informacje: miejsca zerowe i kierunek ramion.</p>
+  <p class="wymagania">III.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="rownanie">1. Równanie $ax^2+bx+c=0$</h2>
+  <div class="wzor">
+    <div class="tytul">Wzory <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span></div>
+    $$\Delta=b^2-4ac$$
+    $$x_{1,2}=\frac{-b\mp\sqrt\Delta}{2a}$$
+    <dl><dt>$\Delta&gt;0$</dt><dd>dwa pierwiastki</dd>
+        <dt>$\Delta=0$</dt><dd>jeden (podwójny): $x_0=\frac{-b}{2a}$</dd>
+        <dt>$\Delta&lt;0$</dt><dd>brak pierwiastków</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>Gdy…</th><th>Szybciej bez $\Delta$</th></tr>
+    <tr><td>$c=0$</td><td>$x(ax+b)=0$, więc $x=0$ lub $x=-\frac{b}{a}$</td></tr>
+    <tr><td>$b=0$</td><td>$x^2=-\frac{c}{a}$, albo różnica kwadratów</td></tr>
+    <tr><td>pełny kwadrat</td><td>$x^2-6x+9=(x-3)^2$</td></tr>
+  </table>
+  <div class="uwaga">Nie dziel obu stron przez $x$: z $x^2=3x$ zgubisz rozwiązanie $x=0$. Wyłącz $x$ przed nawias.</div>
+
+  <h2 id="nierownosc">2. Nierówność: szkic paraboli</h2>
+  <ol>
+    <li>Przenieś wszystko na jedną stronę: $ax^2+bx+c \;?\; 0$.</li>
+    <li>Policz miejsca zerowe (albo stwierdź, że ich nie ma).</li>
+    <li>Naszkicuj parabolę: ramiona w górę dla $a&gt;0$, w dół dla $a&lt;0$.</li>
+    <li>Odczytaj, gdzie wykres jest nad osią ($&gt;0$) lub pod nią ($&lt;0$). Przy $\ge$, $\le$ dołącz miejsca zerowe.</li>
+  </ol>
+  <table class="tabela">
+    <tr><th>$a&gt;0$</th><th>$f(x)&gt;0$</th><th>$f(x)&lt;0$</th></tr>
+    <tr><td>$\Delta&gt;0$</td><td>$(-\infty,x_1)\cup(x_2,\infty)$</td><td>$(x_1,x_2)$</td></tr>
+    <tr><td>$\Delta=0$</td><td>$\R\setminus\{x_0\}$</td><td>$\varnothing$</td></tr>
+    <tr><td>$\Delta&lt;0$</td><td>$\R$</td><td>$\varnothing$</td></tr>
+  </table>
+  <p>Dla $a&lt;0$ jest odwrotnie (albo pomnóż nierówność przez $-1$ i odwróć znak).</p>
+
+  <h2 id="demo">3. Interaktywnie: parabola i znak</h2>
+  <div class="demo">
+    <p class="opis">Wybierz znak. Czerwona część paraboli spełnia nierówność, a jej rzut na oś $Ox$ to zbiór rozwiązań. Kółko pełne: koniec należy do zbioru; puste: nie należy.</p>
+    <canvas id="kn-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="kn-a" min="-3" max="3" step="0.1" value="1"> <span id="kn-a-v"></span></label>
+      <label>$b$ <input type="range" id="kn-b" min="-6" max="6" step="0.1" value="-1"> <span id="kn-b-v"></span></label>
+      <label>$c$ <input type="range" id="kn-c" min="-5" max="5" step="0.1" value="-2"> <span id="kn-c-v"></span></label>
+      <label>$f(x)$ <select id="kn-znak"><option value="gt">&gt; 0</option><option value="ge">≥ 0</option><option value="lt">&lt; 0</option><option value="le">≤ 0</option></select></label>
+    </div>
+    <div class="wynik" id="kn-wynik"></div>
+  </div>
+
+  <h2 id="delta-zero">4. Animacja: gdy $\Delta$ przechodzi przez zero</h2>
+  <div class="demo">
+    <p class="opis">Parabola $y=a(x-1)^2+q$ jedzie w górę. Pod spodem zbiory rozwiązań wszystkich czterech nierówności naraz. Zatrzymaj się na $q=0$ ($\Delta=0$): tam $\ge$ i $&gt;$ różnią się tylko jednym punktem.</p>
+    <canvas id="dz-plot" style="height:260px"></canvas>
+    <canvas id="dz-osie" style="height:150px"></canvas>
+    <div class="sterowanie">
+      <label>$q$ <input type="range" id="dz-q" min="-3" max="3" step="0.25" value="-2"> <span id="dz-q-v"></span></label>
+      <label>ramiona <select id="dz-a"><option value="1">w górę</option><option value="-1">w dół</option></select></label>
+      <button id="dz-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="dz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Rozwiąż nierówność $-2x^2+5x+3\ge0$.</p>
+    <ol>
+      <li>$\Delta=25+24=49$, $\sqrt\Delta=7$.</li>
+      <li>$x_1=\frac{-5+7}{-4}=-\frac12$, $\;x_2=\frac{-5-7}{-4}=3$.</li>
+      <li>$a=-2&lt;0$: ramiona w dół, parabola jest nad osią między pierwiastkami. Znak $\ge$: końce należą.</li>
+    </ol>
+    <p class="odp">$x\in\lp-\frac12,3\rp$</p>
+  </div>
+  <div class="przyklad">
+    <p>Rozwiąż $x^2+4&gt;4x$.</p>
+    <ol>
+      <li>$x^2-4x+4&gt;0 \iff (x-2)^2&gt;0$.</li>
+      <li>Kwadrat jest dodatni wszędzie poza $x=2$, gdzie jest zerem.</li>
+    </ol>
+    <p class="odp">$x\in\R\setminus\{2\}$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="przedzial: (-oo; 0&gt; u &lt;5; oo)"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż nierówność $x^2\ge5x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x^2-5x\ge0 \iff x(x-5)\ge0$. Pierwiastki $0$ i $5$, ramiona w górę, bierzemy zewnętrze z końcami.
+        <b>$x\in(-\infty,0\rp\cup\lp5,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2/3; 1" data-odp-opis="rozwiązania x"><span class="poziom">łatwe</span>
+      <div class="tresc">Rozwiąż równanie $3x^2-x-2=0$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\Delta=1+24=25$, $x=\frac{1\mp5}{6}$. <b>$x=-\frac23$ lub $x=1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-1/3; 3)"><span class="poziom">średnie</span>
+      <div class="tresc">Rozwiąż nierówność $(2x-1)^2&lt;(x+2)^2$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $4x^2-4x+1&lt;x^2+4x+4 \iff 3x^2-8x-3&lt;0$. $\Delta=100$, $x_1=-\frac13$, $x_2=3$, ramiona w górę.
+        <b>$x\in\left(-\frac13,3\right)$</b><br>
+        Szybciej: różnica kwadratów $(2x-1-x-2)(2x-1+x+2)=(x-3)(3x+1)&lt;0$.
+      </div></details></li>
+    <li class="zadanie" data-odp="6"><span class="poziom">średnie</span>
+      <div class="tresc">Ile liczb całkowitych spełnia nierówność $-x^2+3x+10&gt;0$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Pierwiastki: $\Delta=49$, $x=-2$ i $x=5$; ramiona w dół, więc $x\in(-2,5)$. Liczby całkowite: $-1,0,1,2,3,4$. <b>Jest ich $6$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-3; 0) u (0; 2&gt;" data-odp-opis="dziedzina"><span class="poziom">maturalne</span>
+      <div class="tresc">Wyznacz dziedzinę funkcji $f(x)=\sqrt{6-x-x^2}+\frac1x$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Warunki: $6-x-x^2\ge0$ i $x\neq0$. Pierwsza: $x^2+x-6\le0$, pierwiastki $-3$ i $2$, więc $x\in\lp-3,2\rp$. Usuwamy zero.
+        <b>$D=\lp-3,0)\cup(0,2\rp$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;3; 7&gt;" data-odp-opis="zbiór x"><span class="poziom">maturalne</span>
+      <div class="tresc">Obwód prostokąta wynosi $20$. Jaką długość może mieć bok $x$, jeśli pole prostokąta jest nie mniejsze niż $21$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Boki $x$ i $10-x$, $x\in(0,10)$. $x(10-x)\ge21 \iff x^2-10x+21\le0$, pierwiastki $3$ i $7$, więc $x\in\lp3,7\rp$. Zawiera się w dziedzinie.
+        <b>$x\in\lp3,7\rp$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Szkic paraboli jest częścią rozwiązania:</b> Zwykle wystarczy zaznaczyć pierwiastki i kierunek ramion. Bez niego łatwo pomylić „między” z „na zewnątrz”.</li>
+    <li><b>Końce przedziałów:</b> przy $\ge$, $\le$ nawiasy $\lp\;\rp$, przy $&gt;$, $&lt;$ okrągłe. Przy $\infty$ zawsze okrągły.</li>
+    <li><b>$a&lt;0$:</b> najczęstszy błąd to odczyt jak dla $a&gt;0$. Możesz pomnożyć przez $-1$ i odwrócić znak.</li>
+    <li><b>$\Delta&lt;0$:</b> odpowiedzią jest $\R$ albo $\varnothing$, nie „brak rozwiązań” bez sprawdzenia znaku.</li>
+    <li><b>Zadania z treścią:</b> przetnij wynik z dziedziną (długości dodatnie, liczby naturalne).</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{,}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "\\lp" : "("}${A}${s}${B}${p.zb ? "\\rp" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{,}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 3. Parabola i znak ---
+  const w1 = new Wykres($("kn-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 8 });
+  function rysujKn() {
+    let a = +$("kn-a").value; const b = +$("kn-b").value, c = +$("kn-c").value, zn = $("kn-znak").value;
+    if (Math.abs(a) < 0.05) a = 0.1;
+    $("kn-a-v").textContent = ladna(a); $("kn-b-v").textContent = ladna(b); $("kn-c-v").textContent = ladna(c);
+    const f = x => a * x * x + b * x + c, d = b * b - 4 * a * c;
+    const kryt = d > 1e-9 ? [(-b - Math.sqrt(d)) / (2 * a), (-b + Math.sqrt(d)) / (2 * a)] : Math.abs(d) <= 1e-9 ? [-b / (2 * a)] : [];
+    const z = zbior(x => POR[zn](f(x)), kryt);
+    w1.rysuj(g => {
+      g.funkcja(f, 1);
+      z.forEach(p => { if (p.a < p.b) g.funkcja(f, 2, { od: p.a, do: p.b, grubosc: 5 }); });
+      naOsi(g, z, 2);
+    });
+    const pier = kryt.length === 2 ? `x_1=${ladnaTex(Math.min(...kryt))},\\;x_2=${ladnaTex(Math.max(...kryt))}` :
+                 kryt.length === 1 ? `x_0=${ladnaTex(kryt[0])}` : "\\text{brak pierwiastków}";
+    tex("kn-wynik", `\\Delta=${ladnaTex(d)},\\;${pier},\\quad x\\in ${zbiorTex(z)}`);
+  }
+  ["kn-a", "kn-b", "kn-c", "kn-znak"].forEach(id => $(id).addEventListener("input", rysujKn));
+  rysujKn();
+
+  // --- 4. Delta przez zero ---
+  const w2 = new Wykres($("dz-plot"), { xmin: -4, xmax: 6, ymin: -4, ymax: 4 });
+  const w3 = new Wykres($("dz-osie"), { xmin: -4, xmax: 6, ymin: 0.3, ymax: 4.6, krokY: 10, osie: false });
+  const RZEDY = [["gt", "> 0"], ["ge", "≥ 0"], ["lt", "< 0"], ["le", "≤ 0"]];
+  let stop = null;
+  function rysujDz(q) {
+    const a = +$("dz-a").value;
+    $("dz-q-v").textContent = ladna(q);
+    const f = x => a * (x - 1) ** 2 + q, d = -4 * a * q; // Δ dla a(x−1)²+q
+    const kryt = -q / a > 1e-12 ? [1 - Math.sqrt(-q / a), 1 + Math.sqrt(-q / a)] : Math.abs(q) < 1e-12 ? [1] : [];
+    w2.rysuj(g => {
+      g.funkcja(f, 1);
+      kryt.forEach(x => g.punkt(x, 0, "", 2));
+    });
+    w3.rysuj(g => {
+      RZEDY.forEach(([zn, opis], i) => {
+        const y = 4 - i;
+        g.odcinek(g.z.xmin, y, g.z.xmax, y, "--plot-axis", false);
+        g.tekst(g.z.xmin, y, "f(x) " + opis, 4, { dx: 4, dy: -8, gruby: true });
+        naOsi(g, zbior(x => POR[zn](f(x)), kryt), i < 2 ? 3 : 2, y);
+      });
+    });
+    tex("dz-wynik", `\\Delta=${ladnaTex(d)}\\;\\Rightarrow\\;` + (d > 1e-12 ? "\\text{dwa pierwiastki}" : Math.abs(d) < 1e-12 ? "\\text{jeden pierwiastek } x_0=1" : "\\text{brak pierwiastków}"));
+  }
+  $("dz-q").addEventListener("input", () => { if (stop) stop(); rysujDz(+$("dz-q").value); });
+  $("dz-a").addEventListener("input", () => { if (stop) stop(); rysujDz(+$("dz-q").value); });
+  $("dz-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(5000, t => { const q = Math.round((-3 + 6 * t) * 20) / 20; $("dz-q").value = q; rysujDz(q); });
+  });
+  rysujDz(+$("dz-q").value);
+});
+</script>
+</body>
+</html>

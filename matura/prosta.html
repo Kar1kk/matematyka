@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odległość punktów, równanie prostej</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Odległość punktów, równanie prostej</h1>
+  <p class="lead">Odległość dwóch punktów to przeciwprostokątna trójkąta o przyprostokątnych $|\Delta x|$ i $|\Delta y|$: zwykły Pitagoras. Prosta to „krok w prawo o 1 → krok w górę o $a$”, zaczepiony w punkcie $(0,b)$.</p>
+  <p class="wymagania">IX.2, IX.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Odległość i środek odcinka</h2>
+  <div class="wzor">
+    <div class="tytul">Odległość punktów $A=(x_A,y_A)$, $B=(x_B,y_B)$</div>
+    $$|AB|=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}$$
+    <dl><dt>skąd</dt><dd>Pitagoras w trójkącie o przyprostokątnych $|x_B-x_A|$ i $|y_B-y_A|$. Jest w tablicach.</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Środek odcinka $AB$</div>
+    $$S=\left(\frac{x_A+x_B}{2},\ \frac{y_A+y_B}{2}\right)$$
+    <dl><dt>$S$</dt><dd>średnia współrzędnych <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span>. Odwrotnie: $B=(2x_S-x_A,\ 2y_S-y_A)$.</dd></dl>
+  </div>
+
+  <h2 id="rownania">2. Równanie prostej</h2>
+  <div class="wzor">
+    <div class="tytul">Postać kierunkowa</div>
+    $$y=ax+b$$
+    <dl><dt>$a$</dt><dd>współczynnik kierunkowy: $a=\tg\alpha$, gdzie $\alpha$ to kąt nachylenia do osi $Ox$; z dwóch punktów $a=\frac{y_B-y_A}{x_B-x_A}$</dd>
+        <dt>$b$</dt><dd>prosta przecina oś $Oy$ w $(0,b)$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Postać ogólna</div>
+    $$Ax+By+C=0,\quad A^2+B^2\neq0$$
+    <dl><dt>$B\neq0$</dt><dd>da się przejść do kierunkowej: $y=-\frac{A}{B}x-\frac{C}{B}$</dd>
+        <dt>$B=0$</dt><dd>prosta pionowa $x=-\frac{C}{A}$: <b>nie ma</b> postaci kierunkowej</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Prosta przez $P=(x_0,y_0)$ o danym $a$ / przez $A$ i $B$</div>
+    $$y-y_0=a(x-x_0)$$
+    $$\begin{aligned}&(y-y_A)(x_B-x_A)=\\&=(y_B-y_A)(x-x_A)\end{aligned}$$
+    <dl><dt>uwaga</dt><dd>drugi wzór <span class="cke" title="Wzór jest w karcie „Wybrane wzory matematyczne” CKE">w karcie CKE</span> działa też dla prostej pionowej</dd></dl>
+  </div>
+  <div class="uwaga">Najszybsza kontrola: podstaw oba dane punkty do otrzymanego równania. Musi wyjść tożsamość.</div>
+
+  <h2 id="demo">3. Interaktywnie: dwa punkty</h2>
+  <div class="demo">
+    <p class="opis">Przeciągaj $A$ i $B$. Zielony trójkąt to Pitagoras dla $|AB|$, $S$ to środek odcinka. Poniżej równanie prostej $AB$ w obu postaciach.</p>
+    <canvas id="pr-plot"></canvas>
+    <div class="wynik" id="pr-wynik"></div>
+    <div class="wynik" id="pr-wynik2"></div>
+  </div>
+
+  <h2 id="kierunek">4. Interaktywnie: co znaczą $a$ i $b$</h2>
+  <div class="demo">
+    <p class="opis">Zmieniaj $a$ i $b$. Z punktu $(0,b)$ idziesz o $1$ w prawo i o $a$ w górę (zielono-czerwony schodek). Kąt nachylenia $\alpha$ spełnia $\tg\alpha=a$.</p>
+    <canvas id="kr-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="kr-a" min="-3" max="3" step="0.25" value="0.5"> <span id="kr-a-v"></span></label>
+      <label>$b$ <input type="range" id="kr-b" min="-4" max="4" step="0.5" value="1"> <span id="kr-b-v"></span></label>
+    </div>
+    <div class="wynik" id="kr-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Dane są $A=(-2,1)$ i $B=(4,9)$. Oblicz $|AB|$, wyznacz środek $S$ i równanie prostej $AB$.</p>
+    <ol>
+      <li>$\Delta x=6$, $\Delta y=8$, więc $|AB|=\sqrt{36+64}=10$.</li>
+      <li>$S=\left(\frac{-2+4}{2},\frac{1+9}{2}\right)=(1,5)$.</li>
+      <li>$a=\frac{8}{6}=\frac43$. Podstaw $A$: $1=\frac43\cdot(-2)+b$, więc $b=\frac{11}{3}$.</li>
+      <li>Pomnóż przez $3$: $3y=4x+11$.</li>
+      <li>Kontrola $B$: $4\cdot4-3\cdot9+11=0$ ✓.</li>
+    </ol>
+    <p class="odp">$|AB|=10$, $S=(1,5)$, $y=\frac43x+\frac{11}{3}$, czyli $4x-3y+11=0$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="13; 7/2; 4" data-odp-opis="|AB|; x_S; y_S"><span class="poziom">łatwe</span>
+      <div class="tresc">Oblicz długość odcinka o końcach $A=(1,-2)$, $B=(6,10)$ i wyznacz jego środek.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $|AB|=\sqrt{5^2+12^2}=\sqrt{169}=13$, $S=\left(\frac72,4\right)$. <b>$|AB|=13$, $S=(3{,}5;\ 4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7; -6" data-odp-opis="x; y punktu B"><span class="poziom">łatwe</span>
+      <div class="tresc">Punkt $S=(2,-1)$ jest środkiem odcinka $AB$, $A=(-3,4)$. Wyznacz $B$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $x_B=2\cdot2-(-3)=7$, $y_B=2\cdot(-1)-4=-6$. <b>$B=(7,-6)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 3" data-odp-opis="a; b w y = ax + b"><span class="poziom">średnie</span>
+      <div class="tresc">Wyznacz równanie prostej przechodzącej przez $A=(-1,5)$ i $B=(3,-3)$ w postaci kierunkowej i ogólnej.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $a=\frac{-3-5}{3-(-1)}=-2$. Z $A$: $5=2+b$, $b=3$. Kontrola $B$: $-6+3=-3$ ✓. <b>$y=-2x+3$, czyli $2x+y-3=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3" data-odp-opis="pole trójkąta"><span class="poziom">średnie</span>
+      <div class="tresc">Prosta $3x-2y+6=0$ odcina od osi układu trójkąt. Zapisz ją w postaci kierunkowej i oblicz pole tego trójkąta.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $2y=3x+6$, więc $y=\frac32x+3$. Przecięcie z $Oy$: $(0,3)$; z $Ox$: $\frac32x+3=0$, $x=-2$. Trójkąt prostokątny o przyprostokątnych $2$ i $3$: $P=\frac12\cdot2\cdot3$. <b>$y=\frac32x+3$, pole $3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 0" data-odp-opis="x; y punktu P"><span class="poziom">maturalne</span>
+      <div class="tresc">Na osi $Ox$ znajdź punkt $P$ równo oddalony od $A=(1,4)$ i $B=(7,2)$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $P=(x,0)$. $|PA|^2=|PB|^2$: $(x-1)^2+16=(x-7)^2+4$, czyli $-2x+17=-14x+53$, $x=3$. Kontrola: $|PA|^2=4+16=20=16+4=|PB|^2$ ✓. <b>$P=(3,0)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10; 1; 2" data-odp-opis="pole; x; y środka okręgu"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że trójkąt o wierzchołkach $A=(-2,1)$, $B=(2,-1)$, $C=(4,3)$ jest prostokątny i równoramienny. Oblicz jego pole i wyznacz środek okręgu na nim opisanego.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $|AB|^2=16+4=20$, $|BC|^2=4+16=20$, $|AC|^2=36+4=40$. Skoro $|AB|^2+|BC|^2=|AC|^2$, z twierdzenia odwrotnego do tw. Pitagorasa kąt przy $B$ jest prosty, a $|AB|=|BC|$. Pole $\frac12\cdot20=10$. Środek okręgu opisanego na trójkącie prostokątnym to środek przeciwprostokątnej $AC$.
+        <b>Pole $10$, środek okręgu opisanego $(1,2)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Prosta pionowa</b> $x=c$ nie ma postaci kierunkowej. Gdy punkty mają równe $x$, nie dziel przez zero, tylko od razu zapisz $x=c$.</li>
+    <li>W odpowiedzi podawaj równanie w postaci, o którą pytają. Ogólną najlepiej z całkowitymi współczynnikami.</li>
+    <li>Pierwiastek upraszczaj: $\sqrt{40}=2\sqrt{10}$. Nie zaokrąglaj, jeśli nie każą.</li>
+    <li>Zadania „wykaż, że trójkąt jest prostokątny/równoramienny” robisz na kwadratach długości: bez pierwiastków i bez błędów.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nwd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  // ułamek p/q (całkowite) w TeX, skrócony
+  function ulamek(p, q) {
+    if (q < 0) { p = -p; q = -q; }
+    const g = nwd(p, q) || 1; p /= g; q /= g;
+    if (q === 1) return `${p}`;
+    return `${p < 0 ? "-" : ""}\\frac{${Math.abs(p)}}{${q}}`;
+  }
+  // √n (n całkowite ≥ 0) w najprostszej postaci
+  function pierw(n) {
+    let k = 1, m = n;
+    for (let i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; }
+    return m === 1 ? `${k}` : m === 0 ? "0" : `${k === 1 ? "" : k}\\sqrt{${m}}`;
+  }
+  // Ax+By+C=0, skrócone przez NWD, A > 0
+  function ogolna(A, B, C) {
+    const g = nwd(nwd(A, B), C) || 1; A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    let s = "";
+    const wyraz = (k, zm) => { if (!k) return; s += (k < 0 ? "-" : s ? "+" : "") + (zm && Math.abs(k) === 1 ? "" : Math.abs(k)) + zm; };
+    wyraz(A, "x"); wyraz(B, "y"); wyraz(C, "");
+    return s + "=0";
+  }
+  function kierunkowa(A, B, C) {
+    if (B === 0) return `x=${ulamek(-C, A)}`;
+    let s = "y=";
+    if (A !== 0) { const u = ulamek(-A, B); s += (u === "1" ? "" : u === "-1" ? "-" : u) + "x"; }
+    if (C !== 0 || A === 0) { const u = ulamek(-C, B); s += (A !== 0 && !u.startsWith("-") ? "+" : "") + u; }
+    return s;
+  }
+
+  // --- 3. Dwa punkty ---
+  const w1 = new Wykres($("pr-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 7, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-4, Math.min(6, p.y)) });
+  const pkt = w1.przeciagaj([{ x: -3, y: -1, siatka: 1, ogranicz: ogr }, { x: 3, y: 3, siatka: 1, ogranicz: ogr }], rysujPr);
+  function rysujPr() {
+    const [P, Q] = pkt;
+    const dx = Q.x - P.x, dy = Q.y - P.y, sx = (P.x + Q.x) / 2, sy = (P.y + Q.y) / 2;
+    w1.rysuj(g => {
+      if (dx || dy) g.prosta(P.x, P.y, Q.x, Q.y, 1);
+      if (dx && dy) {
+        g.wielokat([[P.x, P.y], [Q.x, P.y], [Q.x, Q.y]], 3, { wypelnij: 0.12, przerywana: true });
+        g.tekst((P.x + Q.x) / 2, P.y, `|Δx| = ${Math.abs(dx)}`, 3, { dy: dy > 0 ? 16 : -8, wyrownanie: "center" });
+        g.tekst(Q.x, (P.y + Q.y) / 2, `|Δy| = ${Math.abs(dy)}`, 3, { dx: dx > 0 ? 6 : -6, wyrownanie: dx > 0 ? "left" : "right" });
+      }
+      g.odcinek(P.x, P.y, Q.x, Q.y, 2, false);
+      g.punkt(sx, sy, "S", 4);
+      g.punkt(P.x, P.y, "A"); g.punkt(Q.x, Q.y, "B");
+    });
+    const d2 = dx * dx + dy * dy;
+    if (!d2) { tex("pr-wynik", "A=B\\;\\text{— rozsuń punkty}"); tex("pr-wynik2", ""); return; }
+    const d = pierw(d2), r = Math.round(Math.sqrt(d2)), naw = v => v < 0 ? `(${v})` : v;
+    const dTex = r * r === d2 ? `${r}` : `\\sqrt{${d2}}` + (d === `\\sqrt{${d2}}` ? "" : `=${d}`) + `\\approx${ladnaTex(Math.sqrt(d2))}`;
+    tex("pr-wynik", `|AB|=\\sqrt{${naw(dx)}^2+${naw(dy)}^2}=${dTex},\\quad S=(${ladnaTex(sx)},\\,${ladnaTex(sy)})`);
+    const A = dy, B = -dx, C = -(A * P.x + B * P.y);
+    tex("pr-wynik2", `AB:\\ ${kierunkowa(A, B, C)}${B === 0 ? "\\ (\\text{pionowa})" : ""},\\quad ${ogolna(A, B, C)}`);
+  }
+  rysujPr();
+
+  // --- 4. Znaczenie a i b ---
+  const w2 = new Wykres($("kr-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  function rysujKr() {
+    const a = +$("kr-a").value, b = +$("kr-b").value;
+    $("kr-a-v").textContent = ladna(a); $("kr-b-v").textContent = ladna(b);
+    const alfa = Math.atan(a) < 0 ? Math.PI + Math.atan(a) : Math.atan(a);
+    w2.rysuj(g => {
+      g.funkcja(x => a * x + b, 1);
+      if (a !== 0) {
+        const x0 = -b / a;
+        g.luk(x0, 0, 0.8, 0, alfa, 4, { wypelnij: 0.2 });
+        g.tekst(x0 + 1, 0, "α", 4, { dy: -6, gruby: true });
+      }
+      g.odcinek(0, b, 1, b, 3, false);
+      g.odcinek(1, b, 1, b + a, 2, false);
+      g.tekst(0.5, b, "1", 3, { dy: a >= 0 ? 15 : -6, wyrownanie: "center" });
+      if (a) g.tekst(1, b + a / 2, "a", 2, { dx: 6, gruby: true });
+      g.punkt(0, b, "(0, b)", 2);
+    });
+    const ax = a === 0 ? "" : a === 1 ? "x" : a === -1 ? "-x" : ladnaTex(a) + "x";
+    const bx = b === 0 ? (a === 0 ? "0" : "") : (a === 0 ? ladnaTex(b) : znakTex(b));
+    tex("kr-wynik", `y=${ax}${bx},\\quad \\tg\\alpha=a=${ladnaTex(a)},\\quad \\alpha\\approx${ladnaTex(alfa * 180 / Math.PI, 1)}^\\circ`);
+  }
+  ["kr-a", "kr-b"].forEach(id => $(id).addEventListener("input", rysujKr));
+  rysujKr();
+});
+</script>
+</body>
+</html>

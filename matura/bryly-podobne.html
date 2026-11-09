@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bryły podobne</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/bryly3d.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Bryły podobne</h1>
+  <p class="lead">Powiększ bryłę $2$ razy: każda długość rośnie $2$ razy, pole $4$ razy (bo ma dwa wymiary), a objętość $8$ razy (bo ma trzy). Ta jedna obserwacja rozwiązuje całą klasę zadań.</p>
+  <p class="wymagania">X.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="skala">1. Skala k, k², k³</h2>
+  <div class="definicja"><b>Bryły podobne w skali $k&gt;0$</b>: każdy odcinek jednej bryły ma długość $k$ razy większą od odpowiadającego mu odcinka drugiej (kąty się nie zmieniają). Wszystkie kule są podobne, wszystkie sześciany też.</div>
+  <div class="wzor">
+    <div class="tytul">Bryły podobne w skali $k$ (trzeba pamiętać)</div>
+    $$\frac{P_2}{P_1}=k^2,\qquad \frac{V_2}{V_1}=k^3$$
+    <dl><dt>$k$</dt><dd>stosunek odpowiadających sobie długości: krawędzi, wysokości, promieni, przekątnych</dd>
+        <dt>$P$</dt><dd>dowolne pole: powierzchni całkowitej, bocznej, podstawy, przekroju</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>Przekrój równoległy do podstawy</b> Płaszczyzna równoległa do podstawy ostrosłupa (stożka) odcina od niego ostrosłup (stożek) <b>podobny</b> do wyjściowego w skali $k=\frac{h}{H}$, gdzie $h$ to odległość płaszczyzny od wierzchołka.
+    <details class="rozwin"><summary>Dlaczego $k^3$?</summary><div>
+      Przy skali $k$ każde pole podstawy rośnie $k^2$ razy (figury podobne), a wysokość $k$ razy. Dla graniastosłupa, ostrosłupa, walca i stożka $V=c\cdot P_p\cdot H$, więc $V$ rośnie $k^2\cdot k=k^3$ razy. Dla kuli: $V=\frac43\pi r^3$, a $r$ rośnie $k$ razy.
+    </div></details></div>
+
+  <h2 id="demo">2. Interaktywnie: skalowanie</h2>
+  <div class="demo">
+    <p class="opis">Przesuwaj $k$ albo naciśnij ▶ ($k$ od $1$ do $2$). Zielona: bryła wyjściowa ($k=1$), niebieska: przeskalowana. Zobacz, jak szybko rośnie $k^3$ w porównaniu z $k$.</p>
+    <canvas id="bp-plot"></canvas>
+    <div class="sterowanie">
+      <button id="bp-szescian" class="wtorny aktywny">sześcian</button>
+      <button id="bp-ostroslup" class="wtorny">ostrosłup</button>
+      <button id="bp-stozek" class="wtorny">stożek</button>
+      <label>$k$ <input type="range" id="bp-k" min="0.2" max="2.5" step="0.05" value="1.5"></label>
+      <button id="bp-start">▶ k: 1 → 2</button>
+    </div>
+    <div class="wynik" id="bp-wynik"></div>
+  </div>
+
+  <h2 id="demo2">3. Interaktywnie: odcięty ostrosłup</h2>
+  <div class="demo">
+    <p class="opis">Przesuwaj płaszczyznę równoległą do podstawy. Odcięty ostrosłup (czerwony) jest podobny do całego w skali $k=\frac hH$, więc jego objętość to $k^3$ całości.</p>
+    <canvas id="oc-plot"></canvas>
+    <div class="sterowanie">
+      <label>wysokość cięcia <input type="range" id="oc-t" min="0" max="0.95" step="0.01" value="0.5"></label>
+    </div>
+    <div class="wynik" id="oc-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Ostrosłup o objętości $54$ przecięto płaszczyzną równoległą do podstawy, odległą od wierzchołka o $\frac13$ wysokości. Oblicz objętości obu powstałych brył.</p>
+    <ol>
+      <li>Odcięty ostrosłup jest podobny w skali $k=\frac13$.</li>
+      <li>$V_{\text{mały}}=k^3\cdot54=\frac{54}{27}=2$.</li>
+      <li>Druga bryła (ostrosłup ścięty): $54-2=52$.</li>
+    </ol>
+    <p class="odp">$2$ i $52$</p>
+  </div>
+
+  <h2 id="zadania">5. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/9; 1/27" data-odp-opis="stosunek pól; stosunek objętości (ułamki)"><span class="poziom">łatwe</span>
+      <div class="tresc">Kule mają promienie $2$ i $6$. Podaj stosunek ich pól powierzchni i objętości.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $k=3$. <b>Pola $1:9$, objętości $1:27$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8" data-odp-opis="ile razy"><span class="poziom">łatwe</span>
+      <div class="tresc">Sześcian $A$ ma pole powierzchni $24$, sześcian $B$ ma pole $96$. Ile razy objętość $B$ jest większa od objętości $A$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $k^2=4$, więc $k=2$ i $k^3=8$ (sprawdzenie: $V_A=8$, $V_B=64$). <b>8 razy</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4/25" data-odp-opis="stosunek pól (ułamek)"><span class="poziom">średnie</span>
+      <div class="tresc">Stosunek objętości dwóch brył podobnych wynosi $8:125$. Oblicz stosunek ich pól powierzchni.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $k^3=\frac{8}{125}\Rightarrow k=\frac25$, $k^2=\frac{4}{25}$. <b>$4:25$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8; 56" data-odp-opis="objętości obu brył"><span class="poziom">średnie</span>
+      <div class="tresc">Stożek o objętości $64$ przecięto płaszczyzną równoległą do podstawy w połowie wysokości. Oblicz objętości powstałych brył.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Mały stożek: $k=\frac12$, $V=\frac{64}{8}=8$. Reszta: $64-8$. <b>$8$ i $56$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/8; 2^(-1/3)" data-odp-opis="część pojemności; część wysokości (pierwiastek 3. stopnia jako potęga, np. 2^(1/3))"><span class="poziom">maturalne</span>
+      <div class="tresc">Kieliszek ma kształt stożka (wierzchołkiem w dół). Nalano do niego wody do połowy wysokości. Jaką część pojemności kieliszka zajmuje woda? Do jakiej wysokości trzeba nalać wody, by wypełnić połowę pojemności?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Woda tworzy stożek podobny w skali $\frac12$: $\left(\frac12\right)^3=\frac18$. Połowa objętości: $k^3=\frac12$, $k=\frac{1}{\sqrt[3]2}\approx0{,}79$. <b>$\frac18$ pojemności; do $\frac{1}{\sqrt[3]{2}}=\frac{\sqrt[3]{4}}{2}$ wysokości ($\approx79\%$)</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10-5*4^(1/3)" data-odp-opis="odległość od podstawy (pierwiastek 3. stopnia jako potęga, np. 4^(1/3))"><span class="poziom">maturalne</span>
+      <div class="tresc">Ostrosłup ma wysokość $10$. W jakiej odległości od podstawy należy go przeciąć płaszczyzną równoległą do podstawy, aby podzielić go na dwie bryły o równych objętościach? Podaj wynik dokładny i przybliżony.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Odcięty ostrosłup: $k^3=\frac12$, jego wysokość $\frac{10}{\sqrt[3]2}=5\sqrt[3]4\approx7{,}94$. Odległość od podstawy: $10-5\sqrt[3]4$. <b>$10-5\sqrt[3]{4}\approx2{,}06$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. Na maturze</h2>
+  <ul>
+    <li>Najpierw ustal $k$ z <b>długości</b>. Jeśli dane są pola, $k=\sqrt{\text{stosunek pól}}$; jeśli objętości, $k=\sqrt[3]{\text{stosunek objętości}}$.</li>
+    <li>Przy przekroju równoległym $k$ liczysz od <b>wierzchołka</b>, nie od podstawy.</li>
+    <li>Ostrosłup (stożek) ścięty to różnica: $V_{\text{ścięty}}=V(1-k^3)$.</li>
+    <li>Pułapka: „$2$ razy wyższy” stożek o tym samym promieniu <b>nie</b> jest podobny. Podobieństwo wymaga skalowania wszystkich wymiarów.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- 2. skalowanie ---
+  const s3 = new Scena3D($("bp-plot"), { zakres: 2.6, srodek: [0.8, 0.8, 1] });
+  const BT = { szescian: $("bp-szescian"), ostroslup: $("bp-ostroslup"), stozek: $("bp-stozek") };
+  let typ = "szescian", stop = null;
+  const SZ = { W: [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]],
+    S: [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]] };
+  const OS = { W: [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.2]], S: [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]] };
+  function stozek(g, k, nr, o) {
+    const c = [0.5 * k, 0.5 * k, 0], S = [0.5 * k, 0.5 * k, 1.3 * k], r = 0.5 * k;
+    g.okrag(c, [0, 0, 1], r, nr, o);
+    const ex = [Math.cos(g.az), -Math.sin(g.az), 0];
+    [1, -1].forEach(z => g.odcinek(V3.dod(c, V3.razy(ex, z * r)), S, nr, o));
+  }
+  function rysuj() {
+    const k = +$("bp-k").value, sk = W => W.map(p => V3.razy(p, k));
+    s3.rysuj(g => {
+      if (typ === "stozek") { stozek(g, 1, 3, { przerywana: true }); stozek(g, k, 1, { wypelnij: 0.08 }); }
+      else { const B = typ === "szescian" ? SZ : OS; g.bryla(B.W, B.S, 3, { ukryte: false, grubosc: 1.5 }); g.bryla(sk(B.W), B.S, 1, { wypelnij: 0.08 }); }
+    });
+    tex("bp-wynik", `k=${ladnaTex(k)},\\quad \\frac{P_2}{P_1}=k^2=${ladnaTex(k * k)},\\quad \\frac{V_2}{V_1}=k^3=${ladnaTex(k ** 3)}`);
+  }
+  Object.keys(BT).forEach(t => BT[t].addEventListener("click", () => {
+    typ = t; Object.keys(BT).forEach(j => BT[j].classList.toggle("aktywny", j === t)); rysuj();
+  }));
+  $("bp-k").addEventListener("input", () => { if (stop) stop(); rysuj(); });
+  $("bp-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(3000, x => { $("bp-k").value = 1 + x; rysuj(); });
+  });
+  rysuj();
+
+  // --- 3. odcięty ostrosłup ---
+  const s4 = new Scena3D($("oc-plot"), { zakres: 2.2, srodek: [0, 0, 1.2] });
+  const H = 2.6, P = [[-1.2, -1.2, 0], [1.2, -1.2, 0], [1.2, 1.2, 0], [-1.2, 1.2, 0]], S = [0, 0, H];
+  function rysuj2() {
+    const t = +$("oc-t").value, k = 1 - t, G = P.map(p => V3.lerp(S, p, k));
+    s4.rysuj(g => {
+      g.bryla([...P, ...G], [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]], 1, { wypelnij: 0.06 });
+      g.bryla([...G, S], [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]], 2, { wypelnij: 0.2 });
+      g.odcinek(S, [0, 0, 0], 3, { przerywana: true });
+      g.punkt(S, "S", 2, { r: 3 });
+      g.tekst([0, 0, H * (1 - k / 2)], "h", 3, { dx: 6, gruby: true });
+    });
+    tex("oc-wynik", `k=\\frac hH=${ladnaTex(k)},\\quad \\frac{V_{\\text{odcięty}}}{V}=k^3=${ladnaTex(k ** 3, 3)}`);
+  }
+  $("oc-t").addEventListener("input", rysuj2);
+  rysuj2();
+});
+</script>
+</body>
+</html>

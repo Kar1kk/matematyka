@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dowody: podzielność i reszty, niewymierność</title>
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/dzialy.js"></script>
+<script defer src="../assets/wykres.js"></script>
+<script defer src="../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Zmień motyw">◐</button>
+</div></header>
+
+<main>
+  <h1>Dowody: podzielność i reszty, niewymierność</h1>
+  <p class="lead">Dowód podzielności to prawie zawsze ten sam ruch: zapisz liczbę ogólnie ($2k+1$, $4k+3$, $n(n+1)$…) i <b>wyłącz dzielnik przed nawias</b>. Niewymierność i nieskończoność liczb pierwszych dowodzi się nie wprost: załóż przeciwnie i dojdź do sprzeczności.</p>
+  <p class="wymagania">I.2 · dowody: nieskończenie wiele liczb pierwszych, niewymierność $\sqrt2$, $\log_2 5$</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="narzedzia">1. Narzędzia i schemat zapisu</h2>
+  <div class="wzor">
+    <div class="tytul">Dzielenie z resztą (do zapamiętania)</div>
+    $$n=mk+r,\quad k\in\Z,\ \ r\in\{0,\dots,m-1\}$$
+    <dl><dt>parzysta</dt><dd>$2k$; nieparzysta $2k+1$</dd>
+        <dt>kolejne</dt><dd>wśród $m$ kolejnych liczb całkowitych dokładnie jedna dzieli się przez $m$; iloczyn dwóch kolejnych jest parzysty</dd>
+        <dt>reszty</dt><dd>reszta sumy/iloczynu = reszta z sumy/iloczynu reszt, bo $(mk+r)(ml+s)=m(\dots)+rs$</dd></dl>
+  </div>
+  <div class="przyklad">
+    <p><b>Schemat zapisu na maturze</b></p>
+    <ol>
+      <li>Zapisz założenie wzorem: „Niech $n=4k+3$, gdzie $k\in\Z$”.</li>
+      <li>Przekształć wyrażenie i <b>wyłącz dzielnik</b>: $\ldots=4(\ldots)+r$.</li>
+      <li>Nazwij to, co w nawiasie: „$4k^2+6k+2$ jest liczbą całkowitą”.</li>
+      <li>Wniosek słowami: „więc liczba jest podzielna przez $4$ / daje resztę $r$”.</li>
+    </ol>
+  </div>
+
+  <h2 id="podstawa">2. Dwa dowody z podstawy</h2>
+  <div class="twierdzenie"><b>Twierdzenie</b> Iloczyn czterech kolejnych liczb naturalnych dzieli się przez $24$.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>Niech $P=n(n+1)(n+2)(n+3)$. Wśród trzech (a więc i czterech) kolejnych liczb jedna dzieli się przez $3$, więc $3\mid P$.</p>
+      <p>Wśród czterech kolejnych liczb są dwie <b>kolejne liczby parzyste</b> $2j$ i $2j+2=2(j+1)$. Ich iloczyn to $4j(j+1)$, a $j(j+1)$ jest parzyste, więc $8\mid P$.</p>
+      <p>$3$ i $8$ są względnie pierwsze, więc $24=3\cdot8\mid P$. $\blacksquare$</p>
+    </div></details></div>
+  <div class="twierdzenie"><b>Twierdzenie</b> Liczba, która przy dzieleniu przez $4$ daje resztę $3$, nie jest kwadratem liczby całkowitej.
+    <details class="rozwin"><summary>Dowód</summary><div>
+      <p>Sprawdzamy, jakie reszty z dzielenia przez $4$ dają kwadraty. Każda liczba całkowita to $2j$ albo $2j+1$:</p>
+      $$(2j)^2=4j^2$$
+      $$(2j+1)^2=4(j^2+j)+1$$
+      <p>Kwadrat daje więc resztę $0$ albo $1$, nigdy $3$. $\blacksquare$</p>
+    </div></details></div>
+
+  <h2 id="reszty">3. Interaktywnie: zegar reszt</h2>
+  <div class="demo">
+    <p class="opis">Na „zegarze” jest $m$ reszt. Niebieski punkt to reszta $n$, czerwony — reszta $n^k$. „▶ Odtwórz” przechodzi po kolejnych $n$: zapalają się tylko reszty, które potęgi naprawdę osiągają. Dla $k=2$, $m=4$ zostają tylko $0$ i $1$ — to cały dowód z punktu 2.</p>
+    <canvas id="zr-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$m$ <input type="range" id="zr-m" min="2" max="12" step="1" value="4"> <span id="zr-m-v"></span></label>
+      <label>$k$ <select id="zr-k"><option value="2">2 (kwadrat)</option><option value="3">3 (sześcian)</option></select></label>
+      <label>$n$ <input type="range" id="zr-n" min="0" max="30" step="1" value="7"> <span id="zr-n-v"></span></label>
+      <button id="zr-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="zr-wynik"></div>
+  </div>
+
+  <h2 id="nie-wprost">4. Dowody nie wprost</h2>
+  <p>Schemat: <b>załóż zaprzeczenie</b> tezy, wyprowadź z niego coś fałszywego, wniosek: założenie było fałszywe.</p>
+  <div class="twierdzenie"><b>Twierdzenie</b> $\sqrt2$ jest liczbą niewymierną.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Załóżmy, że $\sqrt2=\frac pq$, gdzie $p,q$ są całkowite dodatnie, a ułamek jest <b>nieskracalny</b>. Wtedy $p^2=2q^2$, więc $p^2$ jest parzyste, a zatem $p$ jest parzyste (kwadrat liczby nieparzystej jest nieparzysty). Niech $p=2s$:</p>
+      $$4s^2=2q^2\ \Rightarrow\ q^2=2s^2$$
+      <p>Tak samo $q$ jest parzyste. Ale wtedy $\frac pq$ da się skrócić przez $2$ — sprzeczność. $\blacksquare$</p>
+    </div></details></div>
+  <div class="twierdzenie"><b>Twierdzenie</b> $\log_2 5$ jest liczbą niewymierną.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>$\log_2 5&gt;0$, bo $5&gt;1$. Załóżmy, że $\log_2 5=\frac pq$, gdzie $p,q$ są całkowite dodatnie. Z definicji logarytmu:</p>
+      $$2^{p/q}=5\ \Rightarrow\ 2^p=5^q$$
+      <p>Lewa strona jest parzysta ($p\ge1$), prawa nieparzysta — sprzeczność. $\blacksquare$ Tak samo dowodzi się niewymierności np. $\log_3 2$ czy $\log 5$ (wtedy $10^p=5^q$: lewa strona parzysta).</p>
+    </div></details></div>
+  <div class="twierdzenie"><b>Twierdzenie</b> (Euklides) Liczb pierwszych jest nieskończenie wiele.
+    <details class="rozwin"><summary>Dowód (wymagany na maturze)</summary><div>
+      <p>Załóżmy, że jest ich skończenie wiele: $p_1,p_2,\dots,p_k$. Niech</p>
+      $$N=p_1p_2\cdots p_k+1$$
+      <p>$N&gt;1$, więc ma jakiś dzielnik pierwszy $p$. Z założenia $p$ jest jedną z liczb $p_i$. Ale $p_i$ dzieli iloczyn $p_1\cdots p_k$, więc $N$ daje przy dzieleniu przez $p_i$ resztę $1$ — nie dzieli się przez $p_i$. Sprzeczność. $\blacksquare$</p>
+    </div></details></div>
+  <div class="demo">
+    <p class="opis">Weź $k$ pierwszych liczb pierwszych i zbuduj $N$. „▶ Odtwórz” sprawdza po kolei: każda $p_i$ daje resztę $1$. Rozkład $N$ zawiera więc liczbę pierwszą <b>spoza listy</b>. Uwaga: dla $k=6$ $N=30031=59\cdot509$ nie jest pierwsza — dowód tego nie wymaga.</p>
+    <canvas id="eu-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="eu-k" min="1" max="8" step="1" value="6"> <span id="eu-k-v"></span></label>
+      <button id="eu-start">▶ Odtwórz</button>
+    </div>
+    <div class="wynik" id="eu-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Przykład krok po kroku</h2>
+  <div class="przyklad">
+    <p>Wykaż, że dla każdej liczby całkowitej $n$ liczba $n^3-n$ jest podzielna przez $6$.</p>
+    <ol>
+      <li>Rozłóż: $n^3-n=n(n^2-1)=(n-1)n(n+1)$ — iloczyn trzech kolejnych liczb całkowitych.</li>
+      <li>Wśród nich jest liczba parzysta, więc $2\mid n^3-n$; jest też liczba podzielna przez $3$, więc $3\mid n^3-n$.</li>
+      <li>$2$ i $3$ są względnie pierwsze.</li>
+    </ol>
+    <p class="odp">$6\mid n^3-n$ dla każdego $n\in\Z$</p>
+  </div>
+
+  <h2 id="zadania">6. Zadania</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykaż, że suma trzech kolejnych liczb całkowitych jest podzielna przez $3$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $(n-1)+n+(n+1)=3n$, $n\in\Z$. <b>$3\mid 3n$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">łatwe</span>
+      <div class="tresc">Wykaż, że kwadrat liczby nieparzystej daje przy dzieleniu przez $8$ resztę $1$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $(2k+1)^2=4k^2+4k+1=4k(k+1)+1$. $k(k+1)$ jest parzyste, $k(k+1)=2j$, więc $(2k+1)^2=8j+1$. <b>Reszta $1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2" data-odp-opis="reszta"><span class="poziom">średnie</span>
+      <div class="tresc">Liczba całkowita $n$ daje przy dzieleniu przez $5$ resztę $2$. Jaką resztę daje $n^3+2n$?</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $n=5k+2$: $(5k+2)^3+2(5k+2)=125k^3+150k^2+70k+12$
+        $$=5(25k^3+30k^2+14k+2)+2$$
+        <b>Reszta $2$</b> (szybciej: reszty $2^3+2\cdot2=12$, a $12$ daje resztę $2$).
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">średnie</span>
+      <div class="tresc">Wykaż, że liczba dająca przy dzieleniu przez $4$ resztę $3$ nie jest sumą kwadratów dwóch liczb całkowitych.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        Kwadraty dają reszty $0$ lub $1$ (punkt 2). Suma dwóch takich reszt to $0$, $1$ albo $2$. <b>Reszta $3$ jest niemożliwa.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że dla każdej liczby całkowitej $n$ liczba $n^5-n$ jest podzielna przez $30$.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $n^5-n=n(n^2-1)(n^2+1)$. Zapisz $n^2+1=(n^2-4)+5$:
+        $$n^5-n=n(n^2-1)(n^2-4)+5n(n^2-1)$$
+        $$=(n-2)(n-1)n(n+1)(n+2)$$
+        $$+\,5(n-1)n(n+1)$$
+        Pierwszy składnik to iloczyn $5$ kolejnych liczb: dzieli się przez $2$, $3$ i $5$. Drugi: $5\cdot$(iloczyn $3$ kolejnych), a ten dzieli się przez $6$. <b>Oba składniki dzielą się przez $30$</b>, więc suma też.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">maturalne</span>
+      <div class="tresc">Wykaż, że $\log_3 2$ jest liczbą niewymierną.</div>
+      <details class="rozwin"><summary>Rozwiązanie</summary><div>
+        $\log_3 2&gt;0$. Załóżmy, że $\log_3 2=\frac pq$, $p,q\in\N_+$. Wtedy $3^{p/q}=2$, czyli $3^p=2^q$. Lewa strona nieparzysta, prawa parzysta ($q\ge1$) — sprzeczność. <b>$\log_3 2\notin\Q$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. Na maturze</h2>
+  <ul>
+    <li><b>Zawsze „$k\in\Z$”</b> (albo $\N$) przy zapisie $2k+1$, $4k+3$. Bez tego dowód jest niepełny.</li>
+    <li><b>Przykłady to nie dowód.</b> Sprawdzenie $n=1,2,3$ jest dobre do wyczucia, ale za nie nie ma punktów.</li>
+    <li><b>Łączenie dzielników:</b> z $3\mid P$ i $8\mid P$ wynika $24\mid P$, bo $3$ i $8$ są względnie pierwsze. Z $4\mid P$ i $6\mid P$ <b>nie</b> wynika $24\mid P$ (np. $12$).</li>
+    <li><b>Nie wprost:</b> napisz wprost „Załóżmy, że…”, wskaż sprzeczność i zakończ wnioskiem.</li>
+    <li>Reszta spełnia $0\le r&lt;m$: $-1$ przy dzieleniu przez $4$ to reszta $3$.</li>
+  </ul>
+</main>
+
+<footer>Matematyka · matura rozszerzona</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Zegar reszt ---
+  const w1 = new Wykres($("zr-plot"), { xmin: -1.6, xmax: 1.6, ymin: -1.45, ymax: 1.45, rowneSkale: true, siatka: false, osie: false });
+  const potegaMod = (n, k, m) => { let w = 1; for (let i = 0; i < k; i++) w = (w * n) % m; return w; };
+  let stopZr = null;
+  function rysujZr(nAkt) {
+    const m = +$("zr-m").value, k = +$("zr-k").value;
+    $("zr-m-v").textContent = m; $("zr-n-v").textContent = nAkt;
+    const kat = r => Math.PI / 2 - 2 * Math.PI * r / m;
+    const P = r => [Math.cos(kat(r)), Math.sin(kat(r))];
+    const zapalone = new Set();
+    for (let n = 0; n <= nAkt; n++) zapalone.add(potegaMod(n, k, m));
+    const r = nAkt % m, rk = potegaMod(nAkt, k, m);
+    w1.rysuj(g => {
+      g.okrag(0, 0, 1, 3, { przerywana: true });
+      for (let i = 0; i < m; i++) {
+        const [x, y] = P(i);
+        g.punkt(x, y, "", zapalone.has(i) ? 2 : 3, { r: 9, pusty: !zapalone.has(i) });
+        g.tekst(x * 1.28, y * 1.28, String(i), zapalone.has(i) ? 2 : 3, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: 15 });
+      }
+      const [xa, ya] = P(r), [xb, yb] = P(rk);
+      if (r !== rk) g.strzalka(xa * 0.85, ya * 0.85, xb * 0.85, yb * 0.85, 4);
+      g.punkt(xa, ya, "", 1, { r: 6 });
+      g.punkt(xb, yb, "", 2, { r: 4 });
+    });
+    const wsz = [...zapalone].sort((a, b) => a - b).join(",\\,");
+    tex("zr-wynik", `n=${nAkt}:\\ n\\bmod ${m}=${r},\\ \\ n^{${k}}=${nAkt ** k},\\ n^{${k}}\\bmod ${m}=${rk}\\quad\\text{osiągnięte reszty: }\\{${wsz}\\}`);
+  }
+  $("zr-start").addEventListener("click", () => {
+    if (stopZr) stopZr();
+    const m = +$("zr-m").value, N = 2 * m;
+    stopZr = animuj(N * 450, t => { const n = Math.round(t * N); $("zr-n").value = n; rysujZr(n); });
+  });
+  ["zr-m", "zr-k", "zr-n"].forEach(id => $(id).addEventListener("input", () => { if (stopZr) stopZr(); rysujZr(+$("zr-n").value); }));
+  $("zr-k").addEventListener("change", () => { if (stopZr) stopZr(); rysujZr(+$("zr-n").value); });
+  rysujZr(+$("zr-n").value);
+
+  // --- 4. Euklides ---
+  const PIERWSZE = [2, 3, 5, 7, 11, 13, 17, 19];
+  const rozklad = n => { const f = []; for (let d = 2; d * d <= n; d++) while (n % d === 0) { f.push(d); n /= d; } if (n > 1) f.push(n); return f; };
+  const w2 = new Wykres($("eu-plot"), { xmin: 0, xmax: 10, ymin: 0, ymax: 10, siatka: false, osie: false });
+  let stopEu = null;
+  function klatkaEu(t) {
+    const k = +$("eu-k").value;
+    $("eu-k-v").textContent = k;
+    const ps = PIERWSZE.slice(0, k), N = ps.reduce((a, b) => a * b, 1) + 1, fs = rozklad(N);
+    const krok = 10 / 8, x0 = 5 - krok * k / 2;
+    const ile = Math.floor(t / 0.6 * k + 1e-9); // ile p_i już sprawdzonych
+    w2.rysuj(g => {
+      g.tekst(0.1, 9.3, "lista „wszystkich” liczb pierwszych:", 1, { rozmiar: 12 });
+      ps.forEach((p, i) => {
+        const x = x0 + i * krok + 0.1, spr = i < ile;
+        g.prostokat(x, 7, krok - 0.2, 1.6, spr ? 3 : 1, { wypelnij: spr ? 0.3 : 0.15 });
+        g.tekst(x + (krok - 0.2) / 2, 7.8, String(p), spr ? 3 : 1, { wyrownanie: "center", dy: 5, gruby: true });
+        if (spr) g.tekst(x + (krok - 0.2) / 2, 7, "r = 1", 3, { wyrownanie: "center", dy: 14, rozmiar: 11 });
+      });
+      g.prostokat(2.5, 3.6, 5, 1.6, 4, { wypelnij: 0.2 });
+      g.tekst(5, 4.4, "N = " + ps.join("·") + " + 1 = " + N, 4, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: k > 6 ? 11 : 13 });
+      if (t > 0.6) {
+        g.tekst(5, 2.6, "N = " + fs.join(" · "), 2, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: 15 });
+        g.tekst(5, 1.2, fs.length === 1 ? "N jest pierwsza — i nie ma jej na liście!" : "dzielniki pierwsze N są spoza listy!", 2, { wyrownanie: "center", dy: 5 });
+      }
+    });
+    const lista = fs.filter((v, i, a) => a.indexOf(v) === i).join(",\\,");
+    tex("eu-wynik", t > 0.6 ? `N=${N}${fs.length === 1 ? "\\text{ (pierwsza)}" : "=" + fs.join("\\cdot")},\\quad ${lista}\\notin\\{${ps.join(",\\,")}\\}` : `N\\bmod p_i=1\\ \\text{dla każdego } p_i`);
+  }
+  $("eu-start").addEventListener("click", () => { if (stopEu) stopEu(); stopEu = animuj(3500, klatkaEu); });
+  $("eu-k").addEventListener("input", () => { if (stopEu) stopEu(); klatkaEu(1); });
+  klatkaEu(1);
+});
+</script>
+</body>
+</html>
