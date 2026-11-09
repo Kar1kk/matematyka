@@ -2,7 +2,7 @@
 // Strategia: przy instalacji pobiera wszystkie strony i zasoby; potem „najpierw z pamięci,
 // w tle odśwież” — nowa wersja pliku pojawia się przy kolejnym otwarciu.
 // Przy większej zmianie struktury podbij WERSJA (stara pamięć zostanie usunięta).
-const WERSJA = "v5";
+const WERSJA = "v6";
 const PAMIEC = "matematyka-" + WERSJA;
 
 importScripts("assets/dzialy.js"); // DZIALY_MATURA → lista stron tematów

@@ -16,7 +16,7 @@
   dodaj("link", { rel: "manifest", href: new URL("manifest.webmanifest", korzen).href });
   dodaj("link", { rel: "apple-touch-icon", href: new URL("assets/ikony/apple-touch-icon.png", korzen).href });
   dodaj("link", { rel: "icon", type: "image/png", href: new URL("assets/ikony/ikona-192.png", korzen).href });
-  dodaj("meta", { name: "theme-color", content: "#2f5bd3" });
+  dodaj("meta", { name: "theme-color", content: "#4a5ae8" });
   if ("serviceWorker" in navigator && location.protocol !== "file:")
     addEventListener("load", () => navigator.serviceWorker.register(new URL("sw.js", korzen).href).catch(() => {}));
 })();
