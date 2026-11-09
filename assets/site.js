@@ -66,7 +66,11 @@ window.addEventListener("resize", () => { clearTimeout(_szerTimer); _szerTimer =
 const pamiec = {
   get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
   // zwraca false, gdy zapis się nie udał (np. brak miejsca w pamięci przeglądarki)
-  set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); return true; } catch (e) { return false; } },
+  set(k, v) {
+    try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) { return false; }
+    if (typeof syncZmiana === "function") syncZmiana(k);
+    return true;
+  },
 };
 
 // Tematy bez odsyłaczy (ten sam plik w drugim dziale liczy się raz)
@@ -91,6 +95,132 @@ function ustawPowtorke(plik, etap) {
 }
 // Opanowany temat bez zapisanego terminu (stary postęp) jest do powtórki od razu
 const doPowtorki = plik => opanowany(plik) && (stanPowtorki(plik)?.termin || "") <= dzis();
+
+// --- Synchronizacja postępu między urządzeniami (dobrowolna, przez prywatny gist GitHuba) ---
+// Działa tylko po wklejeniu własnego tokenu (uprawnienie „gist”) w panelu „Twoja nauka”; bez tokenu nic się nie dzieje.
+// Token i stan synchronizacji zostają w tej przeglądarce (klucze „sync:*” — nie trafiają do eksportu ani do gista).
+// Synchronizowane: opanowane:, powtorka:, zadanie: (bez brudnopisów). Gist: plik matematyka-postep.json =
+// {wersja, dane: {klucz: {v: wartość | null (usunięte), t: czas zmiany w ms}}}; przy konflikcie wygrywa nowsza zmiana.
+const SYNC_KLUCZE = /^(opanowane:|powtorka:|zadanie:)/;
+const SYNC_PLIK = "matematyka-postep.json";
+const syncToken = () => pamiec.get("sync:token");
+const syncCzasy = () => { try { return JSON.parse(pamiec.get("sync:zmiany")) || {}; } catch (e) { return {}; } };
+const syncUstaw = (k, v) => { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };
+let _syncTimer = null, _syncTrwa = null;
+function syncZmiana(k) {
+  if (!SYNC_KLUCZE.test(k) || !syncToken()) return;
+  const z = syncCzasy(); z[k] = Date.now();
+  syncUstaw("sync:zmiany", JSON.stringify(z)); syncUstaw("sync:brudne", "1");
+  clearTimeout(_syncTimer); _syncTimer = setTimeout(() => synchronizuj().catch(() => {}), 2500);
+}
+async function syncApi(metoda, sciezka, tresc) {
+  const body = tresc ? JSON.stringify(tresc) : undefined;
+  const r = await fetch("https://api.github.com" + sciezka, { method: metoda, cache: "no-store", body,
+    keepalive: !!body && body.length < 60000, // zdąży się wysłać także przy zamykaniu strony
+    headers: { Authorization: "Bearer " + syncToken(), Accept: "application/vnd.github+json", ...(body ? { "Content-Type": "application/json" } : {}) } });
+  if (r.status === 401) throw new Error(T("Token jest nieprawidłowy albo wygasł.", "The token is invalid or has expired."));
+  if (r.status === 403 || r.status === 404) throw new Error(T("Brak dostępu — token musi mieć uprawnienie „gist”.", "No access — the token needs the “gist” permission."));
+  if (!r.ok) throw new Error(T("Błąd GitHuba: ", "GitHub error: ") + r.status);
+  return r.json();
+}
+// Zwraca true, gdy z drugiego urządzenia przyszły zmiany (stronę warto odświeżyć)
+function synchronizuj() {
+  if (!syncToken()) return Promise.resolve(false);
+  if (_syncTrwa) return _syncTrwa;
+  clearTimeout(_syncTimer);
+  _syncTrwa = (async () => {
+    let id = pamiec.get("sync:gist");
+    if (!id) { // gist założony wcześniej z innego urządzenia?
+      const moje = await syncApi("GET", "/gists?per_page=100");
+      id = (moje.find(g => g.files && g.files[SYNC_PLIK]) || {}).id;
+    }
+    let zdalne = {};
+    if (id) {
+      const g = await syncApi("GET", "/gists/" + id), p = g.files && g.files[SYNC_PLIK];
+      if (p) {
+        const tekst = p.truncated ? await (await fetch(p.raw_url, { cache: "no-store" })).text() : p.content;
+        try { zdalne = JSON.parse(tekst).dane || {}; } catch (e) { zdalne = {}; }
+      }
+    }
+    syncUstaw("sync:brudne", null); // zmiany zrobione w trakcie wysyłania ustawią znacznik ponownie
+    const czasy = syncCzasy(), lokalne = {};
+    try { for (let k = 0; k < localStorage.length; k++) { const n = localStorage.key(k); if (SYNC_KLUCZE.test(n)) lokalne[n] = localStorage.getItem(n); } } catch (e) {}
+    const wynik = {}; let pobrano = false, wyslac = false;
+    for (const k of new Set([...Object.keys(zdalne), ...Object.keys(lokalne), ...Object.keys(czasy)])) {
+      if (!SYNC_KLUCZE.test(k)) continue;
+      const maL = k in lokalne || k in czasy, l = { v: k in lokalne ? lokalne[k] : null, t: czasy[k] || 0 };
+      const r = zdalne[k] && typeof zdalne[k] === "object" ? zdalne[k] : null;
+      // nowsza zmiana wygrywa; przy równych czasach (stary postęp bez dat) rozstrzyga porównanie wartości — tak samo na obu urządzeniach
+      const zdalnaLepsza = r && (!maL || r.t > l.t || (r.t === l.t && String(r.v ?? "") > String(l.v ?? "")));
+      if (zdalnaLepsza) {
+        wynik[k] = r;
+        if (r.v !== l.v) { syncUstaw(k, typeof r.v === "string" ? r.v : null); pobrano = true; }
+        czasy[k] = r.t;
+      } else {
+        wynik[k] = l;
+        if (!r || r.t !== l.t || r.v !== l.v) wyslac = true;
+      }
+    }
+    syncUstaw("sync:zmiany", JSON.stringify(czasy));
+    const pliki = { files: { [SYNC_PLIK]: { content: JSON.stringify({ wersja: 1, dane: wynik }) } } };
+    if (!id) id = (await syncApi("POST", "/gists", { description: "Matematyka — postęp nauki (synchronizacja)", public: false, ...pliki })).id;
+    else if (wyslac) await syncApi("PATCH", "/gists/" + id, pliki);
+    syncUstaw("sync:gist", id); syncUstaw("sync:czas", String(Date.now()));
+    return pobrano;
+  })().catch(e => { syncUstaw("sync:brudne", "1"); throw e; }).finally(() => { _syncTrwa = null; });
+  return _syncTrwa;
+}
+function syncWylacz() { ["sync:token", "sync:gist", "sync:zmiany", "sync:brudne", "sync:czas"].forEach(k => syncUstaw(k, null)); }
+// Przy otwarciu strony: pobierz zmiany (na stronach tematów najwyżej raz na minutę, chyba że są niewysłane zmiany)
+document.addEventListener("DOMContentLoaded", () => {
+  if (!syncToken()) return;
+  const glowna = !!document.getElementById("kontynuuj");
+  if (!glowna && !pamiec.get("sync:brudne") && Date.now() - (+pamiec.get("sync:czas") || 0) < 60000) return;
+  synchronizuj().then(pobrano => {
+    if (!pobrano) return;
+    if (glowna) { location.reload(); return; }
+    const p = document.createElement("div");
+    p.className = "sync-info";
+    p.innerHTML = `${T("Pobrano postęp z drugiego urządzenia.", "Progress from your other device has been downloaded.")} <button type="button">${T("Odśwież", "Reload")}</button>`;
+    p.querySelector("button").onclick = () => location.reload();
+    document.body.appendChild(p);
+  }).catch(() => {});
+});
+document.addEventListener("visibilitychange", () => { if (document.hidden && syncToken() && pamiec.get("sync:brudne")) synchronizuj().catch(() => {}); });
+
+function panelSync(el) {
+  const wl = !!syncToken(), czas = +pamiec.get("sync:czas") || 0;
+  const kiedy = czas ? new Date(czas).toLocaleString(EN ? "en-GB" : "pl-PL", { day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+  el.innerHTML = wl
+    ? `<summary>${T("Synchronizacja: włączona", "Sync: on")} ✓</summary>
+       <p>${T("Ostatnia synchronizacja", "Last sync")}: <b>${kiedy}</b>. ${T("Opanowane tematy, powtórki i wyniki zadań są zapisywane w Twoim prywatnym giście na GitHubie (bez brudnopisów).", "Mastered topics, reviews and task results are stored in your private GitHub gist (scratchpads excluded).")}</p>
+       <div class="postep-plik"><button type="button" data-s="teraz">${T("Synchronizuj teraz", "Sync now")}</button>
+       <button type="button" data-s="wylacz">${T("Wyłącz na tym urządzeniu", "Turn off on this device")}</button><span class="info"></span></div>`
+    : `<summary>${T("Synchronizacja między urządzeniami", "Sync between devices")}</summary>
+       <p>${T(`Postęp (bez brudnopisów) może się sam przenosić między telefonem a komputerem przez Twój prywatny gist na GitHubie.
+         <a href="https://github.com/settings/tokens/new?scopes=gist&description=Matematyka%20-%20synchronizacja" target="_blank" rel="noopener">Utwórz token</a>
+         z jednym uprawnieniem <b>gist</b> i wklej go tutaj — na każdym swoim urządzeniu ten sam. Token zostaje tylko w tej przeglądarce; nie wklejaj go na cudzych urządzeniach.`,
+         `Your progress (without scratchpads) can travel between your phone and computer through your private GitHub gist.
+         <a href="https://github.com/settings/tokens/new?scopes=gist&description=Matematyka%20-%20sync" target="_blank" rel="noopener">Create a token</a>
+         with the single <b>gist</b> permission and paste it here — the same one on each of your devices. The token stays in this browser only; do not paste it on devices that are not yours.`)}</p>
+       <div class="postep-plik"><input type="password" autocomplete="off" placeholder="${T("token GitHuba (ghp_…)", "GitHub token (ghp_…)")}" aria-label="Token">
+       <button type="button" data-s="wlacz">${T("Włącz", "Turn on")}</button><span class="info"></span></div>`;
+  const info = el.querySelector(".info"), przycisk = s => el.querySelector(`[data-s=${s}]`);
+  const uruchom = (poSukcesie) => {
+    info.textContent = T("Synchronizuję…", "Syncing…");
+    synchronizuj().then(pobrano => { if (pobrano || poSukcesie) location.reload(); else panelSync(el); })
+      .catch(e => { if (poSukcesie) syncWylacz(); info.textContent = T("Nie udało się: ", "Failed: ") + (e.message || e); });
+  };
+  if (wl) {
+    przycisk("teraz").onclick = () => uruchom(false);
+    przycisk("wylacz").onclick = () => { syncWylacz(); panelSync(el); };
+  } else przycisk("wlacz").onclick = () => {
+    const t = el.querySelector("input").value.trim();
+    if (!t) return;
+    syncUstaw("sync:token", t);
+    uruchom(true);
+  };
+}
 
 // --- Eksport / import postępu (plik JSON) ---
 const KLUCZE_POSTEPU = /^(opanowane:|powtorka:|zadanie:|brudnopis:|ostatni$)/;
@@ -169,7 +299,9 @@ function panelKontynuuj(el, prefiks) {
   el.innerHTML = naglowek + lista + poprawa + `<div class="siatka">${link(ostatni, T("ostatnio otwarty", "last opened"))}${link(nastepny, ostatni ? T("proponowany następny", "suggested next") : T("zacznij tutaj", "start here"))}${link(powtorki[0], T("powtórka", "review"))}</div>
     <div class="postep-plik"><button type="button" data-akcja="eksport">${T("Zapisz postęp do pliku", "Save progress to a file")}</button>
       <label><input type="file" accept=".json,application/json" hidden>${T("Wczytaj postęp z pliku", "Load progress from a file")}</label>
-      <span class="info"></span></div>`;
+      <span class="info"></span></div>
+    <details class="sync"></details>`;
+  panelSync(el.querySelector("details.sync"));
   const info = el.querySelector(".info");
   el.querySelector("[data-akcja=eksport]").onclick = eksportujPostep;
   el.querySelector("input[type=file]").onchange = e => {
