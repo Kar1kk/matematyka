@@ -52,7 +52,7 @@ header.top .in {
   display: flex; align-items: center; gap: 12px;
 }
 header.top .logo { font-weight: 700; color: var(--text); }
-header.top nav { color: var(--muted); font-size: 15px; flex: 1; }
+header.top nav { color: var(--muted); font-size: 15px; flex: 1; min-width: 0; overflow-wrap: break-word; hyphens: auto; }
 header.top nav a { color: var(--muted); }
 #motyw { background: none; border: 1px solid var(--border); color: var(--text);
   border-radius: 8px; padding: 4px 10px; cursor: pointer; }
@@ -283,3 +283,25 @@ header.top nav:empty { flex: 1; }
 .brudnopis-info { flex-basis: 100%; font-size: 12px; color: #c0392b; }
 .brudnopis-info:empty { display: none; }
 #jezyk { text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .03em; line-height: 1.4; }
+
+/* Podpowiedzi krok po kroku */
+.podpowiedz-przycisk { font: inherit; font-size: 13px; cursor: pointer; background: none; color: var(--warn);
+  border: 1px dashed var(--warn); border-radius: 6px; padding: 4px 10px; margin: 6px 0 6px 6px; }
+.podpowiedz-przycisk:disabled { cursor: default; opacity: .7; border-style: solid; }
+.podpowiedz { background: var(--warn-soft); border-radius: 8px; padding: 6px 12px; margin: 4px 0 8px; font-size: 15px; }
+.podpowiedz .krok { padding: 3px 0; }
+.podpowiedz .krok + .krok { border-top: 1px dashed color-mix(in srgb, var(--warn) 35%, transparent); }
+
+/* Zakrywanie wzorów (sprawdź pamięć) */
+.zakryj-pasek { font-size: 13px; color: var(--muted); margin: 10px 0 14px; }
+.zakryj-pasek button { font: inherit; font-size: 13px; cursor: pointer; background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; margin-right: 6px; }
+main:not(.zakryte) .zakryj-pasek span { display: none; }
+main.zakryte :is(.wzor, .twierdzenie, .definicja) .katex-display:not(.odkryty) { filter: blur(9px); opacity: .55;
+  cursor: pointer; user-select: none; transition: filter .15s; }
+
+/* Opanowane: wynik zadań; wylosowane zadanie w powtórce */
+.opanowane-uwaga { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+li.zadanie.wylosowane { outline: 2px solid #d9822b; outline-offset: 2px; }
+li.zadanie { scroll-margin-top: 80px; }
+@media (max-width: 600px) { header.top nav { font-size: 13px; line-height: 1.3; } }

@@ -154,7 +154,19 @@ function panelKontynuuj(el, prefiks) {
   const lista = powtorki.length ? `<div class="powtorki"><b>${T("Do powtórki dziś", "To review today")} (${powtorki.length}):</b>
       ${powtorki.map(t => `<a href="${prefiks}${t.plik}">${t.nazwa}</a>`).join(" · ")}</div>`
     : opan ? `<div class="powtorki">${T("Na dziś nic do powtórki ✓", "Nothing to review today ✓")}</div>` : "";
-  el.innerHTML = naglowek + lista + `<div class="siatka">${link(ostatni, T("ostatnio otwarty", "last opened"))}${link(nastepny, ostatni ? T("proponowany następny", "suggested next") : T("zacznij tutaj", "start here"))}${link(powtorki[0], T("powtórka", "review"))}</div>
+  // Zadania do poprawy: ocenione jako „źle” (także rozwiązane dopiero po obejrzeniu rozwiązania)
+  const zle = {};
+  try {
+    for (let k = 0; k < localStorage.length; k++) {
+      const m = /^zadanie:(.+):(\d+)$/.exec(localStorage.key(k));
+      if (m && localStorage.getItem(m[0]) === "0") (zle[m[1]] = zle[m[1]] || []).push(+m[2]);
+    }
+  } catch (e) {}
+  const tematy = wszystkieTematy();
+  const zlePliki = Object.keys(zle).filter(p => tematy.some(t => t.plik === p));
+  const poprawa = zlePliki.length ? `<div class="powtorki"><b>${T("Zadania do poprawy", "Tasks to redo")} (${zlePliki.reduce((n, p) => n + zle[p].length, 0)}):</b>
+      ${zlePliki.map(p => `<a href="${prefiks}${p}#zadanie-${Math.min(...zle[p]) + 1}">${tematy.find(t => t.plik === p).nazwa}</a> (${zle[p].length})`).join(" · ")}</div>` : "";
+  el.innerHTML = naglowek + lista + poprawa + `<div class="siatka">${link(ostatni, T("ostatnio otwarty", "last opened"))}${link(nastepny, ostatni ? T("proponowany następny", "suggested next") : T("zacznij tutaj", "start here"))}${link(powtorki[0], T("powtórka", "review"))}</div>
     <div class="postep-plik"><button type="button" data-akcja="eksport">${T("Zapisz postęp do pliku", "Save progress to a file")}</button>
       <label><input type="file" accept=".json,application/json" hidden>${T("Wczytaj postęp z pliku", "Load progress from a file")}</label>
       <span class="info"></span></div>`;
@@ -214,7 +226,14 @@ document.addEventListener("DOMContentLoaded", () => {
     op.className = "opanowane";
     const odswiezOp = () => {
       const ok = pamiec.get(klucz);
-      op.innerHTML = `<button>${ok ? T("✓ Opanowane — cofnij", "✓ Mastered — undo") : T("Oznacz jako opanowane", "Mark as mastered")}</button>`;
+      const ile = document.querySelectorAll("li.zadanie").length;
+      let dobre = 0;
+      for (let k = 0; k < ile; k++) if (pamiec.get(`zadanie:${plik}:${k}`) === "1") dobre++;
+      const uwaga = ok || !ile ? "" : dobre === ile
+        ? T("Wszystkie zadania zaliczone ✓ — możesz oznaczyć temat.", "All tasks done ✓ — you can mark the topic.")
+        : T(`Zaliczone zadania: ${dobre}/${ile}. „Opanowane” znaczy: robisz je sam, bez podglądania rozwiązań.`,
+            `Tasks done: ${dobre}/${ile}. “Mastered” means you can solve them yourself, without peeking.`);
+      op.innerHTML = `<button>${ok ? T("✓ Opanowane — cofnij", "✓ Mastered — undo") : T("Oznacz jako opanowane", "Mark as mastered")}</button>${uwaga ? `<p class="opanowane-uwaga">${uwaga}</p>` : ""}`;
       op.classList.toggle("tak", !!ok);
       op.querySelector("button").onclick = () => {
         if (ok) { pamiec.set(klucz, null); pamiec.set("powtorka:" + plik, null); }
@@ -224,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     odswiezOp();
     main.appendChild(op);
+    document.addEventListener("wynik-zadan", odswiezOp);
 
     sprawdzSie(plik);
 
@@ -232,10 +252,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const st = stanPowtorki(plik), etap = st ? st.etap : 0;
       const pw = document.createElement("div");
       pw.className = "powtorka-temat";
-      pw.innerHTML = T(`<b>Powtórka</b> (${etap + 1}. z kolei). Przejrzyj wzory i zrób jedno zadanie maturalne bez podglądania.`,
-        `<b>Review</b> (no. ${etap + 1}). Go over the formulas and solve one exam-level task without peeking.`)
+      pw.innerHTML = T(`<b>Powtórka</b> (${etap + 1}. z kolei). Najpierw przypomnij sobie wzory (zakryj je), potem rozwiąż wylosowane zadanie bez podglądania. Dopiero wtedy oceń.`,
+        `<b>Review</b> (no. ${etap + 1}). First recall the formulas (hide them), then solve a randomly drawn task without peeking. Only then rate yourself.`)
+        + `<div><button data-p="wzory">${T("1. Zakryj wzory", "1. Hide formulas")}</button> <button data-p="los">${T("2. Wylosuj zadanie", "2. Draw a task")}</button></div>`
         + `<div><button data-o="tak">${T("Pamiętam ✓", "I remember ✓")}</button> <button data-o="nie">${T("Nie pamiętam", "I don't remember")}</button></div>`;
-      pw.querySelectorAll("button").forEach(b => b.onclick = () => {
+      pw.querySelector("[data-p=wzory]").onclick = () => { zakryjWzory(true); (main.querySelector("h2[id]") || main).scrollIntoView({ behavior: "smooth" }); };
+      pw.querySelector("[data-p=los]").onclick = () => losujZadanie(plik);
+      pw.querySelectorAll("button[data-o]").forEach(b => b.onclick = () => {
         const tak = b.dataset.o === "tak";
         ustawPowtorke(plik, tak ? etap + 1 : 0);
         const st2 = stanPowtorki(plik);
@@ -267,6 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // rozwinięcie <details> zmienia szerokości — sprawdź ponownie
   document.querySelectorAll("details").forEach(d => d.addEventListener("toggle", () => dopasujSzerokie(d)));
   dopasujSzerokie();
+  przyciskZakrywania();
 
   // --- Listy na stronach głównych ---
   const poziomy = document.getElementById("lista-poziomow");
@@ -364,6 +388,7 @@ function sprawdzSie(plik) {
     wynikEl.textContent = oc.length ? `${dobre}/${zadania.length}` : "";
     wynikEl.title = oc.length ? T(`Dobrze: ${dobre}, źle: ${oc.length - dobre}, nierozwiązane: ${zadania.length - oc.length}`, `Right: ${dobre}, wrong: ${oc.length - dobre}, unsolved: ${zadania.length - oc.length}`) : "";
     wynikEl.classList.toggle("komplet", dobre === zadania.length);
+    document.dispatchEvent(new Event("wynik-zadan"));
   };
 
   zadania.forEach((li, i) => {
@@ -382,6 +407,12 @@ function sprawdzSie(plik) {
     };
     const stary = pamiec.get(klucz(i));
     if (stary !== null) li.classList.add(stary === "1" ? "dobrze" : "zle");
+    if (!li.id) li.id = "zadanie-" + (i + 1);
+    // Rozwiązanie otwarte przed poprawną odpowiedzią: wpisany potem wynik nie liczy się jako samodzielny
+    let podejrzane = false;
+    rozw.addEventListener("toggle", () => { if (rozw.open && pamiec.get(klucz(i)) !== "1") podejrzane = true; });
+    const PO_PODGLADZIE = T("✓ Dobrze, ale po obejrzeniu rozwiązania — nie zaliczam. Zadanie trafia do poprawy: wróć do niego za kilka dni.",
+      "✓ Correct, but after viewing the solution — not counted. The task goes to your redo list: come back in a few days.");
 
     const kluczOdp = li.dataset.odp;
     if (kluczOdp) {
@@ -400,8 +431,8 @@ function sprawdzSie(plik) {
         if (typeof ocenOdpowiedz !== "function") { kom.textContent = T("Moduł oceny jeszcze się wczytuje…", "The checker is still loading…"); return; }
         const r = ocenOdpowiedz(inp.value, kluczOdp);
         if (r.blad) { kom.textContent = r.komunikat + T(" (zob. „jak wpisać?”)", " (see “how to type?”)"); return; }
-        kom.textContent = r.ok ? T("✓ Dobrze!", "✓ Correct!") : T("✗ Nie. ", "✗ No. ") + (r.komunikat || T("Spróbuj jeszcze raz albo otwórz rozwiązanie.", "Try again or open the solution."));
-        ocena(r.ok);
+        kom.textContent = r.ok ? (podejrzane ? PO_PODGLADZIE : T("✓ Dobrze!", "✓ Correct!")) : T("✗ Nie. ", "✗ No. ") + (r.komunikat || T("Spróbuj jeszcze raz, weź podpowiedź albo otwórz rozwiązanie.", "Try again, take a hint or open the solution."));
+        ocena(r.ok && !podejrzane);
       };
       pasek.querySelector("button").onclick = sprawdz;
       inp.addEventListener("keydown", e => { if (e.key === "Enter") sprawdz(); });
@@ -414,8 +445,8 @@ function sprawdzSie(plik) {
         const odp = liczbaZOdpowiedzi(inp.value);
         if (isNaN(odp)) { kom.textContent = T("Wpisz liczbę, np. 2,5 albo 5/2.", "Enter a number, e.g. 2.5 or 5/2."); return; }
         const ok = zgodne(odp, wynik);
-        kom.textContent = ok ? T("✓ Dobrze!", "✓ Correct!") : T("✗ Nie — spróbuj jeszcze raz albo otwórz rozwiązanie.", "✗ No — try again or open the solution.");
-        ocena(ok);
+        kom.textContent = ok ? (podejrzane ? PO_PODGLADZIE : T("✓ Dobrze!", "✓ Correct!")) : T("✗ Nie — spróbuj jeszcze raz, weź podpowiedź albo otwórz rozwiązanie.", "✗ No — try again, take a hint or open the solution.");
+        ocena(ok && !podejrzane);
       };
       pasek.querySelector("button").onclick = sprawdz;
       inp.addEventListener("keydown", e => { if (e.key === "Enter") sprawdz(); });
@@ -429,7 +460,10 @@ function sprawdzSie(plik) {
       rozw.after(pasek);
     }
     brudnopis(li, rozw, `brudnopis:${plik}:${i}`);
+    podpowiedzi(li, rozw);
   });
+  // Odnośnik do konkretnego zadania (#zadanie-3): przewiń po wyrenderowaniu wzorów
+  if (/^#zadanie-\d+$/.test(location.hash)) setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView(), 0);
 
   // Zerowanie wyników tematu
   if (naglowek) {
@@ -443,6 +477,97 @@ function sprawdzSie(plik) {
     naglowek.after(zeruj);
   }
   odswiezWynik();
+}
+
+// --- Podpowiedzi: rozwiązanie odsłaniane krok po kroku (zamiast „wszystko albo nic”) ---
+// Dzieli surowy HTML rozwiązania na kroki: zdania i <br> na najwyższym poziomie, poza wzorami i znacznikami.
+function krokiRozwiazania(html) {
+  const kroki = [], SKROT = /(^|[\s(])(np|tzn|tj|ok|wsk|por|itd|itp|e\.g|i\.e|cf|etc|resp)\.$/i;
+  let b = "", gl = 0, mat = false, i = 0;
+  const utnij = () => { if (b.replace(/<[^>]+>/g, "").trim()) kroki.push(b.trim()); b = ""; };
+  while (i < html.length) {
+    const c = html[i];
+    if (c === "$") { const dl = html[i + 1] === "$" ? 2 : 1; mat = !mat; b += html.substr(i, dl); i += dl; continue; }
+    if (!mat && c === "<") {
+      const k = html.indexOf(">", i); if (k < 0) { b += html.slice(i); break; }
+      const tag = html.slice(i, k + 1); i = k + 1;
+      if (/^<br\b/i.test(tag)) { if (gl === 0) utnij(); else b += tag; continue; }
+      b += tag;
+      if (tag[1] === "/") { gl--; if (gl === 0 && /^<\/(p|ol|ul|div|table)>/i.test(tag)) utnij(); }
+      else if (!/\/>$/.test(tag) && !/^<(img|hr|input|!)/i.test(tag)) gl++;
+      continue;
+    }
+    b += c; i++;
+    if (!mat && gl === 0 && c === "." && /^\s+(?=[A-ZĄĆĘŁŃÓŚŹŻ$<])/.test(html.slice(i, i + 40)) && !SKROT.test(b.slice(-12)) && !/\d\.$/.test(b)) utnij();
+  }
+  utnij();
+  return kroki;
+}
+function podpowiedzi(li, rozw) {
+  const tresc = rozw.querySelector(":scope > div");
+  if (!tresc) return;
+  // krok z końcowym wynikiem (ostatnie <b>) i wszystko po nim zostaje w rozwiązaniu
+  const wszystkie = krokiRozwiazania(tresc.innerHTML);
+  const zWynikiem = wszystkie.map(k => /<b\b/i.test(k)).lastIndexOf(true);
+  const kroki = wszystkie.slice(0, zWynikiem >= 0 ? zWynikiem : -1);
+  if (!kroki.length) return;
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.className = "podpowiedz-przycisk";
+  const box = document.createElement("div");
+  box.className = "podpowiedz"; box.hidden = true;
+  box.innerHTML = kroki.map(k => `<div class="krok" hidden>${k}</div>`).join("");
+  let n = 0;
+  const opis = () => {
+    btn.textContent = n === 0 ? T("💡 Podpowiedź", "💡 Hint")
+      : n < kroki.length ? T(`💡 Kolejny krok (${n}/${kroki.length})`, `💡 Next step (${n}/${kroki.length})`)
+      : T("💡 Dalej już tylko wynik — dokończ sam", "💡 Only the result is left — finish it yourself");
+    btn.disabled = n >= kroki.length;
+  };
+  btn.onclick = () => { box.hidden = false; box.children[n++].hidden = false; dopasujSzerokie(box); opis(); };
+  li.insertBefore(btn, rozw); li.insertBefore(box, rozw);
+  opis();
+}
+
+// --- Zakrywanie wzorów: przypomnij sobie wzór, zanim go odsłonisz (kliknięcie odsłania) ---
+const WZORY_SEL = ":is(.wzor, .twierdzenie, .definicja) .katex-display";
+function zakryjWzory(wl) {
+  const main = document.querySelector("main"), btn = document.getElementById("zakryj-wzory");
+  if (!main) return;
+  main.classList.toggle("zakryte", wl);
+  if (!wl) main.querySelectorAll(".odkryty").forEach(e => e.classList.remove("odkryty"));
+  if (btn) btn.textContent = wl ? T("Pokaż wszystkie wzory", "Show all formulas") : T("Sprawdź pamięć: zakryj wzory", "Test your memory: hide formulas");
+}
+function przyciskZakrywania() {
+  const main = document.querySelector("main");
+  if (!main || !main.querySelector(WZORY_SEL)) return;
+  const p = document.createElement("p");
+  p.className = "zakryj-pasek";
+  p.innerHTML = `<button type="button" id="zakryj-wzory"></button> <span>${T("Z nazwy wzoru odtwórz go w głowie lub na kartce, potem kliknij, żeby porównać.", "From its name, recall the formula in your head or on paper, then click to compare.")}</span>`;
+  (main.querySelector(".spis") || main.querySelector("p.lead") || main.querySelector("h1")).after(p);
+  p.querySelector("button").onclick = () => zakryjWzory(!main.classList.contains("zakryte"));
+  main.addEventListener("click", e => {
+    if (!main.classList.contains("zakryte")) return;
+    const w = e.target.closest(".katex-display");
+    if (w && w.matches(WZORY_SEL)) w.classList.add("odkryty");
+  });
+  zakryjWzory(false);
+}
+
+// --- Powtórka: losuje zadanie (najpierw wcześniej nieudane, potem z trudniejszej połowy) i zeruje jego wynik ---
+function losujZadanie(plik) {
+  const zadania = [...document.querySelectorAll("li.zadanie")];
+  if (!zadania.length) return;
+  const zle = zadania.filter((_, i) => pamiec.get(`zadanie:${plik}:${i}`) === "0");
+  const pula = zle.length ? zle : zadania.slice(Math.floor(zadania.length / 2));
+  const li = pula[Math.floor(Math.random() * pula.length)], i = zadania.indexOf(li);
+  pamiec.set(`zadanie:${plik}:${i}`, null);
+  li.classList.remove("dobrze", "zle");
+  const rozw = li.querySelector("details.rozwin"); if (rozw) rozw.open = false;
+  const kom = li.querySelector(".komunikat"); if (kom) kom.textContent = "";
+  const inp = li.querySelector(".sprawdz input"); if (inp) inp.value = "";
+  document.dispatchEvent(new Event("wynik-zadan"));
+  zadania.forEach(z => z.classList.toggle("wylosowane", z === li));
+  li.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 // --- Brudnopis przy zadaniu: kartka w kratkę do pisania palcem, rysikiem lub myszą ---
