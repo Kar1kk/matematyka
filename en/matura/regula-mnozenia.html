@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The multiplication and addition rules</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>The multiplication and addition rules</h1>
+  <p class="lead">Every count is building an object: <b>in stages</b> (then you multiply) or <b>in disjoint cases</b> (then you add). The whole art is choosing a good order of stages and a good split into cases.</p>
+  <p class="wymagania">XI.1, XI.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="reguly">1. Two rules and the complement</h2>
+  <div class="wzor">
+    <div class="tytul">Multiplication rule</div>
+    $$N=k_1\cdot k_2\cdot\ldots\cdot k_m$$
+    <dl><dt>$k_i$</dt><dd>the number of possibilities in the $i$-th stage. It may depend on <i>how many</i> elements have already been chosen (e.g. $9,8,7$), but not on <i>which</i> ones were chosen</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Addition rule (disjoint cases)</div>
+    $$|A\cup B|=|A|+|B|,\quad A\cap B=\emptyset$$
+    <dl><dt>$A, B$</dt><dd>cases that do not overlap (e.g. “last digit $0$” and “last digit $\ne 0$”)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Subtracting the complement</div>
+    $$|A|=|\Omega|-|A'|$$
+    <dl><dt>$A'$</dt><dd>objects that do <b>not</b> satisfy the condition. Use it with “at least one”</dd></dl>
+  </div>
+  <div class="uwaga">If the number of options in some stage <b>depends</b> on an earlier choice (e.g. whether $0$ stands at the end), the multiplication rule does not work directly. Split into cases and add.</div>
+  <p>The multiplication and addition rules are not on the formula sheet (they are common sense). Ready-made formulas (permutations, variations, combinations) are on the sheet: see <a href="permutacje-kombinacje.html">Permutations, variations, combinations</a> and the summary in <a href="prawdopodobienstwo-klasyczne.html#zliczanie">classical probability</a>.</p>
+
+  <h2 id="drzewo">2. Interactive: the choice tree</h2>
+  <div class="demo">
+    <p class="opis">Set the number of stages and the number of options in each stage, then click ▶. Each path from the root to a leaf is one outcome. At each level the number of nodes is multiplied by the number of options.</p>
+    <canvas id="dr-plot"></canvas>
+    <div class="sterowanie">
+      <label>stages <input type="range" id="dr-m" min="1" max="4" step="1" value="3"> <span id="dr-m-v"></span></label>
+      <label>options <input type="range" id="dr-k" min="1" max="4" step="1" value="3"> <span id="dr-k-v"></span></label>
+      <button id="dr-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="dr-wynik"></div>
+  </div>
+
+  <h2 id="pudelka">3. The “boxes” method</h2>
+  <ol>
+    <li>Draw as many boxes as the object has places (e.g. 4 digits).</li>
+    <li><b>Start with the boxes that have conditions</b> (first digit $\ne 0$, last digit odd…), and only then fill in the rest.</li>
+    <li>When the number of options depends on an earlier choice, <b>split into cases</b> and add the results.</li>
+    <li>“At least one…”: count all and subtract those that do not satisfy the condition.</li>
+  </ol>
+  <div class="demo">
+    <p class="opis">Choose a condition and click ▶. The small numbers above the boxes show the order of filling. For even numbers with distinct digits you must split into two cases, because a zero at the end changes the number of options for the first digit.</p>
+    <canvas id="pu-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>four-digit numbers <select id="pu-typ">
+        <option value="0">any</option>
+        <option value="1">with distinct digits</option>
+        <option value="2" selected>odd, distinct digits</option>
+        <option value="3">even, distinct digits</option>
+        <option value="4">palindromes</option>
+      </select></label>
+      <button id="pu-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="pu-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example (from the core curriculum)</h2>
+  <div class="przyklad">
+    <p>How many four-digit <b>odd</b> numbers are there that contain exactly one digit $1$ and exactly one digit $2$?</p>
+    <ol>
+      <li>The last digit is odd. Whether it is $1$ changes the rest, so there are <b>two cases</b>. The “other digits” are $0,3,4,\ldots,9$: there are $8$ of them.</li>
+      <li><b>Last digit $=1$.</b> The $2$ stands in one of the first 3 places.
+        $2$ at the start: two free places, $8\cdot 8=64$.
+        $2$ in the 2nd or 3rd place: the first digit is $\ne 0$, so $7$ options, the free place $8$: $2\cdot 7\cdot 8=112$. Total $176$.</li>
+      <li><b>Last digit $\in\{3,5,7,9\}$</b> ($4$ options). In the first 3 places stand $1$, $2$ and one “other” digit. Arranging $1$ and $2$: $3\cdot 2=6$ ways. In 2 of them the “other” digit stands at the start (then $7$ options), in 4 it does not (then $8$): $2\cdot 7+4\cdot 8=46$. Total $4\cdot 46=184$.</li>
+      <li>The cases are disjoint, so you add: $176+184$.</li>
+    </ol>
+    <p class="odp">$360$ numbers</p>
+    <p>The result was verified by computer (going through all $9000$ four-digit numbers). The second example from the curriculum (even numbers with one $0$ and one $1$) is in task 6.</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="10000; 5040" data-odp-opis="all; with distinct digits"><span class="poziom">easy</span>
+      <div class="tresc">How many four-digit PIN codes are there (digits $0$–$9$, $0$ may be first)? How many of them have all digits distinct?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Each place: $10$ options, so $10^4$. Distinct digits: $10\cdot 9\cdot 8\cdot 7$. <b>$10000$ codes, including $5040$ with distinct digits.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3168"><span class="poziom">easy</span>
+      <div class="tresc">How many four-digit numbers contain <b>at least one</b> digit $7$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        In total: $9\cdot 10^3=9000$. Without a seven: the first digit from $8$ (not $0$ or $7$), the others from $9$: $8\cdot 9^3=5832$. <b>$9000-5832=3168$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="136"><span class="poziom">medium</span>
+      <div class="tresc">How many three-digit numbers with distinct digits are divisible by $5$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The last digit is $0$ or $5$, and this changes the options for the first digit.
+        Last $0$: $9\cdot 8=72$. Last $5$: first digit $\ne 0, 5$, so $8$, middle digit $8$: $64$. <b>$72+64=136$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="459"><span class="poziom">medium</span>
+      <div class="tresc">How many four-digit numbers contain exactly two digits $5$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Case 1: a five at the start. The second five in one of 3 places, two free places with $9$ options each: $3\cdot 81=243$.
+        Case 2: both fives in places 2–4 ($3$ ways), first digit $\ne 0, 5$ ($8$), free place $9$: $3\cdot 72=216$.
+        <b>$243+216=459$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="738"><span class="poziom">medium</span>
+      <div class="tresc">How many positive integers less than $1000$ have all digits distinct?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Addition rule over the number of digits. One-digit: $9$. Two-digit: $9\cdot 9=81$. Three-digit: $9\cdot 9\cdot 8=648$. <b>$9+81+648=738$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="320"><span class="poziom">exam-level</span>
+      <div class="tresc">(Example from the curriculum) How many four-digit <b>even</b> numbers contain exactly one digit $0$ and exactly one digit $1$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The “other” digits: $2,\ldots,9$, there are $8$ of them. The last digit is even: cases “$0$ at the end” and “$2,4,6,8$ at the end”.<br>
+        <b>Last digit $0$.</b> The $1$ in one of the first 3 places, two free places with $8$ options each (the zero is already used, so the start is safe): $3\cdot 64=192$.<br>
+        <b>Last digit $\in\{2,4,6,8\}$</b> ($4$). The zero cannot be first: it stands in the 2nd or 3rd place ($2$), the $1$ in one of the two remaining ($2$), the last free place: $8$. Total $4\cdot 2\cdot 2\cdot 8=128$.<br>
+        <b>$192+128=320$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Conditions first:</b> fill the boxes with restrictions (first digit $\ne 0$, parity, divisibility) at the beginning. The reverse order gives “it depends” and mistakes.</li>
+    <li><b>Zero in the first place</b> is the most common trap in $n$-digit numbers.</li>
+    <li><b>Cases must be disjoint and exhaustive.</b> Write them out explicitly (“last $0$” / “last $2,4,6,8$”), because that is what earns points.</li>
+    <li><b>“At least one”</b> is almost always faster by the complement: all minus none.</li>
+    <li>Write a short description of each factor (e.g. “$8$: a digit $\ne 0$ and different from the last”). A bare product without comment may be graded $0$ points.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // pomocnik: rysowanie w pikselach na Wykresie z zakresem [0,1]x[0,1]
+  const px = g => ({
+    line(x1, y1, x2, y2, nr, przer) { g.odcinek(g.wx(x1), g.wy(y1), g.wx(x2), g.wy(y2), nr, !!przer); },
+    dot(x, y, nr, r) { g.punkt(g.wx(x), g.wy(y), "", nr, { r }); },
+    rect(x, y, w, h, nr, op) { g.prostokat(g.wx(x), g.wy(y + h), w / g.w, h / g.h, nr, op); },
+    txt(x, y, s, nr, op) { g.tekst(g.wx(x), g.wy(y), s, nr, op); }
+  });
+  const zakres = { xmin: 0, xmax: 1, ymin: 0, ymax: 1, siatka: false, osie: false };
+
+  // --- 2. Drzewo wyborów ---
+  const w1 = new Wykres($("dr-plot"), zakres);
+  let stop1 = null;
+  function drzewo(t) {
+    const m = +$("dr-m").value, k = +$("dr-k").value;
+    $("dr-m-v").textContent = m; $("dr-k-v").textContent = k;
+    const L = t * m;
+    w1.rysuj(g => {
+      const P = px(g), lewy = 14, prawy = 64, gora = 26, dol = 30;
+      const szer = g.w - lewy - prawy;
+      const yPoz = j => gora + j * (g.h - gora - dol) / m;
+      const xWez = (j, i) => lewy + (i + 0.5) * szer / Math.pow(k, j);
+      const rWez = j => Math.max(1.5, Math.min(6, szer / Math.pow(k, j) / 3));
+      for (let j = 1; j <= m; j++) {
+        const p = Math.max(0, Math.min(1, L - (j - 1)));
+        if (p <= 0) break;
+        const ile = Math.pow(k, j);
+        for (let i = 0; i < ile; i++) {
+          const ox = xWez(j - 1, Math.floor(i / k)), oy = yPoz(j - 1), cx = xWez(j, i), cy = yPoz(j);
+          P.line(ox, oy, ox + (cx - ox) * p, oy + (cy - oy) * p, j === m ? 2 : 1, false);
+        }
+      }
+      P.dot(xWez(0, 0), yPoz(0), 4, 6);
+      for (let j = 1; j <= m; j++) {
+        if (L < j) break;
+        const ile = Math.pow(k, j);
+        for (let i = 0; i < ile; i++) P.dot(xWez(j, i), yPoz(j), j === m ? 2 : 1, rWez(j));
+        P.txt(g.w - 6, yPoz(j), String(ile), j === m ? 2 : "--text", { wyrownanie: "right", dy: 5, gruby: true, rozmiar: 15 });
+        P.txt(g.w - 6, yPoz(j) - 16, "stage " + j, "--muted", { wyrownanie: "right", dy: 5, rozmiar: 11 });
+      }
+    });
+    const gotowe = Math.min(m, Math.floor(L + 1e-9));
+    const czynniki = Array(Math.max(gotowe, 1)).fill(k).join("\\cdot ");
+    tex("dr-wynik", gotowe === 0 ? `\\text{stages: ${m}, options: ${k}. How many leaves?}`
+      : `\\text{leaves after stage ${gotowe}: }${czynniki}=${Math.pow(k, gotowe)}`);
+  }
+  $("dr-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(900 * +$("dr-m").value, drzewo); });
+  ["dr-m", "dr-k"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); drzewo(1); }));
+  drzewo(1);
+
+  // --- 3. Pudełka cyfr ---
+  // pole: [liczba opcji, uzasadnienie, kolejność wypełniania]
+  const ZESTAWY = [
+    [{ nazwa: "", pola: [[9, "≠ 0", 1], [10, "any", 2], [10, "any", 3], [10, "any", 4]] }],
+    [{ nazwa: "", pola: [[9, "≠ 0", 1], [9, "≠ 1st digit", 2], [8, "≠ 2 used", 3], [7, "≠ 3 used", 4]] }],
+    [{ nazwa: "", pola: [[8, "≠ 0, ≠ last", 2], [8, "≠ 2 used", 3], [7, "≠ 3 used", 4], [5, "1, 3, 5, 7, 9", 1]] }],
+    [{ nazwa: "case I: 0 at the end", pola: [[9, "≠ 0", 2], [8, "≠ used", 3], [7, "≠ used", 4], [1, "0", 1]] },
+     { nazwa: "case II: 2, 4, 6 or 8 at the end", pola: [[8, "≠ 0, ≠ last", 2], [8, "≠ used", 3], [7, "≠ used", 4], [4, "2, 4, 6, 8", 1]] }],
+    [{ nazwa: "", pola: [[9, "≠ 0", 1], [10, "any", 2], [1, "= 2nd digit", 3], [1, "= 1st digit", 4]] }]
+  ];
+  const iloczyn = r => r.pola.reduce((s, p) => s * p[0], 1);
+  const w2 = new Wykres($("pu-plot"), zakres);
+  let stop2 = null;
+  function pudelka(t) {
+    const zest = ZESTAWY[+$("pu-typ").value];
+    const krok = t * 4; // ile pól w każdym wierszu już wypełnionych (wg kolejności)
+    w2.rysuj(g => {
+      const P = px(g), wys = g.h / zest.length;
+      const a = Math.min(64, (g.w - 40) / 5.2), odst = a * 0.4, start = (g.w - (4 * a + 3 * odst)) / 2;
+      zest.forEach((r, ri) => {
+        const y0 = ri * wys + (zest.length > 1 ? 30 : wys / 2 - a / 2 - 10);
+        if (r.nazwa) P.txt(g.w / 2, y0 - 12, r.nazwa, "--muted", { wyrownanie: "center", rozmiar: 12 });
+        r.pola.forEach(([v, why, kol], i) => {
+          const x = start + i * (a + odst), widac = krok >= kol - 0.5;
+          P.rect(x, y0, a, a, widac ? (kol === 1 ? 2 : 1) : "--muted", { wypelnij: widac ? 0.15 : 0.04 });
+          P.txt(x + a / 2, y0 - 4, kol + ".", "--muted", { wyrownanie: "center", rozmiar: 11 });
+          if (widac) {
+            P.txt(x + a / 2, y0 + a / 2, String(v), kol === 1 ? 2 : 1, { wyrownanie: "center", dy: 8, rozmiar: 24, gruby: true });
+            P.txt(x + a / 2, y0 + a + 14, why, "--muted", { wyrownanie: "center", rozmiar: 10 });
+          }
+          if (i < 3) P.txt(x + a + odst / 2, y0 + a / 2, "·", "--text", { wyrownanie: "center", dy: 6, rozmiar: 20 });
+        });
+        if (krok >= 3.5) P.txt(g.w / 2, y0 + a + 34, "= " + iloczyn(r), 3, { wyrownanie: "center", rozmiar: 15, gruby: true });
+      });
+    });
+    let opis = "";
+    if (krok >= 3.5) {
+      const czesci = zest.map(r => r.pola.map(p => p[0]).join("\\cdot "));
+      const suma = zest.reduce((s, r) => s + iloczyn(r), 0);
+      opis = zest.length > 1
+        ? `${czesci.join("+")}=${zest.map(iloczyn).join("+")}=${suma}`
+        : `${czesci[0]}=${suma}`;
+    } else opis = "\\text{filling the boxes in the order 1, 2, 3, 4}";
+    tex("pu-wynik", opis);
+  }
+  $("pu-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(3200, pudelka); });
+  $("pu-typ").addEventListener("change", () => { if (stop2) stop2(); pudelka(1); });
+  pudelka(1);
+});
+</script>
+</body>
+</html>

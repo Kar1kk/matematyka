@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optimization problems with derivatives</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Optimization problems with derivatives</h1>
+  <p class="lead">The same as optimization with a parabola, except that the objective function is cubic, rational or contains a root. There is no vertex, so you look for the maximum where the derivative changes sign.</p>
+  <p class="wymagania">XIII.R.6, XIII.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. The exam template</h2>
+  <p>The typical solution (and marking) scheme has <b>three stages</b>: the model (function and domain), the derivative with the extremum, the answer. The stages are usually marked separately, so it is worth writing each of them down even if you do not reach the final result.</p>
+  <div class="przyklad">
+    <ol>
+      <li><b>Model</b>: a variable $x$, the other quantities in terms of $x$, the objective function $f(x)$ and its <b>domain</b> (from geometric conditions, e.g. $x&gt;0$, $12-2x&gt;0$).</li>
+      <li><b>Derivative</b>: $f'(x)$ simplified to a product form and its zeros <b>within the domain</b>.</li>
+      <li><b>Justification and answer</b>: the sign of $f'$ (increasing, then decreasing), so at $x_0$ there is the <b>largest</b> value. Compute it and answer the question in the text.</li>
+    </ol>
+  </div>
+  <div class="uwaga">“$f'(x_0)=0$, so a maximum” is not enough: the justification is missing. Write: “$f'&gt;0$ on $(0,x_0)$ and $f'&lt;0$ on $(x_0,b)$, so $f$ increases on $(0,x_0]$ and decreases on $[x_0,b)$, hence $f(x_0)$ is the largest value”.</div>
+
+  <h2 id="pudelko">2. Interactive: a box from cardboard</h2>
+  <div class="demo">
+    <p class="opis">From a $12\times12$ square you cut squares of side $x$ out of the corners and fold up the sides. Small $x$: a flat box. Large $x$: tall but narrow. Somewhere in between the volume is the largest.</p>
+    <canvas id="pu-plot" style="height:240px"></canvas>
+    <canvas id="pu-wyk" style="height:220px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>$x$ <input type="range" id="pu-x" min="0.1" max="5.9" step="0.05" value="0.8"> <span id="pu-x-v"></span></label>
+      <button id="pu-start">▶ Find the maximum</button>
+    </div>
+    <div class="wynik" id="pu-wynik"></div>
+  </div>
+
+  <h2 id="puszka">3. Interactive: a can of fixed volume</h2>
+  <div class="demo">
+    <p class="opis">The can has volume $V=16\pi$. Change the radius $r$: the height adjusts by itself ($h=\frac{16}{r^2}$). The can that uses the least sheet metal has height equal to its diameter.</p>
+    <canvas id="pc-plot" style="height:240px"></canvas>
+    <canvas id="pc-wyk" style="height:200px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="pc-r" min="1.2" max="4" step="0.05" value="3.2"> <span id="pc-r-v"></span></label>
+    </div>
+    <div class="wynik" id="pc-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>From a square piece of cardboard of side $12$ we cut squares of side $x$ out of the corners and fold an open-topped box. For which $x$ is the volume the largest?</p>
+    <ol>
+      <li><b>Model</b>: the base is $(12-2x)\times(12-2x)$, the height is $x$. $V(x)=x(12-2x)^2$, domain $x\in(0,6)$.</li>
+      <li><b>Derivative</b> (product and composition):
+        $$V'(x)=(12-2x)^2-4x(12-2x)$$
+        $$=(12-2x)(12-6x)$$
+        In the domain $12-2x&gt;0$, so $V'(x)=0\iff x=2$.</li>
+      <li><b>Sign</b>: $12-6x&gt;0$ for $x&lt;2$, $&lt;0$ for $x&gt;2$. $V$ increases on $(0,2]$, decreases on $[2,6)$, so $V(2)$ is the largest: $V(2)=2\cdot8^2=128$.</li>
+    </ol>
+    <p class="odp">$x=2$, the largest volume $128$.</p>
+  </div>
+  <div class="przyklad">
+    <p>A trapezoid is inscribed in a semicircle of radius $2$ so that its longer base is the diameter. Find the largest area of the trapezoid.</p>
+    <ol>
+      <li><b>Model</b>: the shorter base is $2x$ (endpoints on the circle), the height is $\sqrt{4-x^2}$, domain $x\in(0,2)$.
+        $$P(x)=(2+x)\sqrt{4-x^2}$$</li>
+      <li><b>Derivative</b>:
+        $$P'(x)=\sqrt{4-x^2}-\frac{x(2+x)}{\sqrt{4-x^2}}$$
+        $$=\frac{-2(x+2)(x-1)}{\sqrt{4-x^2}}$$
+        In the domain $P'(x)=0\iff x=1$.</li>
+      <li><b>Sign</b>: $P'&gt;0$ on $(0,1)$, $P'&lt;0$ on $(1,2)$, so the maximum is at $x=1$: $P(1)=3\sqrt3$.</li>
+    </ol>
+    <p class="odp">The largest area is $3\sqrt3$ (the shorter base is $2$, equal to the radius: half of a regular hexagon).</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="4; 8; 256" data-odp-opis="x; y; product"><span class="poziom">medium</span>
+      <div class="tresc">Positive numbers $x$, $y$ satisfy $x+y=12$. For which $x$, $y$ is the product $x\cdot y^2$ the largest?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(y)=(12-y)y^2=12y^2-y^3$, $y\in(0,12)$. $f'(y)=24y-3y^2=3y(8-y)$: $+$ on $(0,8)$, $-$ on $(8,12)$.
+        <b>$y=8$, $x=4$, product $256$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="32" data-odp-opis="largest area"><span class="poziom">medium</span>
+      <div class="tresc">A rectangle has two vertices on the $Ox$ axis and two on the parabola $y=12-x^2$ (above the axis). Find the largest area of the rectangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The vertices are $(\pm x,0)$, $(\pm x,12-x^2)$, $x\in(0,2\sqrt3)$. $P(x)=2x(12-x^2)=24x-2x^3$, $P'(x)=24-6x^2=6(2-x)(2+x)$: $+$ on $(0,2)$, $-$ afterwards.
+        <b>$P(2)=32$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; 2; 48" data-odp-opis="base side a; height h; area (dm)"><span class="poziom">medium</span>
+      <div class="tresc">An open box (no lid) with a square base has volume $32\ \text{dm}^3$. What dimensions minimize the amount of material used?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The base is $a$, the height is $h=\frac{32}{a^2}$. $P(a)=a^2+4ah=a^2+\frac{128}{a}$, $a&gt;0$.
+        $$P'(a)=2a-\frac{128}{a^2}=\frac{2(a^3-64)}{a^2}$$
+        $-$ on $(0,4)$, $+$ on $(4,\infty)$: the minimum is at $a=4$.
+        <b>$a=4$ dm, $h=2$ dm, area $48\ \text{dm}^2$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4pi" data-odp-opis="V_max"><span class="poziom">exam-level</span>
+      <div class="tresc">A cylinder is inscribed in a sphere of radius $\sqrt3$. Find the largest volume of the cylinder.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Height $h$, radius $r$: $r^2+\left(\frac h2\right)^2=3$, $h\in(0,2\sqrt3)$.
+        $$V(h)=\pi\left(3-\tfrac{h^2}{4}\right)h$$
+        $V'(h)=\pi\left(3-\frac{3h^2}{4}\right)=\frac{3\pi}{4}(2-h)(2+h)$: $+$ on $(0,2)$, $-$ on $(2,2\sqrt3)$. For $h=2$: $r^2=2$.
+        <b>$V_{\max}=4\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 18pi" data-odp-opis="h; V_max"><span class="poziom">exam-level</span>
+      <div class="tresc">The slant height of a cone is $3\sqrt3$. What height gives the largest volume? Find that volume.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $r^2=27-h^2$, $h\in(0,3\sqrt3)$.
+        $$V(h)=\tfrac{\pi}{3}(27h-h^3)$$
+        $V'(h)=\frac\pi3(27-3h^2)=\pi(3-h)(3+h)$: $+$ on $(0,3)$, $-$ afterwards. $h=3$, $r^2=18$.
+        <b>$h=3$, $V_{\max}=18\pi$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The domain</b> is a separate point. It comes from the geometry: positive lengths, a point on a circle, $h&lt;2R$, etc.</li>
+    <li>Reduce the derivative to a <b>product</b>. Then you can read the sign at once (a denominator such as $a^2$ or $\sqrt{\ }$ is positive).</li>
+    <li>Justifying a maximum/minimum: <b>monotonicity</b> on the whole domain, not just $f'=0$.</li>
+    <li>Answer the <b>question</b>: if they ask for the dimensions, give all the dimensions; if for the volume, compute it.</li>
+    <li>With a root you may optimize the square (e.g. $d^2$ instead of $d$), but you must say so and justify it (the root is increasing).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Pudełko z kartonu ---
+  const A = 12, V = x => x * (A - 2 * x) ** 2, dV = x => (A - 2 * x) * (A - 6 * x);
+  const pu = new Wykres($("pu-plot"), { xmin: -0.5, xmax: 30, ymin: -0.5, ymax: 12.5, rowneSkale: true, siatka: false, osie: false });
+  const pw = new Wykres($("pu-wyk"), { xmin: -0.3, xmax: 6.3, ymin: -12, ymax: 145, krokY: 20 });
+  let stop = null;
+  function rysujPu() {
+    const x = +$("pu-x").value, w = A - 2 * x, v = V(x);
+    $("pu-x-v").textContent = ladna(x);
+    pu.rysuj(g => {
+      // rozkład: kwadrat z wyciętymi rogami
+      g.wielokat([[x, 0], [A - x, 0], [A - x, x], [A, x], [A, A - x], [A - x, A - x], [A - x, A], [x, A],
+        [x, A - x], [0, A - x], [0, x], [x, x]], 1, { wypelnij: 0.15 });
+      [[0, 0], [A - x, 0], [0, A - x], [A - x, A - x]].forEach(([a, b]) => g.prostokat(a, b, x, x, 2, { wypelnij: 0.25, przerywana: true }));
+      g.prostokat(x, x, w, w, 3, { wypelnij: 0.12, przerywana: true });
+      g.tekst(x / 2, 0, "x", 2, { dy: 14, wyrownanie: "center", gruby: true });
+      g.tekst(A / 2, A / 2, "base", 3, { wyrownanie: "center" });
+      // pudełko w rzucie ukośnym
+      const X = 15, gl = 0.45 * w, dx = gl * 0.7, dy = gl * 0.7;
+      const przod = [[X, 0], [X + w, 0], [X + w, x], [X, x]];
+      const tyl = przod.map(([a, b]) => [a + dx, b + dy]);
+      g.wielokat(tyl, 1, { wypelnij: 0.08, przerywana: true });
+      g.wielokat([[X, x], [X + w, x], [X + w + dx, x + dy], [X + dx, x + dy]], 3, { wypelnij: 0.12 });
+      g.wielokat([[X + w, 0], [X + w + dx, dy], [X + w + dx, x + dy], [X + w, x]], 1, { wypelnij: 0.3 });
+      g.wielokat(przod, 1, { wypelnij: 0.35 });
+      g.tekst(X + w / 2, 0, ladna(w), 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(X, x / 2, ladna(x), 2, { dx: -6, wyrownanie: "right", gruby: true });
+      g.tekst(X + w / 2, Math.max(x + dy, 4) + 1.2, "V = " + ladna(v), 2, { wyrownanie: "center", gruby: true, rozmiar: 15 });
+    });
+    pw.rysuj(g => {
+      g.funkcja(V, 1, { od: 0, do: 6 });
+      g.punkt(2, 128, "max", 3, { pusty: true });
+      g.odcinek(x, 0, x, v, 2);
+      const k = dV(x), d = 0.35;
+      g.odcinek(x - d, v - k * d, x + d, v + k * d, 2, false);
+      g.punkt(x, v, "", 2);
+      g.tekst(6, 135, "V(x)", 1, { wyrownanie: "right" });
+    });
+    const zn = Math.abs(x - 2) < 0.03 ? "=0\\ (\\max)" : dV(x) > 0 ? ">0\\ \\nearrow" : "<0\\ \\searrow";
+    tex("pu-wynik", `V(${ladnaTex(x)})=${ladnaTex(x)}\\cdot${ladnaTex(w)}^2=${ladnaTex(v)},\\quad V'(x)=(12-2x)(12-6x)${zn}`);
+  }
+  $("pu-x").addEventListener("input", () => { if (stop) stop(); rysujPu(); });
+  $("pu-start").addEventListener("click", () => {
+    if (stop) stop();
+    // przemiatanie dziedziny, potem powrót do x = 2
+    stop = animuj(4000, t => { $("pu-x").value = t < 0.7 ? 0.1 + 5.8 * t / 0.7 : 5.9 - 3.9 * (t - 0.7) / 0.3; rysujPu(); });
+  });
+  rysujPu();
+
+  // --- 3. Puszka V = 16π ---
+  const H = r => 16 / (r * r), Pc = r => 2 * Math.PI * r * r + 32 * Math.PI / r;
+  const pc = new Wykres($("pc-plot"), { xmin: -5, xmax: 5, ymin: -1.5, ymax: 12.5, rowneSkale: true, siatka: false, osie: false });
+  const pcw = new Wykres($("pc-wyk"), { xmin: 0.9, xmax: 4.2, ymin: 0, ymax: 135, krokY: 20 });
+  function rysujPc() {
+    const r = +$("pc-r").value, h = H(r), p = Pc(r), ok = Math.abs(r - 2) < 0.03;
+    $("pc-r-v").textContent = ladna(r);
+    const elipsa = (g, y, nr, op) => g.parametryczna(t => r * Math.cos(t), t => y + 0.3 * r * Math.sin(t), 0, 2 * Math.PI, nr, op);
+    pc.rysuj(g => {
+      g.wielokat([[-r, 0], [r, 0], [r, h], [-r, h]], ok ? 3 : 1, { wypelnij: 0.2, bezObrysu: true });
+      g.odcinek(-r, 0, -r, h, ok ? 3 : 1, false); g.odcinek(r, 0, r, h, ok ? 3 : 1, false);
+      g.parametryczna(t => r * Math.cos(t), t => 0.3 * r * Math.sin(t), Math.PI, 2 * Math.PI, ok ? 3 : 1);
+      g.parametryczna(t => r * Math.cos(t), t => 0.3 * r * Math.sin(t), 0, Math.PI, ok ? 3 : 1, { przerywana: true });
+      elipsa(g, h, ok ? 3 : 1, {});
+      g.odcinek(0, h, r, h, 2, false);
+      g.tekst(r / 2, h, "r", 2, { dy: -6, wyrownanie: "center", gruby: true });
+      g.tekst(r, h / 2, "h = " + ladna(h), 1, { dx: 6 });
+      if (ok) g.tekst(0, h / 2, "h = 2r", 3, { wyrownanie: "center", gruby: true, rozmiar: 15 });
+    });
+    pcw.rysuj(g => {
+      g.funkcja(Pc, 1, { od: 1.2, do: 4 });
+      g.punkt(2, 24 * Math.PI, "min", 3, { pusty: true });
+      g.odcinek(r, 0, r, p, 2);
+      g.punkt(r, p, "", 2);
+      g.tekst(4, 125, "P(r)", 1, { wyrownanie: "right" });
+    });
+    tex("pc-wynik", `h=\\frac{16}{r^2}=${ladnaTex(h)},\\ \\ P(r)=2\\pi r^2+\\frac{32\\pi}{r}=${ladnaTex(p / Math.PI)}\\pi` +
+      `\\qquad P'(r)=\\frac{4\\pi(r^3-8)}{r^2}\\Rightarrow r=2,\\ P_{\\min}=24\\pi`);
+  }
+  $("pc-r").addEventListener("input", rysujPc);
+  rysujPc();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Definition and interpretation of the derivative</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Definition and interpretation of the derivative</h1>
+  <p class="lead">The derivative is the slope of the graph at a single point. You take a secant through two nearby points and bring them closer together: the secant rotates and in the limit becomes the tangent.</p>
+  <p class="wymagania">XIII.R.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. The difference quotient and the derivative</h2>
+  <div class="wzor">
+    <div class="tytul">Difference quotient (slope of the secant)</div>
+    $$\frac{\Delta y}{\Delta x}=\frac{f(x_0+h)-f(x_0)}{h}$$
+    <dl><dt>$h$</dt><dd>increment of the argument, $h\neq0$ (may be negative)</dd>
+        <dt>$\Delta y$</dt><dd>increment of the function value</dd></dl>
+  </div>
+  <div class="definicja"><b>Definition</b>
+    The derivative of a function $f$ at a point $x_0$ is the limit of the difference quotient (if it exists and is finite):
+    $$f'(x_0)=\lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}$$
+    Then $f$ is <b>differentiable</b> at $x_0$. The function $x\mapsto f'(x)$ is the <b>derivative</b> $f'$.
+  </div>
+  <div class="dwie">
+    <div class="wzor"><div class="tytul">Geometric interpretation</div>
+      $$f'(x_0)=\tan\alpha$$
+      <dl><dt>$\alpha$</dt><dd>the angle between the tangent at $(x_0,f(x_0))$ and the positive $x$-axis</dd></dl></div>
+    <div class="wzor"><div class="tytul">Physical interpretation</div>
+      $$v(t)=s'(t),\quad a(t)=v'(t)$$
+      <dl><dt>$s(t)$</dt><dd>position (distance) at time $t$</dd>
+          <dt>$v(t)$</dt><dd>instantaneous velocity</dd></dl></div>
+  </div>
+
+  <h2 id="sieczna">2. Interactive: secant → tangent</h2>
+  <div class="demo">
+    <p class="opis">Drag point $P$ along the graph and change $h$ with the slider (negative values too). “▶ $h\to0$” brings $Q$ closer to $P$: watch the slope of the secant approach $f'(x_0)$. For $|x|$ at zero the secants from the left and from the right have different slopes.</p>
+    <canvas id="pd-plot" style="height:340px"></canvas>
+    <div class="sterowanie">
+      <label>function <select id="pd-f">
+        <option value="0">x²</option>
+        <option value="1">x³ − 3x</option>
+        <option value="2">1/x</option>
+        <option value="3">|x|</option>
+      </select></label>
+      <label>$h$ <input type="range" id="pd-h" min="-2" max="2" step="0.01" value="1.5"> <span id="pd-h-v"></span></label>
+      <label><input type="checkbox" id="pd-st"> show the tangent</label>
+      <button id="pd-start">▶ h → 0</button>
+    </div>
+    <div class="wynik" id="pd-wynik"></div>
+  </div>
+
+  <h2 id="fizyka">3. Interactive: instantaneous velocity</h2>
+  <div class="demo">
+    <p class="opis">A ball thrown upwards: height $s(t)=20t-5t^2$ (m). The slope of the tangent to the graph of $s(t)$ is the velocity. At the top the tangent is horizontal: $v=0$.</p>
+    <canvas id="pf-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$t$ <input type="range" id="pf-t" min="0" max="4" step="0.01" value="0.5"> <span id="pf-t-v"></span></label>
+      <button id="pf-start">▶ Throw</button>
+    </div>
+    <div class="wynik" id="pf-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>From the definition, find the derivative of $f(x)=x^2$ at a point $x_0$.</p>
+    <ol>
+      <li>$f(x_0+h)-f(x_0)=x_0^2+2x_0h+h^2-x_0^2=2x_0h+h^2$.</li>
+      <li>The quotient: $\frac{2x_0h+h^2}{h}=2x_0+h$ (you can see this in the demo: the slope of the secant).</li>
+      <li>$\lim\limits_{h\to0}(2x_0+h)=2x_0$.</li>
+    </ol>
+    <p class="odp">$f'(x_0)=2x_0$, e.g. $f'(1)=2$.</p>
+  </div>
+  <div class="przyklad">
+    <p>From the definition, find the derivative of $f(x)=\frac1x$ at a point $x_0\neq0$.</p>
+    <ol>
+      <li>The difference: $\frac{1}{x_0+h}-\frac1{x_0}=\frac{x_0-(x_0+h)}{x_0(x_0+h)}=\frac{-h}{x_0(x_0+h)}$.</li>
+      <li>The quotient: $\frac{-1}{x_0(x_0+h)}$.</li>
+      <li>The limit as $h\to0$: $\frac{-1}{x_0\cdot x_0}$.</li>
+    </ol>
+    <p class="odp">$f'(x_0)=-\frac{1}{x_0^2}$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="5"><span class="poziom">easy</span>
+      <div class="tresc">From the definition, find $f'(1)$ for $f(x)=x^2+3x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(1+h)-f(1)=(1+h)^2+3(1+h)-4=h^2+5h$. The quotient $h+5\to5$. <b>$f'(1)=5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12"><span class="poziom">medium</span>
+      <div class="tresc">From the definition, find $f'(2)$ for $f(x)=x^3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(2+h)^3-8=12h+6h^2+h^3$. The quotient $12+6h+h^2\to12$. <b>$f'(2)=12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/4"><span class="poziom">medium</span>
+      <div class="tresc">From the definition, find $f'(4)$ for $f(x)=\sqrt x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Multiply by the conjugate:
+        $$\frac{\sqrt{4+h}-2}{h}=\frac{1}{\sqrt{4+h}+2}$$
+        $\to\frac1{2+2}$. <b>$f'(4)=\frac14$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="17; 13" data-odp-opis="average velocity; instantaneous (m/s)"><span class="poziom">medium</span>
+      <div class="tresc">A body moves along a straight line, $s(t)=2t^2+t$ (metres, seconds). Find the average velocity on the interval $[3,5]$ and the instantaneous velocity at $t=3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Average: $\frac{s(5)-s(3)}{5-3}=\frac{55-21}{2}=17$. Instantaneous: the quotient $\frac{s(3+h)-s(3)}{h}=13+2h\to13$.
+        <b>$17$ m/s and $13$ m/s.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Justify from the definition that $f(x)=|x|$ has no derivative at $x_0=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The quotient: $\frac{|h|-0}{h}$. For $h&gt;0$ it equals $1$, for $h&lt;0$ it equals $-1$. The one-sided limits satisfy $1\neq-1$.
+        <b>The limit of the quotient does not exist, so $f'(0)$ does not exist</b> (the graph has a “corner”).
+      </div></details></li>
+    <li class="zadanie" data-odp="2; -1" data-odp-opis="a; b"><span class="poziom">exam-level</span>
+      <div class="tresc">$f(x)=x^2$ for $x\le1$, $f(x)=ax+b$ for $x&gt;1$. Choose $a$, $b$ so that $f$ is differentiable at $1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Differentiable ⇒ continuous: $a+b=1$. The quotient from the left $\to2$ (the derivative of $x^2$), from the right: $\frac{a(1+h)+b-1}{h}=a$ (when $a+b=1$). So $a=2$, $b=-1$.
+        <b>$a=2$, $b=-1$</b> (the line $y=2x-1$ is tangent to $y=x^2$ at $1$).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>“From the definition” means: <b>difference quotient, simplification, limit</b>. A formula from the tables is not enough.</li>
+    <li>Cancel $h$ only after factoring it out. Do not substitute $h=0$ before cancelling (you get $\frac00$).</li>
+    <li>A differentiable function is continuous. The converse is false: $|x|$ is continuous at $0$, yet has no derivative.</li>
+    <li>Physical interpretation: velocity $=s'$, acceleration $=v'$. Average velocity is a difference quotient, instantaneous velocity is the limit.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Sieczna → styczna ---
+  const FUN = [
+    { f: x => x * x, d: x => 2 * x, x0: 1, zakres: [-2.8, 2.8], dt: "2x_0" },
+    { f: x => x ** 3 - 3 * x, d: x => 3 * x * x - 3, x0: 1.5, zakres: [-2.5, 2.5], dt: "3x_0^2-3" },
+    { f: x => 1 / x, d: x => -1 / (x * x), x0: 1, zakres: [0.35, 3.5], dt: "-\\frac{1}{x_0^2}" },
+    { f: x => Math.abs(x), d: x => Math.sign(x), x0: 0, zakres: [-3, 3], dt: "", snap: true },
+  ];
+  const pd = new Wykres($("pd-plot"), { xmin: -3.5, xmax: 4, ymin: -3, ymax: 7 });
+  let F = FUN[0], stop = null;
+  const P = pd.przeciagaj([{ x: 1, y: 1, ogranicz: p => { let x = Math.min(Math.max(p.x, F.zakres[0]), F.zakres[1]); if (F.snap && Math.abs(x) < 0.12) x = 0; return { x, y: F.f(x) }; } }],
+    () => { if (stop) stop(); rysujPd(); });
+  function hAkt() {
+    let h = +$("pd-h").value;
+    if (Math.abs(h) < 0.001) h = h < 0 ? -0.001 : 0.001;
+    if (F === FUN[2]) h = Math.max(h, 0.2 - P[0].x);   // dla 1/x nie przechodź przez 0
+    return h;
+  }
+  function rysujPd() {
+    const f = F.f, x0 = P[0].x, y0 = f(x0), h = hAkt(), x1 = x0 + h, y1 = f(x1);
+    P[0].y = y0;
+    const q = (y1 - y0) / h, ostrze = F === FUN[3] && Math.abs(x0) < 1e-9;
+    const st = $("pd-st").checked || Math.abs(h) < 0.02;
+    $("pd-h-v").textContent = ladna(h, 3);
+    pd.rysuj(g => {
+      if (F === FUN[2]) { g.funkcja(f, 1, { od: 0.01 }); g.funkcja(f, 1, { do: -0.01 }); } else g.funkcja(f, 1);
+      if (st && !ostrze) g.prosta(x0, y0, x0 + 1, y0 + F.d(x0), 3, true);
+      g.prosta(x0, y0, x1, y1, 2);
+      g.odcinek(x0, y0, x1, y0, 4, true);
+      g.odcinek(x1, y0, x1, y1, 4, true);
+      g.tekst((x0 + x1) / 2, y0, "h", 4, { dy: y1 > y0 ? 16 : -6, wyrownanie: "center", gruby: true });
+      g.tekst(x1, (y0 + y1) / 2, "Δy", 4, { dx: h > 0 ? 6 : -24, gruby: true });
+      g.punkt(x1, y1, "Q", 2);
+      g.punkt(x0, y0, "P", 1);
+    });
+    const pochodna = ostrze ? "\\text{does not exist (from the left }-1\\text{, from the right }1)" : `${F.dt ? F.dt + "=" : ""}${ladnaTex(F.d(x0), 3)}`;
+    tex("pd-wynik", `x_0=${ladnaTex(x0)}:\\ \\ \\frac{f(x_0+h)-f(x_0)}{h}=${ladnaTex(q, 3)}\\qquad f'(x_0)=${pochodna}`);
+  }
+  $("pd-f").addEventListener("change", () => {
+    if (stop) stop();
+    F = FUN[+$("pd-f").value]; P[0].x = F.x0; $("pd-h").value = 1.5; rysujPd();
+  });
+  $("pd-h").addEventListener("input", () => { if (stop) stop(); rysujPd(); });
+  $("pd-st").addEventListener("change", rysujPd);
+  $("pd-start").addEventListener("click", () => {
+    if (stop) stop();
+    const h0 = Math.abs(+$("pd-h").value) < 0.05 ? 1.5 : +$("pd-h").value;
+    // h maleje wykładniczo: szybko na początku, wolno blisko zera
+    stop = animuj(3500, t => { $("pd-h").value = h0 * Math.pow(0.001 / Math.abs(h0), t); rysujPd(); });
+  });
+  rysujPd();
+
+  // --- 3. Prędkość chwilowa ---
+  const s = t => 20 * t - 5 * t * t, v = t => 20 - 10 * t;
+  const pf = new Wykres($("pf-plot"), { xmin: -0.4, xmax: 5.4, ymin: -3, ymax: 24, krokY: 5 });
+  let stopF = null;
+  function rysujPf() {
+    const t = +$("pf-t").value, y = s(t), vt = v(t);
+    $("pf-t-v").textContent = ladna(t) + " s";
+    pf.rysuj(g => {
+      g.funkcja(s, 1, { od: 0, do: 4 });
+      g.funkcja(s, 1, { od: 0, do: t, grubosc: 4 });
+      g.prosta(t, y, t + 1, y + vt, 2);
+      g.odcinek(t, y, 4.9, y, 3);
+      g.punkt(t, y, "", 2);
+      g.odcinek(4.9, 0, 4.9, 20, 3);                      // tor piłki (pionowo)
+      g.punkt(4.9, y, "", 4, { r: 9 });
+      if (Math.abs(vt) > 0.2) g.strzalka(4.9, y, 4.9, y + vt / 3, 2);
+      g.tekst(4.9, 20, "ball", 4, { dy: -8, wyrownanie: "center" });
+      g.tekst(3.9, 22, "s(t)", 1, { wyrownanie: "right" });
+    });
+    tex("pf-wynik", `s(${ladnaTex(t)})=${ladnaTex(y)}\\text{ m},\\quad v=s'(t)=20-10t=${ladnaTex(vt)}\\ \\tfrac{\\text{m}}{\\text{s}}`);
+  }
+  $("pf-t").addEventListener("input", () => { if (stopF) stopF(); rysujPf(); });
+  $("pf-start").addEventListener("click", () => {
+    if (stopF) stopF();
+    // lot w czasie rzeczywistym (bez wygładzania): 4 s
+    const p = petla(sek => { const t = Math.min(4, sek); $("pf-t").value = t; rysujPf(); if (t >= 4) p.stop(); });
+    stopF = () => p.stop();
+  });
+  rysujPf();
+});
+</script>
+</body>
+</html>

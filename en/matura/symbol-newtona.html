@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binomial coefficients in counting problems</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Binomial coefficients in counting problems</h1>
+  <p class="lead">$\binom nk$ is the number of ways to choose $k$ elements from $n$. You can prove almost every property of it without calculations: <b>count the same thing in two ways</b>.</p>
+  <p class="wymagania">XI.R.2, II.R.4, II.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wlasnosci">1. Definition and properties</h2>
+  <div class="wzor">
+    <div class="tytul">Binomial coefficient <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\binom nk=\frac{n!}{k!\,(n-k)!}$$
+    $$\binom nk=\frac{n(n-1)\cdot\ldots\cdot(n-k+1)}{k!}$$
+    <dl><dt>$0\le k\le n$</dt><dd>integers. The second formula <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> is handy for computing: $k$ factors in the numerator and in the denominator</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>property <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></th><th>why, in plain words</th></tr>
+    <tr><td>$\binom n0=\binom nn=1$</td><td>empty set / whole set: one way</td></tr>
+    <tr><td>$\binom n1=\binom n{n-1}=n$</td><td>choosing one = choosing one to leave out</td></tr>
+    <tr><td>$\binom nk=\binom n{n-k}$</td><td>choosing $k$ to take = choosing $n-k$ to leave behind</td></tr>
+    <tr><td>$\binom nk+\binom n{k+1}=\binom{n+1}{k+1}$</td><td>Pascal's triangle (proof below)</td></tr>
+  </table>
+  <p>Also useful <span class="cke nie" title="This formula is not on the CKE sheet – you have to remember or derive it">not on CKE sheet</span>: $\binom n0+\binom n1+\ldots+\binom nn=2^n$, because it is the number of all subsets (task 6).</p>
+
+  <h2 id="pascal">2. Pascal's triangle</h2>
+  <div class="twierdzenie"><b>Theorem</b> If $0&lt;k&lt;n$, then
+    $$\binom nk=\binom{n-1}{k-1}+\binom{n-1}{k}$$
+    This is the same equality as in the tables, only with $n-1$ in place of $n$ and $k-1$ in place of $k$.
+    <details class="rozwin"><summary>Combinatorial proof (required on the exam)</summary><div>
+      <p>Take a set of $n$ people and single out one person, call them $X$. Let us count the $k$-person subsets in two ways.</p>
+      <ul>
+        <li>There are $\binom nk$ of them in total (definition).</li>
+        <li>Split them into two <b>disjoint</b> groups:
+          <br>those containing $X$: the other $k-1$ people are chosen from $n-1$, giving $\binom{n-1}{k-1}$ ways;
+          <br>those not containing $X$: all $k$ people are chosen from $n-1$, giving $\binom{n-1}{k}$ ways.</li>
+      </ul>
+      <p>Every subset is in exactly one group, so by the addition rule $\binom nk=\binom{n-1}{k-1}+\binom{n-1}{k}$. The assumption $0&lt;k&lt;n$ guarantees that both symbols on the right make sense ($0\le k-1$ and $k\le n-1$). $\blacksquare$</p>
+    </div></details>
+  </div>
+  <p>This is why in Pascal's triangle every number is the sum of the two numbers above it, and the edges are all ones. Row $n$ is $\binom n0,\binom n1,\ldots,\binom nn$.</p>
+  <div class="demo">
+    <p class="opis">Click a number in the triangle (or use the sliders). Red = $\binom nk$, blue = the two numbers above it. The ▶ button builds the triangle row by row.</p>
+    <canvas id="pa-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="pa-n" min="2" max="10" step="1" value="6"> <span id="pa-n-v"></span></label>
+      <label>$k$ <input type="range" id="pa-k" min="1" max="5" step="1" value="2"> <span id="pa-k-v"></span></label>
+      <button id="pa-start">▶ Build</button>
+    </div>
+    <div class="wynik" id="pa-wynik"></div>
+  </div>
+
+  <h2 id="dwumian">3. The binomial theorem</h2>
+  <div class="twierdzenie"><b>Binomial theorem</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> For $n\ge 1$ and any $a,b\in\R$:
+    $$(a+b)^n=\sum_{k=0}^{n}\binom nk a^{n-k}b^k$$
+    that is, $\binom n0a^n+\binom n1a^{n-1}b+\ldots+\binom nn b^n$. Substituting $-b$ for $b$ gives the formula for $(a-b)^n$ <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>: alternating signs, $(-1)^k\binom nk a^{n-k}b^k$.
+    <details class="rozwin"><summary>Combinatorial proof (required on the exam)</summary><div>
+      <p>$(a+b)^n=\underbrace{(a+b)(a+b)\cdots(a+b)}_{n\text{ brackets}}$. When expanding, from each bracket you take $a$ or $b$ and multiply the chosen letters. Each of the $2^n$ such choices gives one term.</p>
+      <p>The term $a^{n-k}b^k$ arises exactly when $b$ was taken from $k$ brackets and $a$ from the remaining $n-k$. Such a choice is determined by the <b>set</b> of $k$ brackets from which you take $b$, and there are $\binom nk$ such sets. After collecting like terms, the coefficient of $a^{n-k}b^k$ is therefore $\binom nk$. $\blacksquare$</p>
+      <p>(You can also use induction: $(a+b)^{n+1}=(a+b)^n(a+b)$, and the coefficients add up as in Pascal's triangle.)</p>
+    </div></details>
+  </div>
+  <div class="demo">
+    <p class="opis">Set $n$ and $k$, then click ▶. The animation goes through all choices of $k$ brackets from which you take $b$ (red). Each choice gives one $a^{n-k}b^k$, so the bar grows up to $\binom nk$. The bars are row $n$ of Pascal's triangle.</p>
+    <canvas id="dw-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="dw-n" min="1" max="6" step="1" value="4"> <span id="dw-n-v"></span></label>
+      <label>$k$ <input type="range" id="dw-k" min="0" max="4" step="1" value="2"> <span id="dw-k-v"></span></label>
+      <button id="dw-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="dw-wynik"></div>
+  </div>
+
+  <h2 id="podzielnosc">4. Formulas for $a^n\pm b^n$ and divisibility</h2>
+  <div class="twierdzenie"><b>Theorem</b> For $n\ge 1$ <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>:
+    $$\begin{aligned}a^n-b^n=(a-b)(&amp;a^{n-1}+a^{n-2}b\\&amp;+\ldots+b^{n-1})\end{aligned}$$
+    For <b>odd</b> $n$ (not in the tables, except $n=3$):
+    $$\begin{aligned}a^n+b^n=(a+b)(&amp;a^{n-1}-a^{n-2}b\\&amp;+\ldots+b^{n-1})\end{aligned}$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Multiply out the right-hand side of the first formula. $a$ times the bracket gives $a^n+a^{n-1}b+\ldots+ab^{n-1}$, and $-b$ times the bracket gives $-a^{n-1}b-\ldots-ab^{n-1}-b^n$. All the middle terms cancel (a “telescoping” sum), leaving $a^n-b^n$.</p>
+      <p>Second formula: substitute $-b$ for $b$. For odd $n$ we have $(-b)^n=-b^n$, so the left-hand side is $a^n+b^n$, and in the bracket the signs start to alternate. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Corollary</b> For integers $a\ne b$ and $n\ge 1$: $\;(a-b)\mid(a^n-b^n)$.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>Method 1.</b> From the first formula $a^n-b^n=(a-b)\cdot m$, where $m=a^{n-1}+\ldots+b^{n-1}$ is an integer (a sum of products of integers).</p>
+      <p><b>Method 2 (from the binomial theorem).</b> Let $d=a-b$. Then $a^n=(b+d)^n=b^n+\binom n1b^{n-1}d+\ldots+d^n$, so</p>
+      $$a^n-b^n=d\cdot\Big(\tbinom n1 b^{n-1}+\ldots+d^{n-1}\Big)$$
+      <p>and the bracket is an integer. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <p>Examples: $5\mid 7^n-2^n$; $\;3\mid 2^{100}-1$, because $2^{100}-1=4^{50}-1^{50}$ and $4-1=3$. From the second formula: for odd $n$ we have $(a+b)\mid(a^n+b^n)$, e.g. $9\mid 4^{7}+5^{7}$.</p>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Expand $(x-2)^4$.</p>
+    <ol>
+      <li>Row $4$ of Pascal's triangle: $1,\,4,\,6,\,4,\,1$.</li>
+      <li>$a=x$, $b=-2$: the powers of $b$ are $1,\,-2,\,4,\,-8,\,16$.</li>
+      <li>Multiply in pairs: $1\cdot x^4$, $4\cdot(-2)x^3$, $6\cdot 4x^2$, $4\cdot(-8)x$, $1\cdot 16$.</li>
+    </ol>
+    <p class="odp">$x^4-8x^3+24x^2-32x+16$</p>
+  </div>
+  <div class="przyklad">
+    <p>How many shortest paths along grid lines are there from $(0,0)$ to $(5,3)$ (steps: right or up)?</p>
+    <ol>
+      <li>Every path has $8$ steps: $5$ to the right and $3$ up.</li>
+      <li>A path is determined by the <b>set</b> of numbers of the “up” steps: $\binom83=\frac{8\cdot7\cdot6}{6}$.</li>
+    </ol>
+    <p class="odp">$56$ paths</p>
+    <p>This is Pascal's triangle again: you reach each point from the left or from below, so the numbers of paths add up.</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="330"><span class="poziom">easy</span>
+      <div class="tresc">Calculate $\binom{10}{3}+\binom{10}{4}$ and compare it with $\binom{11}{4}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\binom{10}3=\frac{10\cdot9\cdot8}{6}=120$, $\binom{10}4=\binom{10}{3}\cdot\frac74=210$. The sum is $330$, and by Pascal's property it equals $\binom{11}{4}=\frac{11\cdot10\cdot9\cdot8}{24}=330$. <b>$330$, equal</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="80"><span class="poziom">easy</span>
+      <div class="tresc">Find the coefficient of $x^3$ in the expansion of $(2x-1)^5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The term with $x^3$: $\binom53(2x)^3(-1)^2=10\cdot 8x^3$. <b>$80$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10"><span class="poziom">medium</span>
+      <div class="tresc">A convex polygon has $35$ diagonals. How many sides does it have?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The number of segments joining $n$ vertices is $\binom n2$, of which $n$ are sides: $\binom n2-n=\frac{n(n-3)}{2}=35$. Hence $n^2-3n-70=0$, $n=10$ (you reject the other root $-7$). <b>$10$ sides</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="160"><span class="poziom">medium</span>
+      <div class="tresc">Find the term independent of $x$ in the expansion of $\left(x+\frac2x\right)^6$, $x\ne 0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        General term: $\binom6k x^{6-k}\left(\frac2x\right)^k=\binom6k2^k x^{6-2k}$. Independent of $x$: $6-2k=0$, $k=3$. $\binom63\cdot 8=20\cdot8$. <b>$160$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that the number $11^{10}-1$ is divisible by $100$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $11^{10}=(1+10)^{10}=1+\binom{10}{1}\cdot10+\binom{10}{2}\cdot10^2+\ldots+10^{10}$.
+        Hence $11^{10}-1=100+\binom{10}{2}10^2+\ldots+10^{10}$: the first term is $10\cdot10=100$, and each following one contains $10^k$ with $k\ge2$. <b>Every term is divisible by $100$, so the whole sum is too.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that $\binom n0+\binom n1+\ldots+\binom nn=2^n$ for $n\ge1$. Give two justifications.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        <b>Combinatorially:</b> the left-hand side is the number of subsets of an $n$-element set, grouped by the number of elements. By the multiplication rule there are $2^n$ subsets (each element either belongs or does not).
+        <b>From the binomial theorem:</b> substitute $a=b=1$: $2^n=(1+1)^n=\sum_k\binom nk$. <b>The claim holds.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Combinatorial proofs</b>: name the set you are counting and say into which <b>disjoint</b> parts you split it. Without this the proof is not complete.</li>
+    <li><b>General term</b> $\binom nk a^{n-k}b^k$: write it out explicitly, then compare exponents. Watch the sign when $b$ is negative.</li>
+    <li>The expansion of $(a+b)^n$ has $n+1$ terms, not $n$.</li>
+    <li>Divisibility such as $11^{10}-1$, $7^n-2^n$: expand the binomial or use $(a-b)\mid(a^n-b^n)$ and cite it directly.</li>
+    <li>Equations with $\binom n2$, $\binom n3$: turn them into a polynomial and reject solutions that are not natural numbers $\ge k$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const C = (n, k) => { let r = 1; for (let i = 0; i < k; i++) r = r * (n - i) / (i + 1); return Math.round(r); };
+  const zakres = { xmin: 0, xmax: 1, ymin: 0, ymax: 1, siatka: false, osie: false };
+
+  // --- 2. Trójkąt Pascala ---
+  const N = 10;
+  const w1 = new Wykres($("pa-plot"), zakres);
+  let uklad = null, stop1 = null;
+  function pascal(t) {
+    const n = +$("pa-n").value;
+    $("pa-k").max = n - 1;
+    let k = +$("pa-k").value;
+    if (k > n - 1) { k = n - 1; $("pa-k").value = k; }
+    $("pa-n-v").textContent = n; $("pa-k-v").textContent = k;
+    const wiersze = t * (N + 1);
+    w1.rysuj(g => {
+      const X = p => g.wx(p), Y = p => g.wy(p);
+      const cw = Math.min(56, (g.w - 8) / (N + 1)), rh = (g.h - 12) / (N + 1), sr = g.w / 2;
+      uklad = { cw, rh, sr, gora: 6 };
+      const pole = (i, j) => [sr + (j - i / 2) * cw, 6 + i * rh];
+      const rozm = cw >= 40 ? 14 : 11;
+      for (let i = 0; i <= N; i++) {
+        if (i >= wiersze) break;
+        for (let j = 0; j <= i; j++) {
+          const [x, y] = pole(i, j);
+          let nr = "--muted", wyp = 0.04;
+          if (i === n && j === k) { nr = 2; wyp = 0.3; }
+          else if (i === n - 1 && (j === k - 1 || j === k)) { nr = 1; wyp = 0.25; }
+          g.prostokat(X(x - cw / 2 + 2), Y(y + rh - 3), (cw - 4) / g.w, (rh - 4) / g.h, nr, { wypelnij: wyp, grubosc: 1 });
+          g.tekst(X(x), Y(y + rh / 2), String(C(i, j)), typeof nr === "number" ? nr : "--text", { wyrownanie: "center", dy: rozm / 3, rozmiar: rozm, gruby: typeof nr === "number" });
+        }
+      }
+      if (wiersze > n + 0.5) {
+        const [xc, yc] = pole(n, k);
+        [k - 1, k].forEach(j => { const [x, y] = pole(n - 1, j); g.strzalka(X(x), Y(y + rh - 4), X(xc + (x - xc) * 0.25), Y(yc + 4), 1); });
+      }
+    });
+    const a = C(n - 1, k - 1), b = C(n - 1, k);
+    tex("pa-wynik", `\\binom{${n - 1}}{${k - 1}}+\\binom{${n - 1}}{${k}}=${a}+${b}=${a + b}=\\binom{${n}}{${k}}`);
+  }
+  $("pa-plot").addEventListener("click", e => {
+    if (!uklad) return;
+    const r = $("pa-plot").getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+    const i = Math.floor((py - uklad.gora) / uklad.rh), j = Math.round((px - uklad.sr) / uklad.cw + i / 2);
+    if (i >= 2 && i <= N && j >= 1 && j <= i - 1) {
+      if (stop1) stop1();
+      $("pa-n").value = i; $("pa-k").max = i - 1; $("pa-k").value = j;
+      pascal(1);
+    }
+  });
+  $("pa-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(4000, pascal); });
+  ["pa-n", "pa-k"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); pascal(1); }));
+  pascal(1);
+
+  // --- 3. Dwumian: wybory nawiasów ---
+  const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+  const pot = (lit, e) => e === 0 ? "" : e === 1 ? lit : lit + String(e).split("").map(c => SUP[c]).join("");
+  const wyraz = (n, j) => (pot("a", n - j) + pot("b", j)) || "1";
+  function podzbiory(n, k) {
+    const wyn = [];
+    (function bud(start, pref) {
+      if (pref.length === k) { wyn.push(pref); return; }
+      for (let i = start; i < n; i++) bud(i + 1, [...pref, i]);
+    })(0, []);
+    return wyn;
+  }
+  const w2 = new Wykres($("dw-plot"), zakres);
+  let stop2 = null;
+  function dwumian(t) {
+    const n = +$("dw-n").value;
+    $("dw-k").max = n;
+    let k = +$("dw-k").value;
+    if (k > n) { k = n; $("dw-k").value = k; }
+    $("dw-n-v").textContent = n; $("dw-k-v").textContent = k;
+    const wyb = podzbiory(n, k), ile = wyb.length;
+    const nr = Math.min(ile - 1, Math.floor(t * ile)), S = wyb[nr], zliczone = t >= 1 ? ile : nr + 1;
+    w2.rysuj(g => {
+      const X = p => g.wx(p), Y = p => g.wy(p);
+      const bw = Math.min(110, (g.w - 16) / n), f = Math.max(12, Math.min(18, bw / 5)), x0 = (g.w - n * bw) / 2;
+      for (let i = 0; i < n; i++) {
+        const cx = x0 + (i + 0.5) * bw, y = 30, b = S.includes(i);
+        g.tekst(X(cx - 0.4 * bw), Y(y), "(", "--muted", { wyrownanie: "center", rozmiar: f + 4, dy: 6 });
+        g.tekst(X(cx - 0.2 * bw), Y(y), "a", b ? "--muted" : 1, { wyrownanie: "center", rozmiar: f, dy: 5, gruby: !b });
+        g.tekst(X(cx), Y(y), "+", "--muted", { wyrownanie: "center", rozmiar: f, dy: 5 });
+        g.tekst(X(cx + 0.2 * bw), Y(y), "b", b ? 2 : "--muted", { wyrownanie: "center", rozmiar: f, dy: 5, gruby: b });
+        g.tekst(X(cx + 0.4 * bw), Y(y), ")", "--muted", { wyrownanie: "center", rozmiar: f + 4, dy: 6 });
+        g.punkt(X(cx + (b ? 0.2 : -0.2) * bw), Y(y), "", b ? 2 : 1, { r: f * 0.8, pusty: true });
+        g.tekst(X(cx + (b ? 0.2 : -0.2) * bw), Y(y), b ? "b" : "a", b ? 2 : 1, { wyrownanie: "center", rozmiar: f, dy: 5, gruby: true });
+      }
+      const slowo = Array.from({ length: n }, (_, i) => S.includes(i) ? "b" : "a").join("·");
+      g.tekst(X(g.w / 2), Y(72), slowo + " = " + wyraz(n, k), "--text", { wyrownanie: "center", rozmiar: 15, gruby: true });
+      g.tekst(X(g.w / 2), Y(94), "choice " + zliczone + " of " + ile, "--muted", { wyrownanie: "center", rozmiar: 12 });
+      // słupki: wiersz n trójkąta Pascala
+      const gora = 118, dol = g.h - 22, maks = C(n, Math.floor(n / 2)), sw = (g.w - 16) / (n + 1);
+      for (let j = 0; j <= n; j++) {
+        const v = C(n, j), hgt = (dol - gora - 18) * v / maks, x = 8 + j * sw + sw * 0.15, s = sw * 0.7;
+        if (j === k) {
+          g.prostokat(X(x), Y(dol), s / g.w, hgt / g.h, 2, { wypelnij: 0.05, przerywana: true, grubosc: 1.5 });
+          const hz = hgt * zliczone / ile;
+          if (hz > 0) g.prostokat(X(x), Y(dol), s / g.w, hz / g.h, 2, { wypelnij: 0.45 });
+        } else g.prostokat(X(x), Y(dol), s / g.w, hgt / g.h, 1, { wypelnij: 0.25 });
+        g.tekst(X(x + s / 2), Y(dol - hgt - 6), j === k ? zliczone + "/" + v : String(v), j === k ? 2 : 1, { wyrownanie: "center", rozmiar: 13, gruby: true });
+        g.tekst(X(x + s / 2), Y(dol + 16), wyraz(n, j), j === k ? 2 : "--muted", { wyrownanie: "center", rozmiar: 12 });
+      }
+    });
+    const czlony = [];
+    for (let j = 0; j <= n; j++) {
+      const c = C(n, j), ea = n - j, eb = j;
+      let s = (c === 1 ? "" : String(c)) + (ea ? "a" + (ea > 1 ? "^{" + ea + "}" : "") : "") + (eb ? "b" + (eb > 1 ? "^{" + eb + "}" : "") : "");
+      if (j === k) s = "\\textcolor{#d2452f}{" + s + "}";
+      czlony.push(s);
+    }
+    tex("dw-wynik", `(a+b)^{${n}}=` + czlony.join("+"));
+  }
+  $("dw-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    const ile = C(+$("dw-n").value, Math.min(+$("dw-k").value, +$("dw-n").value));
+    stop2 = animuj(Math.max(1500, 650 * ile), dwumian);
+  });
+  ["dw-n", "dw-k"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); dwumian(1); }));
+  dwumian(1);
+});
+</script>
+</body>
+</html>

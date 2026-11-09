@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triangles: types, Pythagoras, segments in a right triangle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Triangles: types, Pythagoras, segments in a right triangle</h1>
+  <p class="lead">Whether a triangle is acute, right or obtuse comes down to one comparison: the square of the longest side versus the sum of the squares of the other two. And the altitude from the right angle cuts the triangle into two smaller ones similar to the whole. All the "segment" formulas come from this.</p>
+  <p class="wymagania">VIII.1, VIII.2, VIII.12</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="rodzaje">1. Types of triangles and Pythagoras</h2>
+  <p>Notation as on the formula sheet: side $a$ lies opposite angle $\alpha$ (at $A$), $b$ opposite $\beta$, $c$ opposite $\gamma$.</p>
+  <div class="twierdzenie"><b>Pythagorean theorem and its converse</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    $$\gamma=90^\circ\iff a^2+b^2=c^2$$
+    The arrow "$\Leftarrow$" is the converse: from the sides alone you know the angle is right. Proof: the <a href="rozwiazywanie-trojkatow.html">law of cosines</a> (for $\gamma=90^\circ$ the term $-2ab\cos\gamma$ vanishes) or below, from similarity.
+  </div>
+  <div class="wzor"><div class="tytul">Type of triangle from its sides ($c$ – longest)</div>
+    $$c^2&lt;a^2+b^2\ \Rightarrow\ \text{acute}$$
+    $$c^2=a^2+b^2\ \Rightarrow\ \text{right}$$
+    $$c^2&gt;a^2+b^2\ \Rightarrow\ \text{obtuse}$$
+    <dl><dt>why</dt><dd>$c^2=a^2+b^2-2ab\cos\gamma$: the sign of $\cos\gamma$ decides whether $c^2$ is smaller or larger than $a^2+b^2$</dd>
+        <dt>$c$</dt><dd>must be the longest: only opposite it can a right or obtuse angle lie</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>Sides and angles</b>
+    In a triangle the longer side lies opposite the larger angle (and vice versa). Also the triangle inequality: $c&lt;a+b$ for every side.
+    <details class="rozwin"><summary>Short justification</summary><div>
+      <p>From the <a href="rozwiazywanie-trojkatow.html">law of sines</a>, $a=2R\sin\alpha$, $b=2R\sin\beta$. When $\alpha&gt;\beta$ and $\alpha+\beta&lt;180^\circ$:</p>
+      $$\sin\alpha-\sin\beta=2\cos\tfrac{\alpha+\beta}{2}\sin\tfrac{\alpha-\beta}{2}$$
+      <p>Both factors are positive ($\frac{\alpha+\beta}2&lt;90^\circ$), so $a&gt;b$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="wzor"><div class="tytul">Chord (Pythagoras in a circle, VIII.1)</div>
+    $$\left(\tfrac{l}{2}\right)^2+d^2=r^2$$
+    <dl><dt>$l$</dt><dd>length of the chord; $d$ – its distance from the center. A radius perpendicular to a chord bisects it. This is not on the formula sheet; you derive it from the diagram</dd></dl>
+  </div>
+  <p>Special triangles (equilateral: $h=\frac{a\sqrt3}{2}$, $P=\frac{a^2\sqrt3}{4}$, $r=\frac13h$, $R=\frac23h$; right: $R=\frac c2$, $r=\frac{a+b-c}{2}$) – all on the formula sheet. The $30^\circ$–$60^\circ$–$90^\circ$ and $45^\circ$–$45^\circ$–$90^\circ$ triangles: <a href="trygonometria-trojkat-prostokatny.html">trigonometry in a right triangle</a>.</p>
+
+  <h2 id="pitagoras-demo">2. Interactive: squares on the sides</h2>
+  <div class="demo">
+    <p class="opis">Drag the vertices (step 0.5). The numbers in the squares are their areas. Compare the square on the longest side (red) with the sum of the other two: equal – right angle; smaller – all angles acute; larger – obtuse angle.</p>
+    <canvas id="tr-plot"></canvas>
+    <div class="wynik" id="tr-wynik"></div>
+    <div class="wynik" id="tr-typ"></div>
+  </div>
+
+  <h2 id="odcinki">3. Segments in a right triangle</h2>
+  <div class="twierdzenie"><b>Theorem on segments in a right triangle</b>
+    If $CD$ is the altitude of the right triangle $ABC$ with right angle $ACB$, then
+    $$|AD|\cdot|BD|=|CD|^2$$
+    $$|AC|^2=|AB|\cdot|AD|$$
+    $$|BC|^2=|AB|\cdot|BD|$$
+    The formula sheet has only $h_c=\sqrt{|AD|\cdot|DB|}$ and $h_c=\frac{ab}{c}$. Memorize the other two: "leg$^2$ = hypotenuse · its projection".
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Let $|\angle BAC|=\alpha$, $|\angle ABC|=\beta$, $\alpha+\beta=90^\circ$.</p>
+      <ol>
+        <li>$\triangle ADC\sim\triangle ACB$ (AA): both have a right angle (at $D$ and at $C$) and the common angle $\alpha$. The vertices correspond $A\to A$, $D\to C$, $C\to B$, so $\frac{|AD|}{|AC|}=\frac{|AC|}{|AB|}$, i.e. $|AC|^2=|AB|\cdot|AD|$.</li>
+        <li>$\triangle CDB\sim\triangle ACB$: a right angle and the common angle $\beta$. $D\to C$, $B\to B$, $C\to A$, so $\frac{|BD|}{|BC|}=\frac{|BC|}{|AB|}$, i.e. $|BC|^2=|AB|\cdot|BD|$.</li>
+        <li>Hence $\triangle ADC\sim\triangle CDB$; the angle $\alpha$ at $A$ corresponds to the angle $DCB$ (since $|\angle DCB|=90^\circ-\beta=\alpha$). $A\to C$, $D\to D$, $C\to B$, so $\frac{|AD|}{|CD|}=\frac{|CD|}{|BD|}$, i.e. $|AD|\cdot|BD|=|CD|^2$. $\blacksquare$</li>
+      </ol>
+      <p>Bonus: adding the formulas from steps 1 and 2: $|AC|^2+|BC|^2=|AB|(|AD|+|BD|)=|AB|^2$. This is a proof of the Pythagorean theorem.</p>
+    </div></details>
+  </div>
+  <div class="demo">
+    <p class="opis">Drag $C$ along the semicircle (angle $C$ is always right – this is Thales' circle) and drag $A$ and $B$. Mark the equal angles: the angle $\alpha$ at $A$ reappears at $C$ in the purple triangle, $\beta$ in the blue one. That is why the three triangles are similar.</p>
+    <canvas id="wy-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="wy-katy" checked> show equal angles</label>
+    </div>
+    <div class="wynik" id="wy-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>The altitude $CD$ of the right triangle $ABC$ ($|\angle C|=90^\circ$) divides the hypotenuse into segments $|AD|=4$ and $|BD|=9$. Find $|CD|$, $|AC|$, $|BC|$.</p>
+    <ol>
+      <li>$|CD|^2=|AD|\cdot|BD|=36$, so $|CD|=6$.</li>
+      <li>$|AB|=13$, $|AC|^2=13\cdot4=52$, so $|AC|=2\sqrt{13}$.</li>
+      <li>$|BC|^2=13\cdot9=117$, so $|BC|=3\sqrt{13}$.</li>
+      <li>Check: $52+117=169=13^2$.</li>
+    </ol>
+    <p class="odp">$|CD|=6$, $|AC|=2\sqrt{13}$, $|BC|=3\sqrt{13}$</p>
+  </div>
+
+  <h2 id="zadania">5. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">A triangle has sides $6$, $8$, $11$. Is it acute, right or obtuse? Which side is opposite the largest angle?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Longest side $11$: $11^2=121$, $6^2+8^2=100&lt;121$. The largest angle lies opposite the side $11$. <b>Obtuse, the obtuse angle is opposite the side $11$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">In a circle of radius $10$ a chord of length $16$ is drawn. Find the distance of the chord from the center of the circle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Half the chord is $8$, the radius $10$ is the hypotenuse: $d=\sqrt{100-64}$. <b>$d=6$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12; 9; 16" data-odp-opis="altitude; segments of the hypotenuse"><span class="poziom">medium</span>
+      <div class="tresc">The legs of a triangle have lengths $15$ and $20$. Find the altitude to the hypotenuse and the lengths of the segments into which this altitude divides the hypotenuse.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $c=25$, $h=\frac{ab}{c}=\frac{300}{25}=12$. Projection of the leg $15$: $\frac{15^2}{25}=9$, of the leg $20$: $\frac{400}{25}=16$ (check: $9\cdot16=144=12^2$). <b>$h=12$, segments $9$ and $16$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (1; 3)" data-odp-opis="set of x"><span class="poziom">medium</span>
+      <div class="tresc">For which $x$ are the numbers $x$, $x+1$, $x+2$ the side lengths of an obtuse triangle?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The triangle exists when $x+(x+1)&gt;x+2$, i.e. $x&gt;1$. The longest side is $x+2$; it is obtuse when $(x+2)^2&gt;x^2+(x+1)^2$, i.e. $x^2-2x-3&lt;0$, $(x-3)(x+1)&lt;0$, $x\in(-1,3)$. Intersection: <b>$x\in(1,3)$</b>. (For $x=3$ you get the triangle $3,4,5$ – right.)
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">The altitude $CD$ of the right triangle $ABC$ with the right angle at $C$ has length $6$ and divides the hypotenuse in the ratio $|AD|:|DB|=1:4$. Find the area of the triangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|AD|=t$, $|DB|=4t$. $t\cdot4t=36$, so $t=3$, $|AB|=5t=15$. $P=\frac12\cdot15\cdot6$. <b>$P=45$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that if $a$, $b$ are the legs and $h$ the altitude to the hypotenuse, then $\frac1{h^2}=\frac1{a^2}+\frac1{b^2}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        From the two area formulas: $\frac12ab=\frac12ch$, so $h=\frac{ab}{c}$. Hence
+        $$\frac1{h^2}=\frac{c^2}{a^2b^2}=\frac{a^2+b^2}{a^2b^2}$$
+        (Pythagoras), and this is $\frac1{b^2}+\frac1{a^2}$. <b>Q.E.D.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Type of triangle:</b> compare the square of the <i>longest</i> side with the sum of the squares of the others. Check the triangle inequality first.</li>
+    <li>When citing the converse of Pythagoras, say so explicitly: "$a^2+b^2=c^2$, so by the converse of the Pythagorean theorem the angle $\gamma$ is right".</li>
+    <li><b>Altitude from the right angle:</b> $h=\frac{ab}{c}$ (from areas) is the fastest way. Formulas with the segments $|AD|$, $|BD|$ only make sense for a right angle.</li>
+    <li>Chord, tangent segment: always draw the radius to the point (of tangency or the chord's midpoint) – this creates a right triangle.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Kwadraty na bokach ---
+  const w1 = new Wykres($("tr-plot"), { xmin: -7, xmax: 7, ymin: -6.5, ymax: 6.5, rowneSkale: true, podpisy: false });
+  const pt = w1.przeciagaj([{ x: -1.5, y: 1, siatka: 0.5, ogranicz: wPolu(3, 3) }, { x: 2.5, y: -2, siatka: 0.5, ogranicz: wPolu(3, 3) },
+    { x: -1.5, y: -2, siatka: 0.5, ogranicz: wPolu(3, 3) }], rysujTr);
+  // kwadrat zbudowany na boku PQ po stronie przeciwnej do R
+  const kwadrat = (P, Q, R) => {
+    let nx = -(Q.y - P.y), ny = Q.x - P.x;
+    if (nx * (R.x - P.x) + ny * (R.y - P.y) > 0) { nx = -nx; ny = -ny; }
+    return [[P.x, P.y], [Q.x, Q.y], [Q.x + nx, Q.y + ny], [P.x + nx, P.y + ny]];
+  };
+  function rysujTr() {
+    const [A, B, C] = pt;
+    const S = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+    const pole2 = (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
+    const boki = [{ n: "a", P: B, Q: C, R: A, k: "\\alpha" }, { n: "b", P: A, Q: C, R: B, k: "\\beta" }, { n: "c", P: A, Q: B, R: C, k: "\\gamma" }];
+    boki.forEach(s => { s.kw = (s.Q.x - s.P.x) ** 2 + (s.Q.y - s.P.y) ** 2; });
+    const naj = boki.reduce((m, s) => (s.kw > m.kw ? s : m), boki[0]);
+    const suma = boki.reduce((t, s) => t + s.kw, 0) - naj.kw;
+    const ok = Math.abs(pole2) > 1e-9;
+    let typ = "", znak = "";
+    if (!ok) { typ = "The points lie on one line – this is not a triangle."; znak = "?"; }
+    else if (Math.abs(naj.kw - suma) < 1e-6) { typ = "Right triangle: the right angle is opposite the longest side."; znak = "="; }
+    else if (naj.kw < suma) { typ = "Acute triangle: even the largest angle is acute."; znak = "<"; }
+    else { typ = "Obtuse triangle: the obtuse angle is opposite the longest side."; znak = ">"; }
+    w1.rysuj(g => {
+      if (ok) boki.forEach(s => {
+        const kw = kwadrat(s.P, s.Q, s.R), nr = s === naj ? 2 : 1;
+        g.wielokat(kw, nr, { wypelnij: s === naj ? 0.2 : 0.12, grubosc: 1.5 });
+        const cx = (kw[0][0] + kw[2][0]) / 2, cy = (kw[0][1] + kw[2][1]) / 2;
+        g.tekst(cx, cy, ladna(s.kw), nr, { wyrownanie: "center", dy: 5, gruby: true });
+      });
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 3, { wypelnij: 0.2 });
+      if (ok) {
+        const W = naj.R, [P, Q] = [naj.P, naj.Q];
+        if (znak === "=") katProsty(g, W, P, Q, 0.35, 2); else lukKata(g, W, P, Q, 0.5, 2);
+      }
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+    });
+    tex("tr-wynik", ok ? `${naj.n}^2=${ladnaTex(naj.kw)}\\ ${znak}\\ ${ladnaTex(suma)}=\\text{sum of the other two}` : "\\text{---}");
+    $("tr-typ").textContent = typ;
+  }
+  rysujTr();
+
+  // --- 3. Wysokość z kąta prostego ---
+  const w2 = new Wykres($("wy-plot"), { xmin: -5.5, xmax: 5.5, ymin: -1, ymax: 5.5, rowneSkale: true });
+  let th = 2.1; // położenie C na półokręgu (kąt w radianach)
+  const pw = w2.przeciagaj([
+    { x: -4, y: 0, ogranicz: p => ({ x: Math.max(-5, Math.min(-1, p.x)), y: 0 }) },
+    { x: 4, y: 0, ogranicz: p => ({ x: Math.max(1, Math.min(5, p.x)), y: 0 }) },
+    { x: 0, y: 0, ogranicz: p => {
+      const M = sr(pw[0], pw[1]);
+      th = Math.max(0.2, Math.min(Math.PI - 0.2, Math.atan2(Math.max(0, p.y - M.y), p.x - M.x)));
+      return p;
+    } }], rysujWy);
+  function rysujWy() {
+    const [A, B, C] = pw;
+    const M = sr(A, B), R = odl(A, B) / 2;
+    C.x = M.x + R * Math.cos(th); C.y = M.y + R * Math.sin(th);
+    const D = { x: C.x, y: 0 };
+    const ad = odl(A, D), bd = odl(B, D), cd = odl(C, D), ab = odl(A, B), ac = odl(A, C), bc = odl(B, C);
+    w2.rysuj(g => {
+      g.luk(M.x, M.y, R, 0, Math.PI, 3, { przerywana: true, grubosc: 1.5 });
+      g.wielokat([[A.x, A.y], [D.x, D.y], [C.x, C.y]], 1, { wypelnij: 0.15 });
+      g.wielokat([[D.x, D.y], [B.x, B.y], [C.x, C.y]], 4, { wypelnij: 0.15 });
+      g.odcinek(C.x, C.y, D.x, D.y, 3, false);
+      katProsty(g, C, A, B, 0.3, 1); katProsty(g, D, B, C, 0.3, 3);
+      if ($("wy-katy").checked) {
+        lukKata(g, A, B, C, 0.6, 2); lukKata(g, C, D, B, 0.6, 2);
+        lukKata(g, B, A, C, 0.6, 3); lukKata(g, C, A, D, 0.45, 3);
+      }
+      const S = { x: M.x, y: C.y / 3 };
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+      g.punkt(D.x, D.y, "", 3, { r: 3.5 }); g.tekst(D.x, D.y, "D", 3, { dy: 17, wyrownanie: "center", gruby: true });
+    });
+    const f = v => ladnaTex(v);
+    tex("wy-wynik", `\\begin{aligned}|AD|\\cdot|BD|&=${f(ad * bd)},&|CD|^2&=${f(cd * cd)}\\\\|AB|\\cdot|AD|&=${f(ab * ad)},&|AC|^2&=${f(ac * ac)}\\\\|AB|\\cdot|BD|&=${f(ab * bd)},&|BC|^2&=${f(bc * bc)}\\end{aligned}`);
+  }
+  $("wy-katy").addEventListener("change", rysujWy);
+  rysujWy();
+});
+</script>
+</body>
+</html>

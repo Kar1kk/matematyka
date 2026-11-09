@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conditional probability and Bayes' theorem</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Conditional probability and Bayes' theorem</h1>
+  <p class="lead">"We know that $B$ happened" means: throw away everything outside $B$, and $B$ becomes the new, whole world. $P(A|B)$ is the fraction of this new world that $A$ occupies. Bayes' theorem lets you reverse the question: from $P(\text{result}|\text{cause})$ get $P(\text{cause}|\text{result})$.</p>
+  <p class="wymagania">XII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definition</h2>
+  <div class="definicja"><b>Definition</b> For $P(B)&gt;0$ the probability that $A$ occurs given that $B$ occurred:
+    $$P(A|B)=\frac{P(A\cap B)}{P(B)}$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Consequences</div>
+    $$P(A\cap B)=P(B)\cdot P(A|B)$$
+    $$\text{classical model: } P(A|B)=\frac{|A\cap B|}{|B|}$$
+    <dl><dt>multiplication</dt><dd>this is the "along the branch of the tree" rule: the probability of the first stage times the conditional probability of the second</dd>
+        <dt>classical</dt><dd>in the classical model you simply count within the set $B$ instead of $\Omega$</dd></dl>
+  </div>
+  <div class="uwaga">$P(A|B)$ and $P(B|A)$ are usually <b>different</b> numbers. Confusing them is the most common mistake in this topic (see the medical test below).</div>
+  <p><b>Independence</b> (not listed explicitly in the requirements, but it appears in tasks): $A$ and $B$ are independent when $P(A\cap B)=P(A)\cdot P(B)$, i.e. $P(A|B)=P(A)$: knowing $B$ changes nothing.</p>
+
+  <h2 id="pole">2. Interactive: conditioning narrows the world</h2>
+  <div class="demo">
+    <p class="opis">The square is $\Omega$ (area $1$). The green strip is $B$, the blue parts are $A$. Click "Condition on B": the rest disappears and $B$ stretches to the whole square. The blue area that remains is exactly $P(A|B)$.</p>
+    <canvas id="po-plot" style="height:330px"></canvas>
+    <div class="sterowanie">
+      <label>$P(B)$ <input type="range" id="po-b" min="0.1" max="0.9" step="0.05" value="0.4"> <span id="po-b-v"></span></label>
+      <label>$A$ in $B$ <input type="range" id="po-h1" min="0" max="1" step="0.05" value="0.75"> <span id="po-h1-v"></span></label>
+      <label>$A$ outside $B$ <input type="range" id="po-h2" min="0" max="1" step="0.05" value="0.25"> <span id="po-h2-v"></span></label>
+      <button id="po-start">▶ Condition on B</button>
+      <button id="po-wroc">↺ Whole Ω</button>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <h2 id="bayes">3. Bayes' theorem</h2>
+  <div class="wzor">
+    <div class="tytul">Bayes' theorem</div>
+    $$P(B|A)=\frac{P(A|B)\cdot P(B)}{P(A)}$$
+    <dl><dt>$P(A)$</dt><dd>you usually compute it from the <a href="prawdopodobienstwo-calkowite.html">law of total probability</a>: $P(A)=P(A|B)P(B)+P(A|B')P(B')$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Where does it come from? (one line)</summary><div>
+    From the definition, write $P(A\cap B)$ in two ways: $P(B|A)\,P(A)=P(A\cap B)=P(A|B)\,P(B)$. Divide by $P(A)$. You do not have to memorize it, just be able to derive it.
+  </div></details>
+  <p><b>On the tree:</b> $P(B|A)=\dfrac{\text{branch through }B\text{ to }A}{\text{all branches to }A}$.</p>
+
+  <h2 id="test">4. Interactive: a test for a rare disease</h2>
+  <div class="demo">
+    <p class="opis">The test has sensitivity $P(+|\text{sick})$ and specificity $P(-|\text{healthy})$. The thickness of a branch is the probability of the whole path. Set the disease frequency to $1\%$: despite a "good" test most $+$ results are healthy people (bottom bar).</p>
+    <canvas id="te-plot" style="height:360px"></canvas>
+    <div class="sterowanie">
+      <label>disease <input type="range" id="te-p" min="0.001" max="0.2" step="0.001" value="0.01"> <span id="te-p-v"></span></label>
+      <label>sensitivity <input type="range" id="te-s" min="0.5" max="1" step="0.01" value="0.95"> <span id="te-s-v"></span></label>
+      <label>specificity <input type="range" id="te-q" min="0.5" max="1" step="0.01" value="0.95"> <span id="te-q-v"></span></label>
+    </div>
+    <div class="wynik" id="te-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>We roll a die twice. It is known that the sum of the dots is at least $10$. Find the probability that the first roll was a six.</p>
+    <ol>
+      <li>$B$ (sum $\ge10$): $(4,6),(5,5),(6,4),(5,6),(6,5),(6,6)$, $|B|=6$.</li>
+      <li>$A\cap B$ (first a six and sum $\ge10$): $(6,4),(6,5),(6,6)$, $|A\cap B|=3$.</li>
+      <li>$P(A|B)=\frac{|A\cap B|}{|B|}=\frac36$.</li>
+    </ol>
+    <p class="odp">$P(A|B)=\frac12$ (without the condition it would be $\frac16$)</p>
+  </div>
+  <div class="przyklad">
+    <p>Machine $M_1$ makes $60\%$ of the products, of which $2\%$ are defective; machine $M_2$ makes $40\%$, of which $5\%$ are defective. A randomly chosen product is defective. What is the probability that it was made by $M_1$?</p>
+    <ol>
+      <li>Branches to "defective": $0.6\cdot0.02=0.012$ and $0.4\cdot0.05=0.02$.</li>
+      <li>$P(W)=0.012+0.02=0.032$.</li>
+      <li>$P(M_1|W)=\frac{0.012}{0.032}=\frac{12}{32}$.</li>
+    </ol>
+    <p class="odp">$P(M_1|W)=\frac38$</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/2; 2/5" data-odp-opis="P(A|B); P(B|A)"><span class="poziom">easy</span>
+      <div class="tresc">$P(A)=0.5$, $P(B)=0.4$, $P(A\cap B)=0.2$. Find $P(A|B)$ and $P(B|A)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P(A|B)=\frac{0.2}{0.4}$, $P(B|A)=\frac{0.2}{0.5}$. <b>$P(A|B)=\frac12$, $P(B|A)=\frac25$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/3" data-odp-opis="probability (fraction)"><span class="poziom">easy</span>
+      <div class="tresc">We roll a die twice. The sum of the dots is even. Find the probability that a double was rolled (the same number twice).</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The sum is even when both results are even or both odd: $|B|=9+9=18$. Every double has an even sum, so $|A\cap B|=6$. <b>$P(A|B)=\frac{6}{18}=\frac13$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5/7" data-odp-opis="probability (fraction)"><span class="poziom">medium</span>
+      <div class="tresc">A class has $18$ girls and $12$ boys. $10$ girls and $4$ boys wear glasses. We pick a person wearing glasses. Find the probability that it is a girl.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The condition "glasses" narrows the world to $14$ people, of whom $10$ are girls. <b>$P=\frac{10}{14}=\frac57$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/2; 3/5" data-odp-opis="P(B); P(A|B)"><span class="poziom">medium</span>
+      <div class="tresc">$P(A)=0.6$, $P(B|A)=0.5$, $P(A\cup B)=0.8$. Find $P(B)$ and $P(A|B)$. Are $A$ and $B$ independent?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P(A\cap B)=0.6\cdot0.5=0.3$. $P(B)=P(A\cup B)-P(A)+P(A\cap B)=0.8-0.6+0.3=0.5$. $P(A|B)=\frac{0.3}{0.5}=\frac35$. Since $P(A)P(B)=0.3=P(A\cap B)$, the events are independent.
+        <b>$P(B)=\frac12$, $P(A|B)=\frac35$, independent</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/2" data-odp-opis="probability (fraction)"><span class="poziom">exam-level</span>
+      <div class="tresc">$10\%$ of the population has the disease. The test is positive for $90\%$ of the sick and for $10\%$ of the healthy. A randomly chosen person tests positive. Find the probability that the person is sick.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P(+)=0.1\cdot0.9+0.9\cdot0.1=0.18$. $P(C|+)=\frac{0.09}{0.18}$. The test is "accurate in $90\%$", yet a positive result gives only fifty-fifty. <b>$P(C|+)=\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3/4" data-odp-opis="probability (fraction)"><span class="poziom">exam-level</span>
+      <div class="tresc">Urn I: $3$ white and $2$ black balls, urn II: $1$ white and $4$ black. We toss a coin: heads → we draw a ball from urn I, tails → from urn II. A white ball was drawn. Find the probability that it came from urn I.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P(B)=\frac12\cdot\frac35+\frac12\cdot\frac15=\frac{4}{10}=\frac25$. $P(I|B)=\frac{\frac12\cdot\frac35}{\frac25}=\frac{3/10}{4/10}$. <b>$P(I|B)=\frac34$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Name the events</b> in words ("$A$: a white ball was drawn", "$B$: …") and write which probability you are computing: $P(A|B)$ or $P(B|A)$.</li>
+    <li>In the classical model compute $\frac{|A\cap B|}{|B|}$: usually faster than via $P(A\cap B)$ and $P(B)$.</li>
+    <li><b>Bayes = tree:</b> draw the tree, the result is "my branch to $A$" over "all branches to $A$". A tree with labeled branches and numbers is a full-fledged solution.</li>
+    <li>Check that the result makes sense: probability $\in[0,1]$, fraction in lowest terms.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const proc = x => ladna(x * 100, 1) + "%";
+  // gałąź o grubości w pikselach (wykres.js nie ma grubości w odcinku)
+  function galaz(g, x1, y1, x2, y2, nr, px) {
+    const c = g.ctx;
+    c.strokeStyle = g.kolor(nr); c.lineWidth = px; c.lineCap = "round"; c.setLineDash([]);
+    c.beginPath(); c.moveTo(g.sx(x1), g.sy(y1)); c.lineTo(g.sx(x2), g.sy(y2)); c.stroke(); c.lineCap = "butt";
+  }
+
+  // --- 2. Model pola ---
+  const w1 = new Wykres($("po-plot"), { xmin: -0.12, xmax: 1.12, ymin: -0.13, ymax: 1.1, rowneSkale: true, siatka: false, osie: false });
+  let tt = 0, stop = null;
+  function rysujPo() {
+    const b = +$("po-b").value, h1 = +$("po-h1").value, h2 = +$("po-h2").value;
+    $("po-b-v").textContent = ladna(b); $("po-h1-v").textContent = ladna(h1); $("po-h2-v").textContent = ladna(h2);
+    const s = 1 + (1 / b - 1) * tt, gr = Math.min(1, b * s), kr = 1 - tt;
+    w1.rysuj(g => {
+      // B (rozciągane) i reszta (znika i wypada poza kwadrat)
+      g.prostokat(0, 0, gr, 1, 3, { wypelnij: 0.12, grubosc: 2.5 });
+      g.prostokat(0, 0, gr, h1, 1, { wypelnij: 0.5, bezObrysu: true });
+      if (kr > 0.01 && gr < 1) {
+        g.prostokat(gr, 0, 1 - gr, 1, "--plot-axis", { wypelnij: 0.06 * kr, bezObrysu: true });
+        g.prostokat(gr, 0, 1 - gr, h2, 1, { wypelnij: 0.5 * kr, bezObrysu: true });
+      }
+      g.prostokat(0, 0, 1, 1, "--plot-axis", { wypelnij: 0, grubosc: 1.5 });
+      g.tekst(gr / 2, 1, tt > 0.99 ? "B = new Ω" : "B", 3, { dy: -6, wyrownanie: "center", gruby: true });
+      if (kr > 0.3 && gr < 0.92) g.tekst((gr + 1) / 2, 1, "B′", "--plot-axis", { dy: -6, wyrownanie: "center", gruby: true });
+      if (h1 > 0.08) g.tekst(gr / 2, h1 / 2, tt > 0.99 ? "A|B" : "A∩B", 1, { dy: 5, wyrownanie: "center", gruby: true, rozmiar: 15 });
+      g.tekst(0, 0, "0", "--plot-axis", { dx: -4, dy: 16, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(1, 0, "1", "--plot-axis", { dy: 16, wyrownanie: "center", rozmiar: 12 });
+    });
+    const pa = b * h1 + (1 - b) * h2;
+    const niez = Math.abs(h1 - h2) < 1e-9 ? ",\\;\\text{independent!}" : "";
+    tex("po-wynik", `P(A|B)=\\frac{P(A\\cap B)}{P(B)}=\\frac{${ladnaTex(b * h1, 4)}}{${ladnaTex(b)}}=${ladnaTex(h1)},\\; P(A)=${ladnaTex(pa, 4)}${niez}`);
+  }
+  $("po-start").addEventListener("click", () => { if (stop) stop(); const t0 = tt; stop = animuj(1600, t => { tt = t0 + (1 - t0) * t; rysujPo(); }); });
+  $("po-wroc").addEventListener("click", () => { if (stop) stop(); const t0 = tt; stop = animuj(900, t => { tt = t0 * (1 - t); rysujPo(); }); });
+  ["po-b", "po-h1", "po-h2"].forEach(id => $(id).addEventListener("input", rysujPo));
+  rysujPo();
+
+  // --- 4. Test medyczny ---
+  const w2 = new Wykres($("te-plot"), { xmin: 0, xmax: 10, ymin: -2.6, ymax: 10, siatka: false, osie: false });
+  function rysujTe() {
+    const p = +$("te-p").value, s = +$("te-s").value, q = +$("te-q").value;
+    $("te-p-v").textContent = proc(p); $("te-s-v").textContent = proc(s); $("te-q-v").textContent = proc(q);
+    const tp = p * s, fn = p * (1 - s), fp = (1 - p) * (1 - q), tn = (1 - p) * q;
+    const px = v => 1.5 + 16 * v;
+    const R = [0.5, 5], C = [4, 7.8], Z = [4, 2.2];
+    const L = [[8, 9.4, "+", tp, 2], [8, 6.6, "−", fn, "--plot-axis"], [8, 3.4, "+", fp, 2], [8, 1, "−", tn, "--plot-axis"]];
+    const post = tp / (tp + fp);
+    w2.rysuj(g => {
+      galaz(g, ...R, ...C, 1, px(p)); galaz(g, ...R, ...Z, 1, px(1 - p));
+      galaz(g, ...C, L[0][0], L[0][1], 2, px(tp)); galaz(g, ...C, L[1][0], L[1][1], 1, px(fn));
+      galaz(g, ...Z, L[2][0], L[2][1], 2, px(fp)); galaz(g, ...Z, L[3][0], L[3][1], 1, px(tn));
+      g.tekst(2.2, 6.4, proc(p), 1, { dx: -6, wyrownanie: "right", rozmiar: 12 });
+      g.tekst(2.2, 3.6, proc(1 - p), 1, { dx: -6, dy: 10, wyrownanie: "right", rozmiar: 12 });
+      g.tekst(6, 8.6, proc(s), 2, { dy: -6, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(6, 7.2, proc(1 - s), "--plot-axis", { dy: 14, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(6, 2.8, proc(1 - q), 2, { dy: -6, wyrownanie: "center", rozmiar: 12 });
+      g.tekst(6, 1.6, proc(q), "--plot-axis", { dy: 14, wyrownanie: "center", rozmiar: 12 });
+      g.punkt(...R, "", 1); g.punkt(...C, "chory", 1); g.punkt(...Z, "zdrowy", 1);
+      L.forEach(([x, y, z, v, nr]) => { g.punkt(x, y, "", nr); g.tekst(x, y, `${z}  ${ladna(v, 4)}`, nr, { dx: 10, dy: 5, gruby: z === "+" }); });
+      // pasek: wszystkie wyniki dodatnie
+      g.tekst(0.2, -0.6, "all + results", "--plot-axis", { rozmiar: 12 });
+      g.prostokat(0.2, -2.3, 9.6 * post, 1.2, 2, { wypelnij: 0.55, bezObrysu: true });
+      g.prostokat(0.2 + 9.6 * post, -2.3, 9.6 * (1 - post), 1.2, "--plot-axis", { wypelnij: 0.25, bezObrysu: true });
+      if (post > 0.12) g.tekst(0.2 + 4.8 * post, -1.7, "sick", 2, { dy: 5, wyrownanie: "center", gruby: true, rozmiar: 12 });
+      if (post < 0.88) g.tekst(0.2 + 9.6 * post + 4.8 * (1 - post), -1.7, "healthy", "--plot-axis", { dy: 5, wyrownanie: "center", gruby: true, rozmiar: 12 });
+    });
+    const n1 = Math.round(tp * 10000), n2 = Math.round(fp * 10000);
+    tex("te-wynik", `P(\\text{sick}|+)=\\frac{${ladnaTex(tp, 4)}}{${ladnaTex(tp, 4)}+${ladnaTex(fp, 4)}}\\approx${ladnaTex(post * 100, 1)}\\%\\;\\;(\\text{out of }10\\,000\\text{ people: }${n1}\\text{ sick and }${n2}\\text{ healthy with }+)`);
+  }
+  ["te-p", "te-s", "te-q"].forEach(id => $(id).addEventListener("input", rysujTe));
+  rysujTe();
+});
+</script>
+</body>
+</html>

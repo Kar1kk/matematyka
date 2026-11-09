@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factoring polynomials, integer roots</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+<style>
+  .demo input[type=text] { font: inherit; width: 9em; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Factoring polynomials, integer roots</h1>
+  <p class="lead">To factor a polynomial is to write it as a product of linear factors and quadratic factors with no roots. When nothing is obvious, you guess a root, but not blindly: an integer root must divide the constant term.</p>
+  <p class="wymagania">II.R.2, II.R.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="metody">1. Methods, in this order</h2>
+  <table class="tabela">
+    <tr><th>Method</th><th>Example</th></tr>
+    <tr><td>1. factor out the common factor</td><td>$2x^4-6x^3=2x^3(x-3)$</td></tr>
+    <tr><td>2. <a href="wzory-skroconego-mnozenia.html">special product formulas</a></td><td>$x^4-16=(x^2-4)(x^2+4)$ $=(x-2)(x+2)(x^2+4)$</td></tr>
+    <tr><td>3. grouping</td><td>$x^3+3x^2-4x-12$ $=x^2(x+3)-4(x+3)$ $=(x+3)(x-2)(x+2)$</td></tr>
+    <tr><td>4. integer root + <a href="dzielenie-wielomianow.html">Horner</a></td><td>$W(1)=0\Rightarrow W(x)=(x-1)Q(x)$</td></tr>
+    <tr><td>5. trinomial: $\Delta$</td><td>$x^2-x-6=(x-3)(x+2)$</td></tr>
+  </table>
+  <p><b>Done</b> when only factors of degree $1$ and trinomials with $\Delta&lt;0$ remain (e.g. $x^2+4$, $x^2+x+1$).</p>
+  <p><b>Trick for grouping</b>: when there are too few terms, split one of them:
+    $$x^3-7x+6=x^3-x-6x+6$$
+    $$=x(x-1)(x+1)-6(x-1)$$
+    $$=(x-1)(x^2+x-6)$$
+    $$=(x-1)(x-2)(x+3)$$</p>
+
+  <h2 id="calkowite">2. Integer roots</h2>
+  <div class="twierdzenie"><b>Theorem</b> If a polynomial $W(x)=a_nx^n+\ldots+a_1x+a_0$ with <b>integer</b> coefficients, $a_0\ne0$, has an integer root $k$, then $k$ is a divisor of the constant term $a_0$.
+    <details class="rozwin"><summary>Proof</summary><div>
+      <p>$W(k)=0$, that is, $a_nk^n+\ldots+a_1k+a_0=0$. Hence</p>
+      $$a_0=-k\left(a_nk^{n-1}+\ldots+a_1\right)$$
+      <p>The bracket is an integer (a sum of products of integers), so $a_0$ is a multiple of $k$, that is, $k\mid a_0$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <ul>
+    <li>If $a_0=0$, first factor out $x$ (or $x^m$), and only then look for divisors.</li>
+    <li>The theorem gives only <b>candidates</b>. You check each one: is $W(k)=0$? Quick tests: $W(1)$ is the sum of the coefficients, and $W(-1)$ is easy to compute in your head too.</li>
+    <li>After finding $k$, divide by $x-k$ (Horner) and keep searching in the quotient, <b>starting again from $k$</b>: the root may be repeated.</li>
+    <li>When $a_n\ne\pm1$, the roots may be fractions, e.g. $2x-1$. The rational root theorem is <b>outside the core curriculum</b>; such roots will come out of $\Delta$ after the division.</li>
+  </ul>
+
+  <h2 id="sito">3. Interactive: divisor sieve</h2>
+  <div class="demo">
+    <p class="opis">Pick a polynomial or type integer coefficients (from the highest power). “Step →” tests the next candidate. A hit ($P(k)=0$) divides the polynomial by $x-k$; candidates that do not divide the new constant term drop out (grey). When a trinomial remains, $\Delta$ finishes the job.</p>
+    <canvas id="si-plot" style="height:150px"></canvas>
+    <canvas id="si-wykres" style="height:260px;margin-top:8px"></canvas>
+    <div class="sterowanie">
+      <label>example <select id="si-wybor">
+        <option value="1, -2, -5, 6">x³ − 2x² − 5x + 6</option>
+        <option value="1, 0, -5, 0, 4">x⁴ − 5x² + 4</option>
+        <option value="2, -3, -3, 2">2x³ − 3x² − 3x + 2</option>
+        <option value="1, -2, -3, 4, 4">x⁴ − 2x³ − 3x² + 4x + 4</option>
+        <option value="1, 1, 1, 1">x³ + x² + x + 1</option>
+        <option value="1, -1, -2, 0">x³ − x² − 2x</option>
+      </select></label>
+      <label>$W$: <input type="text" id="si-w" value="1, -2, -5, 6"></label>
+      <button id="si-krok">Step →</button>
+      <button id="si-start" class="wtorny">▶ Play</button>
+    </div>
+    <div class="wynik" id="si-wynik"></div>
+    <div class="wynik" id="si-rozklad"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>Factor $W(x)=x^4-x^3-7x^2+x+6$.</p>
+    <ol>
+      <li>Candidates: divisors of $6$: $\pm1,\pm2,\pm3,\pm6$.</li>
+      <li>$W(1)=1-1-7+1+6=0$. Horner for $1$: $\;1,\,0,\,-7,\,-6\;|\;0$, so $W(x)=(x-1)(x^3-7x-6)$.</li>
+      <li>Quotient $P(x)=x^3-7x-6$: $P(1)=-12$, $P(-1)=-1+7-6=0$. Horner for $-1$: $\;1,\,-1,\,-6\;|\;0$.</li>
+      <li>The trinomial $x^2-x-6$ remains: $\Delta=25$, roots $3$ and $-2$.</li>
+    </ol>
+    <p class="odp">$W(x)=(x-1)(x+1)(x-3)(x+2)$</p>
+    <p>Faster: $W(1)=0$ is visible at once from the sum of the coefficients. Solving equations and inequalities using such a factorization: <a href="rownania-wielomianowe.html">Polynomial equations and inequalities</a>.</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Factor $3x^5-12x^3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $3x^3(x^2-4)=$ <b>$3x^3(x-2)(x+2)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Factor $x^3-5x^2-4x+20$ by grouping.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x^2(x-5)-4(x-5)=(x-5)(x^2-4)=$ <b>$(x-5)(x-2)(x+2)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Factor $x^4+x^3-8x-8$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x^3(x+1)-8(x+1)=(x+1)(x^3-8)$, and $x^3-8=(x-2)(x^2+2x+4)$, where $\Delta=-12&lt;0$.
+        <b>$(x+1)(x-2)(x^2+2x+4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; -3" data-odp-opis="integer roots"><span class="poziom">medium</span>
+      <div class="tresc">Find the integer roots of the polynomial $W(x)=2x^3+x^2-13x+6$ and factor it.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Candidates: $\pm1,\pm2,\pm3,\pm6$. $W(1)=-4$, $W(-1)=18$, $W(2)=16+4-26+6=0$. Horner for $2$: $\;2,\,5,\,-3\;|\;0$.
+        $2x^2+5x-3$: $\Delta=49$, $x=-3$ or $x=\frac12$ (not an integer).
+        <b>Integer roots: $2$ and $-3$; $\;W(x)=(x-2)(x+3)(2x-1)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that the polynomial $W(x)=x^3-3x+1$ has no integer roots.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The coefficients are integers, so an integer root would have to divide $a_0=1$, that is, it would equal $1$ or $-1$. But $W(1)=-1\ne0$ and $W(-1)=3\ne0$. <b>No integer roots.</b> $\blacksquare$
+      </div></details></li>
+    <li class="zadanie" data-odp="1; -4; -2" data-odp-opis="a; b; third root"><span class="poziom">exam-level</span>
+      <div class="tresc">The numbers $2$ and $-1$ are roots of the polynomial $W(x)=x^3+ax^2-4x+b$. Find $a$, $b$ and the third root.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $W(2)=4a+b=0$, $\;W(-1)=a+b+3=0$. Subtracting: $3a=3$, so $a=1$, $b=-4$.
+        $W(x)=x^3+x^2-4x-4=x^2(x+1)-4(x+1)=(x+1)(x-2)(x+2)$.
+        <b>$a=1$, $b=-4$, third root $-2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>Write down <b>where</b> the candidates come from (“an integer root divides the constant term $6$”) and show the computation $W(k)=0$. “I guessed” alone is not enough.</li>
+    <li>After Horner, <b>do not stop</b> at a trinomial with $\Delta\ge0$: factor it completely.</li>
+    <li>Always factor out the common factor first and check grouping: it often saves all the guessing.</li>
+    <li>Repeated root: after dividing by $x-k$, check $k$ once more in the quotient.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function wTex(ws) {
+    const n = ws.length - 1;
+    let s = "";
+    ws.forEach((c, i) => {
+      const k = n - i;
+      if (c === 0) return;
+      const znak = c < 0 ? "-" : (s ? "+" : "");
+      const m = Math.abs(c);
+      const wsp = (m === 1 && k > 0) ? "" : ladnaTex(m);
+      const xx = k === 0 ? "" : k === 1 ? "x" : `x^{${k}}`;
+      s += znak + wsp + xx;
+    });
+    return s || "0";
+  }
+  const wart = (w, x) => w.reduce((s, c) => s * x + c, 0);
+  const horner = (w, a) => { const q = [w[0]]; for (let i = 1; i < w.length; i++) q.push(w[i] + a * q[i - 1]); return q; };
+  const dwumian = k => k === 0 ? "x" : `x${k > 0 ? "-" : "+"}${Math.abs(k)}`;
+  const dzielniki = n => { n = Math.abs(n); const d = []; for (let i = 1; i <= n; i++) if (n % i === 0) d.push(i, -i); return d; };
+
+  // --- preparing all steps (states in order) ---
+  let W = [], stany = [], krok = 0, stop = null, kand = [];
+  function przygotuj() {
+    const w = $("si-w").value.split(/[,;\s]+/).filter(v => v !== "").map(Number);
+    if (w.length < 2 || w.length > 7 || w.some(v => !Number.isInteger(v)) || w[0] === 0 || w.every((v, i) => i === 0 || v === 0)) {
+      tex("si-wynik", "\\text{Enter 2–7 integers, the first}\\ne0");
+      stany = []; return false;
+    }
+    W = w;
+    let m = 0, cur = W.slice();
+    while (cur[cur.length - 1] === 0) { cur.pop(); m++; }
+    kand = Math.abs(cur[cur.length - 1]) <= 60 ? dzielniki(cur[cur.length - 1]) : [];
+    const st = { cur, m, pierw: [], chip: {}, opis: "", test: null };
+    kand.forEach(k => { st.chip[k] = { stan: "nowy", v: null }; });
+    const kopia = s => JSON.parse(JSON.stringify(s));
+    stany = [];
+    const dodaj = (s, opis, test = null) => { s.opis = opis; s.test = test; stany.push(kopia(s)); };
+    dodaj(st, `W(x)=${wTex(W)}` + (m ? "" : `,\\quad\\text{candidates: divisors of } ${cur[cur.length - 1]}`));
+    if (m) dodaj(st, `a_0=0:\\ \\text{factor out } ${m > 1 ? "x^{" + m + "}" : "x"},\\ \\text{what remains is } P(x)=${wTex(cur)}`);
+    let i = 0;
+    while (st.cur.length > 3 && i < kand.length) {
+      const k = kand[i], a0 = st.cur[st.cur.length - 1];
+      if (st.chip[k].stan === "odpada" || a0 % k !== 0) { i++; continue; }
+      const v = wart(st.cur, k);
+      if (v !== 0 && st.chip[k].stan === "tak") {
+        dodaj(st, `P(${k})=${v}\\neq0:\\ ${k}\\ \\text{is no longer a root of the quotient}`, k);
+        i++;
+      } else if (v !== 0) {
+        st.chip[k] = { stan: "nie", v };
+        dodaj(st, `P(${k})=${v}\\neq0`, k);
+        i++;
+      } else {
+        st.chip[k] = { stan: "tak", v: 0, kr: (st.chip[k].kr || 0) };
+        dodaj(st, `P(${k})=0\\ \\Rightarrow\\ \\text{divide by } ${dwumian(k)}`, k);
+        const q = horner(st.cur, k); q.pop();
+        st.cur = q; st.pierw.push(k); st.chip[k].kr++;
+        const nowy = q[q.length - 1], wyp = [];
+        kand.forEach(d => { if (st.chip[d].stan === "nowy" && nowy % d !== 0) { st.chip[d].stan = "odpada"; wyp.push(d); } });
+        dodaj(st, `P(x)=(${dwumian(k)})(${wTex(q)})` + (wyp.length ? `,\\ \\text{dropped: } ${wyp.join(",\\,")}` : "") + `,\\ \\text{next } P(x)=${wTex(q)}`, k);
+      }
+    }
+    // end: a trinomial, a binomial or a constant remains
+    const c = st.cur;
+    let opisK = "";
+    if (c.length === 3) {
+      const [a, b, cc] = c, D = b * b - 4 * a * cc;
+      opisK = `\\Delta=${D}` + (D < 0 ? "\\lt 0:\\ \\text{the trinomial does not factor}" : "");
+      if (D >= 0) {
+        const s = Math.sqrt(D);
+        [(-b - s) / (2 * a), (-b + s) / (2 * a)].forEach(r => {
+          if (Math.abs(r - Math.round(r)) < 1e-9 && st.cur.length > 1) {
+            const k = Math.round(r) || 0, q = horner(st.cur, k); q.pop();
+            st.cur = q; st.pierw.push(k);
+            if (st.chip[k]) { st.chip[k].stan = "tak"; st.chip[k].kr = (st.chip[k].kr || 0) + 1; }
+          }
+        });
+        if (st.cur.length === 3) opisK += ":\\ \\text{non-integer roots, the trinomial stays}";
+        else if (st.cur.length === 2) opisK += ":\\ \\text{one integer root, the other is not}";
+        else opisK += ":\\ \\text{integer roots}";
+      }
+    } else if (c.length === 2 && Number.isInteger(-c[1] / c[0])) {
+      const k = -c[1] / c[0] || 0; st.cur = [c[0]]; st.pierw.push(k);
+      if (st.chip[k]) { st.chip[k].stan = "tak"; st.chip[k].kr = (st.chip[k].kr || 0) + 1; }
+      opisK = `\\text{linear factor } ${dwumian(k)}`;
+    } else opisK = "\\text{no (further) integer roots}";
+    dodaj(st, opisK);
+    return true;
+  }
+  function rozkladTex(s) {
+    const krot = {};
+    s.pierw.forEach(k => { krot[k] = (krot[k] || 0) + 1; });
+    let t = "";
+    const lead = s.cur.length === 1 ? s.cur[0] : 1;
+    if (lead === -1) t += "-"; else if (lead !== 1) t += ladnaTex(lead);
+    if (s.m) t += s.m > 1 ? `x^{${s.m}}` : "x";
+    Object.keys(krot).map(Number).sort((u, v) => v - u).forEach(k => {
+      t += `(${dwumian(k)})` + (krot[k] > 1 ? `^{${krot[k]}}` : "");
+    });
+    if (s.cur.length > 1) t += `(${wTex(s.cur)})`;
+    return t || "1";
+  }
+
+  // --- drawing ---
+  const w1 = new Wykres($("si-plot"), { xmin: 0, xmax: 8, ymin: -1, ymax: 0, siatka: false, osie: false });
+  const w2 = new Wykres($("si-wykres"), { xmin: -4, xmax: 4, ymin: -10, ymax: 10 });
+  function zakresWykresu() {
+    const s = stany[stany.length - 1];
+    const pw = s.pierw.concat(s.m ? [0] : []);
+    const lo = Math.min(-2, ...pw) - 1.5, hi = Math.max(2, ...pw) + 1.5;
+    let Y = 1;
+    for (let i = 0; i <= 200; i++) { const x = lo + 0.4 + (hi - lo - 0.8) * i / 200; Y = Math.max(Y, Math.abs(wart(W, x))); }
+    Y = Math.min(Y, 1e6);
+    const kr = 10 ** Math.floor(Math.log10(Y / 2)), krokY = [1, 2, 5, 10].map(f => f * kr).find(v => Y / v <= 5);
+    w2.zakres({ xmin: lo, xmax: hi, ymin: -1.2 * Y, ymax: 1.2 * Y, krokY });
+  }
+  function rysuj() {
+    if (!stany.length) return;
+    const s = stany[Math.min(krok, stany.length - 1)];
+    const kol = Math.min(8, Math.max(1, kand.length)), wier = Math.max(1, Math.ceil(kand.length / kol));
+    w1.zakres({ xmin: -0.05, xmax: kol + 0.05, ymin: -wier - 0.05, ymax: 0.05 });
+    w1.rysuj(g => {
+      if (!kand.length) { g.tekst(kol / 2, -0.5, "|a₀| too large for the demo — graph only", "--muted", { wyrownanie: "center" }); return; }
+      kand.forEach((k, i) => {
+        const x = i % kol, y = -Math.floor(i / kol) - 1, c = s.chip[k];
+        const akt = s.test === k;
+        const nr = c.stan === "tak" ? 3 : c.stan === "nie" ? 2 : "--border";
+        const kr = c.stan === "tak" ? 0.35 : c.stan === "nie" ? 0.12 : c.stan === "odpada" ? 0.0001 : 0.0001;
+        g.prostokat(x + 0.06, y + 0.08, 0.88, 0.84, akt ? 1 : nr, { wypelnij: kr, grubosc: akt ? 3 : 1.5 });
+        const kolTxt = c.stan === "odpada" ? "--border" : "--text";
+        g.tekst(x + 0.5, y + 0.5, String(k).replace("-", "−"), kolTxt, { wyrownanie: "center", dy: -2, gruby: true, rozmiar: 17 });
+        let pod = "";
+        if (c.stan === "nie") pod = "P=" + ladna(c.v);
+        else if (c.stan === "tak") pod = "✓" + (c.kr > 1 ? " ×" + c.kr : "");
+        else if (c.stan === "odpada") pod = "out";
+        if (pod) g.tekst(x + 0.5, y + 0.5, pod, c.stan === "tak" ? 3 : c.stan === "nie" ? 2 : "--muted", { wyrownanie: "center", dy: 17, rozmiar: 12 });
+      });
+    });
+    w2.rysuj(g => {
+      g.funkcja(x => wart(W, x), 1);
+      if (s.m) g.punkt(0, 0, "0", 3);
+      [...new Set(s.pierw)].forEach(k => g.punkt(k, 0, String(k), 3));
+      if (s.test !== null && s.test >= g.z.xmin && s.test <= g.z.xmax) {
+        const v = wart(W, s.test);
+        g.odcinek(s.test, 0, s.test, Math.max(g.z.ymin, Math.min(g.z.ymax, v)), 2, true);
+        g.punkt(s.test, Math.max(g.z.ymin, Math.min(g.z.ymax, v)), "", 2, { pusty: v !== 0 });
+      }
+    });
+    tex("si-wynik", s.opis);
+    tex("si-rozklad", `W(x)=${rozkladTex(s)}`);
+  }
+  function odNowa() { if (stop) stop(); krok = 0; if (przygotuj()) { zakresWykresu(); rysuj(); } }
+  $("si-wybor").addEventListener("change", () => { $("si-w").value = $("si-wybor").value; odNowa(); });
+  $("si-w").addEventListener("input", odNowa);
+  $("si-krok").addEventListener("click", () => {
+    if (stop) stop();
+    if (!stany.length) return;
+    krok = krok >= stany.length - 1 ? 0 : krok + 1;
+    rysuj();
+  });
+  $("si-start").addEventListener("click", () => {
+    if (stop) stop();
+    if (!stany.length) return;
+    const N = stany.length - 1;
+    krok = 0; rysuj();
+    stop = animuj(1000 * N, t => { const k = Math.min(N, Math.floor(t * (N + 1))); if (k !== krok) { krok = k; rysuj(); } });
+  });
+  odNowa();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geometric sequence</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Geometric sequence</h1>
+  <p class="lead">At each step you multiply by the same number $q$. An arithmetic sequence grows linearly (like simple interest), a geometric one exponentially (like compound interest), and for negative $q$ it jumps from one side of the axis to the other.</p>
+  <p class="wymagania">VI.4, VI.6, VI.7, I.8 (compound interest)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definition and formulas</h2>
+  <div class="definicja"><b>Definition</b> A sequence $(a_n)$ is <b>geometric</b> if there is a number $q$ (the <b>common ratio</b>) such that $a_{n+1}=a_n\cdot q$ for every $n$. When the terms are nonzero: $\frac{a_{n+1}}{a_n}=q$ is constant.</div>
+  <div class="wzor">
+    <div class="tytul">The $n$-th term <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a_n=a_1\cdot q^{n-1}$$
+    <dl><dt>$q&gt;1$</dt><dd>for $a_1&gt;0$ increasing, for $a_1&lt;0$ decreasing</dd>
+        <dt>$0&lt;q&lt;1$</dt><dd>for $a_1&gt;0$ decreasing, for $a_1&lt;0$ increasing; the terms tend to $0$</dd>
+        <dt>$q&lt;0$</dt><dd>alternating signs: <b>not monotonic</b> (when $a_1\neq0$)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Sum of the first $n$ terms <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$S_n=a_1\cdot\frac{1-q^n}{1-q},\quad q\neq1$$
+    $$S_n=n\cdot a_1,\quad q=1$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Geometric mean of the neighbours <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a_n^2=a_{n-1}\cdot a_{n+1}$$
+    <dl><dt>$x,y,z$</dt><dd>nonzero numbers form (in this order) a geometric sequence $\iff y^2=xz$</dd></dl>
+  </div>
+  <div class="uwaga">Without the assumption “nonzero” the condition $y^2=xz$ fails: $0, 0, 5$ satisfies it, yet it is not a geometric sequence (you cannot get $5$ from $0$ by multiplying).</div>
+
+  <div class="twierdzenie"><b>Theorem</b> In a geometric sequence $a_n=a_1q^{n-1}$, and for $q\neq1$: $S_n=a_1\cdot\frac{1-q^n}{1-q}$.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>The formula for $a_n$.</b> $a_2=a_1q$, $a_3=a_2q=a_1q^2$, … each step adds one factor $q$. From $a_1$ to $a_n$ there are $n-1$ steps, so $a_n=a_1q^{n-1}$ (formally: induction on $n$).</p>
+      <p><b>The formula for $S_n$ (the $S_n-qS_n$ method).</b> Multiply the sum by $q$. Since $a_kq=a_{k+1}$, each term shifts one place:</p>
+      $$\begin{aligned}S_n&amp;=a_1+a_2+\ldots+a_n\\ qS_n&amp;=a_2+\ldots+a_n+a_nq\end{aligned}$$
+      <p>After subtracting, everything cancels except $a_1$ from the top and $a_nq=a_1q^n$ from the bottom:</p>
+      $$S_n-qS_n=a_1-a_1q^n$$
+      $$S_n(1-q)=a_1(1-q^n)$$
+      <p>For $q\neq1$ we divide by $1-q$ and get the formula. For $q=1$ all terms equal $a_1$, so $S_n=na_1$.</p>
+    </div></details></div>
+
+  <div class="wzor">
+    <div class="tytul">Compound interest <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$K_n=K_0\left(1+\frac{p}{100}\right)^n$$
+    $$K=K_0\left(1+\frac{p}{100\,m}\right)^{m\cdot n}$$
+    <dl><dt>$K_0$</dt><dd>initial capital, $p$ – annual interest rate in %, $n$ – number of years</dd>
+        <dt>$m$</dt><dd>number of compounding periods per year (quarterly: $m=4$, monthly: $m=12$)</dd>
+        <dt>meaning</dt><dd>the account balances after consecutive periods form a geometric sequence with ratio $q=1+\frac{p}{100m}$</dd></dl>
+  </div>
+
+  <h2 id="iloraz">2. How the terms behave</h2>
+  <div class="demo">
+    <p class="opis">Change $q$ and watch the shape: $|q|&gt;1$ “explodes”, $|q|&lt;1$ fades to $0$, $q&lt;0$ jumps alternately above and below the axis. Empty circles at the edge = the term is outside the graph.</p>
+    <canvas id="gq-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="gq-a1" min="-3" max="3" step="0.5" value="1"> <span id="gq-a1-v"></span></label>
+      <label>$q$ <input type="range" id="gq-q" min="-2" max="2" step="0.1" value="1.5"> <span id="gq-q-v"></span></label>
+    </div>
+    <div class="wynik" id="gq-wynik"></div>
+  </div>
+
+  <h2 id="lokata">3. A deposit: compound vs simple interest</h2>
+  <div class="demo">
+    <p class="opis">Blue: capital with compound interest (a geometric sequence). Green: simple interest, always computed from $K_0$ (an arithmetic sequence, a straight line). Increase $p$ and the number of years: the advantage of compound interest grows faster and faster.</p>
+    <canvas id="lo-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$K_0$ (PLN) <input type="range" id="lo-k" min="1000" max="10000" step="1000" value="5000"> <span id="lo-k-v"></span></label>
+      <label>$p$ (%) <input type="range" id="lo-p" min="1" max="12" step="1" value="6"> <span id="lo-p-v"></span></label>
+      <label>years <input type="range" id="lo-n" min="1" max="30" step="1" value="20"> <span id="lo-n-v"></span></label>
+      <label>compounding <select id="lo-m">
+        <option value="1">annual</option>
+        <option value="4">quarterly</option>
+        <option value="12">monthly</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="lo-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>In a geometric sequence $a_3=12$ and $a_6=-96$. Find $S_7$.</p>
+    <ol>
+      <li>$a_6=a_3q^3$, so $q^3=-8$ and $q=-2$.</li>
+      <li>$a_1=\frac{a_3}{q^2}=\frac{12}{4}=3$.</li>
+      <li>$S_7=3\cdot\frac{1-(-2)^7}{1-(-2)}=3\cdot\frac{129}{3}=129$.</li>
+    </ol>
+    <p class="odp">$S_7=129$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">In a geometric sequence $a_2=6$ and $a_5=48$. Find $S_6$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $q^3=\frac{48}{6}=8$, $q=2$, $a_1=3$. $S_6=3\cdot\frac{1-2^6}{1-2}=3\cdot63$. <b>$S_6=189$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; -1"><span class="poziom">medium</span>
+      <div class="tresc">The numbers $x-1$, $x+3$, $5x+3$ form (in this order) a geometric sequence. Find $x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(x+3)^2=(x-1)(5x+3)$, that is $x^2+6x+9=5x^2-2x-3$, $x^2-2x-3=0$, $x\in\{-1,3\}$.
+        Check (terms nonzero): $x=3$: $2,6,18$ ($q=3$); $x=-1$: $-2,2,-2$ ($q=-1$). <b>$x=3$ or $x=-1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">$5000$ PLN was deposited at $4\%$ per year with quarterly compounding. How much will be in the account after $2$ years (ignore tax)?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Quarterly $\frac{4\%}{4}=1\%$, $8$ quarters: $K=5000\cdot1.01^8\approx5414.28$. <b>$\approx 5414.28$ PLN</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">How many initial terms of the sequence $1, 2, 4, 8, \ldots$ must be added for the sum to exceed $1000$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $S_n=\frac{1-2^n}{1-2}=2^n-1&gt;1000 \iff 2^n&gt;1001$. $2^9=512$, $2^{10}=1024$. <b>$n=10$</b> (then $S_{10}=1023$).
+      </div></details></li>
+    <li class="zadanie" data-odp="1; 2; 4" data-odp-opis="the three numbers"><span class="poziom">exam-level</span>
+      <div class="tresc">Three numbers form a geometric sequence. Their sum is $7$ and their product is $8$. Find the numbers.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The numbers are $\frac{b}{q}, b, bq$. The product $b^3=8$, so $b=2$. The sum: $\frac2q+2+2q=7$, that is $2q^2-5q+2=0$, $q\in\{2,\frac12\}$.
+        <b>$1, 2, 4$ or $4, 2, 1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Three numbers with sum $15$ form an arithmetic sequence. If we add $1$, $4$ and $19$ to them respectively, we get a geometric sequence. Find these numbers.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The numbers are $5-r, 5, 5+r$ (sum $15$). After adding: $6-r,\ 9,\ 24+r$, so $81=(6-r)(24+r)$, that is $r^2+18r-63=0$, $r\in\{3,-21\}$.
+        Check: $r=3$: $2,5,8 \to 3,9,27$; $r=-21$: $26,5,-16 \to 27,9,3$. <b>$2,5,8$ or $26,5,-16$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>$q$ from two terms</b>: $a_m=a_kq^{m-k}$. For even $m-k$ there are <b>two</b> solutions $q=\pm\ldots$ (e.g. $q^2=4$). Consider both.</li>
+    <li><b>The formula for $S_n$</b> only for $q\neq1$. If $q$ depends on a parameter, treat the case $q=1$ separately.</li>
+    <li><b>Three numbers</b>: $\frac bq, b, bq$ (when the product is given) or the condition $y^2=xz$. Always check that the terms are nonzero.</li>
+    <li><b>Deposits</b>: $p\%$ per year with compounding $m$ times a year gives $\frac{p}{m}\%$ per period and $mn$ periods. Round the result in zloty to the grosz (cent) only at the end.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const rown = (x, m = 2) => (Math.abs(Math.round(x * 10 ** m) / 10 ** m - x) < 1e-9 ? "=" : "\\approx ") + ladnaTex(x, m);
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  // --- 2. Zachowanie wyrazów ---
+  const YM = 9;
+  const w1 = new Wykres($("gq-plot"), { xmin: -0.5, xmax: 10.8, ymin: -YM, ymax: YM, krokY: 2 });
+  function rysujGq() {
+    const a1 = +$("gq-a1").value, q = Math.round(+$("gq-q").value * 10) / 10, N = 10;
+    $("gq-a1-v").textContent = ladna(a1); $("gq-q-v").textContent = ladna(q);
+    const a = n => a1 * q ** (n - 1);
+    const kl = y => Math.max(-YM + 0.3, Math.min(YM - 0.3, y));
+    w1.rysuj(g => {
+      for (let n = 1; n < N; n++) g.odcinek(n, kl(a(n)), n + 1, kl(a(n + 1)), 3);
+      for (let n = 1; n <= N; n++) {
+        const y = a(n), poza = Math.abs(y) > YM - 0.3;
+        g.punkt(n, kl(y), n <= 3 ? `a${"₀₁₂₃"[n]}` : "", poza ? 2 : 1, { pusty: poza });
+      }
+    });
+    let opis;
+    if (q === 0) opis = "a_1, 0, 0, \\ldots";
+    else if (q === 1) opis = "\\text{constant}";
+    else if (q === -1) opis = "\\text{alternating } \\pm a_1";
+    else if (q < 0) opis = Math.abs(q) < 1 ? "\\text{alternating signs, } |a_n|\\to0" : "\\text{alternating signs, } |a_n|\\text{ grows}";
+    else opis = (q > 1) === (a1 > 0) ? "\\text{increasing}" : "\\text{decreasing}";
+    if (q > 0 && q < 1) opis += ",\\ a_n\\to0";
+    if (a1 === 0) opis = "\\text{all zeros}";
+    tex("gq-wynik", `a_n=${ladnaTex(a1)}\\cdot(${ladnaTex(q)})^{n-1},\\ \\ a_{10}${rown(a(10), 3)}\\ \\Rightarrow\\ ${opis}`);
+  }
+  ["gq-a1", "gq-q"].forEach(id => $(id).addEventListener("input", rysujGq));
+  rysujGq();
+
+  // --- 3. Lokata ---
+  const w2 = new Wykres($("lo-plot"), { xmin: -1, xmax: 21, ymin: -1, ymax: 20 });
+  function rysujLo() {
+    const K0 = +$("lo-k").value, p = +$("lo-p").value, N = +$("lo-n").value, m = +$("lo-m").value;
+    $("lo-k-v").textContent = K0; $("lo-p-v").textContent = p; $("lo-n-v").textContent = N;
+    const zl = x => x / 1000; // oś Y w tysiącach zł
+    const skl = t => K0 * (1 + p / (100 * m)) ** (m * t), pros = t => K0 * (1 + p * t / 100);
+    const top = zl(skl(N));
+    Object.assign(w2.z0, { xmin: -N * 0.06, xmax: N * 1.08, krokX: ladnyKrok(N), ymin: -top * 0.06, ymax: top * 1.12, krokY: ladnyKrok(top) });
+    w2.rysuj(g => {
+      g.funkcja(t => zl(pros(t)), 3, { od: 0, do: N });
+      g.funkcja(t => zl(skl(t)), 1, { przerywana: true, od: 0, do: N });
+      const co = Math.max(1, Math.round(N / 15));
+      for (let n = 0; n <= N; n += co) { g.punkt(n, zl(pros(n)), "", 3, { r: 3.5 }); g.punkt(n, zl(skl(n)), "", 1, { r: 3.5 }); }
+      g.odcinek(N, zl(pros(N)), N, zl(skl(N)), 2, false);
+      g.tekst(g.z.xmin, g.z.ymax, " thousand PLN", 4, { dy: 16 });
+    });
+    const Kn = skl(N), Pn = pros(N);
+    const zlote = x => ladnaTex(x).replace(/\B(?=(\d{3})+(?!\d))/g, "\\,");
+    tex("lo-wynik", `K_{${N}}=${K0}\\cdot\\left(1+\\tfrac{${p}}{${100 * m}}\\right)^{${m * N}}\\approx${zlote(Kn)}\\text{ PLN},\\ \\text{simple: } ${zlote(Pn)}\\text{ PLN}`);
+  }
+  ["lo-k", "lo-p", "lo-n", "lo-m"].forEach(id => $(id).addEventListener("input", rysujLo));
+  rysujLo();
+});
+</script>
+</body>
+</html>

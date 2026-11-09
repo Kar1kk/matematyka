@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reflections in the axes and the origin</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Reflections in the axes and the origin</h1>
+  <p class="lead">Reflection in an axis is "folding the sheet along the axis": it changes the sign of <b>one</b> coordinate. Reflection in $O$ is a rotation by $180^\circ$: it changes the sign of <b>both</b>.</p>
+  <p class="wymagania">IX.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Formulas</h2>
+  <table class="tabela">
+    <tr><th>reflection</th><th>$(x,y)\mapsto$</th><th>center of a circle $(a,b)\mapsto$</th></tr>
+    <tr><td>in $Ox$</td><td>$(x,-y)$</td><td>$(a,-b)$</td></tr>
+    <tr><td>in $Oy$</td><td>$(-x,y)$</td><td>$(-a,b)$</td></tr>
+    <tr><td>in $O$</td><td>$(-x,-y)$</td><td>$(-a,-b)$</td></tr>
+  </table>
+  <div class="uwaga">Reflection in the axis $Ox$ changes <b>$y$</b>, not $x$! The point "jumps" across the axis $Ox$, so its height changes.</div>
+  <div class="wzor">
+    <div class="tytul">Image of the circle $(x-a)^2+(y-b)^2=r^2$</div>
+    $$S_{Ox}\colon\ (x-a)^2+(y+b)^2=r^2$$
+    $$S_{Oy}\colon\ (x+a)^2+(y-b)^2=r^2$$
+    $$S_{O}\colon\ (x+a)^2+(y+b)^2=r^2$$
+    <dl><dt>principle</dt><dd>a reflection does not change distances, so the radius stays and the center goes to the image of the center</dd></dl>
+  </div>
+  <p><b>A polygon:</b> find the images of the vertices and join them in the same order. <b>A line / graph:</b> in the equation replace $y\to-y$ ($Ox$), $x\to-x$ ($Oy$) or both ($O$), e.g. $y=f(x)$ goes to $y=-f(x)$, $y=f(-x)$, $y=-f(-x)$. The CKE formula sheet has the formulas for the images of a point under reflections in $Ox$, $Oy$ and a point; the replacement in the equation of a graph follows from them directly.</p>
+  <details class="rozwin"><summary>Composition of two reflections in axes</summary><div>
+    <p>$(x,y)\xrightarrow{Ox}(x,-y)\xrightarrow{Oy}(-x,-y)$, so $S_{Oy}\circ S_{Ox}=S_O$. Two reflections in perpendicular axes give a rotation by $180^\circ$. That is why point reflection preserves the order of the vertices (the orientation), while reflection in an axis reverses it.</p>
+  </div></details>
+
+  <h2 id="demo">2. Interactive: reflecting a polygon</h2>
+  <div class="demo">
+    <p class="opis">Drag the vertices $A,B,C,D$ and play the reflection. Note the order of the letters: after a reflection in an axis they go around the figure the other way, after a point reflection they do not.</p>
+    <canvas id="sy-plot"></canvas>
+    <div class="sterowanie">
+      <button id="sy-ox">▶ in Ox</button>
+      <button id="sy-oy">▶ in Oy</button>
+      <button id="sy-o">▶ in O</button>
+    </div>
+    <div class="wynik" id="sy-wynik"></div>
+  </div>
+
+  <h2 id="demo-okrag">3. Interactive: the image of a circle</h2>
+  <div class="demo">
+    <p class="opis">Drag the center $S$ (blue circle) and change $r$. The images: red in $Ox$, green in $Oy$, purple in $O$.</p>
+    <canvas id="so-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="so-r" min="0.5" max="4" step="0.5" value="1.5"> <span id="so-r-v"></span></label>
+    </div>
+    <div class="wynik" id="so-w1"></div>
+    <div class="wynik" id="so-w2"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>A triangle $A=(1,2)$, $B=(4,1)$, $C=(3,5)$ and the circle $(x-2)^2+(y+3)^2=4$. Find the image of the triangle under reflection in $O$ and the image of the circle under reflection in $Oy$.</p>
+    <ol>
+      <li>$S_O$: we change both signs: $A'=(-1,-2)$, $B'=(-4,-1)$, $C'=(-3,-5)$.</li>
+      <li>The center of the circle $(2,-3)$ goes under $S_{Oy}$ to $(-2,-3)$. The radius $2$ is unchanged.</li>
+    </ol>
+    <p class="odp">$A'B'C'$: $(-1,-2)$, $(-4,-1)$, $(-3,-5)$; circle $(x+2)^2+(y+3)^2=4$</p>
+  </div>
+
+  <h2 id="zadania">5. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Find the images of the point $P=(-3,5)$ under reflection in $Ox$, $Oy$ and $O$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        <b>$(-3,-5)$, $(3,5)$, $(3,-5)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; -4; 3" data-odp-opis="x_S; y_S; r of the image"><span class="poziom">easy</span>
+      <div class="tresc">Find the image of the circle $(x+1)^2+(y-4)^2=9$ under reflection in the origin.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Center $(-1,4)\mapsto(1,-4)$, $r=3$. <b>$(x-1)^2+(y+4)^2=9$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2" data-odp-opis="m; n"><span class="poziom">medium</span>
+      <div class="tresc">The points $A=(2m-1,\ 3)$ and $B=(5,\ n+1)$ are symmetric about the axis $Oy$. Find $m$ and $n$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        In $Oy$: opposite $x$, equal $y$. $2m-1=-5$, $n+1=3$. <b>$m=-2$, $n=2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Find the image of the line $y=2x-3$ under reflection in the axis $Ox$ and in the point $O$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $Ox$: $-y=2x-3$, i.e. $y=-2x+3$. $O$: $-y=2\cdot(-x)-3$, i.e. $y=2x+3$. <b>$y=-2x+3$ and $y=2x+3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="21" data-odp-opis="area"><span class="poziom">exam-level</span>
+      <div class="tresc">$A=(2,1)$, $B=(5,4)$, and $A'$, $B'$ are their images under reflection in $Oy$. Find the area of the quadrilateral $ABB'A'$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $A'=(-2,1)$, $B'=(-5,4)$. $AA'$ and $BB'$ are horizontal, so this is a trapezoid: bases $|AA'|=4$, $|BB'|=10$, height $4-1=3$. $P=\frac{4+10}{2}\cdot3$. <b>$21$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5" data-odp-opis="r"><span class="poziom">exam-level</span>
+      <div class="tresc">The circle $o\colon(x-3)^2+(y-4)^2=r^2$ and its image under reflection in $O$ are externally tangent. Find $r$ and the point of tangency.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The centers $S=(3,4)$, $S'=(-3,-4)$, $|SS'|=10$. External tangency: $|SS'|=r+r$, so $r=5$. The point of tangency lies at the midpoint of $SS'$, i.e. at the center of symmetry. <b>$r=5$, point $(0,0)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>The most common mistake: mixing up the axes. In $Ox$ the $y$ changes, in $Oy$ the $x$ changes. If in doubt, draw a single point.</li>
+    <li>The image of a circle: <b>the radius is unchanged</b>, you transform only the center.</li>
+    <li>The image of a line: substitute $-x$ or $-y$ into the equation and only then rearrange. Check: the image of one point must satisfy the new equation.</li>
+    <li>Give the vertices of the image with the labels $A'$, $B'$… in the same order.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const kw = (zm, a) => a === 0 ? `${zm}^2` : `(${zm}${a > 0 ? "-" : "+"}${ladnaTex(Math.abs(a))})^2`;
+  const rownanie = (a, b, r) => `${kw("x", a)}+${kw("y", b)}=${ladnaTex(r * r)}`;
+  // symetrie: [nazwa TeX, kolor, przekształcenie z parametrem t ∈ [0,1] (animacja „składania”)]
+  const SYM = {
+    ox: ["S_{Ox}", 2, (x, y, t) => [x, y * Math.cos(Math.PI * t)]],
+    oy: ["S_{Oy}", 3, (x, y, t) => [x * Math.cos(Math.PI * t), y]],
+    o:  ["S_{O}",  4, (x, y, t) => [x * Math.cos(Math.PI * t) - y * Math.sin(Math.PI * t), x * Math.sin(Math.PI * t) + y * Math.cos(Math.PI * t)]],
+  };
+
+  // --- 2. Wielokąt ---
+  const w1 = new Wykres($("sy-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) });
+  const pk = w1.przeciagaj([[1, 1], [4, 1], [5, 3], [2, 4]].map(([x, y]) => ({ x, y, siatka: 1, ogranicz: ogr })), () => rysujSy());
+  const NAZWY = ["A", "B", "C", "D"];
+  let stop = null, akt = "ox", tAkt = 0;
+  function rysujSy() {
+    const [nazwa, nr, f] = SYM[akt];
+    const obr = pk.map(p => f(p.x, p.y, tAkt));
+    w1.rysuj(g => {
+      if (tAkt === 1) pk.forEach((p, i) => g.odcinek(p.x, p.y, obr[i][0], obr[i][1], nr, true));
+      g.wielokat(pk.map(p => [p.x, p.y]), 1, { wypelnij: 0.15 });
+      if (tAkt > 0) g.wielokat(obr, nr, { wypelnij: 0.15 });
+      pk.forEach((p, i) => g.punkt(p.x, p.y, NAZWY[i], 1));
+      if (tAkt > 0) obr.forEach(([x, y], i) => g.punkt(x, y, NAZWY[i] + "'", nr, { r: 4 }));
+      if (akt === "o" && tAkt > 0) g.punkt(0, 0, "O", 4, { r: 4 });
+    });
+    if (tAkt < 1) { tex("sy-wynik", tAkt ? "\\dots" : "\\text{Choose a reflection with a button}"); return; }
+    tex("sy-wynik", `${nazwa}\\colon\\ ` + pk.map((p, i) => `${NAZWY[i]}'=(${ladnaTex(obr[i][0])},${ladnaTex(obr[i][1])})`).join(",\\ "));
+  }
+  [["sy-ox", "ox"], ["sy-oy", "oy"], ["sy-o", "o"]].forEach(([id, k]) => $(id).addEventListener("click", () => {
+    if (stop) stop();
+    akt = k;
+    stop = animuj(1800, t => { tAkt = t; rysujSy(); });
+  }));
+  rysujSy();
+
+  // --- 3. Okrąg ---
+  const w2 = new Wykres($("so-plot"), { xmin: -8, xmax: 8, ymin: -7, ymax: 7, rowneSkale: true });
+  const pk2 = w2.przeciagaj([{ x: 3, y: 2, siatka: 1, ogranicz: p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) }) }], rysujSo);
+  function rysujSo() {
+    const r = +$("so-r").value, { x: a, y: b } = pk2[0];
+    $("so-r-v").textContent = ladna(r);
+    w2.rysuj(g => {
+      [[a, -b, 2, "S'(Ox)"], [-a, b, 3, "S'(Oy)"], [-a, -b, 4, "S'(O)"]].forEach(([x, y, nr, et]) => {
+        g.odcinek(a, b, x, y, nr, true);
+        g.okrag(x, y, r, nr, { wypelnij: 0.08 });
+        g.punkt(x, y, et, nr, { r: 4 });
+      });
+      g.okrag(a, b, r, 1, { wypelnij: 0.12 });
+      g.punkt(a, b, "S", 1);
+    });
+    tex("so-w1", `o\\colon ${rownanie(a, b, r)},\\quad S_{Ox}\\colon ${rownanie(a, -b, r)}`);
+    tex("so-w2", `S_{Oy}\\colon ${rownanie(-a, b, r)},\\quad S_{O}\\colon ${rownanie(-a, -b, r)}`);
+  }
+  $("so-r").addEventListener("input", rysujSo);
+  rysujSo();
+});
+</script>
+</body>
+</html>

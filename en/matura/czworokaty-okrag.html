@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quadrilaterals inscribed in a circle and circumscribed about a circle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Quadrilaterals inscribed in a circle and circumscribed about a circle</h1>
+  <p class="lead">A circle can be circumscribed about a quadrilateral when opposite angles add up to $180^\circ$ – because together they “see” the whole circle. A circle can be inscribed in a quadrilateral when the sums of opposite sides are equal – because each side consists of two tangent segments.</p>
+  <p class="wymagania">VIII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wpisany">1. A quadrilateral inscribed in a circle</h2>
+  <div class="twierdzenie"><b>Theorem on a cyclic quadrilateral</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    A convex quadrilateral $ABCD$ can be inscribed in a circle if and only if
+    $$\alpha+\gamma=\beta+\delta=180^\circ$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>$\Rightarrow$</b> Angle $\alpha$ (at $A$) is an inscribed angle subtending arc $BCD$, and $\gamma$ subtends arc $BAD$. These two arcs make up the whole circle, so the corresponding central angles add up to $360^\circ$. Inscribed angles are half of them (<a href="katy-w-okregu.html">inscribed angle theorem</a>): $\alpha+\gamma=180^\circ$. Likewise $\beta+\delta=180^\circ$ (or from the sum $360^\circ$).</p>
+      <p><b>$\Leftarrow$</b> Let $\alpha+\gamma=180^\circ$. Exactly one circle passes through $A$, $B$, $D$. Ray $AC$ meets it (after crossing diagonal $BD$) at a point $C'$ on the arc $BD$ not containing $A$, so by the part $\Rightarrow$: $|\angle BC'D|=180^\circ-\alpha=\gamma$.</p>
+      <ul>
+        <li>If $C$ lay inside the circle ($C$ between $A$ and $C'$): angle $BCA$ is an exterior angle of triangle $BCC'$, so $|\angle BCA|&gt;|\angle BC'A|$; likewise $|\angle ACD|&gt;|\angle AC'D|$. Adding gives $\gamma&gt;|\angle BC'D|=\gamma$ – a contradiction.</li>
+        <li>If $C$ lay outside ($C'$ between $A$ and $C$): the same inequalities the other way round, $\gamma&lt;\gamma$ – a contradiction.</li>
+      </ul>
+      <p>Hence $C=C'$ lies on the circle. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <p>Consequences: a parallelogram inscribed in a circle is a rectangle ($\alpha=\gamma$ and $\alpha+\gamma=180^\circ$); a trapezoid inscribed in a circle is isosceles (task 5).</p>
+  <div class="demo">
+    <p class="opis">Drag the vertices along the circle. The red arc “sees” angle $\alpha$, the green one angle $\gamma$; together they make the whole circle, so $\alpha+\gamma=180^\circ$. Tick “$C$ free” and pull $C$ off the circle – the sum stops being $180^\circ$.</p>
+    <canvas id="co-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="co-wolny"> $C$ free (off the circle)</label>
+    </div>
+    <div class="wynik" id="co-wynik"></div>
+  </div>
+
+  <h2 id="opisany">2. A quadrilateral circumscribed about a circle</h2>
+  <div class="twierdzenie"><b>Theorem on a tangential quadrilateral</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    A circle can be inscribed in a convex quadrilateral $ABCD$ if and only if
+    $$|AB|+|CD|=|AD|+|BC|$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>$\Rightarrow$</b> From each vertex come two equal tangent segments (<a href="katy-w-okregu.html">tangent segments theorem</a>): $x$ from $A$, $y$ from $B$, $z$ from $C$, $t$ from $D$. Then</p>
+      $$|AB|+|CD|=(x+y)+(z+t)$$
+      $$|BC|+|AD|=(y+z)+(t+x)$$
+      <p>The right-hand sides are equal. $\blacksquare$</p>
+      <p><b>$\Leftarrow$</b> Let $|AB|+|CD|=|AD|+|BC|$. The bisectors of angles $A$ and $B$ meet at a point equidistant from $AD$, $AB$, $BC$ – so there is a circle tangent to these three sides. Suppose it is not tangent to $CD$. Draw a second tangent from $C$; it meets line $AD$ at $D'\ne D$. Quadrilateral $ABCD'$ is tangential, so by the part $\Rightarrow$: $|AB|+|CD'|=|AD'|+|BC|$. Subtracting from the assumption:</p>
+      $$|CD|-|CD'|=|AD|-|AD'|=\pm|DD'|$$
+      <p>so in triangle $CDD'$ one side equals the difference of the other two – a contradiction with the triangle inequality. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="wzor"><div class="tytul">Area of a tangential quadrilateral <span class="cke nie" title="This formula is not on the CKE sheet – you have to remember or derive it">not on CKE sheet</span></div>
+    $$P=p\cdot r,\qquad p=\tfrac12\text{perimeter}$$
+    <dl><dt>why</dt><dd>split the quadrilateral into 4 triangles with a common vertex at the centre of the circle; each has height $r$</dd>
+        <dt>tangential trapezoid</dt><dd>height $h=2r$, and the sum of the bases = the sum of the legs</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Drag the green tangency points. Segments of the same colour (coming from one vertex) are always equal – that is why the sums of opposite sides agree.</p>
+    <canvas id="op-plot"></canvas>
+    <div class="wynik" id="op-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>An isosceles trapezoid with bases $8$ and $2$ is circumscribed about a circle. Find the leg, the radius of the circle and the area of the trapezoid.</p>
+    <ol>
+      <li>Inscribed circle: $8+2=2c$, so the leg is $c=5$.</li>
+      <li>The projection of the leg onto the longer base: $\frac{8-2}{2}=3$, so $h=\sqrt{25-9}=4$ and $r=\frac h2=2$.</li>
+      <li>$P=\frac{8+2}{2}\cdot4=20$ (check: $P=p\cdot r=10\cdot2$).</li>
+    </ol>
+    <p class="odp">$c=5$, $r=2$, $P=20$</p>
+  </div>
+
+  <h2 id="zadania">4. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Consecutive angles of a quadrilateral measure $80^\circ$, $110^\circ$, $100^\circ$, $70^\circ$. Can a circle be circumscribed about it?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Opposite angles: $80^\circ+100^\circ=180^\circ$ and $110^\circ+70^\circ=180^\circ$. <b>Yes.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Quadrilateral $ABCD$ is circumscribed about a circle, $|AB|=7$, $|BC|=9$, $|CD|=8$. Find $|AD|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $7+8=9+|AD|$. <b>$|AD|=6$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">A quadrilateral circumscribed about a circle of radius $2$ has perimeter $20$. Find its area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P=p\cdot r=10\cdot2$. <b>$P=20$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 15/2; 45" data-odp-opis="shorter base; leg; area"><span class="poziom">medium</span>
+      <div class="tresc">An isosceles trapezoid is circumscribed about a circle of radius $3$, and its longer base has length $12$. Find the shorter base, the leg and the area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $h=2r=6$. Leg $c$, shorter base $b$: $12+b=2c$, projection of the leg $\frac{12-b}{2}=12-c$. By the Pythagorean theorem $(12-c)^2+36=c^2$, so $144-24c+36=0$, $c=7.5$, $b=3$. $P=\frac{12+3}{2}\cdot6=45$. <b>$b=3$, $c=7.5$, $P=45$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that a trapezoid inscribed in a circle is isosceles.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Trapezoid $ABCD$, $AB\parallel CD$. Angles at leg $AD$: $|\angle A|+|\angle D|=180^\circ$. The quadrilateral is cyclic, so $|\angle A|+|\angle C|=180^\circ$. Hence $|\angle C|=|\angle D|$ – the angles at base $CD$ are equal. A trapezoid with equal angles at a base is isosceles (the altitudes from $C$ and $D$ give congruent right triangles, ASA). <b>Q.E.D.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7; 16sqrt(3)" data-odp-opis="length of AC; area"><span class="poziom">exam-level</span>
+      <div class="tresc">Quadrilateral $ABCD$ is inscribed in a circle, $|AB|=3$, $|BC|=5$, $|\angle ABC|=120^\circ$, $|AD|=|CD|$. Find $|AC|$ and the area of the quadrilateral.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Law of cosines: $|AC|^2=9+25-2\cdot15\cdot\cos120^\circ=49$, $|AC|=7$. It is cyclic, so $|\angle ADC|=60^\circ$, and $|AD|=|CD|$ – triangle $ACD$ is equilateral with side $7$.
+        $$P=\tfrac12\cdot3\cdot5\cdot\tfrac{\sqrt3}{2}+\tfrac{49\sqrt3}{4}$$
+        <b>$|AC|=7$, $P=16\sqrt3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. On the exam</h2>
+  <ul>
+    <li>Write the use of a theorem together with its condition: “the quadrilateral is inscribed in a circle, so $\alpha+\gamma=180^\circ$” – this earns points.</li>
+    <li>In a cyclic quadrilateral look for inscribed angles subtending the same arc (e.g. $|\angle BAC|=|\angle BDC|$) – this is the strongest tool.</li>
+    <li>Tangential quadrilateral: immediately mark the tangent segments $x,y,z,t$. Tangential trapezoid: $h=2r$ and $a+b=c+d$.</li>
+    <li>Both theorems concern <b>convex</b> quadrilaterals.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 1. Czworokąt wpisany ---
+  const R = 3, O = { x: 0, y: 0 }, PI2 = 2 * Math.PI;
+  const w1 = new Wykres($("co-plot"), { xmin: -4, xmax: 4, ymin: -3.8, ymax: 3.8, rowneSkale: true });
+  const ang = P => Math.atan2(P.y - O.y, P.x - O.x);
+  const mod = t => ((t % PI2) + PI2) % PI2;
+  // punkt na okręgu, w łuku między sąsiadami (kolejność A, B, C, D przeciwnie do zegara)
+  const wLuku = i => p => {
+    if (i === 2 && $("co-wolny").checked) return wPolu(3.8, 3.6)(p);
+    const tp = ang(pc[(i + 3) % 4]), tn = ang(pc[(i + 1) % 4]);
+    const span = mod(tn - tp), d = Math.max(0.2, Math.min(span - 0.2, mod(Math.atan2(p.y, p.x) - tp)));
+    return { x: R * Math.cos(tp + d), y: R * Math.sin(tp + d) };
+  };
+  const pc = w1.przeciagaj([200, 290, 10, 110].map((s, i) => ({ x: R * Math.cos(s / st), y: R * Math.sin(s / st), ogranicz: wLuku(i) })), rysujCo);
+  function rysujCo() {
+    const [A, B, C, D] = pc;
+    if (!$("co-wolny").checked) { const n = wLuku(2)(C); C.x = n.x; C.y = n.y; }
+    const naOk = Math.abs(odl(O, C) - R) < 1e-6;
+    const al = kat(A, D, B), be = kat(B, A, C), ga = kat(C, B, D), de = kat(D, C, A);
+    const tB = ang(B), tD = ang(D);
+    w1.rysuj(g => {
+      g.okrag(0, 0, R, 1, { przerywana: true });
+      if (naOk) {
+        g.luk(0, 0, R, tB, tB + mod(tD - tB), 2, { grubosc: 5 });
+        g.luk(0, 0, R, tD, tD + mod(tB - tD), 3, { grubosc: 5 });
+      }
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y], [D.x, D.y]], 1, { wypelnij: 0.1 });
+      lukKata(g, A, D, B, 0.55, 2); lukKata(g, C, B, D, 0.55, 3);
+      lukKata(g, B, A, C, 0.45, 4); lukKata(g, D, C, A, 0.45, 4);
+      const S = { x: (A.x + B.x + C.x + D.x) / 4, y: (A.y + B.y + C.y + D.y) / 4 };
+      [[A, "A"], [B, "B"], [C, "C"], [D, "D"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+    });
+    tex("co-wynik", `\\alpha+\\gamma=${stopnie(al)}+${stopnie(ga)}=${stopnie(al + ga)},\\quad \\beta+\\delta=${stopnie(be + de)}`);
+  }
+  $("co-wolny").addEventListener("change", rysujCo);
+  rysujCo();
+
+  // --- 2. Czworokąt opisany ---
+  const r = 1.8, GMIN = 0.5, GMAX = 2.44;
+  const w2 = new Wykres($("op-plot"), { xmin: -5.6, xmax: 5.6, ymin: -5.6, ymax: 5.6, rowneSkale: true });
+  const sty = i => p => {
+    const tp = ang(pt[(i + 3) % 4]), tn = ang(pt[(i + 1) % 4]), span = mod(tn - tp);
+    const lo = Math.max(GMIN, span - GMAX), hi = Math.min(GMAX, span - GMIN);
+    let d = mod(Math.atan2(p.y, p.x) - tp);
+    d = lo <= hi ? Math.max(lo, Math.min(hi, d)) : span / 2;
+    return { x: r * Math.cos(tp + d), y: r * Math.sin(tp + d) };
+  };
+  const pt = w2.przeciagaj([0.3, 1.9, 3.3, 4.7].map((t, i) => ({ x: r * Math.cos(t), y: r * Math.sin(t), ogranicz: sty(i) })), rysujOp);
+  function rysujOp() {
+    const t = pt.map(ang);
+    // wierzchołek i leży między punktami styczności i oraz i+1
+    const V = [0, 1, 2, 3].map(i => {
+      const dl = mod(t[(i + 1) % 4] - t[i]), m = t[i] + dl / 2, d = r / Math.cos(dl / 2);
+      return { x: d * Math.cos(m), y: d * Math.sin(m), s: r * Math.tan(dl / 2) };
+    });
+    const nazwy = ["A", "B", "C", "D"];
+    const R = Math.max(3.2, ...V.map(W => Math.hypot(W.x, W.y))) + 0.7; // kadr dopasowany do czworokąta
+    w2.zakres({ xmin: -R, xmax: R, ymin: -R, ymax: R });
+    w2.rysuj(g => {
+      g.okrag(0, 0, r, 1, { wypelnij: 0.08 });
+      V.forEach((W, i) => {
+        const T1 = pt[i], T2 = pt[(i + 1) % 4], nr = i + 1;
+        g.odcinek(W.x, W.y, T1.x, T1.y, nr, false); g.odcinek(W.x, W.y, T2.x, T2.y, nr, false);
+        g.tekst((W.x + T1.x) / 2, (W.y + T1.y) / 2, ladna(W.s), nr, { dx: 4, dy: -4 });
+        g.tekst((W.x + T2.x) / 2, (W.y + T2.y) / 2, ladna(W.s), nr, { dx: 4, dy: -4 });
+      });
+      pt.forEach(T => { g.odcinek(0, 0, T.x, T.y, 3); g.punkt(T.x, T.y, "", 3); });
+      V.forEach((W, i) => { g.punkt(W.x, W.y, "", 2, { r: 3.5 }); etykieta(g, W, O, nazwy[i], 2); });
+    });
+    const bok = (i, j) => odl(V[i], V[j]);
+    const ab = bok(0, 1), bc = bok(1, 2), cd = bok(2, 3), da = bok(3, 0), f = ladnaTex;
+    tex("op-wynik", `\\begin{aligned}|AB|+|CD|&=${f(ab)}+${f(cd)}=${f(ab + cd)}\\\\|BC|+|AD|&=${f(bc)}+${f(da)}=${f(bc + da)}\\end{aligned}`);
+  }
+  rysujOp();
+});
+</script>
+</body>
+</html>

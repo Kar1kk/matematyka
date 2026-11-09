@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trigonometric equations</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Trigonometric equations</h1>
+  <p class="lead">You reduce every equation to $\sin x=m$, $\cos x=m$ or $\tan x=m$. On the unit circle such an equation usually has <b>two</b> points; then you add full turns $+2k\pi$ (for the tangent $+k\pi$).</p>
+  <p class="wymagania">VII.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="elementarne">1. Elementary equations</h2>
+  <div class="wzor">
+    <div class="tytul">$\sin x=m$, $\;|m|\le1$</div>
+    $$x=x_0+2k\pi\ \vee\ x=\pi-x_0+2k\pi$$
+    <dl><dt>$x_0$</dt><dd>any solution, e.g. from $\left[-\frac\pi2,\frac\pi2\right]$; for $|m|&gt;1$ there are no solutions</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">$\cos x=m$, $\;|m|\le1$</div>
+    $$x=x_0+2k\pi\ \vee\ x=-x_0+2k\pi$$
+    <dl><dt>$x_0$</dt><dd>the solution from $[0,\pi]$ (cosine is even, hence $\pm x_0$)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">$\tan x=m$, $\;m\in\R$</div>
+    $$x=x_0+k\pi$$
+    <dl><dt>$x_0$</dt><dd>the solution from $\left(-\frac\pi2,\frac\pi2\right)$; it always exists</dd></dl>
+  </div>
+  <p>Everywhere $k\in\Z$. Special cases (one family): $\sin x=0\iff x=k\pi$, $\;\sin x=\pm1\iff x=\pm\frac\pi2+2k\pi$, $\;\cos x=0\iff x=\frac\pi2+k\pi$.</p>
+  <div class="wzor">
+    <div class="tytul">Equality of the same functions</div>
+    $$\sin a=\sin b\iff$$
+    $$a=b+2k\pi\ \vee\ a=\pi-b+2k\pi$$
+    $$\cos a=\cos b\iff a=\pm b+2k\pi$$
+    $$\tan a=\tan b\iff a=b+k\pi$$
+    <dl><dt>note</dt><dd>for $\tan$ both arguments must belong to the domain</dd></dl>
+  </div>
+
+  <h2 id="demo">2. Interactive: the line $y=m$ and the unit circle</h2>
+  <div class="demo">
+    <p class="opis">Move $m$ (it snaps to the values $0,\pm\frac12,\pm\frac{\sqrt2}2,\pm\frac{\sqrt3}2,\pm1$; for the tangent to $\pm\frac{\sqrt3}{3},\pm1,\pm\sqrt3$). The graph shows all the solutions; the red ones lie in the interval $[0,2\pi]$ (shaded). On the circle the same solutions are just two points.</p>
+    <canvas id="rw-plot" style="height:280px"></canvas>
+    <canvas id="rw-okrag" style="height:220px; margin-top:8px"></canvas>
+    <div class="sterowanie">
+      <label>equation <select id="rw-f"><option value="sin">sin x = m</option><option value="cos">cos x = m</option><option value="tan">tan x = m</option></select></label>
+      <label>$m$ <input type="range" id="rw-m" min="-2" max="2" step="0.01" value="0.5"> <span id="rw-m-v"></span></label>
+    </div>
+    <div class="wynik" id="rw-wynik"></div>
+    <div class="wynik" id="rw-wynik2"></div>
+  </div>
+
+  <h2 id="metoda">3. Types of equations and the method</h2>
+  <ol>
+    <li><b>Elementary with a composite argument:</b> $\sin\left(2x-\frac\pi3\right)=\frac12$ – substitute $u=2x-\frac\pi3$, solve for $u$, go back to $x$ (the period is also divided by $2$: $+k\pi$).</li>
+    <li><b>Reducible to a quadratic:</b> use the Pythagorean identity to change everything into one function, $t=\sin x$, <b>$t\in[-1,1]$</b>, reject roots outside the interval.</li>
+    <li><b>Double angle:</b> $\sin2x=2\sin x\cos x$; for $\cos2x$ choose the form with the same function as the rest of the equation.</li>
+    <li><b>Factoring:</b> move everything to one side and factor out the common factor. <b>Never divide</b> by $\sin x$ or $\cos x$ – you lose solutions (demo below).</li>
+    <li><b>$\sin f=\sin g$, $\cos f=\cos g$:</b> the formulas from the box above. When $\sin f=\cos g$, convert: $\cos g=\sin\left(\frac\pi2-g\right)$.</li>
+  </ol>
+  <div class="uwaga">Trigonometric inequalities were removed from the 2024 core curriculum – on the exam there are only equations.</div>
+
+  <div class="demo">
+    <p class="opis">The equation $\sin2x=\sin x$ in $[0,2\pi]$. Tick “dividing by $\sin x$” and see which solutions disappear (those where $\sin x=0$).</p>
+    <canvas id="dz-plot" style="height:260px"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="dz-dziel"> dividing by $\sin x$ (mistake)</label>
+    </div>
+    <div class="wynik" id="dz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Solve the equation $2\sin^2x-\sin x-1=0$.</p>
+    <ol>
+      <li>$t=\sin x$, $t\in[-1,1]$: $\;2t^2-t-1=0$, $\Delta=9$, $t=1$ or $t=-\frac12$. Both are in the interval.</li>
+      <li>$\sin x=1\iff x=\frac\pi2+2k\pi$.</li>
+      <li>$\sin x=-\frac12$: $x_0=-\frac\pi6$, so $x=-\frac\pi6+2k\pi$ or $x=\pi+\frac\pi6+2k\pi=\frac{7\pi}6+2k\pi$.</li>
+    </ol>
+    <p class="odp">$x=\frac\pi2+2k\pi\ \vee\ x=-\frac\pi6+2k\pi\ \vee\ x=\frac{7\pi}6+2k\pi,\ k\in\Z$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $\cos x=-\frac{\sqrt2}{2}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x_0=\frac{3\pi}4$ (second quadrant). <b>$x=\pm\frac{3\pi}{4}+2k\pi$, $k\in\Z$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="pi/3; 4pi/3" data-odp-opis="solutions in [0; 2π] (separate with semicolons)"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $\tan x=\sqrt3$ in the interval $[0,2\pi]$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x=\frac\pi3+k\pi$; in the interval $k=0,1$. <b>$x\in\left\{\frac\pi3,\frac{4\pi}3\right\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $2\cos^2x+3\sin x-3=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2(1-\sin^2x)+3\sin x-3=0\iff2t^2-3t+1=0$, $t=\sin x$. $t=1$ or $t=\frac12$.
+        <b>$x=\frac\pi2+2k\pi\ \vee\ x=\frac\pi6+2k\pi\ \vee\ x=\frac{5\pi}6+2k\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="pi/6; pi/2; 5pi/6; 3pi/2" data-odp-opis="solutions in [0; 2π] (separate with semicolons)"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $\sin2x=\cos x$ in the interval $[0,2\pi]$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2\sin x\cos x-\cos x=0\iff\cos x(2\sin x-1)=0$. $\cos x=0$: $\frac\pi2,\frac{3\pi}2$; $\sin x=\frac12$: $\frac\pi6,\frac{5\pi}6$.
+        <b>$x\in\left\{\frac\pi6,\frac\pi2,\frac{5\pi}6,\frac{3\pi}2\right\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $\sin3x=\sin x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $3x=x+2k\pi$ or $3x=\pi-x+2k\pi$, that is $x=k\pi$ or $4x=\pi+2k\pi$.
+        <b>$x=k\pi\ \vee\ x=\frac\pi4+\frac{k\pi}2$, $k\in\Z$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2pi/3; pi; 4pi/3" data-odp-opis="solutions in [0; 2π] (separate with semicolons)"><span class="poziom">exam-level</span>
+      <div class="tresc">Find all solutions of the equation $\cos2x+3\cos x+2=0$ that belong to the interval $[0,2\pi]$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\cos2x=2\cos^2x-1$: $\;2t^2+3t+1=0$, $t=\cos x\in[-1,1]$. $t=-1$ or $t=-\frac12$.
+        $\cos x=-1$: $x=\pi$. $\cos x=-\frac12$: $x=\frac{2\pi}3$ or $x=\frac{4\pi}3$.
+        <b>$x\in\left\{\frac{2\pi}3,\pi,\frac{4\pi}3\right\}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>Leaving out “$k\in\Z$” in a general solution costs a point. For $\tan$ the period is $\pi$.</li>
+    <li>After the substitution $t=\sin x$ write $t\in[-1,1]$ and explicitly reject e.g. $t=2$.</li>
+    <li>Dividing by an expression containing the unknown loses solutions – factor out instead.</li>
+    <li>For solutions in an interval, list consecutive values of $k$ and check the endpoints (whether $0$ and $2\pi$ belong).</li>
+    <li>When the equation contains $\tan x$, write the domain $x\neq\frac\pi2+k\pi$ and check the result against it.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const PI = Math.PI, F = { sin: Math.sin, cos: Math.cos, tan: Math.tan };
+  const piTex = k => { // kπ/12 → TeX
+    if (k === 0) return "0";
+    const g = (a, b) => b ? g(b, a % b) : Math.abs(a), d = g(k, 12), l = Math.abs(k / d), m = 12 / d;
+    return (k < 0 ? "-" : "") + (m === 1 ? `${l === 1 ? "" : l}\\pi` : `\\frac{${l === 1 ? "" : l}\\pi}{${m}}`);
+  };
+  const xTex = x => { const k = x / (PI / 12); return Math.abs(k - Math.round(k)) < 1e-6 ? piTex(Math.round(k)) : ladnaTex(x); };
+  const rw = x => (/[,.]/.test(xTex(x)) ? "\\approx" : "=") + xTex(x);
+  const S2 = Math.SQRT2 / 2, S3 = Math.sqrt(3);
+  const SPEC = { sin: [0, 0.5, S2, S3 / 2, 1], cos: [0, 0.5, S2, S3 / 2, 1], tan: [0, S3 / 3, 1, S3] };
+  const MTEX = [[0.5, "\\frac12"], [S2, "\\frac{\\sqrt2}2"], [S3 / 2, "\\frac{\\sqrt3}2"], [S3 / 3, "\\frac{\\sqrt3}3"], [S3, "\\sqrt3"]];
+  const mTex = m => { for (const [v, t] of MTEX) if (Math.abs(Math.abs(m) - v) < 1e-9) return (m < 0 ? "-" : "") + t; return ladnaTex(m); };
+
+  // rozwiązania równania f(x)=m w przedziale [a,b]: { x0, rodziny: [[start, okres]], lista }
+  function rozw(f, m, a, b) {
+    let rodz = [];
+    if (f === "tan") rodz = [[Math.atan(m), PI]];
+    else if (Math.abs(m) <= 1 + 1e-12) {
+      const mm = Math.max(-1, Math.min(1, m));
+      if (f === "sin") { const x0 = Math.asin(mm); rodz = Math.abs(Math.abs(mm) - 1) < 1e-12 ? [[x0, 2 * PI]] : [[x0, 2 * PI], [PI - x0, 2 * PI]]; }
+      else { const x0 = Math.acos(mm); rodz = x0 < 1e-12 || Math.abs(x0 - PI) < 1e-12 ? [[x0, 2 * PI]] : [[x0, 2 * PI], [-x0, 2 * PI]]; }
+    }
+    const lista = [];
+    rodz.forEach(([s, T]) => { for (let k = Math.ceil((a - s) / T - 1e-9); s + k * T <= b + 1e-9; k++) lista.push(s + k * T); });
+    return { rodz, lista: lista.sort((u, v) => u - v) };
+  }
+
+  // --- 2. Wykres + okrąg ---
+  const w1 = new Wykres($("rw-plot"), { xmin: -2 * PI - 0.3, xmax: 4 * PI + 0.3, ymin: -2.3, ymax: 2.3, krokX: PI, formatX: Wykres.pi });
+  const w2 = new Wykres($("rw-okrag"), { xmin: -1.6, xmax: 1.6, ymin: -1.3, ymax: 1.3, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  function rysujRw() {
+    const f = $("rw-f").value;
+    let m = +$("rw-m").value;
+    for (const v of SPEC[f]) for (const s of [v, -v]) if (Math.abs(m - s) < 0.025) m = s;
+    $("rw-m-v").textContent = ladna(m);
+    const { rodz, lista } = rozw(f, m, w1.z0.xmin, w1.z0.xmax);
+    w1.rysuj(g => {
+      g.obszar(() => g.z.ymax, () => g.z.ymin, 0, 2 * PI, 4, 0.08);
+      g.funkcja(F[f], 1);
+      g.odcinek(g.z.xmin, m, g.z.xmax, m, 2, false);
+      lista.forEach(x => {
+        const w = x > -1e-9 && x < 2 * PI + 1e-9;
+        g.odcinek(x, 0, x, m, w ? 2 : 3);
+        g.punkt(x, m, "", w ? 2 : 3, { r: 4 });
+      });
+    });
+    w2.rysuj(g => {
+      g.okrag(0, 0, 1, 1);
+      if (f === "sin") g.odcinek(g.z.xmin, m, g.z.xmax, m, 2, false);
+      else if (f === "cos") g.odcinek(m, g.z.ymin, m, g.z.ymax, 2, false);
+      else { g.odcinek(1, g.z.ymin, 1, g.z.ymax, 3); g.prosta(0, 0, 1, m, 2, true); g.punkt(1, m, "", 2, { r: 4 }); }
+      rodz.forEach(([s]) => {
+        const k = f === "tan" ? [s, s + PI] : [s];
+        k.forEach(t => { g.odcinek(0, 0, Math.cos(t), Math.sin(t), 4, false); g.punkt(Math.cos(t), Math.sin(t), "", 2); });
+      });
+    });
+    const fn = { sin: "\\sin", cos: "\\cos", tan: "\\tan" }[f];
+    let ogol;
+    if (!rodz.length) ogol = "\\text{no solutions, since }|m|>1";
+    else if (f === "tan") ogol = `x${rw(rodz[0][0])}+k\\pi`.replace(/x=0\+/g, "x=");
+    else ogol = rodz.map(([s]) => `x${rw(s)}+2k\\pi`).join("\\ \\vee\\ ").replace(/x=0\+/g, "x=");
+    if (m === 0 && f !== "tan") ogol = f === "sin" ? "x=k\\pi" : "x=\\frac{\\pi}{2}+k\\pi";
+    tex("rw-wynik", `${fn} x=${mTex(m)}:\\quad ${ogol}${rodz.length ? ",\\ k\\in\\Z" : ""}`);
+    const wP = lista.filter(x => x > -1e-9 && x < 2 * PI + 1e-9);
+    tex("rw-wynik2", rodz.length ? `\\text{in }[0,2\\pi]:\\ x\\in\\left\\{${wP.map(xTex).join(",\\ ")}\\right\\}` : "\\text{ }");
+  }
+  $("rw-f").addEventListener("change", () => { if ($("rw-f").value !== "tan" && Math.abs(+$("rw-m").value) > 1) $("rw-m").value = 0.5; rysujRw(); });
+  $("rw-m").addEventListener("input", rysujRw);
+  rysujRw();
+
+  // --- 3. Dzielenie gubi rozwiązania ---
+  const w3 = new Wykres($("dz-plot"), { xmin: -0.3, xmax: 2 * PI + 0.3, ymin: -1.4, ymax: 1.4, krokX: PI / 3, formatX: Wykres.pi });
+  function rysujDz() {
+    const dziel = $("dz-dziel").checked;
+    const zera = [0, PI, 2 * PI], cosy = [PI / 3, 5 * PI / 3];
+    w3.rysuj(g => {
+      g.funkcja(x => Math.sin(2 * x), 1);
+      g.funkcja(Math.sin, 3);
+      g.tekst(PI / 4, 1, "sin 2x", 1, { dy: -8, gruby: true }); g.tekst(PI / 2, 1, "sin x", 3, { dx: 6, dy: -8, gruby: true });
+      cosy.forEach(x => g.punkt(x, Math.sin(x), "", 2));
+      zera.forEach(x => g.punkt(x, 0, dziel ? "lost" : "", dziel ? "--plot-axis" : 2, { pusty: dziel }));
+    });
+    tex("dz-wynik", dziel
+      ? "2\\cos x=1\\Rightarrow x\\in\\left\\{\\frac\\pi3,\\frac{5\\pi}3\\right\\}\\quad\\textcolor{red}{\\text{missing }0,\\ \\pi,\\ 2\\pi}"
+      : "\\sin x(2\\cos x-1)=0\\Rightarrow x\\in\\left\\{0,\\frac\\pi3,\\pi,\\frac{5\\pi}3,2\\pi\\right\\}");
+  }
+  $("dz-dziel").addEventListener("change", rysujDz);
+  rysujDz();
+});
+</script>
+</body>
+</html>

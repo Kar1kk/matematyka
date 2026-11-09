@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cylinder, cone, sphere</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Cylinder, cone, sphere</h1>
+  <p class="lead">Solids of revolution are formed by rotating a plane figure about an axis: a rectangle, a right triangle, a semicircle. Their <b>axial cross-section</b> is that figure together with its reflection, and in it you compute almost everything.</p>
+  <p class="wymagania">X.4, X.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Formulas <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></h2>
+  <div class="dwie">
+    <div class="wzor"><div class="tytul">Cylinder</div>
+      $$V=\pi r^2h,\qquad P_b=2\pi rh$$
+      $$P_c=2\pi r(r+h)$$
+      <dl><dt>axial cross-section</dt><dd>a rectangle $2r\times h$</dd></dl></div>
+    <div class="wzor"><div class="tytul">Cone</div>
+      $$V=\frac13\pi r^2h,\qquad P_b=\pi rl$$
+      $$P_c=\pi r(r+l),\quad l^2=r^2+h^2$$
+      <dl><dt>axial cross-section</dt><dd>an isosceles triangle: base $2r$, legs $l$ (slant height)</dd></dl></div>
+  </div>
+  <div class="wzor"><div class="tytul">Sphere</div>
+    $$V=\frac43\pi r^3,\qquad P=4\pi r^2$$
+    <dl><dt>axial cross-section</dt><dd>a great circle of radius $r$; every plane section is a circle</dd></dl></div>
+  <div class="definicja"><b>Angles in a cone</b> The <b>apex angle</b> $2\alpha$ is the angle between opposite slant lines (the angle at the apex of the axial cross-section): $\sin\alpha=\frac rl$. The <b>angle between the slant line and the base</b> $\beta$: $\cos\beta=\frac rl$, $\tan\beta=\frac hr$, and $\alpha+\beta=90^\circ$.</div>
+  <div class="uwaga">The lateral surface of a cone, when unrolled, is a circular sector of radius $l$ and arc length $2\pi r$; its central angle is $\frac{r}{l}\cdot360^\circ$ (worth remembering).</div>
+
+  <h2 id="demo">2. Interactive: rotation creates a solid</h2>
+  <div class="demo">
+    <p class="opis">Choose a figure and press ▶: the red figure rotates about the axis and “sweeps out” the solid. Show the axial cross-section, rotate the scene with your finger. Below: the axial cross-section with the angles.</p>
+    <canvas id="ob-plot"></canvas>
+    <div class="sterowanie">
+      <button id="ob-walec" class="wtorny">cylinder</button>
+      <button id="ob-stozek" class="wtorny aktywny">cone</button>
+      <button id="ob-kula" class="wtorny">sphere</button>
+      <button id="ob-start">▶ Rotate</button>
+      <label>$r$ <input type="range" id="ob-r" min="0.5" max="2" step="0.1" value="1.2"></label>
+      <label>$h$ <input type="range" id="ob-h" min="0.5" max="3.5" step="0.1" value="2.5"></label>
+      <label><input type="checkbox" id="ob-prz"> axial cross-section</label>
+    </div>
+    <canvas id="ob-2d" style="height:240px"></canvas>
+    <div class="wynik" id="ob-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>The axial cross-section of a cone is an equilateral triangle of side $6$. Find the volume, the total surface area and the apex angle of the cone.</p>
+    <ol>
+      <li>The side of the triangle is the slant height and the diameter: $l=6$, $r=3$. The height of the equilateral triangle: $h=\frac{6\sqrt3}{2}=3\sqrt3$.</li>
+      <li>$V=\frac13\pi\cdot9\cdot3\sqrt3=9\sqrt3\pi$, $\;P_c=\pi\cdot3\cdot(3+6)=27\pi$.</li>
+      <li>The angle at the apex of an equilateral triangle: $60^\circ$.</li>
+    </ol>
+    <p class="odp">$V=9\sqrt3\pi$, $P_c=27\pi$, apex angle $60^\circ$</p>
+  </div>
+
+  <h2 id="zadania">4. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="45pi; 48pi" data-odp-opis="V; P_c"><span class="poziom">easy</span>
+      <div class="tresc">A cylinder has base radius $3$ and height $5$. Find $V$ and $P_c$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $V=\pi\cdot9\cdot5$, $P_c=2\pi\cdot3\cdot(3+5)$. <b>$V=45\pi$, $P_c=48\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="36pi" data-odp-opis="surface area"><span class="poziom">easy</span>
+      <div class="tresc">A sphere has volume $36\pi$. Find its surface area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac43\pi r^3=36\pi\Rightarrow r^3=27$, $r=3$. $P=4\pi\cdot9$. <b>$P=36\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="125sqrt(3)/3*pi; 50pi" data-odp-opis="V; P_b"><span class="poziom">medium</span>
+      <div class="tresc">The slant height of a cone is $10$ and it is inclined to the base at an angle of $60^\circ$. Find $V$ and $P_b$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $r=10\cos60^\circ=5$, $h=10\sin60^\circ=5\sqrt3$. $V=\frac13\pi\cdot25\cdot5\sqrt3$, $P_b=\pi\cdot5\cdot10$. <b>$V=\frac{125\sqrt3}{3}\pi$, $P_b=50\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60; 64sqrt(3)/3*pi" data-odp-opis="apex angle (in degrees); V"><span class="poziom">medium</span>
+      <div class="tresc">The lateral surface of a cone, when unrolled, is a semicircle of radius $8$. Find the apex angle and the volume of the cone.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $l=8$; the arc of the semicircle $8\pi=2\pi r$, so $r=4$. $\sin\alpha=\frac48=\frac12$, $\alpha=30^\circ$. $h=\sqrt{64-16}=4\sqrt3$, $V=\frac13\pi\cdot16\cdot4\sqrt3$. <b>Apex angle $60^\circ$, $V=\frac{64\sqrt3}{3}\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="48/5*pi; 84/5*pi" data-odp-opis="V; P"><span class="poziom">exam-level</span>
+      <div class="tresc">A right triangle with legs $3$ and $4$ rotates about its hypotenuse. Find the volume and the surface area of the resulting solid.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Two cones with a common base are formed. Its radius is the altitude to the hypotenuse: $r=\frac{3\cdot4}{5}=\frac{12}{5}$; the sum of the heights of the cones $=5$. $V=\frac13\pi r^2\cdot5=\frac13\pi\cdot\frac{144}{25}\cdot5$. Area: slant heights $3$ and $4$, $P=\pi r\cdot3+\pi r\cdot4=\frac{84}{5}\pi$. <b>$V=\frac{48}{5}\pi$, $P=\frac{84}{5}\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3/2" data-odp-opis="ratio (both are equal)"><span class="poziom">exam-level</span>
+      <div class="tresc">A cylinder is circumscribed about a sphere (the sphere touches both bases and the lateral surface). Find the ratio of the volume of the cylinder to the volume of the sphere and the ratio of their surface areas.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Cylinder: radius $r$, $h=2r$. $V_w=2\pi r^3$, $V_k=\frac43\pi r^3$; $P_w=2\pi r(r+2r)=6\pi r^2$, $P_k=4\pi r^2$. <b>Both ratios equal $\frac32$</b> (a discovery of Archimedes).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. On the exam</h2>
+  <ul>
+    <li>Draw the <b>axial cross-section</b> and mark $r$, $h$, $l$ and the angle in it. Most tasks are ordinary plane geometry in that cross-section.</li>
+    <li>The apex angle is $2\alpha$, not $\alpha$. Read carefully which angle is given.</li>
+    <li>Leave results with $\pi$ (e.g. $27\pi$), unless the text asks for an approximation.</li>
+    <li>Compute $P_b$ of a cone with the slant height $l$, not with the height $h$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("ob-plot"), { zakres: 2.5, srodek: [0, 0, 1.2], kat: [-0.4, 0.3] });
+  const w2 = new Wykres($("ob-2d"), { xmin: -2.4, xmax: 2.4, ymin: -0.4, ymax: 4.2, rowneSkale: true, siatka: false, osie: false });
+  const BT = { walec: $("ob-walec"), stozek: $("ob-stozek"), kula: $("ob-kula") };
+  let typ = "stozek", u = 1, stop = null;
+  const e = (f, a, z) => [a * Math.cos(f), a * Math.sin(f), z];
+  const luk = (a, z, f1, f2) => { const p = []; for (let i = 0; i <= 60; i++) p.push(e(f1 + (f2 - f1) * i / 60, a, z)); return p; };
+  function rysuj() {
+    const r = +$("ob-r").value, h = typ === "kula" ? 2 * r : +$("ob-h").value, fi = 2 * Math.PI * u;
+    const z0 = typ === "kula" ? r : 0, zc = typ === "kula" ? r : 0;
+    const prz = $("ob-prz").checked, l = Math.hypot(r, h);
+    const figura = f => typ === "walec" ? [e(f, 0, 0), e(f, r, 0), e(f, r, h), e(f, 0, h)]
+      : typ === "stozek" ? [e(f, 0, 0), e(f, r, 0), e(f, 0, h)]
+      : [...Array(41).keys()].map(i => e(f, r * Math.sin(Math.PI * i / 40), zc - r * Math.cos(Math.PI * i / 40)));
+    s3.o.srodek = [0, 0, h / 2];
+    s3.rysuj(g => {
+      const ex = [Math.cos(g.az), -Math.sin(g.az), 0], fx = Math.atan2(ex[1], ex[0]);
+      g.odcinek([0, 0, -0.4], [0, 0, h + 0.5], "--muted", { przerywana: true });
+      for (let f = 0; f < fi - 1e-6; f += Math.PI / 9) g.krzywa(figura(f), 1, { grubosc: 1, przerywana: false });
+      if (typ === "walec") { g.krzywa(luk(r, 0, 0, fi), 1); g.krzywa(luk(r, h, 0, fi), 1); }
+      if (typ === "stozek") g.krzywa(luk(r, 0, 0, fi), 1);
+      if (typ === "kula") g.krzywa(luk(r, zc, 0, fi), 1, { grubosc: 1.5 });
+      if (u >= 1) {
+        if (typ === "kula") g.kula([0, 0, zc], r, 1, { wypelnij: 0.08 });
+        else if (typ === "walec") { [fx, fx + Math.PI].forEach(f => g.odcinek(e(f, r, 0), e(f, r, h), 1)); }
+        else {
+          const kty = []; const S = g.rzut([0, 0, h]);
+          for (let i = 0; i < 360; i++) { const q = g.rzut(e(i * Math.PI / 180, r, 0)); kty.push([Math.atan2(q[1] - S[1], q[0] - S[0]), i]); }
+          kty.sort((p, q) => p[0] - q[0]);
+          [kty[0][1], kty[kty.length - 1][1]].forEach(i => g.odcinek(e(i * Math.PI / 180, r, 0), [0, 0, h], 1));
+        }
+      }
+      if (prz) {
+        const pts = typ === "kula" ? [...Array(73).keys()].map(i => V3.dod([0, 0, zc], V3.dod(V3.razy(ex, r * Math.cos(i * Math.PI / 36)), [0, 0, r * Math.sin(i * Math.PI / 36)])))
+          : typ === "walec" ? [e(fx, r, 0), e(fx, r, h), e(fx + Math.PI, r, h), e(fx + Math.PI, r, 0)] : [e(fx, r, 0), [0, 0, h], e(fx + Math.PI, r, 0)];
+        g.wielokat(pts, 4, { wypelnij: 0.3, grubosc: 2 });
+      }
+      g.wielokat(figura(fi), 2, { wypelnij: 0.3, grubosc: 2.5 });
+      g.punkt([0, 0, z0], "", 2, { r: 3 });
+    });
+    w2.rysuj(g => {
+      if (typ === "kula") { g.okrag(0, r, r, 4, { wypelnij: 0.15 }); g.odcinek(0, r, r, r, 2, false); g.tekst(r / 2, r, "r", 2, { dy: -6 }); return; }
+      if (typ === "walec") { g.prostokat(-r, 0, 2 * r, h, 4, { wypelnij: 0.15 }); g.tekst(0, 0, "2r", 4, { dy: 16, wyrownanie: "center" }); g.tekst(r, h / 2, "h", 4, { dx: 6 }); return; }
+      const b = Math.atan2(h, r), a = Math.atan2(r, h);
+      g.wielokat([[-r, 0], [r, 0], [0, h]], 4, { wypelnij: 0.15 });
+      g.odcinek(0, 0, 0, h, 3, true);
+      g.luk(0, h, 0.5, -Math.PI / 2 - a, -Math.PI / 2 + a, 2, { wypelnij: 0.3 });
+      g.luk(r, 0, 0.45, Math.PI - b, Math.PI, 1, { wypelnij: 0.3 });
+      g.tekst(0, h, "2α", 2, { dy: 34, dx: -9, gruby: true });
+      g.tekst(r, 0, "β", 1, { dx: -38, dy: -6, gruby: true });
+      g.tekst(r / 2, h / 2, "l", 4, { dx: 8, gruby: true });
+      g.tekst(0, h / 2, "h", 3, { dx: 5 });
+    });
+    const W = typ === "walec" ? `V=\\pi r^2h=${ladnaTex(Math.PI * r * r * h)},\\ P_c=${ladnaTex(2 * Math.PI * r * (r + h))}`
+      : typ === "stozek" ? `l=${ladnaTex(l)},\\ 2\\alpha=${ladnaTex(2 * Math.asin(r / l) * 180 / Math.PI, 1)}^\\circ,\\ \\beta=${ladnaTex(Math.atan2(h, r) * 180 / Math.PI, 1)}^\\circ,\\ V=${ladnaTex(Math.PI * r * r * h / 3)}`
+      : `V=\\tfrac43\\pi r^3=${ladnaTex(4 / 3 * Math.PI * r ** 3)},\\ P=4\\pi r^2=${ladnaTex(4 * Math.PI * r * r)}`;
+    tex("ob-wynik", W);
+  }
+  const ustaw = t => {
+    typ = t; ["walec", "stozek", "kula"].forEach(k => BT[k].classList.toggle("aktywny", k === t));
+    if (stop) stop(); stop = animuj(2500, x => { u = x; rysuj(); });
+  };
+  ["walec", "stozek", "kula"].forEach(k => BT[k].addEventListener("click", () => ustaw(k)));
+  $("ob-start").addEventListener("click", () => ustaw(typ));
+  ["ob-r", "ob-h", "ob-prz"].forEach(id => $(id).addEventListener("input", rysuj));
+  $("ob-prz").addEventListener("change", rysuj);
+  rysuj();
+});
+</script>
+</body>
+</html>

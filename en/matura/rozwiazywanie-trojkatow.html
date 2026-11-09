@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solving triangles: the law of sines and the law of cosines</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Solving triangles: the law of sines and the law of cosines</h1>
+  <p class="lead">The law of cosines is Pythagoras with a correction $-2ab\cos\gamma$: for an acute angle the side is shorter, for an obtuse one longer than "by Pythagoras". The law of sines says that a side divided by the sine of the opposite angle is always the diameter of the circumscribed circle.</p>
+  <p class="wymagania">VII.3, VII.R.7, VII.R.8, VIII.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenia">1. Theorems</h2>
+  <p>Notation: sides $a,b,c$ lie opposite the angles $\alpha,\beta,\gamma$ (at vertices $A,B,C$), $R$ is the circumradius.</p>
+
+  <div class="twierdzenie"><b>Area of a triangle</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    $$P=\frac12ab\sin\gamma$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>$P=\frac12a\cdot h$, where $h$ is the altitude from $A$ to the line $BC$ and $D$ is its foot. In the right triangle $ADC$ the hypotenuse is $b$.</p>
+      <ul>
+        <li>$\gamma$ acute: the angle at $C$ in triangle $ADC$ is $\gamma$, so $h=b\sin\gamma$.</li>
+        <li>$\gamma$ obtuse: $D$ lies on the extension of $BC$ beyond $C$, the angle at $C$ is $180^\circ-\gamma$, so $h=b\sin(180^\circ-\gamma)=b\sin\gamma$.</li>
+        <li>$\gamma=90^\circ$: $h=b=b\sin90^\circ$.</li>
+      </ul>
+      <p>Always $h=b\sin\gamma$, so $P=\frac12ab\sin\gamma$. $\blacksquare$</p>
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Law of cosines</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    $$c^2=a^2+b^2-2ab\cos\gamma$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Place the triangle in a coordinate system: $C=(0,0)$, $B=(a,0)$. Point $A$ lies on the ray of angle $\gamma$ at distance $b$ from $C$, so by the definition of trigonometric functions (valid for every $\gamma\in(0^\circ,180^\circ)$): $A=(b\cos\gamma,\,b\sin\gamma)$. Then</p>
+      $$c^2=|AB|^2=(b\cos\gamma-a)^2+b^2\sin^2\gamma$$
+      $$=b^2(\cos^2\gamma+\sin^2\gamma)-2ab\cos\gamma+a^2$$
+      $$=a^2+b^2-2ab\cos\gamma\quad\blacksquare$$
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Converse of the Pythagorean theorem</b> If $c^2=a^2+b^2$, then $\gamma=90^\circ$. More generally:
+    $$c^2&lt;a^2+b^2\iff\gamma\text{ acute}$$
+    $$c^2&gt;a^2+b^2\iff\gamma\text{ obtuse}$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>From the law of cosines $a^2+b^2-c^2=2ab\cos\gamma$, and $2ab&gt;0$. So the sign of $a^2+b^2-c^2$ is the sign of $\cos\gamma$. When $c^2=a^2+b^2$, $\cos\gamma=0$, and the only such angle in $(0^\circ,180^\circ)$ is $90^\circ$. Similarly $\cos\gamma&gt;0\iff\gamma$ acute, $\cos\gamma&lt;0\iff\gamma$ obtuse. $\blacksquare$</p>
+      <p>The largest angle lies opposite the longest side (VIII.2), so the type of the triangle is decided by comparing the <b>square of the longest side</b> with the sum of the squares of the other two.</p>
+    </div></details></div>
+
+  <div class="twierdzenie"><b>Law of sines</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    $$\frac{a}{\sin\alpha}=\frac{b}{\sin\beta}=\frac{c}{\sin\gamma}=2R$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>It suffices to show $a=2R\sin\alpha$ (the same for $b$, $c$). Let $O$ be the center of the circumscribed circle and $BD$ its diameter, $|BD|=2R$. Angle $BCD$ is inscribed and subtends a diameter, so $\angle BCD=90^\circ$ and $a=|BC|=2R\sin\angle BDC$.</p>
+      <ul>
+        <li>$\alpha$ acute: $A$ and $D$ lie on the same side of $BC$, the inscribed angles $BAC$ and $BDC$ subtend the same arc: $\angle BDC=\alpha$, so $a=2R\sin\alpha$.</li>
+        <li>$\alpha$ obtuse: $A$ and $D$ lie on opposite sides of $BC$, the quadrilateral $ABDC$ is inscribed in a circle: $\angle BDC=180^\circ-\alpha$, so $a=2R\sin(180^\circ-\alpha)=2R\sin\alpha$.</li>
+        <li>$\alpha=90^\circ$: $BC$ is a diameter, $a=2R=2R\sin90^\circ$. $\blacksquare$</li>
+      </ul>
+    </div></details></div>
+  <div class="uwaga">A consequence of both formulas: $\sin\gamma=\frac{c}{2R}$, so $P=\frac{abc}{4R}$ <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>.</div>
+
+  <h2 id="demo">2. Interactive</h2>
+  <div class="demo">
+    <p class="opis">Drag the vertices. The three ratios "side / sine of the opposite angle" are always equal to the diameter of the circumscribed circle. Tick "proof" to see the diameter $BD$ and the angle $\angle BDC=\alpha$ (or $180^\circ-\alpha$).</p>
+    <canvas id="ts-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="ts-dowod"> show proof (diameter $BD$)</label>
+    </div>
+    <div class="wynik" id="ts-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">Side $c$ (red) versus the side "by Pythagoras" (dashed, as if $\gamma=90^\circ$). The green segment is the projection of $b$ onto the line $BC$, of length $|b\cos\gamma|$: the correction $-2a\cdot b\cos\gamma$ decreases $c^2$ for an acute angle and increases it for an obtuse one.</p>
+    <canvas id="tc-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="tc-a" min="1" max="6" step="0.5" value="5"> <span id="tc-a-v"></span></label>
+      <label>$b$ <input type="range" id="tc-b" min="1" max="6" step="0.5" value="4"> <span id="tc-b-v"></span></label>
+      <label>$\gamma$ <input type="range" id="tc-g" min="10" max="170" step="5" value="60"> <span id="tc-g-v"></span></label>
+    </div>
+    <div class="wynik" id="tc-wynik"></div>
+  </div>
+
+  <h2 id="metoda">3. Which theorem?</h2>
+  <table class="tabela">
+    <tr><th>given</th><th>use</th></tr>
+    <tr><td>three sides</td><td>law of cosines → angles</td></tr>
+    <tr><td>two sides and the angle <b>between</b> them</td><td>law of cosines → third side; area $\frac12ab\sin\gamma$</td></tr>
+    <tr><td>a side and two angles</td><td>angle sum, then the law of sines</td></tr>
+    <tr><td>two sides and the angle opposite one of them</td><td>law of sines (watch out: $0$, $1$ or $2$ triangles) or the law of cosines as a quadratic equation</td></tr>
+    <tr><td>triangle inscribed in a circle</td><td>law of sines with $2R$</td></tr>
+  </table>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>In a triangle $a=5$, $b=8$, $\gamma=60^\circ$. Find $c$, the area and the circumradius.</p>
+    <ol>
+      <li>$c^2=25+64-2\cdot5\cdot8\cdot\frac12=49$, so $c=7$.</li>
+      <li>$P=\frac12\cdot5\cdot8\cdot\frac{\sqrt3}2=10\sqrt3$.</li>
+      <li>$2R=\frac{c}{\sin\gamma}=\frac{7}{\sqrt3/2}=\frac{14}{\sqrt3}$, so $R=\frac{7\sqrt3}{3}$.</li>
+    </ol>
+    <p class="odp">$c=7,\ P=10\sqrt3,\ R=\frac{7\sqrt3}{3}$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Decide whether the triangle with sides a) $4,5,6$, b) $4,5,7$ is acute, right or obtuse.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Compare the square of the longest side with the sum of the squares of the other two: $16+25=41$. a) $36&lt;41$; b) $49&gt;41$. <b>a) acute, b) obtuse</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Find the area of the triangle in which $a=6$, $b=10$, $\gamma=150^\circ$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P=\frac12\cdot6\cdot10\cdot\sin150^\circ=30\cdot\frac12$. <b>$P=15$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="120" data-odp-opis="angle in degrees"><span class="poziom">medium</span>
+      <div class="tresc">The sides of a triangle have lengths $7$, $8$, $13$. Find the measure of the largest angle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The largest angle lies opposite the side $13$: $\cos\gamma=\frac{49+64-169}{2\cdot7\cdot8}=\frac{-56}{112}=-\frac12$. <b>$\gamma=120^\circ$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6sqrt(2); 6" data-odp-opis="b; R"><span class="poziom">medium</span>
+      <div class="tresc">In a triangle $a=6$, $\alpha=30^\circ$, $\beta=45^\circ$. Find $b$ and the circumradius.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2R=\frac{6}{\sin30^\circ}=12$, $b=2R\sin45^\circ=12\cdot\frac{\sqrt2}2$. <b>$b=6\sqrt2$, $R=6$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">In triangle $ABC$: $|BC|=2$, $|AC|=2\sqrt3$, $\angle BAC=30^\circ$. Find the remaining angles (consider all possibilities).</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Law of sines: $\frac{2}{\sin30^\circ}=\frac{2\sqrt3}{\sin\beta}$, so $\sin\beta=\frac{\sqrt3}{2}$, $\beta=60^\circ$ or $\beta=120^\circ$. Both are possible, since $30^\circ+120^\circ&lt;180^\circ$ (here $a&lt;b$, so $\alpha&lt;\beta$ – no contradiction).
+        <b>$\beta=60^\circ,\ \gamma=90^\circ$ or $\beta=120^\circ,\ \gamma=30^\circ$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2sqrt(7); 2sqrt(19); 12sqrt(3)" data-odp-opis="diagonals; area"><span class="poziom">exam-level</span>
+      <div class="tresc">A parallelogram has sides $4$ and $6$ and an acute angle of $60^\circ$. Find the lengths of its diagonals and its area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The shorter diagonal lies opposite the $60^\circ$ angle: $d_1^2=16+36-2\cdot4\cdot6\cdot\frac12=28$. The longer one opposite $120^\circ$: $d_2^2=16+36+24=76$. Area $=4\cdot6\cdot\sin60^\circ$.
+        <b>$d_1=2\sqrt7$, $d_2=2\sqrt{19}$, $P=12\sqrt3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>An angle found from a sine has two values</b> ($\beta$ and $180^\circ-\beta$). Check both: angle sum $&lt;180^\circ$ and the larger angle opposite the longer side. An angle found from a cosine is unique.</li>
+    <li>When identifying the type of a triangle, compare with the <b>longest</b> side – one check is enough.</li>
+    <li>In the law of cosines the angle must lie <b>between</b> the sides $a$ and $b$, with $c$ opposite it. For an obtuse angle $-2ab\cos\gamma$ is positive – watch the sign.</li>
+    <li>Proofs of the law of sines, the law of cosines and the area formula are required – the exam may contain a "prove that" task.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const st = 180 / Math.PI;
+  // łuk kąta w wierzchołku P między ramionami PQ i PR (mniejszy kąt)
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  const kat = (P, Q, R) => Math.acos(Math.max(-1, Math.min(1, ((Q.x - P.x) * (R.x - P.x) + (Q.y - P.y) * (R.y - P.y)) / (Math.hypot(Q.x - P.x, Q.y - P.y) * Math.hypot(R.x - P.x, R.y - P.y)))));
+
+  // --- 2a. Twierdzenie sinusów ---
+  const w1 = new Wykres($("ts-plot"), { xmin: -5, xmax: 5, ymin: -4.2, ymax: 4.2, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-4.8, Math.min(4.8, p.x)), y: Math.max(-4, Math.min(4, p.y)) });
+  const pk = w1.przeciagaj([{ x: -1, y: 2.6, ogranicz: ogr }, { x: -2.6, y: -1.6, ogranicz: ogr }, { x: 2.8, y: -1.4, ogranicz: ogr }], rysujTs);
+  function rysujTs() {
+    const [A, B, C] = pk;
+    const d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
+    const a = Math.hypot(B.x - C.x, B.y - C.y), b = Math.hypot(A.x - C.x, A.y - C.y), c = Math.hypot(A.x - B.x, A.y - B.y);
+    const al = kat(A, B, C), be = kat(B, A, C), ga = kat(C, A, B);
+    const ok = Math.abs(d) > 0.3 && a > 0.2 && b > 0.2 && c > 0.2;
+    let O = null, R = 0;
+    if (ok) {
+      const s = p => p.x * p.x + p.y * p.y;
+      O = { x: (s(A) * (B.y - C.y) + s(B) * (C.y - A.y) + s(C) * (A.y - B.y)) / d, y: (s(A) * (C.x - B.x) + s(B) * (A.x - C.x) + s(C) * (B.x - A.x)) / d };
+      R = Math.hypot(A.x - O.x, A.y - O.y);
+    }
+    w1.rysuj(g => {
+      if (ok) { g.okrag(O.x, O.y, R, 3); g.punkt(O.x, O.y, "O", 3, { r: 3 }); }
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1, { wypelnij: 0.1 });
+      lukKata(g, A, B, C, 0.55, 2);
+      if (ok && $("ts-dowod").checked) {
+        const D = { x: 2 * O.x - B.x, y: 2 * O.y - B.y };
+        g.odcinek(B.x, B.y, D.x, D.y, 4, false); g.odcinek(D.x, D.y, C.x, C.y, 4, false);
+        lukKata(g, D, B, C, 0.55, 4);
+        g.punkt(D.x, D.y, "D", 4);
+      }
+      g.tekst((B.x + C.x) / 2, (B.y + C.y) / 2, "a", 1, { dx: 4, dy: 14, gruby: true });
+      g.tekst((A.x + C.x) / 2, (A.y + C.y) / 2, "b", 1, { dx: 6, gruby: true });
+      g.tekst((A.x + B.x) / 2, (A.y + B.y) / 2, "c", 1, { dx: -14, gruby: true });
+      g.punkt(A.x, A.y, "A"); g.punkt(B.x, B.y, "B"); g.punkt(C.x, C.y, "C");
+    });
+    if (!ok) { tex("ts-wynik", "\\text{degenerate triangle – move the vertices apart}"); return; }
+    const f = v => ladnaTex(v, 2);
+    tex("ts-wynik", `\\alpha\\approx${Math.round(al * st)}^\\circ:\\ \\frac{a}{\\sin\\alpha}\\approx${f(a / Math.sin(al))},\\ \\frac{b}{\\sin\\beta}\\approx${f(b / Math.sin(be))},\\ \\frac{c}{\\sin\\gamma}\\approx${f(c / Math.sin(ga))},\\ 2R\\approx${f(2 * R)}`);
+  }
+  $("ts-dowod").addEventListener("change", rysujTs);
+  rysujTs();
+
+  // --- 2b. Twierdzenie cosinusów ---
+  const w2 = new Wykres($("tc-plot"), { xmin: -6.3, xmax: 7, ymin: -0.9, ymax: 6.4, rowneSkale: true });
+  function rysujTc() {
+    const a = +$("tc-a").value, b = +$("tc-b").value, dg = +$("tc-g").value, g0 = dg / st;
+    $("tc-a-v").textContent = ladna(a); $("tc-b-v").textContent = ladna(b); $("tc-g-v").textContent = dg + "°";
+    const A = { x: b * Math.cos(g0), y: b * Math.sin(g0) }, c2 = a * a + b * b - 2 * a * b * Math.cos(g0);
+    w2.rysuj(g => {
+      g.odcinek(0, b, a, 0, "--plot-axis"); g.odcinek(0, 0, 0, b, "--plot-axis");
+      g.wielokat([[0, 0], [a, 0], [A.x, A.y]], 1, { wypelnij: 0.1, bezObrysu: true });
+      g.odcinek(0, 0, a, 0, 1, false); g.odcinek(0, 0, A.x, A.y, 1, false);
+      g.odcinek(A.x, A.y, a, 0, 2, false);
+      g.odcinek(A.x, A.y, A.x, 0, 3); g.odcinek(0, 0.06, A.x, 0.06, 3, false);
+      g.luk(0, 0, 0.6, 0, g0, 4, { wypelnij: 0.2 });
+      g.tekst(a / 2, 0, "a", 1, { dy: 16, gruby: true }); g.tekst(A.x / 2, A.y / 2, "b", 1, { dx: -14, gruby: true });
+      g.tekst((A.x + a) / 2, A.y / 2, "c", 2, { dx: 8, gruby: true });
+      g.tekst(A.x / 2, 0, "b cos γ", 3, { dy: -8, wyrownanie: "center", rozmiar: 12 });
+      g.punkt(0, 0, "C", 1); g.punkt(a, 0, "B", 1); g.punkt(A.x, A.y, "A");
+    });
+    const p = a * a + b * b, typ = dg < 90 ? "\\gamma\\text{ acute: }c^2<a^2+b^2" : dg > 90 ? "\\gamma\\text{ obtuse: }c^2>a^2+b^2" : "\\gamma=90^\\circ:\\ c^2=a^2+b^2";
+    tex("tc-wynik", `c^2=${ladnaTex(p)}${znakTex(-2 * a * b * Math.cos(g0))}\\approx${ladnaTex(c2)};\\quad ${typ}`);
+  }
+  ["tc-a", "tc-b", "tc-g"].forEach(id => $(id).addEventListener("input", rysujTc));
+  rysujTc();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polynomial equations and inequalities</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Polynomial equations and inequalities</h1>
+  <p class="lead">Factor the polynomial and the rest is easy: a product is zero when one of its factors is zero, and the sign changes only at the roots, and only for odd multiplicity. Hence the “wavy curve”.</p>
+  <p class="wymagania">III.5, III.R.1, II.R.1, II.R.2, II.R.3, II.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="rozklad">1. Factoring</h2>
+  <table class="tabela">
+    <tr><th>Method</th><th>Example</th></tr>
+    <tr><td>factoring out a common factor</td><td>$x^4-3x^3=x^3(x-3)$</td></tr>
+    <tr><td>grouping</td><td>$x^3+2x^2-x-2=x^2(x+2)-(x+2)$ $=(x+2)(x-1)(x+1)$</td></tr>
+    <tr><td>special product formulas</td><td>$x^3-1=(x-1)(x^2+x+1)$</td></tr>
+    <tr><td>integer root + division</td><td>see the theorem below</td></tr>
+  </table>
+  <div class="twierdzenie"><b>Theorem (integer roots)</b> If a polynomial with integer coefficients and constant term $a_0\neq0$ has an integer root $k$, then $k$ is a divisor of $a_0$.
+    <details class="rozwin"><summary>Why?</summary><div>
+      <p>$W(k)=a_nk^n+\ldots+a_1k+a_0=0$, so $a_0=-k\,(a_nk^{n-1}+\ldots+a_1)$. The bracket is an integer, hence $k\mid a_0$.</p>
+    </div></details>
+  </div>
+  <p>If $W(k)=0$, then $W(x)=(x-k)\cdot Q(x)$ (the factor theorem, Bézout); you find $Q$ by dividing by $x-k$ (Horner's scheme). Rational roots $\frac{p}{q}$ are outside the core curriculum.</p>
+  <div class="definicja"><b>Definition</b> $k$ is a root of <i>multiplicity $r$</i> of the polynomial $W$ if $W(x)=(x-k)^r\cdot Q(x)$ and $Q(k)\neq0$.</div>
+
+  <h2 id="wezyk">2. Inequality: the wavy-curve method</h2>
+  <ol>
+    <li>Move everything to one side and factor: $W(x)\;?\;0$.</li>
+    <li>Mark the roots on the axis, with their multiplicities.</li>
+    <li>Start <b>on the right</b>: above the axis if the leading coefficient is positive (below the axis if negative).</li>
+    <li>Go left: at a root of <b>odd</b> multiplicity <b>cross</b> the axis, at <b>even</b> multiplicity <b>bounce</b> off it.</li>
+    <li>Read off the set. For $\ge$, $\le$ include all the roots, also the “bounced” ones.</li>
+  </ol>
+  <div class="uwaga">A factor with no roots (e.g. $x^2+x+1$, $\Delta&lt;0$) has a constant sign: it does not change the wavy curve, it only flips it if it is negative.</div>
+
+  <h2 id="demo">3. Interactive: the wavy curve</h2>
+  <div class="demo">
+    <p class="opis">Drag the roots along the axis and change their multiplicities. Notice: odd multiplicity means passing through the axis, even means bouncing. The graph is rescaled vertically, only the sign matters.</p>
+    <canvas id="wz-plot"></canvas>
+    <div class="sterowanie">
+      <label>multiplicities <select id="wz-k1"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        <select id="wz-k2"><option value="2">2</option><option value="1">1</option><option value="3">3</option></select>
+        <select id="wz-k3"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
+      <label>coefficient <select id="wz-a"><option value="1">a &gt; 0</option><option value="-1">a &lt; 0</option></select></label>
+      <label>$W(x)$ <select id="wz-znak"><option value="gt">&gt; 0</option><option value="ge">≥ 0</option><option value="lt">&lt; 0</option><option value="le">≤ 0</option></select></label>
+      <button id="wz-start">▶ Draw the curve</button>
+    </div>
+    <div class="wynik" id="wz-wynik"></div>
+    <div class="wynik" id="wz-zbior"></div>
+  </div>
+
+  <h2 id="tabela">4. Interactive: where the sign of a product comes from</h2>
+  <div class="demo">
+    <p class="opis">The same polynomial split into factors: each row is the sign of one factor (green $+$, red $-$). Drag the purple point at the bottom. The sign of $W(x)$ is “minus” when the number of negative factors is odd. A factor raised to an even power is never negative.</p>
+    <canvas id="tz-plot" style="height:260px"></canvas>
+    <div class="wynik" id="tz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Solve the inequality $x^3-2x^2-9x+18\ge0$.</p>
+    <ol>
+      <li>Grouping: $x^2(x-2)-9(x-2)=(x-2)(x^2-9)$ $=(x-2)(x-3)(x+3)$.</li>
+      <li>Roots $-3,\,2,\,3$, all of multiplicity 1; $a=1&gt;0$.</li>
+      <li>Wavy curve from the top right: $+$ on $(3,\infty)$, $-$ on $(2,3)$, $+$ on $(-3,2)$, $-$ on $(-\infty,-3)$.</li>
+    </ol>
+    <p class="odp">$x\in[-3,2]\cup[3,\infty)$</p>
+  </div>
+  <div class="przyklad">
+    <p>Solve the inequality $x^3-3x-2&lt;0$.</p>
+    <ol>
+      <li>Candidates for integer roots: divisors of $-2$, that is $\pm1,\pm2$. $W(-1)=-1+3-2=0$.</li>
+      <li>Dividing by $x+1$: $x^3-3x-2=(x+1)(x^2-x-2)$ $=(x+1)^2(x-2)$.</li>
+      <li>$-1$ has multiplicity 2 (bounce), $2$ has multiplicity 1. Negative only to the left of $2$, but without $-1$.</li>
+    </ol>
+    <p class="odp">$x\in(-\infty,-1)\cup(-1,2)$</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-1/2; 0; 3" data-odp-opis="solutions x"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $x(x-3)(2x+1)=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        A product is zero when one of its factors is zero. <b>$x\in\left\{-\frac12,0,3\right\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="0; 2; 3" data-odp-opis="solutions x"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $x^3-5x^2+6x=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x(x^2-5x+6)=x(x-2)(x-3)=0$. <b>$x\in\{0,2,3\}$</b> (do not divide by $x$!)
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-oo; -2) u (-1; 1)"><span class="poziom">medium</span>
+      <div class="tresc">Solve the inequality $x^3+2x^2-x-2&lt;0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(x+2)(x-1)(x+1)&lt;0$; roots $-2,-1,1$, wavy curve from the top right.
+        <b>$x\in(-\infty,-2)\cup(-1,1)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-2; 3&gt;"><span class="poziom">medium</span>
+      <div class="tresc">Solve the inequality $(x-1)^2(x+2)^3(3-x)\ge0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The coefficient of $x^6$: $1\cdot1\cdot(-1)=-1&lt;0$, so we start on the right <b>below</b> the axis. At $3$ we cross (multiplicity 1), at $1$ we bounce (2), at $-2$ we cross (3).
+        Signs: $(3,\infty)$: $-$; $(1,3)$: $+$; $(-2,1)$: $+$; $(-\infty,-2)$: $-$. <b>$x\in[-2,3]$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-2; 1/2) u (3; oo)"><span class="poziom">exam-level</span>
+      <div class="tresc">Solve the inequality $2x^3-3x^2-11x+6&gt;0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Divisors of $6$: $W(3)=54-27-33+6=0$. Dividing by $x-3$: $2x^3-3x^2-11x+6=(x-3)(2x^2+3x-2)$. For $2x^2+3x-2$: $\Delta=25$, $x=\frac12$, $x=-2$.
+        $W(x)=2(x-3)\left(x-\frac12\right)(x+2)$. <b>$x\in\left(-2,\frac12\right)\cup(3,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-1; 1&gt;"><span class="poziom">exam-level</span>
+      <div class="tresc">Solve the inequality $x^4+x^3\le x+1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x^3(x+1)-(x+1)=(x+1)(x^3-1)$ $=(x+1)(x-1)(x^2+x+1)\le0$. The last factor has $\Delta=-3&lt;0$, so it is always positive.
+        What remains is $(x+1)(x-1)\le0$. <b>$x\in[-1,1]$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Do not divide by $x$</b> or by a factor containing $x$: you lose solutions. Factor out instead.</li>
+    <li><b>The sign of the leading coefficient</b> comes from the product of the factors (e.g. $(3-x)$ gives $-1$). The start of the wavy curve depends on it.</li>
+    <li><b>Roots of even multiplicity</b> belong to the set for $\ge$, $\le$, and must be thrown out for $&gt;$.</li>
+    <li>Show the factorization and a sketch of the wavy curve with the roots marked: it is safer to show them, because they are usually scored separately.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- helpers: the set {x : pred(x)}; pred changes value only at the critical points kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // consecutive single points are merged into one set {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = ",\\,";
+      cz.push(`${p.za ? "[" : "("}${A}${s}${B}${p.zb ? "]" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 3. Wavy curve ---
+  const w1 = new Wykres($("wz-plot"), { xmin: -6, xmax: 6, ymin: -4, ymax: 4, krokY: 10 });
+  const naOx = p => ({ x: Math.max(-5.5, Math.min(5.5, p.x)), y: 0 });
+  const pk = [-3, 0.5, 3].map(x => ({ x, y: 0, siatka: 0.5, ogranicz: naOx }));
+  let stop = null, postep = 1;
+  const kr = () => ["wz-k1", "wz-k2", "wz-k3"].map(id => +$(id).value);
+  function wielomian() {
+    const k = kr(), a = +$("wz-a").value, xs = pk.map(p => p.x);
+    const W = x => a * xs.reduce((s, xi, i) => s * (x - xi) ** k[i], 1);
+    // vertical scale: the largest |W| near the roots → 3 units
+    const lo = Math.min(...xs) - 1, hi = Math.max(...xs) + 1;
+    let M = 1e-9;
+    for (let i = 0; i <= 200; i++) M = Math.max(M, Math.abs(W(lo + (hi - lo) * i / 200)));
+    return { W, k, a, xs, K: 3 / M };
+  }
+  function rysujWz() {
+    const { W, k, a, xs, K } = wielomian(), zn = $("wz-znak").value;
+    const z = zbior(x => POR[zn](W(x)), xs);
+    const od = w1.z0.xmax - (w1.z0.xmax - w1.z0.xmin) * postep;
+    w1.rysuj(g => {
+      g.funkcja(x => W(x) * K, 1, { od });
+      if (postep >= 1) z.forEach(p => { if (p.a < p.b) g.funkcja(x => W(x) * K, 2, { od: p.a, do: p.b, grubosc: 5 }); });
+      if (postep < 1) g.punkt(od, W(od) * K, "", 4);
+      naOsi(g, postep >= 1 ? z : [], 2);
+      pk.forEach((p, i) => g.punkt(p.x, 0, k[i] > 1 ? `×${k[i]}` : "", 4));
+    });
+    const czyn = xs.map((x, i) => (x === 0 ? "x" : `(x${znakTex(-x)})`) + (k[i] > 1 ? "^" + k[i] : "")).join("");
+    tex("wz-wynik", `W(x)=${a < 0 ? "-" : ""}${czyn}`);
+    tex("wz-zbior", `W(x)${ZNAK[zn]}0 \\iff x\\in ${zbiorTex(z)}`);
+    rysujTz();
+  }
+  w1.przeciagaj(pk, () => { if (stop) stop(); postep = 1; rysujWz(); });
+  ["wz-k1", "wz-k2", "wz-k3", "wz-a", "wz-znak"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); postep = 1; rysujWz(); }));
+  $("wz-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(3500, t => { postep = Math.max(0.002, t); rysujWz(); });
+  });
+
+  // --- 4. Sign table ---
+  const w2 = new Wykres($("tz-plot"), { xmin: -6, xmax: 6, ymin: -0.4, ymax: 5.8, krokY: 10, osie: false });
+  const kursor = [{ x: 1.5, y: 0, siatka: 0.1, ogranicz: p => ({ x: Math.max(-5.9, Math.min(5.9, p.x)), y: 0 }) }];
+  function rysujTz() {
+    const { W, k, a, xs } = wielomian(), x = kursor[0].x;
+    const rzedy = [
+      { opis: a > 0 ? "a = 1" : "a = −1", f: () => a, zera: [] },
+      ...xs.map((xi, i) => ({ opis: (xi === 0 ? "x" : `(x ${xi > 0 ? "−" : "+"} ${ladna(Math.abs(xi))})`) + (k[i] > 1 ? "^" + k[i] : ""), f: t => (t - xi) ** k[i], zera: [xi] })),
+      { opis: "W(x)", f: W, zera: xs },
+    ];
+    let ujemne = 0;
+    w2.rysuj(g => {
+      rzedy.forEach((r, i) => {
+        const y = 5.2 - i * 1.1, ost = i === rzedy.length - 1;
+        g.odcinek(g.z.xmin, y, g.z.xmax, y, "--plot-axis", false);
+        naOsi(g, zbior(t => r.f(t) > 0, r.zera), 3, y);
+        naOsi(g, zbior(t => r.f(t) < 0, r.zera), 2, y);
+        g.tekst(g.z.xmin, y, r.opis, ost ? 4 : 1, { dx: 4, dy: -9, gruby: ost });
+        const v = r.f(x);
+        if (!ost && v < 0) ujemne++;
+        g.tekst(x, y, v > 1e-12 ? "+" : v < -1e-12 ? "−" : "0", v > 1e-12 ? 3 : 2, { dx: 8, dy: 16, gruby: true, rozmiar: 15 });
+      });
+      g.odcinek(x, 0, x, 5.6, 4);
+      g.punkt(x, 0, "x", 4);
+    });
+    const v = W(x);
+    tex("tz-wynik", `x=${ladnaTex(x)}:\\;\\text{negative factors: }${ujemne}\\;\\Rightarrow\\;W(x)${Math.abs(v) < 1e-12 ? "=0" : v > 0 ? ">0" : "<0"}`);
+  }
+  w2.przeciagaj(kursor, rysujTz);
+  rysujWz();
+});
+</script>
+</body>
+</html>

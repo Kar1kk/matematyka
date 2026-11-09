@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pyramids</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Pyramids</h1>
+  <p class="lead">Everything revolves around the height $H$ and its foot $O$. From $H$ and a segment in the base ($R$ or $r$) you build two right triangles: one gives the lateral edge, the other the height of a lateral face.</p>
+  <p class="wymagania">X.3, X.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="pojecia">1. The foot of the height and two triangles</h2>
+  <div class="definicja"><b>A regular pyramid</b> has a regular polygon as its base, and the foot of the height at the center of that base. A regular tetrahedron: all $6$ edges equal.</div>
+  <div class="twierdzenie"><b>Where is the foot of the height?</b>
+    <ul>
+      <li>All <b>lateral edges equal</b> (or equally inclined to the base) $\Rightarrow$ $O$ is the center of the <b>circumscribed circle</b> of the base.</li>
+      <li>All <b>lateral faces equally inclined</b> to the base (foot inside the base) $\Rightarrow$ $O$ is the center of the <b>inscribed circle</b>.</li>
+    </ul>
+    <details class="rozwin"><summary>Why?</summary><div>
+      The triangles $SOA_i$ are right triangles with a common leg $SO=H$. Equal hypotenuses $|SA_i|$ (or equal angles at $A_i$) give equal $|OA_i|$, so $O$ is equidistant from the vertices. For the faces: by the three perpendiculars theorem, the feet of the altitudes of the faces project onto segments $OM_i\perp$ the edge, and equal angles give equal $|OM_i|$, so $O$ is equidistant from the sides.
+    </div></details></div>
+  <div class="wzor">
+    <div class="tytul">A regular pyramid (to remember)</div>
+    $$b^2=H^2+R^2,\qquad h_b^2=H^2+r^2$$
+    $$\tan\alpha=\frac{H}{R},\qquad \tan\beta=\frac{H}{r}$$
+    <dl><dt>$R$, $r$</dt><dd>radius of the circle circumscribed about / inscribed in the base ($r$ = distance of the center from a side)</dd>
+        <dt>$\alpha$</dt><dd>the angle between the lateral edge $b$ and the base</dd>
+        <dt>$\beta$</dt><dd>the angle between a lateral face and the base; $h_b$ – the height of a lateral face</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Volume <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> and area</div>
+    $$V=\frac13 P_p\cdot H,\qquad P_c=P_p+P_b$$
+    <dl><dt>$P_b$</dt><dd>in a regular one: $n\cdot\frac12 a\,h_b$</dd>
+        <dt>square</dt><dd>$R=\frac{a\sqrt2}{2}$, $r=\frac a2$; equilateral triangle: $R=\frac{a\sqrt3}{3}$, $r=\frac{a\sqrt3}{6}$ (from the formula sheet: $R=\frac23h$, $r=\frac13h$)</dd></dl>
+  </div>
+
+  <h2 id="demo">2. Interactive: a regular pyramid</h2>
+  <div class="demo">
+    <p class="opis">Choose the angle: of the lateral edge (triangle $SOA$, circumscribed circle) or of the lateral face (triangle $SOM$, inscribed circle). Change $n$ and $H$, rotate the solid. At the bottom the chosen triangle in its true shape.</p>
+    <canvas id="os-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="os-n" min="3" max="8" step="1" value="4"> <span id="os-n-v"></span></label>
+      <label>$H$ <input type="range" id="os-h" min="0.5" max="4" step="0.1" value="2.5"></label>
+      <button id="os-sciana" class="wtorny aktywny">face angle β</button>
+      <button id="os-kraw" class="wtorny">edge angle α</button>
+    </div>
+    <canvas id="os-2d" style="height:150px"></canvas>
+    <div class="wynik" id="os-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>A regular quadrilateral pyramid has a base edge of $6$, and a lateral face is inclined to the base at an angle of $60^\circ$. Find $V$ and $P_c$.</p>
+    <ol>
+      <li>Triangle $SOM$: $r=|OM|=3$, the angle at $M$ is $60^\circ$.</li>
+      <li>$H=3\tan60^\circ=3\sqrt3$, $\;h_b=\frac{3}{\cos60^\circ}=6$.</li>
+      <li>$V=\frac13\cdot36\cdot3\sqrt3=36\sqrt3$, $\;P_c=36+4\cdot\frac12\cdot6\cdot6=36+72$.</li>
+    </ol>
+    <p class="odp">$V=36\sqrt3$, $P_c=108$</p>
+  </div>
+
+  <h2 id="zadania">4. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="64; 144" data-odp-opis="V; P_c"><span class="poziom">easy</span>
+      <div class="tresc">A regular quadrilateral pyramid has a base edge of $8$ and a height of $3$. Find $V$ and $P_c$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $V=\frac13\cdot64\cdot3=64$. $r=4$, $h_b=\sqrt{9+16}=5$, $P_c=64+4\cdot\frac12\cdot8\cdot5$. <b>$V=64$, $P_c=144$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2sqrt(6); 18sqrt(2)" data-odp-opis="H; V"><span class="poziom">medium</span>
+      <div class="tresc">Find the height and the volume of a regular tetrahedron with edge $6$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The foot is the center of an equilateral triangle: $R=\frac{6\sqrt3}{3}=2\sqrt3$. $H=\sqrt{36-12}=\sqrt{24}=2\sqrt6$. $V=\frac13\cdot\frac{36\sqrt3}{4}\cdot2\sqrt6=6\sqrt{18}$. <b>$H=2\sqrt6$, $V=18\sqrt2$</b> (in general $H=\frac{a\sqrt6}{3}$, $V=\frac{a^3\sqrt2}{12}$).
+      </div></details></li>
+    <li class="zadanie" data-odp="18" data-odp-opis="V"><span class="poziom">medium</span>
+      <div class="tresc">In a regular triangular pyramid the base edge has length $6$, and a lateral edge forms an angle of $45^\circ$ with the base. Find the volume.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $R=2\sqrt3$, the angle is $45^\circ$, so $H=R=2\sqrt3$. $P_p=9\sqrt3$, $V=\frac13\cdot9\sqrt3\cdot2\sqrt3$. <b>$V=18$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="144sqrt(3); 18sqrt(91)" data-odp-opis="V; P_b"><span class="poziom">exam-level</span>
+      <div class="tresc">A regular hexagonal pyramid has a lateral edge of $10$ and a height of $8$. Find the volume and the lateral surface area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $R=\sqrt{100-64}=6$, and in a regular hexagon $R=a$, so $a=6$. $P_p=\frac{3\cdot36\sqrt3}{2}=54\sqrt3$, $V=\frac13\cdot54\sqrt3\cdot8=144\sqrt3$. The height of a face from the triangle $b$, $\frac a2$: $h_b=\sqrt{100-9}=\sqrt{91}$, $P_b=6\cdot\frac12\cdot6\sqrt{91}$. <b>$V=144\sqrt3$, $P_b=18\sqrt{91}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="96; 16sqrt(3)" data-odp-opis="a); b)"><span class="poziom">exam-level</span>
+      <div class="tresc">The base of a pyramid is a right triangle with legs $6$ and $8$. a) Each lateral edge has length $13$. b) Each lateral face is inclined to the base at an angle of $60^\circ$. Find the volume in each case.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P_p=24$, the hypotenuse is $10$. a) The foot = the center of the circumscribed circle = the midpoint of the hypotenuse, $R=5$, $H=\sqrt{169-25}=12$, $V=\frac13\cdot24\cdot12=96$. b) The foot = the center of the inscribed circle, $r=\frac{6+8-10}{2}=2$, $H=2\tan60^\circ=2\sqrt3$, $V=\frac13\cdot24\cdot2\sqrt3$. <b>a) $96$, b) $16\sqrt3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. On the exam</h2>
+  <ul>
+    <li>Always <b>justify the position of the foot of the height</b> (regular, equal edges, equal face angles).</li>
+    <li>Do not confuse $h_b$ (height of a face, used for $P_b$) with $H$ (height of the solid, used for $V$), nor $\alpha$ (edge) with $\beta$ (face).</li>
+    <li>The angle between a face and the base: arms perpendicular to the base edge, i.e. $OM$ and $SM$, where $M$ is the midpoint of the edge (in a regular one).</li>
+    <li>Do not forget the $\frac13$ in the volume.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("os-plot"), { zakres: 2.9, srodek: [0, 0, 1.2] });
+  const w2 = new Wykres($("os-2d"), { xmin: -0.5, xmax: 3.2, ymin: -0.5, ymax: 4.4, rowneSkale: true, siatka: false, osie: false });
+  let tryb = "sciana";
+  function rysuj() {
+    const n = +$("os-n").value, H = +$("os-h").value, a = 2;
+    $("os-n-v").textContent = n;
+    const R = a / (2 * Math.sin(Math.PI / n)), r = a / (2 * Math.tan(Math.PI / n)), f0 = -Math.PI / 2 - Math.PI / n;
+    const W = [];
+    for (let i = 0; i < n; i++) W.push([R * Math.cos(f0 + 2 * Math.PI * i / n), R * Math.sin(f0 + 2 * Math.PI * i / n), 0]);
+    const S = [0, 0, H], O = [0, 0, 0], M = V3.lerp(W[0], W[1], 0.5);
+    W.push(S);
+    const SC = [[...Array(n).keys()]];
+    for (let i = 0; i < n; i++) SC.push([i, (i + 1) % n, n]);
+    const sc = tryb === "sciana", X = sc ? M : W[0], d = sc ? r : R, kat = Math.atan2(H, d) * 180 / Math.PI;
+    const hb = Math.hypot(H, r), b = Math.hypot(H, R), Pp = n * a * r / 2;
+    s3.o.srodek = [0, 0, H / 2];
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.05 });
+      g.okrag(O, [0, 0, 1], d, 4, { przerywana: true });
+      g.wielokat([S, O, X], 3, { wypelnij: 0.25, grubosc: 2.5 });
+      if (sc) g.odcinek(S, M, 2, { grubosc: 3 }); else g.odcinek(S, W[0], 2, { grubosc: 3 });
+      g.kat(O, S, X, 0.25, 3, { prosty: true });
+      g.kat(X, O, S, 0.4, 2, { wypelnij: 0.3 });
+      g.punkt(S, "S", 1); g.punkt(O, "O", 3); g.punkt(X, sc ? "M" : "A", 2);
+    });
+    // wysokość płótna dopasowana do trójkąta (skala x stała) – bez pustego pasa nad nim
+    const c2 = $("os-2d");
+    w2.zakres({ ymax: H + 0.4 });
+    c2.style.height = Math.round(Math.min(220, Math.max(90, c2.clientWidth * (H + 0.4 + 0.5) / 3.7))) + "px";
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [d, 0], [d, H]], 3, { wypelnij: 0.15 });
+      g.odcinek(0, 0, d, H, 2, false);
+      g.luk(0, 0, 0.45, 0, Math.atan2(H, d), 2, { wypelnij: 0.3 });
+      g.wielokat([[d - 0.2, 0], [d - 0.2, 0.2], [d, 0.2]], 3, { zamknij: false, grubosc: 1.5 });
+      g.tekst(d / 2, 0, (sc ? "r = " : "R = ") + ladna(d), 3, { dy: 16, wyrownanie: "center" });
+      g.tekst(d, H / 2, "H = " + ladna(H), 3, { dx: 6 });
+      g.tekst(d / 2, H / 2, (sc ? "hb = " : "b = ") + ladna(sc ? hb : b), 2, { dx: -10, wyrownanie: "right" });
+      g.tekst(0.5, 0.05, sc ? "β" : "α", 2, { dy: -4, gruby: true });
+    });
+    tex("os-wynik", `${sc ? "\\beta" : "\\alpha"}=${ladnaTex(kat, 1)}^\\circ,\\ h_b=${ladnaTex(hb)},\\ b=${ladnaTex(b)},\\ V=${ladnaTex(Pp * H / 3)},\\ P_c=${ladnaTex(Pp + n * a * hb / 2)}`);
+  }
+  const ustaw = t => { tryb = t; $("os-sciana").classList.toggle("aktywny", t === "sciana"); $("os-kraw").classList.toggle("aktywny", t !== "sciana"); rysuj(); };
+  $("os-sciana").addEventListener("click", () => ustaw("sciana"));
+  $("os-kraw").addEventListener("click", () => ustaw("kraw"));
+  ["os-n", "os-h"].forEach(id => $(id).addEventListener("input", rysuj));
+  rysuj();
+});
+</script>
+</body>
+</html>

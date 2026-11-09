@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inscribed and central angles, tangents, arc and sector</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Inscribed and central angles, tangents, arc and sector</h1>
+  <p class="lead">An inscribed angle “sees” an arc from the circumference, a central angle sees it from the centre; from the centre the arc looks twice as wide. Wherever you move the vertex of the inscribed angle along the same arc, the angle does not change.</p>
+  <p class="wymagania">VIII.1, VIII.5, VIII.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="katy">1. Inscribed and central angles</h2>
+  <div class="definicja"><b>Definition</b> A <b>central angle</b> has its vertex at the centre $O$ of a circle. An <b>inscribed angle</b> has its vertex on the circle and its sides contain chords. Both <i>subtend</i> the arc that lies inside the angle. The measure of an arc is the measure of the central angle subtending it.</div>
+  <div class="twierdzenie"><b>The angles-in-a-circle theorem</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    <ol>
+      <li>An inscribed angle is half of the central angle subtending the same arc.</li>
+      <li>Two inscribed angles in the same circle are equal if and only if they subtend equal arcs.</li>
+    </ol>
+    In particular, an inscribed angle subtending a semicircle is a right angle.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>1.</b> Inscribed angle $APB$, centre $O$, $|OA|=|OB|=|OP|=r$. Three cases:</p>
+      <ul>
+        <li><b>$O$ lies on a side</b>, say $PB$. Triangle $AOP$ is isosceles, so $|\angle OAP|=|\angle OPA|=\alpha$. Angle $AOB$ is an exterior angle of this triangle, so $|\angle AOB|=\alpha+\alpha=2\alpha$.</li>
+        <li><b>$O$ inside the angle.</b> Draw the diameter $PQ$. It splits the inscribed angle into $\alpha_1+\alpha_2$ and the central angle into two angles to which the first case applies: $2\alpha_1+2\alpha_2=2\alpha$.</li>
+        <li><b>$O$ outside the angle.</b> Again the diameter $PQ$, but now the inscribed angle is the <i>difference</i> $\alpha_1-\alpha_2$ and the central angle is $2\alpha_1-2\alpha_2$.</li>
+      </ul>
+      <p><b>2.</b> Equal arcs $\iff$ equal central angles (by the definition of arc measure) $\iff$ equal halves of them, i.e. inscribed angles (by part 1). $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="uwaga">A chord $AB$ divides the circle into two arcs. Inscribed angles on opposite sides of the chord add up to $180^\circ$: $\alpha$ and $180^\circ-\alpha$ (arcs: $2\alpha+(360^\circ-2\alpha)$).</div>
+
+  <h2 id="demo">2. Interactive: the inscribed angle does not change</h2>
+  <div class="demo">
+    <p class="opis">Drag $P$ along the circle (or press “▶ Move $P$”): as long as $P$ stays on the same arc, the angle $APB$ stays put and is half of the central angle on the red arc. Drag $P$ to the other side of the chord and the angle becomes $180^\circ-\alpha$. You can also move the points $A$ and $B$.</p>
+    <canvas id="kw-plot"></canvas>
+    <div class="sterowanie"><button id="kw-start">▶ Move $P$</button></div>
+    <div class="wynik" id="kw-wynik"></div>
+  </div>
+
+  <h2 id="styczne">3. Tangents</h2>
+  <div class="twierdzenie"><b>Tangent and radius</b>
+    A tangent to a circle is perpendicular to the radius drawn to the point of tangency.
+  </div>
+  <div class="twierdzenie"><b>The tangent segments theorem</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    If the tangents at the points $A$ and $B$ meet at $P$, then $|PA|=|PB|$ and $PO$ is the angle bisector of the angle $APB$.
+    <details class="rozwin"><summary>Proof</summary><div>
+      <p>Triangles $OAP$ and $OBP$ are right triangles (right angles at $A$ and $B$), they share the hypotenuse $OP$ and $|OA|=|OB|=r$. By Pythagoras $|PA|=\sqrt{|OP|^2-r^2}=|PB|$, so the triangles are congruent (SSS) and $|\angle APO|=|\angle BPO|$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="wzor"><div class="tytul">Length of a tangent segment</div>
+    $$t=\sqrt{d^2-r^2}$$
+    <dl><dt>$d$</dt><dd>distance from the point $P$ to the centre of the circle (Pythagoras in triangle $OAP$)</dd></dl>
+  </div>
+  <p>The formula sheet contains two more theorems: the one about the secant and tangent segments ($|PA|\cdot|PB|=|PC|^2$) and the one about the angle between a tangent and a chord. The latter is <b>outside the 2024 requirements</b>, but it is on the CKE formula sheet, so you may cite it; it is enough to know that this angle equals the inscribed angle subtending the same arc.</p>
+
+  <h2 id="wycinek">4. Arc length and sector area</h2>
+  <div class="wzor"><div class="tytul">Angle $\alpha$ in degrees <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$L=\frac{\alpha}{360^\circ}\cdot2\pi r$$
+    $$P=\frac{\alpha}{360^\circ}\cdot\pi r^2$$
+    <dl><dt>$\frac{\alpha}{360^\circ}$</dt><dd>what fraction of the full angle (disc) the sector takes up</dd>
+        <dt>in radians</dt><dd>$L=\alpha r$, $P=\frac12\alpha r^2=\frac12Lr$ (<a href="miara-lukowa.html">radian measure</a>)</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Change the angle and the radius. A sector is simply the fraction $\frac{\alpha}{360^\circ}$ of the disc – the arc is the same fraction of the circumference.</p>
+    <canvas id="wc-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$\alpha$ <input type="range" id="wc-a" min="5" max="360" step="5" value="120"> <span id="wc-a-v"></span></label>
+      <label>$r$ <input type="range" id="wc-r" min="1" max="4" step="0.5" value="3"> <span id="wc-r-v"></span></label>
+    </div>
+    <div class="wynik" id="wc-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Points $A$, $B$, $C$ lie on a circle with centre $O$ and radius $6$, $|\angle AOB|=110^\circ$. Find $|\angle ACB|$ when $C$ lies on the longer arc $AB$, and when it lies on the shorter one. Find the length of the shorter arc $AB$.</p>
+    <ol>
+      <li>$C$ on the longer arc: angle $ACB$ subtends the shorter arc, whose central angle is $110^\circ$, so $|\angle ACB|=55^\circ$.</li>
+      <li>$C$ on the shorter arc: the angle subtends the longer arc ($250^\circ$), so it is $125^\circ=180^\circ-55^\circ$.</li>
+      <li>$L=\frac{110}{360}\cdot12\pi=\frac{11\pi}{3}$.</li>
+    </ol>
+    <p class="odp">$55^\circ$ or $125^\circ$; $L=\frac{11\pi}{3}$</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">A point $P$ lies at distance $13$ from the centre of a circle of radius $5$. Find the length of the tangent segment drawn from $P$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $t=\sqrt{169-25}$. <b>$t=12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2pi; 9pi" data-odp-opis="arc length; sector area"><span class="poziom">easy</span>
+      <div class="tresc">Find the arc length and the sector area of a disc of radius $9$ with central angle $40^\circ$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{40}{360}=\frac19$. $L=\frac19\cdot18\pi$, $P=\frac19\cdot81\pi$. <b>$L=2\pi$, $P=9\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="140; 100; 120" data-odp-opis="angles BOC; AOC; AOB in degrees"><span class="poziom">medium</span>
+      <div class="tresc">Triangle $ABC$ is inscribed in a circle with centre $O$, $|\angle BAC|=70^\circ$, $|\angle ABC|=50^\circ$. Find the angles $BOC$, $AOC$, $AOB$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|\angle ACB|=60^\circ$. The triangle is acute, so each central angle is twice the inscribed angle subtending the same arc: <b>$|\angle BOC|=140^\circ$, $|\angle AOC|=100^\circ$, $|\angle AOB|=120^\circ$</b> (sum $360^\circ$).
+      </div></details></li>
+    <li class="zadanie" data-odp="30; 150" data-odp-opis="angles in degrees"><span class="poziom">medium</span>
+      <div class="tresc">A chord $AB$ has length equal to the radius of the circle. Find the measures of the inscribed angles subtending this chord.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangle $AOB$ is equilateral, so $|\angle AOB|=60^\circ$. The inscribed angle on one side of the chord: $30^\circ$, on the other: $180^\circ-30^\circ$. <b>$30^\circ$ or $150^\circ$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6sqrt(3); 4pi" data-odp-opis="length of PA; arc length"><span class="poziom">exam-level</span>
+      <div class="tresc">From a point $P$ the tangents $PA$ and $PB$ are drawn to a circle with centre $O$ and radius $6$. $|\angle APB|=60^\circ$. Find $|PA|$ and the length of the shorter arc $AB$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        In the quadrilateral $OAPB$ the angles at $A$ and $B$ are right angles, so $|\angle AOB|=360^\circ-90^\circ-90^\circ-60^\circ=120^\circ$. $PO$ is the angle bisector: in triangle $OAP$ the angle at $P$ is $30^\circ$, $\tan30^\circ=\frac{6}{|PA|}$, $|PA|=\frac{6}{\sqrt3/3}=6\sqrt3$. Arc: $\frac{120}{360}\cdot12\pi=4\pi$. <b>$|PA|=6\sqrt3$, $L=4\pi$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">In triangle $ABC$ the median $CM$ has length equal to half of the side $AB$. Show that the angle $ACB$ is a right angle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $M$ is the midpoint of $AB$, so $|MA|=|MB|=\frac12|AB|=|MC|$. Thus the points $A$, $B$, $C$ lie on a circle with centre $M$, and $AB$ is its diameter. Angle $ACB$ is an inscribed angle subtending a semicircle, so <b>$|\angle ACB|=90^\circ$</b>, which was to be shown.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>Always determine <b>which arc</b> the angle subtends – on which side of the chord the vertex lies. This decides between $\alpha$ and $180^\circ-\alpha$.</li>
+    <li>In a justification, write the full name: “the inscribed and central angles subtending the same arc $AB$”, “the inscribed angle subtending a semicircle”.</li>
+    <li>Point of tangency = right angle. Draw the radius and the segment to the centre – you almost always get a right triangle.</li>
+    <li>The formulas for arc and sector on the formula sheet use degrees; if the angle is in radians, use $L=\alpha r$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Kąt wpisany i środkowy ---
+  const R = 3, O = { x: 0, y: 0 };
+  const w1 = new Wykres($("kw-plot"), { xmin: -4, xmax: 4, ymin: -3.8, ymax: 3.8, rowneSkale: true });
+  const naO = naOkregu(O, R);
+  const biegun = t => ({ x: R * Math.cos(t), y: R * Math.sin(t) });
+  const pk = w1.przeciagaj([{ ...biegun(-2.5), ogranicz: naO }, { ...biegun(-0.4), ogranicz: naO }, { ...biegun(1.9), ogranicz: naO }], rysujKw);
+  const kt = P => { let t = Math.atan2(P.y, P.x); if (t < 0) t += 2 * Math.PI; return t; };
+  function rysujKw() {
+    const [A, B, P] = pk;
+    // łuk AB nie zawierający P (przeciwnie do zegara od A do B lub od B do A)
+    const a = kt(A), b = kt(B), p = kt(P);
+    const odAdoB = ((b - a) + 2 * Math.PI) % (2 * Math.PI), odAdoP = ((p - a) + 2 * Math.PI) % (2 * Math.PI);
+    const [t0, dl] = odAdoP < odAdoB ? [b, 2 * Math.PI - odAdoB] : [a, odAdoB];
+    const wpis = kat(P, A, B);
+    w1.rysuj(g => {
+      g.okrag(0, 0, R, 1);
+      g.luk(0, 0, R, t0, t0 + dl, 2, { grubosc: 5 });
+      g.wielokat([[A.x, A.y], [0, 0], [B.x, B.y]], 2, { zamknij: false, grubosc: 1.5 });
+      g.luk(0, 0, 0.6, t0, t0 + dl, 2, { wypelnij: 0.18 });
+      g.wielokat([[A.x, A.y], [P.x, P.y], [B.x, B.y]], 4, { zamknij: false });
+      lukKata(g, P, A, B, 0.7, 4);
+      g.punkt(0, 0, "O", 1, { r: 3.5 });
+      [[A, "A"], [B, "B"], [P, "P"]].forEach(([Q, s]) => { g.punkt(Q.x, Q.y, "", s === "P" ? 4 : 2); etykieta(g, Q, O, s, s === "P" ? 4 : 2); });
+    });
+    tex("kw-wynik", `|\\angle APB|=${stopnie(wpis)},\\quad \\text{central angle on the red arc}=${stopnie(dl)},\\quad \\tfrac12\\cdot${stopnie(dl)}=${stopnie(dl / 2)}`);
+  }
+  let stop = null;
+  $("kw-start").addEventListener("click", () => {
+    if (stop) stop();
+    const [A, B, P] = pk;
+    const a = kt(A), b = kt(B), p = kt(P);
+    const odAdoB = ((b - a) + 2 * Math.PI) % (2 * Math.PI), odAdoP = ((p - a) + 2 * Math.PI) % (2 * Math.PI);
+    // P wędruje po swoim łuku (od końca do końca, z marginesem)
+    const [s0, d] = odAdoP < odAdoB ? [a, odAdoB] : [b, 2 * Math.PI - odAdoB];
+    stop = animuj(3000, t => { const u = s0 + d * (0.08 + 0.84 * (t < 0.5 ? 2 * t : 2 - 2 * t)); P.x = R * Math.cos(u); P.y = R * Math.sin(u); rysujKw(); });
+  });
+  rysujKw();
+
+  // --- 4. Wycinek koła ---
+  const w2 = new Wykres($("wc-plot"), { xmin: -4.5, xmax: 4.5, ymin: -4.3, ymax: 4.3, rowneSkale: true });
+  function rysujWc() {
+    const al = +$("wc-a").value, r = +$("wc-r").value;
+    $("wc-a-v").textContent = al + "°"; $("wc-r-v").textContent = ladna(r);
+    const rad = al / st;
+    w2.rysuj(g => {
+      g.okrag(0, 0, r, 3, { przerywana: true });
+      g.luk(0, 0, r, 0, rad, 1, { wypelnij: 0.25 });
+      g.luk(0, 0, r, 0, rad, 2, { grubosc: 4 });
+      if (al < 360) { g.odcinek(0, 0, r, 0, 1, false); g.odcinek(0, 0, r * Math.cos(rad), r * Math.sin(rad), 1, false); }
+      g.luk(0, 0, 0.5, 0, rad, 4);
+    });
+    const ul = al / 360;
+    tex("wc-wynik", `\\tfrac{\\alpha}{360^\\circ}=${ladnaTex(ul, 3)},\\ \\ L=${ladnaTex(ul * 2 * r, 3)}\\pi\\approx${ladnaTex(ul * 2 * Math.PI * r)},\\ \\ P=${ladnaTex(ul * r * r, 3)}\\pi\\approx${ladnaTex(ul * Math.PI * r * r)}`);
+  }
+  ["wc-a", "wc-r"].forEach(id => $(id).addEventListener("input", rysujWc));
+  rysujWc();
+});
+</script>
+</body>
+</html>

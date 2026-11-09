@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Absolute value</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Absolute value</h1>
+  <p class="lead">$|x-a|$ is simply the <b>distance</b> between points $x$ and $a$ on the number line. Almost every problem with an absolute value is solved faster once you read it as a statement about distance.</p>
+  <p class="wymagania">I.7 (inequalities: III.R.4)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definition and properties</h2>
+  <div class="wzor">
+    <div class="tytul">Definition <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$|x|=\begin{cases} x, &amp; x\ge0\\ -x, &amp; x&lt;0\end{cases}$$
+    <dl><dt>$|x|$</dt><dd>the distance of $x$ from $0$; it “removes the minus”, e.g. $|-7|=7$</dd>
+        <dt>$|x-a|$</dt><dd>the distance of $x$ from $a$. Note: $|x+4|=|x-(-4)|$ is the distance from $-4$</dd>
+        <dt>$\sqrt{x^2}$</dt><dd>$=|x|$ <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Properties <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$|x|\ge0,\qquad |-x|=|x|$$
+    $$|xy|=|x||y|,\qquad \left|\frac xy\right|=\frac{|x|}{|y|}$$
+    $$|x+y|\le|x|+|y|$$
+    <dl><dt>triangle</dt><dd>the equality $|x+y|=|x|+|y|$ holds only when $xy\ge0$ (the same signs)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Where does the triangle inequality come from?</summary><div>
+    <p>By definition $-|x|\le x\le|x|$ and $-|y|\le y\le|y|$. Add side by side:</p>
+    $$-(|x|+|y|)\le x+y\le |x|+|y|,$$
+    <p>which says exactly that $|x+y|\le|x|+|y|$ (the number lies no farther from zero than $|x|+|y|$).</p>
+  </div></details>
+
+  <h2 id="odleglosc">2. Interactive: absolute value is distance</h2>
+  <div class="demo">
+    <p class="opis">Drag the points $x$ and $a$. The value $|x-a|$ is the length of the red bracket. Swap the points: the distance does not change, because $|x-a|=|a-x|$.</p>
+    <canvas id="od-plot" style="height:200px"></canvas>
+    <div class="wynik" id="od-wynik"></div>
+  </div>
+
+  <h2 id="zbiory">3. Interactive: the set of points at distance $r$</h2>
+  <div class="wzor">
+    <div class="tytul">For $r&gt;0$ (the tables only have the formula with $\le$)</div>
+    $$|x-a|=r\iff x=a-r\ \lor\ x=a+r$$
+    $$|x-a|\le r\iff a-r\le x\le a+r$$
+    <dl><dt>$r&lt;0$</dt><dd>the equation $|x-a|=r$ has no solutions; $r=0$: only $x=a$</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Choose a condition and drag the centre $a$. “▶ Scan” moves $x$ along the line: green when the condition is satisfied. Set $a=-4$, $r=5$: this is the equation $|x+4|=5$.</p>
+    <canvas id="zb-plot" style="height:200px"></canvas>
+    <div class="sterowanie">
+      <label>condition <select id="zb-war">
+        <option value="eq">|x − a| = r</option>
+        <option value="lt">|x − a| &lt; r</option>
+        <option value="gt">|x − a| &gt; r</option>
+      </select></label>
+      <label>$r$ <input type="range" id="zb-r" min="0" max="7" step="0.5" value="5"> <span id="zb-r-v"></span></label>
+      <button id="zb-start">▶ Scan</button>
+    </div>
+    <div class="wynik" id="zb-wynik"></div>
+  </div>
+  <p>Inequalities with an absolute value and equations with several absolute values (the interval method, extended level): <a href="wartosc-bezwzgledna-rownania.html">equations and inequalities with absolute value</a>.</p>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Solve the equation $|x+4|=5$.</p>
+    <ol>
+      <li><b>Geometrically:</b> we look for points at distance $5$ from $-4$: $-4-5=-9$ and $-4+5=1$.</li>
+      <li><b>Algebraically:</b> $x+4=5$ or $x+4=-5$, that is $x=1$ or $x=-9$.</li>
+    </ol>
+    <p class="odp">$x\in\{-9,\,1\}$</p>
+  </div>
+  <div class="przyklad">
+    <p>Evaluate $|\sqrt3-2|+|\sqrt3-1|$.</p>
+    <ol>
+      <li>$\sqrt3\approx1.73$: $\sqrt3-2&lt;0$, so $|\sqrt3-2|=2-\sqrt3$.</li>
+      <li>$\sqrt3-1&gt;0$, so $|\sqrt3-1|=\sqrt3-1$.</li>
+    </ol>
+    <p class="odp">$2-\sqrt3+\sqrt3-1=1$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="2-pi"><span class="poziom">easy</span>
+      <div class="tresc">Evaluate $|-3|-|2-7|+|\pi-4|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\pi-4&lt;0$, so $|\pi-4|=4-\pi$. $3-5+4-\pi=$ <b>$2-\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1; 5; 2; -3" data-odp-opis="solutions of a); solutions of b)"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equations: a) $|x-2|=3$, b) $|2x+1|=5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) points at distance $3$ from $2$: <b>$x=-1$ or $x=5$</b>. b) $2x+1=5$ or $2x+1=-5$: <b>$x=2$ or $x=-3$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Evaluate $\sqrt{(1-\sqrt2)^2}+|\sqrt2-3|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\sqrt{(1-\sqrt2)^2}=|1-\sqrt2|=\sqrt2-1$, $\;|\sqrt2-3|=3-\sqrt2$. The sum: <b>$2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7"><span class="poziom">medium</span>
+      <div class="tresc">How many integers $x$ satisfy the inequality $|x-3|&lt;4$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Distance from $3$ less than $4$: $x\in(-1,7)$. The integers $0,1,\dots,6$. <b>$7$ numbers</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 8" data-odp-opis="possible values"><span class="poziom">medium</span>
+      <div class="tresc">It is known that $|a|=3$ and $|b|=5$. What values can $|a+b|$ take?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a=\pm3$, $b=\pm5$. Same signs: $|a+b|=8$; different signs: $|a+b|=2$. <b>$2$ or $8$</b> (consistent with $|a+b|\le|a|+|b|=8$)
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that if $|x-1|&lt;2$ and $|y+1|&lt;3$, then $|x+y|&lt;5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x+y=(x-1)+(y+1)$. By the triangle inequality $|x+y|\le|x-1|+|y+1|&lt;2+3=5$. <b>$|x+y|&lt;5$</b>, which completes the proof.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The sign inside:</b> $|x+4|$ is the distance from $-4$, not from $4$.</li>
+    <li><b>$\sqrt{x^2}=|x|$:</b> before dropping the absolute value, check the sign of the expression (e.g. $|\pi-4|=4-\pi$).</li>
+    <li><b>$|\,\cdot\,|=r$ with $r&lt;0$:</b> no solutions — say so in one sentence, without calculations.</li>
+    <li>Two absolute values, or an absolute value with an expression on the right-hand side: <a href="wartosc-bezwzgledna-rownania.html">the interval method</a> and checking whether the solution belongs to the interval.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const OS = "--plot-axis";
+  // Oś liczbowa z podziałką (zamiast siatki)
+  function os(g, a, b) {
+    g.odcinek(a, 0, b, 0, OS, false);
+    for (let k = Math.ceil(a); k <= b; k++) {
+      g.odcinek(k, -0.12, k, 0.12, OS, false);
+      if (k % 2 === 0) g.tekst(k, 0, String(k).replace("-", "−"), OS, { dy: 18, wyrownanie: "center", rozmiar: 12 });
+    }
+  }
+  const naOsi = p => ({ x: Math.max(-9.5, Math.min(9.5, Math.round(p.x * 2) / 2)), y: 0 });
+
+  // --- 2. Odległość ---
+  const w1 = new Wykres($("od-plot"), { xmin: -10.5, xmax: 10.5, ymin: -1.5, ymax: 2.5, siatka: false, osie: false });
+  const p1 = w1.przeciagaj([{ x: 3, y: 0, ogranicz: naOsi }, { x: -2, y: 0, ogranicz: naOsi }], rysujOd);
+  function rysujOd() {
+    const x = p1[0].x, a = p1[1].x, d = Math.abs(x - a);
+    w1.rysuj(g => {
+      os(g, -10.5, 10.5);
+      if (d > 0) {
+        g.odcinek(a, 0.3, a, 1.1, 2, false); g.odcinek(x, 0.3, x, 1.1, 2, false);
+        g.odcinek(a, 1.1, x, 1.1, 2, false);
+        g.tekst((a + x) / 2, 1.1, "|x − a| = " + ladna(d), 2, { dy: -8, wyrownanie: "center", gruby: true });
+      }
+      g.punkt(a, 0, "a", 4); g.punkt(x, 0, "x", 2);
+    });
+    tex("od-wynik", `|x-a|=|${ladnaTex(x)}-(${ladnaTex(a)})|=${ladnaTex(d)}`);
+  }
+  rysujOd();
+
+  // --- 3. Zbiory ---
+  const w2 = new Wykres($("zb-plot"), { xmin: -10.5, xmax: 10.5, ymin: -1.5, ymax: 2.5, siatka: false, osie: false });
+  const p2 = w2.przeciagaj([{ x: -4, y: 0, ogranicz: naOsi }], () => { if (stopZb) stopZb(); klatkaZb(1); });
+  let stopZb = null;
+  function klatkaZb(t) {
+    const a = p2[0].x, r = +$("zb-r").value, war = $("zb-war").value;
+    $("zb-r-v").textContent = ladna(r);
+    const L = -10.5, P = 10.5, xs = L + (P - L) * t; // skan do xs
+    const spelnia = x => war === "eq" ? Math.abs(Math.abs(x - a) - r) < 0.12 : war === "lt" ? Math.abs(x - a) < r : Math.abs(x - a) > r;
+    w2.rysuj(g => {
+      os(g, L, P);
+      const pas = (u, v) => { const k = Math.min(v, xs); if (k > u) g.odcinek(u, 0, k, 0, 3, false); };
+      const konce = [a - r, a + r];
+      if (war === "lt") pas(a - r, a + r);
+      if (war === "gt") { pas(L, a - r); pas(a + r, P); }
+      konce.forEach(k => {
+        if (k <= xs + 1e-9) g.punkt(k, 0, "", 3, { pusty: war !== "eq" });
+      });
+      g.punkt(a, 0, "a", 4);
+      if (t < 1) {
+        const ok = spelnia(xs);
+        g.odcinek(a, 0.9, xs, 0.9, ok ? 3 : 2, true);
+        g.punkt(xs, 0.9, "x", ok ? 3 : 2);
+        g.tekst(xs, 0.9, ladna(Math.abs(xs - a), 1), ok ? 3 : 2, { dy: -14, wyrownanie: "center" });
+      }
+    });
+    const A = ladnaTex(a - r), B = ladnaTex(a + r), sa = a === 0 ? "x" : `x${a < 0 ? "+" + ladnaTex(-a) : "-" + ladnaTex(a)}`;
+    let zb = "";
+    if (war === "eq") zb = r === 0 ? `x=${ladnaTex(a)}` : `x=${A}\\ \\lor\\ x=${B}`;
+    if (war === "lt") zb = r === 0 ? "x\\in\\varnothing" : `x\\in(${A},\\,${B})`;
+    if (war === "gt") zb = `x\\in(-\\infty,\\,${A})\\cup(${B},\\,\\infty)`;
+    const zn = war === "eq" ? "=" : war === "lt" ? "<" : ">";
+    tex("zb-wynik", `|${sa}|${zn}${ladnaTex(r)}\\iff ${zb}`);
+  }
+  $("zb-start").addEventListener("click", () => { if (stopZb) stopZb(); stopZb = animuj(4000, klatkaZb); });
+  ["zb-r", "zb-war"].forEach(id => $(id).addEventListener("input", () => { if (stopZb) stopZb(); klatkaZb(1); }));
+  $("zb-war").addEventListener("change", () => { if (stopZb) stopZb(); klatkaZb(1); });
+  klatkaZb(1);
+});
+</script>
+</body>
+</html>

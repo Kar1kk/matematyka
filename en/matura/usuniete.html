@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Removed from the core curriculum</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav>› <a href="index.html">Polish matura, extended level</a> › Removed from the curriculum</nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Removed from the core curriculum</h1>
+  <p class="lead">Topics that were in the 2018 curriculum (and on the 2015–2024 exams) but are not in the 2024 curriculum (matura from 2025). <b>They are not required on the 2025+ exam.</b> They are useful for olympiads, university, and older exam papers and problem books.</p>
+  <div class="uwaga">Some of this material is no longer required, but its formulas are still on the CKE formula sheet (2023 edition, also valid for the 2026–2027 exams), so you may use them on the exam: distance from a point to a line, variance and standard deviation, expected value, the tangent–chord angle theorem, the general form of the circle equation, and the table of trigonometric function values.</div>
+  <p>Sources: the 2018 curriculum (Dz.U. 2018 item 467) and the 2024 curriculum (Dz.U. 2024 item 1019). Detailed comparison with quotations: <code>docs/usuniete-z-podstawy.md</code>.</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="geometria">1. Analytic geometry</h2>
+
+  <h3>Distance from a point to a line <span class="znacznik">on CKE sheet</span></h3>
+  <p>This formula is on the CKE formula sheet — you may use it on the exam.</p>
+  <p>A ready-made formula for the distance of a point $P=(x_0,y_0)$ from a line in general form. In 2024 it is not among the requirements (neither basic nor extended level), but it is on the CKE formula sheet, so you may use it. You can also derive it in a few lines (below). Alternatively, the same result comes from methods in the current curriculum: the perpendicular line through $P$, the intersection point, the length of a segment.</p>
+  <div class="wzor">
+    <div class="tytul">Distance from a point to the line $Ax+By+C=0$</div>
+    $$d=\frac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$$
+    <dl><dt>$[A,B]$</dt><dd>a vector perpendicular to the line</dd>
+        <dt>numerator</dt><dd>the left-hand side of the line's equation after substituting $P$; it equals $0$ exactly when $P$ lies on the line</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Derivation</summary><div>
+    <p>The line through $P$ perpendicular to $Ax+By+C=0$ has direction $[A,B]$, so its points are $(x_0+At,\;y_0+Bt)$. Substitute into the line's equation:</p>
+    $$A(x_0+At)+B(y_0+Bt)+C=0$$
+    $$t=-\frac{Ax_0+By_0+C}{A^2+B^2}$$
+    <p>The projection $H$ corresponds to this $t$, and $|PH|=|t|\cdot|[A,B]|=|t|\sqrt{A^2+B^2}$. After simplifying we get $d=\frac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$.</p>
+  </div></details>
+  <details class="rozwin"><summary>Example</summary><div>
+    <p>Distance of $P=(3,4)$ from the line $3x+4y-5=0$:</p>
+    $$d=\frac{|9+16-5|}{\sqrt{9+16}}=\frac{20}{5}$$
+    <p><b>$d=4$</b></p>
+  </div></details>
+
+  <div class="demo">
+    <p class="opis">Drag the point $P$ and the points $K$, $L$ that define the line. The red segment is the perpendicular projection, $d$ computed from the formula.</p>
+    <canvas id="od-plot"></canvas>
+    <div class="wynik" id="od-wynik"></div>
+  </div>
+
+  <h3>General form of the circle equation <span class="znacznik">on CKE sheet</span></h3>
+  <p>This formula is on the CKE formula sheet — you may use it on the exam.</p>
+  <p>Expanding $(x-a)^2+(y-b)^2=r^2$ gives the general form. In 2024 only the standard form is required, but the general form (with the condition $a^2+b^2-c>0$) is on the CKE formula sheet. From the general form you go back to the standard one anyway by completing the square.</p>
+  <div class="wzor">
+    <div class="tytul">General form of a circle</div>
+    $$x^2+y^2-2ax-2by+c=0$$
+    $$S=(a,b),\quad r=\sqrt{a^2+b^2-c}$$
+    <dl><dt>condition</dt><dd>$a^2+b^2-c&gt;0$; otherwise the equation does not describe a circle</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Example</summary><div>
+    <p>$x^2+y^2-6x+4y-12=0$: $-2a=-6$, $-2b=4$, so $a=3$, $b=-2$, $c=-12$.</p>
+    <p>$r^2=9+4+12=25$. <b>$S=(3,-2)$, $r=5$</b></p>
+  </div></details>
+
+  <h3>Common points of a line and a parabola</h3>
+  <p>The analytic-geometry requirement is gone, but the technique lives on: it is a system of equations, one of which is quadratic (IV.R in 2024). Substitute $y$ from the line into the parabola and look at $\Delta$: $\Delta&gt;0$ two points, $\Delta=0$ the line is tangent, $\Delta&lt;0$ none.</p>
+  <details class="rozwin"><summary>Example</summary><div>
+    <p>$y=x+1$ and $y=x^2-1$: $x^2-1=x+1$, i.e. $x^2-x-2=0$, $x=2$ or $x=-1$.</p>
+    <p><b>$(2,3)$ and $(-1,0)$</b></p>
+  </div></details>
+
+  <h2 id="funkcje">2. Polynomials and functions</h2>
+
+  <h3>Rational roots of a polynomial</h3>
+  <p>In 2024 only <i>integer</i> roots remain (divisors of the constant term). The rational root theorem gives a finite list of candidates for fractions too.</p>
+  <div class="twierdzenie"><b>Theorem</b> If a polynomial $W(x)=a_nx^n+\ldots+a_1x+a_0$ has integer coefficients and the fraction in lowest terms $\frac{p}{q}$ is its root, then $p\mid a_0$ and $q\mid a_n$.
+    <details class="rozwin"><summary>Proof</summary><div>
+      <p>Substitute $\frac pq$ and multiply by $q^n$:</p>
+      $$a_np^n+a_{n-1}p^{n-1}q+\ldots+a_0q^n=0$$
+      <p>All terms except $a_0q^n$ are divisible by $p$, so $p\mid a_0q^n$. Since $p$ and $q$ are coprime, $p\mid a_0$. Likewise, all terms except $a_np^n$ are divisible by $q$, so $q\mid a_n$.</p>
+    </div></details></div>
+  <details class="rozwin"><summary>Example</summary><div>
+    <p>$W(x)=2x^3+x^2+x-1$. Candidates: $p\in\{\pm1\}$, $q\in\{1,2\}$, i.e. $\pm1,\pm\frac12$.</p>
+    <p>$W(1)=3$, $W(-1)=-3$, $W(-\frac12)=-\frac32$, $W(\frac12)=0$. Division: $W(x)=(2x-1)(x^2+x+1)$, and $x^2+x+1$ has $\Delta=-3&lt;0$.</p>
+    <p><b>The only root: $x=\frac12$</b> (there are no integer roots, so the 2024 method would find nothing).</p>
+  </div></details>
+
+  <h3>Graph of $y=|f(x)|$ (and $y=f(|x|)$)</h3>
+  <p>$|f(x)|$: the part of the graph above the $Ox$ axis stays, the part below the axis is reflected across $Ox$. $f(|x|)$: the part for $x\ge0$ stays, and the left half is replaced by its reflection across $Oy$. Formally, in 2018 only $|f(x)|$ was listed; $f(|x|)$ goes hand in hand with it in problem books.</p>
+  <div class="wzor">
+    <div class="tytul">Two transformations</div>
+    $$|f(x)|=\begin{cases}f(x), & f(x)\ge0\\-f(x), & f(x)&lt;0\end{cases}$$
+    $$f(|x|)=\begin{cases}f(x), & x\ge0\\f(-x), & x&lt;0\end{cases}$$
+  </div>
+  <details class="rozwin"><summary>Example: number of solutions of $|x^2-4|=m$</summary><div>
+    <p>The graph of $|x^2-4|$ is a parabola with a "flipped" dip: minimum $0$ at $x=\pm2$, local maximum $4$ at $x=0$. The line $y=m$ intersects it:</p>
+    <p><b>$m&lt;0$: 0 solutions; $m=0$: 2; $0&lt;m&lt;4$: 4; $m=4$: 3; $m&gt;4$: 2.</b></p>
+  </div></details>
+  <details class="rozwin"><summary>Example: $x^2-4|x|+3=0$</summary><div>
+    <p>This is $f(|x|)=0$ for $f(x)=x^2-4x+3=(x-1)(x-3)$. So $|x|=1$ or $|x|=3$.</p>
+    <p><b>$x\in\{-3,-1,1,3\}$</b></p>
+  </div></details>
+
+  <div class="demo">
+    <p class="opis">Choose a function and a transformation, then "▶ Play": watch the part of the graph "flip over" to the other side of the axis. Dashed green: the graph of $f$.</p>
+    <canvas id="ab-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="radio" name="ab-f" value="0" checked> $x^2-2x-3$</label>
+      <label><input type="radio" name="ab-f" value="1"> $x^3-3x$</label>
+      <label><input type="radio" name="ab-f" value="2"> $\log_2 x$</label>
+    </div>
+    <div class="sterowanie">
+      <label><input type="radio" name="ab-t" value="mod" checked> $|f(x)|$</label>
+      <label><input type="radio" name="ab-t" value="arg"> $f(|x|)$</label>
+      <button id="ab-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="ab-wynik"></div>
+  </div>
+
+  <h2 id="trygonometria">3. Trigonometry</h2>
+
+  <h3>Trigonometric inequalities</h3>
+  <p>In 2024 only trigonometric equations remain. You solve an inequality the same way and then read the intervals off the graph or the unit circle. Remember the period: a solution in $\R$ is a union of intervals "$+2k\pi$" (or "$+k\pi$").</p>
+  <div class="wzor">
+    <div class="tytul">Scheme (e.g. $\sin x&gt;a$, $|a|&lt;1$)</div>
+    $$\sin x=a\ \Rightarrow\ x_1,\ x_2\in[0,2\pi)$$
+    <dl><dt>1.</dt><dd>solve the equation within one period</dd>
+        <dt>2.</dt><dd>from the graph pick the intervals where $\sin x$ is above the line $y=a$</dd>
+        <dt>3.</dt><dd>add the period $2k\pi$, $k\in\Z$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Example: $2\sin^2x\le1$ in $[0,2\pi]$</summary><div>
+    <p>$\sin^2x\le\frac12 \iff |\sin x|\le\frac{\sqrt2}{2}$. Equality for $x=\frac\pi4,\frac{3\pi}4,\frac{5\pi}4,\frac{7\pi}4$; between them the graph of $|\sin x|$ is low near $0$, $\pi$, $2\pi$.</p>
+    <p><b>$x\in[0,\frac\pi4]\cup[\frac{3\pi}4,\frac{5\pi}4]\cup[\frac{7\pi}4,2\pi]$</b></p>
+    <p>Check by another method: $2\sin^2x=1-\cos2x$, so the inequality is $\cos2x\ge0$, i.e. in $\R$: $x\in[-\frac\pi4+k\pi,\frac\pi4+k\pi]$.</p>
+  </div></details>
+
+  <h3>Tables and calculator <span class="znacznik">on CKE sheet</span></h3>
+  <p>This formula is on the CKE formula sheet — you may use it on the exam.</p>
+  <p>Reading approximate values of $\sin$, $\cos$, $\tan$ from tables (e.g. $\sin 37^\circ\approx0.6018$) and the reverse: finding the angle from the function value. The 2024 curriculum has no such requirement, but the CKE formula sheet still contains a table of trigonometric function values every $1^\circ$, so you may use it.</p>
+
+  <h2 id="planimetria">4. Plane and solid geometry</h2>
+
+  <h3>Angle between a tangent and a chord <span class="znacznik">on CKE sheet</span></h3>
+  <p>This formula is on the CKE formula sheet — you may use it on the exam.</p>
+  <p>The angle between the tangent at point $A$ and the chord $AB$ equals the inscribed angle subtending the arc $AB$ (lying inside that angle). In 2024 it is neither among the requirements nor on the list of proofs, but it is easy to justify from the central angle.</p>
+  <div class="wzor">
+    <div class="tytul">Tangent–chord angle</div>
+    $$\angle(\text{tangent},AB)=\tfrac12\angle AOB$$
+    <dl><dt>$O$</dt><dd>the center of the circle; $\angle AOB$ is the central angle, so the angle in question equals every inscribed angle $\angle ACB$ subtending the arc $AB$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Justification and example</summary><div>
+    <p>Let the angle between the tangent and $AB$ be $\alpha$ (acute). $OA\perp$ tangent, so $\angle OAB=90^\circ-\alpha$. Triangle $AOB$ is isosceles, so $\angle AOB=180^\circ-2(90^\circ-\alpha)=2\alpha$. The inscribed angle on this arc is half of that: $\alpha$.</p>
+    <p>Example: the tangent forms an angle of $50^\circ$ with the chord $AB$. Then <b>$\angle AOB=100^\circ$ and the inscribed angle $\angle ACB=50^\circ$</b>.</p>
+  </div></details>
+
+  <h3>Cross-section of a cuboid by a plane</h3>
+  <p>Recognizing which shape (triangle, quadrilateral, pentagon, hexagon) a plane section of a cuboid is. In 2024 only sections of the cube and of regular pyramids remain.</p>
+
+  <h2 id="statystyka">5. Statistics and probability</h2>
+
+  <h3>Variance and standard deviation <span class="znacznik">on CKE sheet</span></h3>
+  <p>This formula is on the CKE formula sheet — you may use it on the exam.</p>
+  <p>The mean tells you where the data are; the standard deviation tells you how spread out they are around the mean. In 2024 only the mean (also weighted), the median and the mode remain.</p>
+  <div class="wzor">
+    <div class="tytul">Variance and standard deviation</div>
+    $$\sigma^2=\frac{(x_1-\bar x)^2+\ldots+(x_n-\bar x)^2}{n}$$
+    $$\sigma=\sqrt{\sigma^2}$$
+    <dl><dt>more convenient</dt><dd>$\sigma^2=\overline{x^2}-\bar x^2$ (mean of the squares minus the square of the mean)</dd>
+        <dt>grouped data</dt><dd>value $x_i$ with frequency $n_i$: multiply each squared deviation by $n_i$ (weighted mean)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Example</summary><div>
+    <p>Data: $2,4,4,4,5,5,7,9$. Mean $\bar x=\frac{40}{8}=5$.</p>
+    <p>Squared deviations: $9,1,1,1,0,0,4,16$, sum $32$, so $\sigma^2=\frac{32}{8}=4$. (Alternatively: $\overline{x^2}=\frac{232}{8}=29$, $29-25=4$.)</p>
+    <p><b>$\sigma^2=4$, $\sigma=2$</b></p>
+  </div></details>
+
+  <h3>Expected value <span class="znacznik">on CKE sheet</span></h3>
+  <p>This formula is on the CKE formula sheet — you may use it on the exam.</p>
+  <p>The average winnings "in the long run": multiply each possible value by its probability and add up. A game is fair when the expected value of the profit is $0$.</p>
+  <div class="wzor">
+    <div class="tytul">Expected value</div>
+    $$E=p_1x_1+p_2x_2+\ldots+p_nx_n$$
+    <dl><dt>$x_i$</dt><dd>possible outcomes (e.g. winnings in PLN)</dd>
+        <dt>$p_i$</dt><dd>their probabilities, $p_1+\ldots+p_n=1$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Example</summary><div>
+    <p>A roll of a die costs 3 PLN. For a six you get 12 PLN, for a five 3 PLN, otherwise nothing.</p>
+    <p>Average payout: $\frac16\cdot12+\frac16\cdot3=2.5$ PLN. Profit: $2.5-3$.</p>
+    <p><b>$E=-0.5$ PLN per game</b> (fair price of the game: 2.50 PLN).</p>
+  </div></details>
+
+  <h3>Percentile scale</h3>
+  <p>The $k$-th percentile is the value below which $k\%$ of the data lie (e.g. children's height percentile charts: the "50th percentile" is the median). Removed.</p>
+
+  <h2 id="zawezone">6. Narrowed</h2>
+  <table class="tabela">
+    <tr><th>Was (2018)</th><th>Is (2024)</th></tr>
+    <tr><td>Inequalities with $|x|$ at basic level (e.g. $|x-2|&lt;3$)</td><td>at basic level only equations; inequalities at extended level</td></tr>
+    <tr><td>Arbitrary rational equations and inequalities (extended)</td><td>only those reducible to linear/quadratic + $\frac{V(x)}{W(x)}=0$</td></tr>
+    <tr><td>Parameter: solutions with a "required property"</td><td>only: given signs or belonging to an interval</td></tr>
+    <tr><td>Contradictory and identity equations (any)</td><td>only linear</td></tr>
+    <tr><td>Angle bisector theorem in the requirements</td><td>only on the list of proofs (basic level)</td></tr>
+    <tr><td>Combinatorics "with a complex counting model"</td><td>the qualifier was removed</td></tr>
+    <tr><td>Darboux: existence and approximation of a zero</td><td>only existence (no bisection)</td></tr>
+  </table>
+
+  <h2 id="przeniesione">7. Moved from the basic to the extended level</h2>
+  <p>For you (extended level) nothing disappears here: this is still required, just no longer at the basic level.</p>
+  <table class="tabela">
+    <tr><th>Was at basic level (2018)</th><th>Now at extended level (2024)</th></tr>
+    <tr><td>$(a\pm b)^3$, $a^3-b^3$, $a^n-b^n$</td><td>II.R5</td></tr>
+    <tr><td>Factoring, division of polynomials, integer roots</td><td>II.R1–R3</td></tr>
+    <tr><td>Adding and subtracting rational expressions</td><td>II.R6</td></tr>
+    <tr><td>Biquadratic equations, $\frac{V(x)}{W(x)}=0$</td><td>III.R6, III.R7</td></tr>
+    <tr><td>System: line + circle or parabola</td><td>IV.R</td></tr>
+    <tr><td>Graphs of $-f(x)$, $f(-x)$</td><td>V.R1</td></tr>
+    <tr><td>Law of sines, arbitrary triangles</td><td>VII.R7, VII.R8</td></tr>
+    <tr><td>Converse of Thales' theorem</td><td>VIII.R2</td></tr>
+    <tr><td>Perpendicular line, tangent to a circle, line ∩ circle</td><td>IX.R1, IX.R4</td></tr>
+  </table>
+
+  <h2 id="matura">8. How to use this</h2>
+  <ul>
+    <li><b>Older papers (2015–2024) and older editions of problem books:</b> you can skip problems on these topics, you will not get them on the 2025+ exam.</li>
+    <li><b>Olympiad and university:</b> rational roots, distance from a point to a line, the tangent–chord angle, expected value and variance are standard tools, worth knowing.</li>
+    <li><b>On the exam</b> you may use formulas from the CKE sheet (e.g. the point–line distance shortens line–circle and distance problems). However, problems will not require material from outside the curriculum, so they can always be solved with the methods of the current curriculum too.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Spis treści (site.js generuje go tylko dla stron z dzialy.js)
+  const spis = document.querySelector(".spis[data-auto]");
+  if (spis && !spis.innerHTML.trim()) {
+    const h2 = [...document.querySelectorAll("main h2[id]")];
+    spis.innerHTML = `<b>On this page</b><ol>${h2.map(h => `<li><a href="#${h.id}">${h.textContent.replace(/^\d+\.\s*/, "")}</a></li>`).join("")}</ol>`;
+  }
+
+  // --- 1. Odległość punktu od prostej ---
+  const w1 = new Wykres($("od-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  const nwd = (a, b) => b ? nwd(b, a % b) : Math.abs(a);
+  const pk = w1.przeciagaj([
+    { x: -4, y: -2, siatka: 1 },
+    { x: 4, y: 2, siatka: 1 },
+    { x: 1, y: 3, siatka: 0.5 },
+  ], rysujOd);
+  function rysujOd() {
+    const [K, L, P] = pk;
+    if (K.x === L.x && K.y === L.y) L.x += 1; // prosta musi mieć dwa różne punkty
+    // prosta Ax + By + C = 0 przez K i L (współczynniki całkowite, skrócone)
+    let A = L.y - K.y, B = K.x - L.x, C = L.x * K.y - K.x * L.y;
+    const g = nwd(nwd(A, B), C) || 1;
+    A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    const N = A * A + B * B, v = A * P.x + B * P.y + C, d = Math.abs(v) / Math.sqrt(N);
+    const H = { x: P.x - v / N * A, y: P.y - v / N * B };
+    w1.rysuj(gr => {
+      gr.prosta(K.x, K.y, L.x, L.y, 1);
+      if (d > 0.35) {
+        // znacznik kąta prostego w H
+        const u = Math.hypot(B, A), ux = -B / u, uy = A / u;
+        const nx = (P.x - H.x) / d, ny = (P.y - H.y) / d, s = 0.3;
+        gr.wielokat([[H.x + s * ux, H.y + s * uy], [H.x + s * ux + s * nx, H.y + s * uy + s * ny], [H.x + s * nx, H.y + s * ny]], 3, { zamknij: false });
+      }
+      gr.odcinek(P.x, P.y, H.x, H.y, 2, false);
+      gr.punkt(H.x, H.y, "H", 3, { r: 4 });
+      gr.punkt(K.x, K.y, "K", 1);
+      gr.punkt(L.x, L.y, "L", 1);
+      gr.punkt(P.x, P.y, "P", 2);
+    });
+    const czlon = (k, s, pierwszy) => k === 0 ? "" : (k > 0 && !pierwszy ? "+" : "") + (k === 1 && s ? "" : k === -1 && s ? "-" : k) + s;
+    let rown = czlon(A, "x", true) + czlon(B, "y", A === 0) + czlon(C, "", false);
+    const pierw = Number.isInteger(Math.sqrt(N)) ? String(Math.sqrt(N)) : `\\sqrt{${N}}`;
+    tex("od-wynik", `${rown}=0,\\quad P=(${ladnaTex(P.x)},${ladnaTex(P.y)}),\\quad d=\\frac{${ladnaTex(Math.abs(v))}}{${pierw}}\\approx${ladnaTex(d)}`);
+  }
+  rysujOd();
+
+  // --- 2. Wykres |f(x)| i f(|x|) ---
+  const FUN = [
+    { f: x => x * x - 2 * x - 3, t: "x^2-2x-3", ta: "|x|^2-2|x|-3", od: -Infinity },
+    { f: x => x ** 3 - 3 * x, t: "x^3-3x", ta: "|x|^3-3|x|", od: -Infinity },
+    { f: x => Math.log2(x), t: "\\log_2 x", ta: "\\log_2|x|", od: 0.01 },
+  ];
+  const w2 = new Wykres($("ab-plot"), { xmin: -5, xmax: 5, ymin: -5, ymax: 5 });
+  const wybor = name => document.querySelector(`input[name="${name}"]:checked`).value;
+  let stop = null;
+  function klatkaAb(t) {
+    const F = FUN[+wybor("ab-f")], f = F.f, tryb = wybor("ab-t");
+    w2.rysuj(g => {
+      g.funkcja(f, 3, { przerywana: true });
+      if (tryb === "mod") {
+        // część pod osią Ox „przewraca się” w górę: y → y·(1 − 2t)
+        g.funkcja(x => { const y = f(x); return y >= 0 ? y : y * (1 - 2 * t); }, 1);
+      } else {
+        // prawa połowa zostaje, jej kopia składa się na lewą stronę: x → x·(1 − 2t)
+        const a = Math.max(F.od, 0), b = g.z.xmax;
+        g.funkcja(f, 1, { od: a });
+        if (t > 0) g.parametryczna(s => s * (1 - 2 * t), f, a, b, 2);
+      }
+    });
+    const wz = tryb === "mod" ? `y=\\left|${F.t}\\right|` : `y=${F.ta}`;
+    tex("ab-wynik", `f(x)=${F.t},\\quad ${wz}`);
+  }
+  $("ab-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(1800, klatkaAb); });
+  document.querySelectorAll('input[name="ab-f"], input[name="ab-t"]').forEach(el =>
+    el.addEventListener("change", () => { if (stop) stop(); stop = animuj(1800, klatkaAb); }));
+  klatkaAb(0);
+});
+</script>
+</body>
+</html>

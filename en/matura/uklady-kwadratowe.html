@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Systems with a quadratic equation</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Systems with a quadratic equation</h1>
+  <p class="lead">The goal is always the same: reduce the system to <b>one</b> quadratic (or linear) equation in one unknown. The number of solutions of the system is the number of common points of the line and the curve, and $\Delta$ tells you that.</p>
+  <p class="wymagania">IV.R</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="metody">1. Three techniques</h2>
+  <div class="wzor">
+    <div class="tytul">Substitution (line + curve)</div>
+    $$\begin{cases} x^2+y^2=10\\ x-y=2 \end{cases}$$
+    $$(y+2)^2+y^2=10$$
+    <dl><dt>step</dt><dd>solve the linear equation for $x$ or $y$, substitute into the quadratic one, solve, and compute the other unknown <b>from the linear equation</b></dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Subtraction (two circles)</div>
+    $$\begin{cases} x^2+y^2+ax+by=c\\ x^2+y^2+dx+ey=f \end{cases}$$
+    $$(a-d)x+(b-e)y=c-f$$
+    <dl><dt>next</dt><dd>$x^2+y^2$ cancels, leaving the line through the common points. Now substitute as above</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Sum and product</div>
+    $$\begin{cases} x+y=s\\ xy=p \end{cases}\;\Rightarrow\; t^2-st+p=0$$
+    <dl><dt>$x,y$</dt><dd>are the roots of this trinomial (<a href="wzory-viete.html">Vieta's formulas</a>), in either order</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Why is the difference of two circle equations the line through their common points?</summary><div>
+    <p>A common point satisfies both equations, so it also satisfies their difference. The difference no longer has $x^2+y^2$, so it is a linear equation, i.e. a line (when $a\neq d$ or $b\neq e$). This line contains both common points, so it is the line through them. For concentric circles the difference is $0=c-f$: a contradiction, or the same circles.</p>
+  </div></details>
+
+  <h2 id="ile">2. How many solutions?</h2>
+  <p>Number of solutions of the system = number of common points of the graphs. After substituting $y=mx+n$ you get a trinomial in $x$, and each $x$ gives one $y$:</p>
+  <table class="tabela">
+    <tr><th>system</th><th>possible number of solutions</th></tr>
+    <tr><td>line and circle</td><td>$0$, $1$ (tangent, $\Delta=0$), $2$</td></tr>
+    <tr><td>line and hyperbola $xy=k$</td><td>$0$, $1$, $2$; horizontal or vertical line: $1$ or $0$</td></tr>
+    <tr><td>two circles</td><td>$0$, $1$, $2$ or infinitely many (the same circle)</td></tr>
+  </table>
+  <p>Geometrically (distance from the center to the line, $|S_1S_2|$ versus $r_1\pm r_2$): <a href="prosta-i-okrag.html">line and circle, two circles</a>. The equation of a circle in standard and general form <b>is on the formula sheet</b>.</p>
+  <div class="uwaga">If the coefficient of $x^2$ in the trinomial comes out $0$ (e.g. a horizontal line and $xy=k$), the equation is linear and you do not compute $\Delta$.</div>
+
+  <h2 id="demo">3. Interactive: a moving line</h2>
+  <div class="demo">
+    <p class="opis">Choose a curve and move the line $y=mx+n$ (the $n$ slider or the button). Watch the sign of $\Delta$ jump exactly at the moment of tangency.</p>
+    <canvas id="kp-plot"></canvas>
+    <div class="sterowanie">
+      <label>curve <select id="kp-krzywa">
+        <option value="o">circle x²+y²=r²</option>
+        <option value="h">hyperbola xy=k</option>
+      </select></label>
+      <label>$m$ <input type="range" id="kp-m" min="-3" max="3" step="0.25" value="-1"> <span id="kp-m-v"></span></label>
+      <label>$n$ <input type="range" id="kp-n" min="-7" max="7" step="0.25" value="1"> <span id="kp-n-v"></span></label>
+      <label>$r$ <input type="range" id="kp-r" min="1" max="5" step="0.5" value="3"> <span id="kp-r-v"></span></label>
+      <label>$k$ <input type="range" id="kp-k" min="-6" max="6" step="1" value="4"> <span id="kp-k-v"></span></label>
+      <button id="kp-start">▶ Move the line</button>
+    </div>
+    <div class="wynik" id="kp-wynik"></div>
+  </div>
+
+  <h2 id="animacja">4. Animation: subtracting circle equations</h2>
+  <div class="demo">
+    <p class="opis">Drag the centers $S_1$, $S_2$ and change the radii. "▶ Subtract" shows the equations $F_1-t\cdot F_2=0$ for $t$ from $0$ to $1$: these are circles through the <b>same</b> common points, getting larger, until at $t=1$ only the line remains.</p>
+    <canvas id="do-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r_1$ <input type="range" id="do-r1" min="0.5" max="5" step="0.5" value="3"> <span id="do-r1-v"></span></label>
+      <label>$r_2$ <input type="range" id="do-r2" min="0.5" max="5" step="0.5" value="2.5"> <span id="do-r2-v"></span></label>
+      <button id="do-start">▶ Subtract</button>
+    </div>
+    <div class="wynik" id="do-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Solve $\begin{cases} x^2+y^2=25\\ x^2+y^2-12x-6y=-35 \end{cases}$ and give an interpretation.</p>
+    <ol>
+      <li>Subtract the second from the first: $12x+6y=60$, i.e. $y=10-2x$.</li>
+      <li>Substitute into the first: $x^2+(10-2x)^2=25$, i.e. $5x^2-40x+75=0$, $x^2-8x+15=0$.</li>
+      <li>$\Delta=64-60=4$, $x_1=3$, $x_2=5$. From the line: $y_1=4$, $y_2=0$.</li>
+      <li>Check in the second: $9+16-36-24=-35$ ✓, $25-60=-35$ ✓.</li>
+    </ol>
+    <p class="odp">$(3,4)$ and $(5,0)$: the circles $S_1=(0,0)$, $r_1=5$ and $S_2=(6,3)$, $r_2=\sqrt{10}$ intersect at two points</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Solve $\begin{cases} x^2+y^2=10\\ x-y=2 \end{cases}$</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x=y+2$: $(y+2)^2+y^2=10$, $2y^2+4y-6=0$, $y^2+2y-3=0$, $y=1$ or $y=-3$. From the line $x=3$ or $x=-1$. <b>$(3,1)$, $(-1,-3)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Solve $\begin{cases} x+y=5\\ xy=6 \end{cases}$</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x,y$ are the roots of $t^2-5t+6=0$, i.e. $2$ and $3$. <b>$(2,3)$, $(3,2)$</b> (two different pairs!)
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 1" data-odp-opis="x; y"><span class="poziom">medium</span>
+      <div class="tresc">Solve $\begin{cases} x^2+y^2=5\\ y=2x+5 \end{cases}$ and give the geometric interpretation.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x^2+(2x+5)^2=5$, $5x^2+20x+20=0$, $(x+2)^2=0$, $x=-2$, $y=1$. One solution, because $\Delta=0$. <b>$(-2,1)$: the line is tangent to the circle</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">How many solutions does the system have: a) $\begin{cases} xy=4\\ x+y=3 \end{cases}$ &nbsp; b) $\begin{cases} xy=4\\ x+y=4 \end{cases}$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) $t^2-3t+4=0$, $\Delta=9-16&lt;0$. <b>No solutions</b> (the line misses the hyperbola).<br>
+        b) $t^2-4t+4=0$, $\Delta=0$, $t=2$. <b>One: $(2,2)$</b> (the line is tangent to the hyperbola).
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Solve $\begin{cases} x^2+y^2+2x-4y=20\\ x^2+y^2-6x+4y=4 \end{cases}$ and give the equation of the line through the common points of the circles.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Subtract: $8x-8y=16$, i.e. $y=x-2$. Substitute into the second: $x^2+(x-2)^2-6x+4(x-2)=4$, $2x^2-6x-8=0$, $x^2-3x-4=0$, $x=4$ or $x=-1$.
+        <b>$(4,2)$, $(-1,-3)$; line $y=x-2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="25/2"><span class="poziom">exam-level</span>
+      <div class="tresc">The line $x+y=10$ meets the circle $x^2+y^2-4x-6y=12$ at the points $A$ and $B$. Find the area of the triangle $ABS$, where $S$ is the center of the circle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $y=10-x$: $x^2+(10-x)^2-4x-60+6x=12$, $2x^2-18x+28=0$, $x^2-9x+14=0$, $x=2$ or $x=7$. Hence $A=(2,8)$, $B=(7,3)$.
+        Center: $(x-2)^2+(y-3)^2=25$, $S=(2,3)$. $\vec{SA}=[0,5]$, $\vec{SB}=[5,0]$ are perpendicular, so the area $=\frac12\cdot5\cdot5$. <b>$P=\frac{25}{2}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Compute the second unknown from the linear equation.</b> From $y^2=25-x^2$ you get $\pm$ and false pairs.</li>
+    <li><b>The result is pairs</b>, ordered: $\begin{cases} x=3\\ y=4 \end{cases}$ or $\begin{cases} x=5\\ y=0 \end{cases}$. Do not mix up the $x$'s with the $y$'s.</li>
+    <li>The question "how many solutions" = $\Delta$ of the trinomial after substitution (first check that the coefficient of $x^2$ is not zero).</li>
+    <li>Two circles: after subtracting you <b>still</b> have a line–circle system to solve. The line alone is not the answer.</li>
+    <li>Check every pair in <b>both</b> original equations; it takes a few seconds.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const EPS = 1e-9;
+
+  // wyraz k·v (pomija 0 i jedynki przy zmiennej)
+  function skladnik(k, v, pierwszy) {
+    if (Math.abs(k) < EPS) return "";
+    const abs = Math.abs(k);
+    const znak = k < 0 ? "-" : (pierwszy ? "" : "+");
+    return znak + (Math.abs(abs - 1) < EPS && v ? "" : ladnaTex(abs)) + v;
+  }
+  function wielTex(A, B, C) {
+    let s = skladnik(A, "x^2", true);
+    s += skladnik(B, "x", s === "");
+    s += skladnik(C, "", s === "");
+    return (s || "0") + "=0";
+  }
+
+  // --- 3. Prosta i krzywa ---
+  const w1 = new Wykres($("kp-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  let stop1 = null;
+  function rysujKp(nAnim) {
+    const krzywa = $("kp-krzywa").value;
+    const m = +$("kp-m").value, r = +$("kp-r").value;
+    let k = +$("kp-k").value;
+    if (k === 0) k = 1; // xy=0 to nie hiperbola
+    const n = nAnim === undefined ? +$("kp-n").value : nAnim;
+    ["kp-m", "kp-r", "kp-k"].forEach(id => { $(id + "-v").textContent = ladna(+$(id).value); });
+    $("kp-k-v").textContent = ladna(k);
+    $("kp-n-v").textContent = ladna(n);
+    let A = 0, B = 0, C = 0, xs = [], podst = "", opis = "";
+    if (krzywa === "o") {
+      A = 1 + m * m; B = 2 * m * n; C = n * n - r * r;
+      podst = "x^2+(" + skladnik(m, "x", true) + skladnik(n, "", Math.abs(m) < EPS) + ")^2=" + ladnaTex(r * r);
+      if (Math.abs(m) < EPS && Math.abs(n) < EPS) podst = "x^2=" + ladnaTex(r * r);
+    } else {
+      A = m; B = n; C = -k;
+      podst = "x(" + (skladnik(m, "x", true) + skladnik(n, "", Math.abs(m) < EPS) || "0") + ")=" + ladnaTex(k);
+    }
+    if (Math.abs(A) > EPS) {
+      const D = B * B - 4 * A * C;
+      if (D > EPS) xs = [(-B - Math.sqrt(D)) / (2 * A), (-B + Math.sqrt(D)) / (2 * A)];
+      else if (Math.abs(D) <= EPS) xs = [-B / (2 * A)];
+      opis = "\\Delta=" + ladnaTex(D) + "\\Rightarrow " + xs.length;
+    } else {
+      if (Math.abs(B) > EPS) xs = [-C / B];
+      opis = "\\text{linear}\\Rightarrow " + xs.length;
+    }
+    opis += "\\text{ sol.}";
+    w1.rysuj(g => {
+      if (krzywa === "o") g.okrag(0, 0, r, 1, { wypelnij: 0.08 });
+      else g.funkcja(x => k / x, 1);
+      g.funkcja(x => m * x + n, 4);
+      xs.forEach((x, i) => g.punkt(x, m * x + n, xs.length === 2 ? "P" + (i + 1) : "P", 2));
+    });
+    tex("kp-wynik", podst + "\\;\\to\\;" + wielTex(A, B, C) + ",\\;" + opis);
+  }
+  ["kp-m", "kp-r", "kp-k"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); rysujKp(); }));
+  $("kp-krzywa").addEventListener("change", () => { if (stop1) stop1(); rysujKp(); });
+  $("kp-n").addEventListener("input", () => { if (stop1) stop1(); rysujKp(); });
+  $("kp-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    stop1 = animuj(6000, t => rysujKp(-7 + 14 * t), () => { $("kp-n").value = 7; });
+  });
+  rysujKp();
+
+  // --- 4. Dwa okręgi: odejmowanie ---
+  const w2 = new Wykres($("do-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const srodki = [{ x: -1, y: 0, siatka: 0.5 }, { x: 2, y: 1, siatka: 0.5 }];
+  let stop2 = null;
+  const ogolneTex = (D, E, F) => "x^2+y^2" + skladnik(D, "x", false) + skladnik(E, "y", false) + "=" + ladnaTex(F);
+  function klatkaDo(t) {
+    const r1 = +$("do-r1").value, r2 = +$("do-r2").value;
+    $("do-r1-v").textContent = ladna(r1); $("do-r2-v").textContent = ladna(r2);
+    const [a1, b1] = [srodki[0].x, srodki[0].y], [a2, b2] = [srodki[1].x, srodki[1].y];
+    const c1 = a1 * a1 + b1 * b1 - r1 * r1, c2 = a2 * a2 + b2 * b2 - r2 * r2;
+    // prosta: 2(a2-a1)x + 2(b2-b1)y = c2 - c1
+    const P = 2 * (a2 - a1), Q = 2 * (b2 - b1), R = c2 - c1;
+    const d = Math.hypot(a2 - a1, b2 - b1);
+    let pkt = [];
+    if (d > EPS && d <= r1 + r2 + EPS && d >= Math.abs(r1 - r2) - EPS) {
+      const a = (d * d + r1 * r1 - r2 * r2) / (2 * d), h = Math.sqrt(Math.max(0, r1 * r1 - a * a));
+      const ux = (a2 - a1) / d, uy = (b2 - b1) / d;
+      const mx = a1 + a * ux, my = b1 + a * uy;
+      pkt = h < 1e-6 ? [[mx, my]] : [[mx - h * uy, my + h * ux], [mx + h * uy, my - h * ux]];
+    }
+    w2.rysuj(g => {
+      g.okrag(a1, b1, r1, 1, { wypelnij: 0.06 });
+      g.okrag(a2, b2, r2, 4, { wypelnij: 0.06 });
+      if (t !== null && t < 0.995) {
+        const cx = (a1 - t * a2) / (1 - t), cy = (b1 - t * b2) / (1 - t);
+        const R2 = cx * cx + cy * cy - (c1 - t * c2) / (1 - t);
+        if (R2 > 0 && R2 < 9e4) g.okrag(cx, cy, Math.sqrt(R2), 3);
+      }
+      if (t !== null && t >= 0.995 && d > EPS) {
+        if (Math.abs(Q) >= Math.abs(P)) g.prosta(0, R / Q, 1, (R - P) / Q, 3);
+        else g.prosta(R / P, 0, (R - Q) / P, 1, 3);
+      }
+      g.punkt(a1, b1, "S₁", 1); g.punkt(a2, b2, "S₂", 4);
+      pkt.forEach(p => g.punkt(p[0], p[1], "", 2));
+    });
+    let wynik = "\\begin{cases}" + ogolneTex(-2 * a1, -2 * b1, -c1) + "\\\\" + ogolneTex(-2 * a2, -2 * b2, -c2) + "\\end{cases}";
+    let prosta = "";
+    if (d < EPS) prosta = "0=" + ladnaTex(R) + (Math.abs(R) < EPS ? "\\;\\text{(the same circle)}" : "\\;\\text{(concentric: none)}");
+    else prosta = (skladnik(P, "x", true) + skladnik(Q, "y", Math.abs(P) < EPS)) + "=" + ladnaTex(R);
+    if (t === null || t >= 0.995) wynik += "\\;\\xrightarrow{-}\\;" + prosta + ",\\;" + (d < EPS && Math.abs(R) < EPS ? "\\infty" : pkt.length) + "\\text{ common pts}";
+    else wynik += "\\;F_1-" + ladnaTex(t) + "F_2=0";
+    tex("do-wynik", wynik);
+  }
+  w2.przeciagaj(srodki, () => { if (stop2) stop2(); klatkaDo(null); });
+  ["do-r1", "do-r2"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); klatkaDo(null); }));
+  $("do-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    stop2 = animuj(4000, t => klatkaDo(t));
+  });
+  klatkaDo(null);
+});
+</script>
+</body>
+</html>

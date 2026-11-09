@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angles in solids: line–plane angle, dihedral angle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Angles in solids: line–plane angle, dihedral angle</h1>
+  <p class="lead">You compute every angle in a solid in a <b>flat triangle</b>. The art is to choose that triangle well: for the angle between a line and a plane you need a projection, and for the angle between faces you need two segments perpendicular to the common edge.</p>
+  <p class="wymagania">X.2, X.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definitions</h2>
+  <div class="definicja"><b>The angle between a line and a plane</b> is the angle between the line and its <b>orthogonal projection</b> onto that plane. Its measure lies in $[0^\circ,90^\circ]$: $0^\circ$ when the line is parallel to the plane, $90^\circ$ when it is perpendicular.</div>
+  <div class="definicja"><b>The dihedral angle</b> (between half-planes with a common edge $k$): choose a point $K\in k$ and in each half-plane draw a ray from $K$ <b>perpendicular to $k$</b>. The angle between these rays is the <b>plane angle</b> of the dihedral angle. It does not depend on the choice of $K$.</div>
+  <div class="uwaga">A dihedral angle can be obtuse (e.g. between adjacent lateral faces of a pyramid). The angle <b>between planes</b> is always the acute (or right) one.</div>
+
+  <h2 id="metoda">2. Method</h2>
+  <div class="dwie">
+    <div><p><b>Line–plane</b></p><ol>
+      <li>From a point of the line drop a perpendicular onto the plane (the foot = the projection of the point).</li>
+      <li>The projection of the line passes through the foot and the point where the line meets the plane.</li>
+      <li>A right triangle: the segment, its projection, the height. Compute $\sin$, $\cos$ or $\tan$.</li></ol></div>
+    <div><p><b>Face–face</b></p><ol>
+      <li>Find the common edge.</li>
+      <li>In both faces draw segments perpendicular to it at the <b>same point</b> (e.g. altitudes of triangles; the three perpendiculars theorem).</li>
+      <li>The angle between them: from a right triangle or from the law of cosines.</li></ol></div>
+  </div>
+
+  <h2 id="demo">3. Interactive: the triangle of the angle</h2>
+  <div class="demo">
+    <p class="opis">Choose an angle in a regular square pyramid. The green triangle is the one in which you compute it. The ▶ button rotates the camera so that you look at the triangle face-on: you see it in its true shape, as on paper.</p>
+    <canvas id="kb-plot"></canvas>
+    <div class="sterowanie">
+      <button id="kb-kr" class="wtorny aktywny">edge–base</button>
+      <button id="kb-sc" class="wtorny">face–base</button>
+      <button id="kb-ss" class="wtorny">face–face</button>
+      <button id="kb-start">▶ Face-on</button>
+      <label>$H$ <input type="range" id="kb-h" min="0.5" max="3.5" step="0.1" value="2"></label>
+    </div>
+    <div class="wynik" id="kb-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>All edges of the regular square pyramid $ABCDS$ have length $2$. Find the cosine of the dihedral angle between faces $ABS$ and $BCS$.</p>
+    <ol>
+      <li>The common edge: $SB$. The faces are equilateral triangles, so the altitudes $AK$ and $CK$ dropped onto $SB$ have a common foot $K$ (the midpoint of $SB$): $|AK|=|CK|=\sqrt3$.</li>
+      <li>$|AC|=2\sqrt2$ (the diagonal of the base).</li>
+      <li>Law of cosines in triangle $AKC$: $8=3+3-2\cdot3\cos\varphi$.</li>
+    </ol>
+    <p class="odp">$\cos\varphi=-\frac13$ (an obtuse angle, about $109.5^\circ$)</p>
+    <p>In the demo: the “face–face” mode, $H\approx1.4$ ($H=\sqrt2$).</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="sqrt(2)/2" data-odp-opis="tangent of the angle"><span class="poziom">easy</span>
+      <div class="tresc">Find the tangent of the angle between the diagonal of a cube and the plane of the base.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The projection of diagonal $AG$ is the base diagonal $AC=a\sqrt2$, the height is $CG=a$. $\tan\alpha=\frac{a}{a\sqrt2}$. <b>$\tan\alpha=\frac{\sqrt2}{2}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="sqrt(2)" data-odp-opis="tangent of the angle"><span class="poziom">medium</span>
+      <div class="tresc">In cube $ABCDEFGH$ ($E$ above $A$) find the tangent of the angle between plane $BDE$ and the plane of the base.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The common edge is $BD$. $O$ is the midpoint of $BD$: $AO\perp BD$, and $EO\perp BD$ (the three perpendiculars theorem, or triangle $BDE$ is equilateral). Angle $EOA$: $\tan=\frac{|AE|}{|AO|}=\frac{a}{a\sqrt2/2}$. <b>$\tan\alpha=\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60; sqrt(3)/2" data-odp-opis="angle β (in degrees); tan α"><span class="poziom">medium</span>
+      <div class="tresc">A regular triangular pyramid has base edge $6$ and height $3$. Find the angle of inclination of a lateral face to the base and the tangent of the angle of inclination of a lateral edge.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $r=\frac{6\sqrt3}{6}=\sqrt3$, $R=2\sqrt3$. $\tan\beta=\frac{3}{\sqrt3}=\sqrt3$, $\tan\alpha=\frac{3}{2\sqrt3}$. <b>$\beta=60^\circ$, $\tan\alpha=\frac{\sqrt3}{2}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/3" data-odp-opis="cosine of the angle"><span class="poziom">exam-level</span>
+      <div class="tresc">Find the cosine of the angle of inclination of a lateral face of a regular tetrahedron to the plane of the base.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangle $SOM$: $|SM|=h$ (the altitude of a face), $|OM|=r=\frac13h$ (the foot is at the centre of the equilateral triangle). $\cos\beta=\frac{r}{h}$. <b>$\cos\beta=\frac13$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2" data-odp-opis="H"><span class="poziom">exam-level</span>
+      <div class="tresc">A regular square pyramid has base edge $4$, and the dihedral angle between adjacent lateral faces is $120^\circ$. Find the height of the pyramid.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangle $AKC$ ($AK$, $CK$ are the altitudes of the faces onto $SB$): isosceles with angle $120^\circ$, $|AC|=4\sqrt2=|AK|\sqrt3$, so $|AK|=\frac{4\sqrt6}{3}$. The area of face $ABS$ in two ways, $b=|SB|$: $b\cdot|AK|=4\sqrt{b^2-4}$, hence $\frac{32}{3}b^2=16(b^2-4)$, $b^2=12$. $H^2=b^2-R^2=12-8$. <b>$H=2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>In the drawing <b>mark the angle with an arc</b> and name it ($\sphericalangle SMO$). Without this the examiner does not know which angle you are computing.</li>
+    <li>Justify the right angle: “$SO\perp ABC$, so $SO\perp OM$”, and for a dihedral angle: both arms $\perp$ the edge.</li>
+    <li>Angle between lateral faces: the altitudes from $A$ and $C$ hit the <b>same</b> point $K$ only by symmetry (a regular solid); in general, draw the perpendiculars from one point.</li>
+    <li>A negative result from the law of cosines = an obtuse dihedral angle. The angle between the planes is then $180^\circ-\varphi$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("kb-plot"), { zakres: 2.2, srodek: [0, 0, 0.9] });
+  const A = [-1, -1, 0], B = [1, -1, 0], C = [1, 1, 0], D = [-1, 1, 0], O = [0, 0, 0], M = [0, -1, 0];
+  const SC = [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]];
+  const TR = { kr: $("kb-kr"), sc: $("kb-sc"), ss: $("kb-ss") };
+  let tryb = "kr", stop = null;
+  const d = (p, q) => V3.dl(V3.odj(p, q)), st = 180 / Math.PI;
+  function trojkat() {
+    const H = +$("kb-h").value, S = [0, 0, H];
+    if (tryb === "kr") return { S, T: [S, O, A], W: A, P: O, opis: `\\tan\\alpha=\\frac{H}{R}=\\frac{${ladnaTex(H)}}{${ladnaTex(Math.SQRT2)}}`, kat: Math.atan2(H, Math.SQRT2) * st, n: "\\alpha" };
+    if (tryb === "sc") return { S, T: [S, O, M], W: M, P: O, opis: `\\tan\\beta=\\frac{H}{r}=${ladnaTex(H)}`, kat: Math.atan2(H, 1) * st, n: "\\beta" };
+    const u = V3.odj(S, B), K = V3.dod(B, V3.razy(u, V3.il(V3.odj(A, B), u) / V3.il(u, u)));
+    const ak = d(A, K), c = (2 * ak * ak - 8) / (2 * ak * ak);
+    return { S, T: [A, K, C], W: K, P: null, opis: `|AK|=${ladnaTex(ak)},\\ \\cos\\varphi=${ladnaTex(c, 3)}`, kat: Math.acos(c) * st, n: "\\varphi" };
+  }
+  function rysuj() {
+    const t = trojkat(), W = [A, B, C, D, t.S];
+    s3.o.srodek = [0, 0, t.S[2] / 2];
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.05 });
+      g.wielokat(t.T, 3, { wypelnij: 0.3, grubosc: 2.5 });
+      const [p, q] = t.T.filter(x => x !== t.W);
+      g.kat(t.W, p, q, 0.35, 2, { wypelnij: 0.35 });
+      if (t.P) { g.kat(t.P, t.S, t.W, 0.2, 3, { prosty: true }); g.odcinek(t.S, O, 3, { przerywana: true }); }
+      else { g.kat(t.W, A, t.S, 0.2, 3, { prosty: true }); g.kat(t.W, C, t.S, 0.2, 3, { prosty: true }); }
+      ["A", "B", "C", "D", "S"].forEach((n, i) => g.tekst(W[i], n, "--muted", { dx: 5, dy: -6, gruby: true }));
+      if (t.P) g.punkt(O, "O", 3, { r: 3 });
+      g.punkt(t.W, tryb === "ss" ? "K" : tryb === "sc" ? "M" : "", 2, { r: 3 });
+    });
+    tex("kb-wynik", `${t.opis},\\quad ${t.n}=${ladnaTex(t.kat, 1)}^\\circ`);
+  }
+  function naWprost() {
+    const t = trojkat();
+    let n = V3.norm(V3.wek(V3.odj(t.T[1], t.T[0]), V3.odj(t.T[2], t.T[0])));
+    if (n[2] < -1e-9 || (Math.abs(n[2]) < 1e-9 && Math.cos(Math.atan2(-n[0], -n[1]) - s3.az) < 0)) n = V3.razy(n, -1);
+    const el = Math.asin(Math.min(1, n[2])), az0 = s3.az, el0 = s3.el;
+    let az = Math.atan2(-n[0], -n[1]);
+    while (az - az0 > Math.PI) az -= 2 * Math.PI;
+    while (az0 - az > Math.PI) az += 2 * Math.PI;
+    if (stop) stop();
+    stop = animuj(1500, x => { s3.az = az0 + (az - az0) * x; s3.el = el0 + (el - el0) * x; rysuj(); });
+  }
+  Object.keys(TR).forEach(k => TR[k].addEventListener("click", () => {
+    tryb = k; Object.keys(TR).forEach(j => TR[j].classList.toggle("aktywny", j === k)); rysuj();
+  }));
+  $("kb-start").addEventListener("click", naWprost);
+  $("kb-h").addEventListener("input", rysuj);
+  rysuj();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Powers and roots</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Powers and roots</h1>
+  <p class="lead">A root is a power with a fractional exponent: $\sqrt[n]{a}=a^{1/n}$. So it is enough to know the laws of powers, and comparing numbers comes down to a single question: is the base greater than $1$?</p>
+  <p class="wymagania">I.1, I.3, I.4, I.5 · proof: properties of powers</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Roots and rational powers</h2>
+  <div class="definicja"><b>Definition</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> The $n$-th root of $a\ge0$ is the number $b\ge0$ for which $b^n=a$. For <b>odd</b> $n$ and $a&lt;0$: $\sqrt[n]{a}$ is the number $b&lt;0$ for which $b^n=a$, e.g. $\sqrt[3]{-8}=-2$, $\sqrt[5]{-32}=-2$. An <b>even</b> root of a negative number does not exist.</div>
+  <div class="wzor">
+    <div class="tytul">Powers with integer and rational exponents <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a^{-n}=\frac{1}{a^n},\qquad a^0=1$$
+    $$a^{\frac mn}=\sqrt[n]{a^m},\qquad a^{-\frac mn}=\frac{1}{\sqrt[n]{a^m}}$$
+    <dl><dt>assumptions</dt><dd>$a\ne0$ for an integer exponent; $a\ge0$ for $\frac mn$; $a&gt;0$ for $-\frac mn$ ($m,n$ positive integers)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Laws of operations <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a^r a^s=a^{r+s},\qquad \frac{a^r}{a^s}=a^{r-s}$$
+    $$(a^r)^s=a^{rs},\qquad (ab)^r=a^r b^r$$
+    $$\left(\frac ab\right)^r=\frac{a^r}{b^r}$$
+    <dl><dt>assumptions</dt><dd>$a,b&gt;0$; for integer exponents $a,b\ne0$ is enough</dd>
+        <dt>$\sqrt{a^2}$</dt><dd>$=|a|$, not $a$! <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>. On the other hand $\sqrt[3]{a^3}=a$ for every $a$</dd></dl>
+  </div>
+  <div class="uwaga">$\sqrt[3]{-8}=-2$, but we do not use the notation $(-8)^{1/3}$: a power with a rational exponent is defined only for $a\ge0$. Otherwise $-2=(-8)^{1/3}=(-8)^{2/6}=\sqrt[6]{64}=2$.</div>
+
+  <details class="rozwin"><summary>Proof (required on the exam): properties of powers</summary><div>
+    <p><b>Positive integer exponents.</b> $a^r a^s$ is $r$ factors of $a$ and $s$ more factors, in total $r+s$. Similarly $(a^r)^s$ is $s$ groups of $r$ factors each, i.e. $rs$ factors. Negative exponents and zero follow from the definition $a^{-n}=1/a^n$.</p>
+    <p><b>Rational exponents.</b> Bring them to a common denominator: $r=\frac pn$, $s=\frac qn$. Let $x=a^{p/n}$, $y=a^{q/n}$, i.e. $x^n=a^p$, $y^n=a^q$, $x,y&gt;0$. Then</p>
+    $$(xy)^n=x^n y^n=a^p a^q=a^{p+q}$$
+    <p>and $xy&gt;0$, so $xy$ is the $n$-th root of $a^{p+q}$: $xy=a^{\frac{p+q}{n}}=a^{r+s}$.</p>
+    <p><b>The remaining laws.</b> Quotient: $a^{r-s}a^s=a^r$, so $a^{r-s}=\frac{a^r}{a^s}$. Product of bases: for $x=a^{p/n}$, $y=b^{p/n}$ we have $(xy)^n=a^pb^p=(ab)^p$, so $xy=(ab)^{p/n}$ (the quotient $\left(\frac ab\right)^r$ analogously). Power of a power: for $r=\frac pn$, $s=\frac qm$ and $z=\left(a^{p/n}\right)^{q/m}$ we have $z^{mn}=\left(z^m\right)^n=\left(a^{p/n}\right)^{qn}=a^{pq}$, and $z&gt;0$, so $z=a^{\frac{pq}{mn}}=a^{rs}$.</p>
+  </div></details>
+
+  <h2 id="niewymiernosc">2. Rationalizing the denominator</h2>
+  <div class="dwie">
+    <div class="wzor">
+      <div class="tytul">A single root</div>
+      $$\frac{6}{\sqrt3}=\frac{6\sqrt3}{3}=2\sqrt3$$
+      $$\frac{1}{\sqrt[3]{2}}=\frac{\sqrt[3]{4}}{\sqrt[3]{8}}=\frac{\sqrt[3]{4}}{2}$$
+      <dl><dt>idea</dt><dd>complete the radicand to a perfect $n$-th power</dd></dl>
+    </div>
+    <div class="wzor">
+      <div class="tytul">Sum or difference: the conjugate</div>
+      $$\frac{2}{\sqrt5-\sqrt3}=\frac{2(\sqrt5+\sqrt3)}{5-3}$$
+      $$=\sqrt5+\sqrt3$$
+      <dl><dt>idea</dt><dd>$(a-b)(a+b)=a^2-b^2$; for $\sqrt[3]{\ }$ use $a^3-b^3$ (extended level)</dd></dl>
+    </div>
+  </div>
+
+  <h2 id="monotonicznosc">3. Interactive: the direction of the inequality</h2>
+  <div class="twierdzenie"><b>Monotonicity of exponentiation</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> If $x&lt;y$, then for $a&gt;1$: $a^x&lt;a^y$, and for $0&lt;a&lt;1$: $a^x&gt;a^y$ (the inequality <b>changes direction</b>).</div>
+  <div class="demo">
+    <p class="opis">Drag the points $x$ and $y$ along the axis. Change $a$ and pass through $a=1$: the graph turns from increasing to decreasing, and the sign between $a^x$ and $a^y$ flips.</p>
+    <canvas id="mo-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="mo-a" min="0.2" max="3" step="0.05" value="2"> <span id="mo-a-v"></span></label>
+    </div>
+    <div class="wynik" id="mo-wynik"></div>
+  </div>
+
+  <h2 id="porownywanie">4. Comparing numbers: a common exponent</h2>
+  <p>Two ways: a <b>common base</b> ($8^{5}=2^{15}$ and $4^{7}=2^{14}$, so $8^5&gt;4^7$) or a <b>common exponent</b> — then you compare the bases, because for $u,v&gt;0$ and $k&gt;0$: $u&lt;v\iff u^k&lt;v^k$.</p>
+  <div class="demo">
+    <p class="opis">Each number is a product of factors. “▶ Group” combines them into the same number of groups. Then you compare group with group: all of them are smaller, so the whole product is smaller.</p>
+    <canvas id="wk-plot" style="height:260px"></canvas>
+    <div class="sterowanie">
+      <label>pair <select id="wk-para">
+        <option value="0">2^30 and 3^20</option>
+        <option value="1">2^100 and 10^30</option>
+        <option value="2">5^40 and 3^60</option>
+      </select></label>
+      <button id="wk-start">▶ Group</button>
+    </div>
+    <div class="wynik" id="wk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Compute $\dfrac{\sqrt[3]{16}\cdot 4^{0.75}}{\sqrt8\cdot 2^{-1/3}}$.</p>
+    <ol>
+      <li>Everything as powers of two: $\sqrt[3]{16}=2^{4/3}$, $4^{0.75}=2^{3/2}$, $\sqrt8=2^{3/2}$.</li>
+      <li>Exponent: $\frac43+\frac32-\frac32-\left(-\frac13\right)=\frac53$.</li>
+      <li>$2^{5/3}=2\cdot2^{2/3}=2\sqrt[3]{4}$.</li>
+    </ol>
+    <p class="odp">$2\sqrt[3]{4}$</p>
+  </div>
+  <div class="przyklad">
+    <p>Which number is greater: $\sqrt3$ or $\sqrt[3]{5}$?</p>
+    <ol>
+      <li>Both are positive, so raise them to a common power $6=\text{LCM}(2,3)$ — this does not change the direction of the inequality.</li>
+      <li>$(\sqrt3)^6=3^3=27$, $\;(\sqrt[3]5)^6=5^2=25$.</li>
+    </ol>
+    <p class="odp">$27&gt;25$, so $\sqrt3&gt;\sqrt[3]{5}$</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\sqrt[3]{-27}+\sqrt[4]{16}-\sqrt[5]{-32}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $-3+2-(-2)=$ <b>$1$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\left(\frac18\right)^{-2/3}+16^{0.75}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\left(\frac18\right)^{-2/3}=8^{2/3}=(\sqrt[3]8)^2=4$, $\;16^{3/4}=(\sqrt[4]{16})^3=8$. <b>$12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="sqrt(5)+1; 2*9^(1/3)" data-odp-opis="a); b)"><span class="poziom">medium</span>
+      <div class="tresc">Rationalize the denominator: a) $\frac{4}{\sqrt5-1}$, b) $\frac{6}{\sqrt[3]{3}}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) $\frac{4(\sqrt5+1)}{5-1}=$ <b>$\sqrt5+1$</b>. b) Multiply by $\sqrt[3]{9}$: $\frac{6\sqrt[3]9}{\sqrt[3]{27}}=\frac{6\sqrt[3]9}{3}=$ <b>$2\sqrt[3]{9}$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Which number is greater: $\left(\frac23\right)^{\sqrt2}$ or $\left(\frac23\right)^{1.5}$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\sqrt2\approx1.41&lt;1.5$, and the base $\frac23\in(0,1)$, so the inequality changes direction. <b>$\left(\frac23\right)^{\sqrt2}&gt;\left(\frac23\right)^{1.5}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Compare the numbers $3^{40}$ and $4^{30}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Common exponent $10$: $3^{40}=(3^4)^{10}=81^{10}$, $4^{30}=(4^3)^{10}=64^{10}$. Since $81&gt;64$, <b>$3^{40}&gt;4^{30}$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that $\sqrt[3]{5\sqrt2+7}-\sqrt[3]{5\sqrt2-7}=2$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Guess the cubes: $(\sqrt2+1)^3=2\sqrt2+6+3\sqrt2+1=5\sqrt2+7$ and $(\sqrt2-1)^3=2\sqrt2-6+3\sqrt2-1=5\sqrt2-7$. Hence the difference is $(\sqrt2+1)-(\sqrt2-1)=$ <b>$2$</b>, which completes the proof.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>$\sqrt{a^2}=|a|$:</b> e.g. $\sqrt{(1-\sqrt3)^2}=\sqrt3-1$, not $1-\sqrt3$. The most common lost point.</li>
+    <li><b>An even root</b> only of a number $\ge0$; an odd one of any number: $\sqrt[3]{-0.001}=-0.1$.</li>
+    <li><b>Comparing:</b> bring to a common base or a common exponent. For a base in $(0,1)$ reverse the sign of the inequality.</li>
+    <li>Give the result in the simplest form: without negative exponents and (if the task asks for it) without irrationals in the denominator.</li>
+    <li>Powers with irrational exponents and graphs of $a^x$: <a href="funkcja-wykladnicza-logarytmiczna.html">exponential and logarithmic functions</a>.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Monotoniczność a^x ---
+  const w1 = new Wykres($("mo-plot"), { xmin: -3.5, xmax: 3.5, ymin: -0.8, ymax: 8 });
+  const pkt = w1.przeciagaj([
+    { x: -1, y: 0, ogranicz: p => ({ x: Math.max(-3, Math.min(3, Math.round(p.x * 10) / 10)), y: 0 }) },
+    { x: 1.5, y: 0, ogranicz: p => ({ x: Math.max(-3, Math.min(3, Math.round(p.x * 10) / 10)), y: 0 }) },
+  ], rysujMo);
+  function rysujMo() {
+    const a = +$("mo-a").value;
+    $("mo-a-v").textContent = ladna(a);
+    const x = pkt[0].x, y = pkt[1].x, ax = a ** x, ay = a ** y;
+    w1.rysuj(g => {
+      g.funkcja(t => a ** t, 1);
+      g.odcinek(x, 0, x, ax, 2); g.odcinek(0, ax, x, ax, 2);
+      g.odcinek(y, 0, y, ay, 4); g.odcinek(0, ay, y, ay, 4);
+      g.punkt(x, ax, "", 2); g.punkt(y, ay, "", 4);
+      g.tekst(0, ax, "aˣ", 2, { dx: -24, dy: 4, gruby: true });
+      g.tekst(0, ay, "aʸ", 4, { dx: -24, dy: 4, gruby: true });
+      g.punkt(x, 0, "x", 2); g.punkt(y, 0, "y", 4);
+    });
+    const zn = (u, v) => Math.abs(u - v) < 1e-9 ? "=" : u < v ? "<" : ">";
+    const opis = Math.abs(a - 1) < 1e-9 ? "a=1:\\ \\text{always equal}"
+      : a > 1 ? "a>1:\\ \\text{direction preserved}" : "0<a<1:\\ \\text{direction reversed}";
+    tex("mo-wynik", `x=${ladnaTex(x, 1)}\\ ${zn(x, y)}\\ y=${ladnaTex(y, 1)}\\ \\Rightarrow\\ a^x\\approx${ladnaTex(ax)}\\ ${zn(ax, ay)}\\ a^y\\approx${ladnaTex(ay)}\\quad(${opis})`);
+  }
+  $("mo-a").addEventListener("input", rysujMo);
+  rysujMo();
+
+  // --- 4. Grupowanie czynników ---
+  // [podstawa1, wykładnik1, rozmiar grupy1, podstawa2, wykładnik2, rozmiar grupy2]
+  const PARY = [[2, 30, 3, 3, 20, 2], [2, 100, 10, 10, 30, 3], [5, 40, 2, 3, 60, 3]];
+  const w2 = new Wykres($("wk-plot"), { xmin: -1, xmax: 101, ymin: 0, ymax: 10, siatka: false, osie: false });
+  let stopWk = null;
+  function klatkaWk(t) {
+    const [b1, n1, s1, b2, n2, s2] = PARY[+$("wk-para").value];
+    const k = n1 / s1, slot = 100 / k, v1 = b1 ** s1, v2 = b2 ** s2;
+    w2.rysuj(g => {
+      const wiersz = (b, n, s, v, yd, nr, inny) => {
+        for (let i = 0; i < n; i++) {
+          const gr = Math.floor(i / s), j = i % s;
+          const x0 = i * 100 / n, w0 = 100 / n;
+          const x1 = gr * slot + slot * 0.08 + j * slot * 0.84 / s, w1s = slot * 0.84 / s;
+          const x = x0 + (x1 - x0) * t, wd = (w0 + (w1s - w0) * t) * 0.85;
+          g.prostokat(x, yd, wd, 2, nr, { wypelnij: 0.25 });
+          if (wd * g.jednostka > 13 && t < 0.7) g.tekst(x + wd / 2, yd + 1, String(b), nr, { wyrownanie: "center", dy: 5, rozmiar: 11 });
+        }
+        if (t > 0.7) for (let gr = 0; gr < k; gr++) {
+          const x = gr * slot + slot * 0.04, wd = slot * 0.92;
+          g.prostokat(x, yd - 0.15, wd, 2.3, nr, { wypelnij: 0.1 });
+          if (wd * g.jednostka > 20) g.tekst(x + wd / 2, yd + 1, String(v), v > inny ? 2 : 3, { wyrownanie: "center", dy: 5, rozmiar: 12, gruby: true });
+        }
+        g.tekst(-0.5, yd + 2.6, `${b}^${n}`, nr, { gruby: true });
+      };
+      wiersz(b1, n1, s1, v1, 5.6, 1, v2);
+      wiersz(b2, n2, s2, v2, 1.2, 4, v1);
+    });
+    const zn = v1 < v2 ? "<" : ">";
+    tex("wk-wynik", t < 1 ? `${b1}^{${n1}}\\ \\text{?}\\ ${b2}^{${n2}}` :
+      `${b1}^{${n1}}=(${b1}^{${s1}})^{${k}}=${v1}^{${k}}\\ ${zn}\\ ${v2}^{${k}}=(${b2}^{${s2}})^{${k}}=${b2}^{${n2}}`);
+  }
+  $("wk-start").addEventListener("click", () => { if (stopWk) stopWk(); stopWk = animuj(1800, klatkaWk); });
+  $("wk-para").addEventListener("change", () => { if (stopWk) stopWk(); klatkaWk(0); });
+  klatkaWk(0);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistics: mean, weighted mean, median, mode</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Statistics: mean, weighted mean, median, mode</h1>
+  <p class="lead">The mean is the point at which data lying on a rod would balance. The median is the “middle” element after the data are put in order. A single extreme value moves the mean a lot, and the median hardly at all.</p>
+  <p class="wymagania">XII.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Four measures and formulas</h2>
+  <div class="wzor">
+    <div class="tytul">Arithmetic mean <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\bar{x}=\frac{x_1+x_2+\ldots+x_n}{n}$$
+    <dl><dt>$n$</dt><dd>the number of data values</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Weighted mean <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\bar{x}_w=\frac{w_1x_1+\ldots+w_nx_n}{w_1+\ldots+w_n}$$
+    <dl><dt>$w_i$</dt><dd>the weight of the value $x_i$ (a positive number). For a frequency table the weight is the <b>frequency</b></dd></dl>
+  </div>
+  <div class="definicja"><b>Median</b> $Me$: arrange the data in <b>non-decreasing</b> order. For odd $n$ it is the middle term $x_{\frac{n+1}{2}}$, for even $n$ the mean of the two middle ones:
+    $$Me=\frac{x_{n/2}+x_{n/2+1}}{2}$$
+  </div>
+  <div class="definicja"><b>Mode</b> $Do$: the value that occurs most often. There may be several. When all values occur the same number of times, we say there is no mode.</div>
+  <div class="twierdzenie"><b>The “balance” property</b> The sum of deviations from the mean is zero: $\;(x_1-\bar x)+\ldots+(x_n-\bar x)=0$.
+    <details class="rozwin"><summary>Why?</summary><div>
+      $\sum (x_i-\bar x)=\sum x_i - n\bar x = n\bar x-n\bar x=0$. Physically: equal weights at the points $x_i$ on a weightless rod balance exactly on a support at $\bar x$ (the torques on the left and right cancel).
+    </div></details></div>
+  <div class="uwaga">Variance and standard deviation were dropped from the 2024 core curriculum. They are not in the 2024 requirements, but the formulas are on the CKE sheet (more: <a href="usuniete.html">removed from the curriculum</a>).</div>
+
+  <h2 id="dzwignia">2. Interactive: the mean as a balance point</h2>
+  <div class="demo">
+    <p class="opis">Drag the blocks (data) along the rod. The triangle is the support at $\bar x$ (green), the red line is the median. Click “Outlier”: see how far the mean runs away while the median stays put.</p>
+    <canvas id="dz-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <button id="dz-odst">▶ Outlier</button>
+      <button id="dz-reset">↺ Starting data</button>
+    </div>
+    <div class="wynik" id="dz-wynik"></div>
+  </div>
+
+  <h2 id="wazona">3. Interactive: the weighted mean</h2>
+  <div class="demo">
+    <p class="opis">Grades $2$, $5$, $6$. The weight is the number of “weights” above the grade. Change the weights and watch the support (the weighted mean) move toward the heavier grade. Dashed line: the ordinary mean $\frac{2+5+6}{3}$.</p>
+    <canvas id="sw-plot" style="height:280px"></canvas>
+    <div class="sterowanie">
+      <label>weight of $2$ <input type="range" id="sw-w1" min="1" max="5" step="1" value="3"> <span id="sw-w1-v"></span></label>
+      <label>weight of $5$ <input type="range" id="sw-w2" min="1" max="5" step="1" value="2"> <span id="sw-w2-v"></span></label>
+      <label>weight of $6$ <input type="range" id="sw-w3" min="1" max="5" step="1" value="1"> <span id="sw-w3-v"></span></label>
+    </div>
+    <div class="wynik" id="sw-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>$20$ students were asked how many siblings they have. Find the mean, median and mode.</p>
+    <table class="tabela">
+      <tr><th>number of siblings</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><th>number of students</th><td>4</td><td>9</td><td>5</td><td>1</td><td>1</td></tr>
+    </table>
+    <ol>
+      <li>The mean is the mean weighted by the frequencies: $\bar x=\frac{0\cdot4+1\cdot9+2\cdot5+3\cdot1+4\cdot1}{20}=\frac{26}{20}=1.3$.</li>
+      <li>$n=20$ is even, so the median is the mean of the 10th and 11th terms. Cumulative frequencies: $4,\ 13,\ldots$, so terms 5 to 13 equal $1$. Hence $Me=\frac{1+1}{2}=1$.</li>
+      <li>The most frequent value (9 times) is $1$.</li>
+    </ol>
+    <p class="odp">$\bar x=1.3$, $\;Me=1$, $\;Do=1$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="11/2; 11/2; 3" data-odp-opis="mean; median; mode"><span class="poziom">easy</span>
+      <div class="tresc">Find the mean, median and mode of the data: $7,\ 3,\ 9,\ 3,\ 5,\ 8,\ 3,\ 6$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The sum is $44$, so $\bar x=\frac{44}{8}=5.5$. Sorted: $3,3,3,5,6,7,8,9$, the middle ones are $5$ and $6$. <b>$\bar x=5.5$, $Me=5.5$, $Do=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="88/25; 3; 48" data-odp-opis="mean; median; percent of students"><span class="poziom">easy</span>
+      <div class="tresc">The chart shows the grades from a class test. Find the mean and median of the grades and the percentage of students who got at least $4$.
+        <canvas id="st-diag" style="width:100%;height:220px;display:block;margin-top:8px"></canvas></div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The frequencies are $2,3,8,6,4,2$, in total $n=25$. The sum of the grades is $2+6+24+24+20+12=88$, so $\bar x=\frac{88}{25}=3.52$. The median is the 13th term: cumulative $2,5,13$, so the 13th grade is $3$. At least $4$ was obtained by $6+4+2=12$ people, $\frac{12}{25}=48\%$.
+        <b>$\bar x=3.52$, $Me=3$, $48\%$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; 9/2" data-odp-opis="x; median"><span class="poziom">medium</span>
+      <div class="tresc">The arithmetic mean of the numbers $2,\ 5,\ x,\ 7,\ 9,\ 3$ is $5$. Find $x$ and the median of these numbers.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{26+x}{6}=5$, so $x=4$. Sorted: $2,3,4,5,7,9$, the middle ones are $4$ and $5$. <b>$x=4$, $Me=4.5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6" data-odp-opis="grade"><span class="poziom">medium</span>
+      <div class="tresc">Grades: tests (weight 3): $4,\ 5$; quizzes (weight 2): $3$ and one more; oral answer (weight 1): $5$. What grade (from 1 to 6) must be obtained on the last quiz for the weighted mean to be at least $4.5$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The sum of the weights is $3+3+2+2+1=11$. The condition: $\frac{12+15+6+2x+5}{11}\ge4.5$, that is $38+2x\ge49.5$, $x\ge5.75$. Check: $x=6$ gives $\frac{50}{11}\approx4.55$, while $x=5$ gives only $\frac{48}{11}\approx4.36$. <b>The student must get $6$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">A set of five natural numbers has mean $6$, median $7$ and exactly one mode, equal to $8$. Find all such sets.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Order them: $a\le b\le 7\le d\le e$, sum $30$. The number $8$ must occur at least twice and is greater than the median, so $d=e=8$. Then $a+b=30-7-16=7$. No other number may occur twice (there would be two modes), so $a&lt;b&lt;7$. The pairs: $(1,6),(2,5),(3,4)$ (the pair $(0,7)$ is out: $7$ would occur twice).
+        <b>$\{1,6,7,8,8\}$, $\{2,5,7,8,8\}$, $\{3,4,7,8,8\}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Median:</b> always <b>sort</b> the data first. The most common mistake is taking the middle number of an unsorted list.</li>
+    <li><b>Frequency table / chart:</b> the mean is a weighted mean (you multiply each value by its frequency). Find the median from the cumulative frequencies, without listing all the data.</li>
+    <li><b>Even $n$:</b> the median is the mean of the <b>two</b> middle values and may not be any of the data.</li>
+    <li><b>Changing the data:</b> adding a number $x$ changes the sum by $x$ and the number of data values by $1$. Work with the sum: $S=n\cdot\bar x$.</li>
+    <li>There may be several modes. Then list them all.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sr = a => a.reduce((s, v) => s + v, 0) / a.length;
+  const med = a => { const b = [...a].sort((u, v) => u - v), n = b.length; return n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2; };
+  // podpora (trójkąt) i listwa z podziałką
+  function listwa(g, a, b, krok, opis) {
+    g.odcinek(a, 0, b, 0, "--plot-axis", false);
+    for (let x = a; x <= b + 1e-9; x += 1) {
+      g.odcinek(x, -0.12, x, 0.12, "--plot-axis", false);
+      if ((x - a) % krok === 0) g.tekst(x, 0, String(x), "--plot-axis", { dy: 18, wyrownanie: "center", rozmiar: 12 });
+    }
+    if (opis) g.tekst(b, 0, opis, "--plot-axis", { dy: 34, wyrownanie: "right", rozmiar: 12 });
+  }
+  function podpora(g, x, h, sz) {
+    g.wielokat([[x, -0.05], [x - sz, -h], [x + sz, -h]], 3, { wypelnij: 0.6 });
+  }
+
+  // --- 2. Dźwignia ---
+  const START = [3, 4, 4, 5, 6, 7, 8];
+  const w1 = new Wykres($("dz-plot"), { xmin: -0.8, xmax: 20.8, ymin: -2.4, ymax: 5, siatka: false, osie: false });
+  const ogr = q => ({ x: Math.min(20, Math.max(0, Math.round(q.x * 2) / 2)), y: q.y });
+  const pk = START.map(x => ({ x, y: 0.5, ogranicz: ogr }));
+  function ustaw() { // klocki o tej samej wartości stawiamy jeden na drugim
+    const ile = {};
+    pk.forEach(p => { const k = p.x.toFixed(1); ile[k] = (ile[k] || 0) + 1; p.y = 0.45 + 0.85 * (ile[k] - 1); });
+  }
+  function rysujDz() {
+    ustaw();
+    const xs = pk.map(p => p.x), m = sr(xs), me = med(xs);
+    let lewo = 0, prawo = 0;
+    xs.forEach(x => { if (x < m) lewo += m - x; else prawo += x - m; });
+    w1.rysuj(g => {
+      listwa(g, 0, 20, 2);
+      pk.forEach(p => g.odcinek(m, p.y, p.x, p.y, p.x < m ? 2 : 1, true));
+      g.odcinek(me, -0.1, me, 4.6, 2, false);
+      g.tekst(me, 4.6, "Me", 2, { dx: 4, dy: 4, gruby: true });
+      podpora(g, m, 1.1, 0.45);
+      g.tekst(m, -1.1, "x̄", 3, { dy: 16, wyrownanie: "center", gruby: true });
+      pk.forEach(p => g.prostokat(p.x - 0.32, p.y - 0.35, 0.64, 0.7, 1, { wypelnij: 0.5 }));
+    });
+    tex("dz-wynik", `\\bar x=${ladnaTex(m)},\\; Me=${ladnaTex(me)},\\;\\text{deviations: }${ladnaTex(lewo)}\\text{ (left)}=${ladnaTex(prawo)}\\text{ (right)}`);
+  }
+  w1.przeciagaj(pk, () => { if (stopDz) stopDz(); rysujDz(); });
+  let stopDz = null;
+  $("dz-odst").addEventListener("click", () => {
+    if (stopDz) stopDz();
+    const p = pk.reduce((a, b) => (b.x > a.x ? b : a)), x0 = p.x;
+    stopDz = animuj(1400, t => { p.x = Math.round((x0 + (20 - x0) * t) * 2) / 2; rysujDz(); });
+  });
+  $("dz-reset").addEventListener("click", () => { if (stopDz) stopDz(); pk.forEach((p, i) => { p.x = START[i]; }); rysujDz(); });
+  rysujDz();
+
+  // --- 3. Średnia ważona ---
+  const OC = [2, 5, 6];
+  const w2 = new Wykres($("sw-plot"), { xmin: 0.3, xmax: 6.7, ymin: -1.6, ymax: 5.6, siatka: false, osie: false });
+  function rysujSw() {
+    const w = ["sw-w1", "sw-w2", "sw-w3"].map(id => +$(id).value);
+    ["sw-w1", "sw-w2", "sw-w3"].forEach((id, i) => { $(id + "-v").textContent = w[i]; });
+    const W = w[0] + w[1] + w[2], S = OC.reduce((s, x, i) => s + w[i] * x, 0), m = S / W;
+    w2.rysuj(g => {
+      listwa(g, 1, 6, 1, "grade");
+      OC.forEach((x, i) => { for (let j = 0; j < w[i]; j++) g.prostokat(x - 0.3, 0.08 + j * 0.95, 0.6, 0.85, i === 0 ? 2 : 1, { wypelnij: 0.45 }); });
+      g.odcinek(13 / 3, -0.1, 13 / 3, 5.2, "--plot-axis", true);
+      podpora(g, m, 0.9, 0.22);
+      g.tekst(m, -0.9, "x̄w", 3, { dy: 16, wyrownanie: "center", gruby: true });
+    });
+    tex("sw-wynik", `\\bar x_w=\\frac{${w[0]}\\cdot2+${w[1]}\\cdot5+${w[2]}\\cdot6}{${W}}=\\frac{${S}}{${W}}\\approx${ladnaTex(m)}`);
+  }
+  ["sw-w1", "sw-w2", "sw-w3"].forEach(id => $(id).addEventListener("input", rysujSw));
+  rysujSw();
+
+  // --- Diagram do zadania 2 ---
+  const LICZ = [2, 3, 8, 6, 4, 2];
+  const w3 = new Wykres($("st-diag"), { xmin: -0.2, xmax: 6.9, ymin: -1.3, ymax: 9.5, krokY: 2, siatka: true });
+  w3.rysuj(g => {
+    LICZ.forEach((c, i) => {
+      g.prostokat(i + 1 - 0.3, 0, 0.6, c, 1);
+      g.tekst(i + 1, c, String(c), 1, { dy: -5, wyrownanie: "center", gruby: true });
+    });
+  });
+});
+</script>
+</body>
+</html>

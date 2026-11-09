@@ -285,7 +285,8 @@ function petla(krok) {
 // Liczba w ładnym zapisie (bez -0, max 2 miejsca po przecinku, przecinek dziesiętny, minus „−”)
 function ladna(x, miejsca = 2) {
   const p = 10 ** miejsca, r = Math.round(x * p) / p;
-  return (Object.is(r, -0) ? 0 : r).toString().replace(".", ",").replace("-", "−");
+  const t = (Object.is(r, -0) ? 0 : r).toString().replace("-", "−");
+  return document.documentElement.lang === "en" ? t : t.replace(".", ","); // po angielsku kropka dziesiętna
 }
 // To samo do wstawiania w KaTeX ({,} = przecinek dziesiętny bez odstępu, zwykły minus)
 function ladnaTex(x, miejsca = 2) { return ladna(x, miejsca).replace(",", "{,}").replace("−", "-"); }

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The three perpendiculars theorem</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>The three perpendiculars theorem</h1>
+  <p class="lead">You test perpendicularity to a slanted line on its “shadow”: a line $m$ in a plane is perpendicular to a slanted line $k$ exactly when it is perpendicular to the projection $l$ of that line. This lets you see right angles in solids on the projection.</p>
+  <p class="wymagania">X.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenia">1. Two theorems</h2>
+  <div class="twierdzenie"><b>Theorem on a line perpendicular to a plane</b> Lines $k$, $l$ and $m$ lie in one plane. If lines $k$ and $l$ have exactly one common point and a line $n$ is perpendicular to both of them, then the line $n$ is also perpendicular to the line $m$.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Translating the lines (this does not change angles), we may assume that $n$ and $m$ pass through the point $O$ common to $k$ and $l$. If $m=k$ or $m=l$, the claim is obvious.</p>
+      <ol>
+        <li>On $n$ take points $P$, $P'$ symmetric with respect to $O$: $|OP|=|OP'|$.</li>
+        <li>In the plane draw a line not through $O$ that meets $k$, $l$, $m$ at points $K$, $L$, $M$.</li>
+        <li>$k$ is perpendicular to $PP'$ at its midpoint, so $|KP|=|KP'|$. Likewise $|LP|=|LP'|$.</li>
+        <li>Triangles $KLP$ and $KLP'$ are congruent (SSS), so $\sphericalangle PKL=\sphericalangle P'KL$.</li>
+        <li>Triangles $PKM$ and $P'KM$ are congruent (SAS: $|KP|=|KP'|$, common side $KM$, equal angles at $K$), so $|MP|=|MP'|$.</li>
+        <li>Triangle $PMP'$ is isosceles and $O$ is the midpoint of its base, so $MO\perp PP'$, that is $m\perp n$. $\blacksquare$</li>
+      </ol>
+      <p>Corollary: a line perpendicular to two intersecting lines of a plane is perpendicular to the whole plane.</p>
+    </div></details></div>
+
+  <div class="twierdzenie"><b>The three perpendiculars theorem</b> A line $k$ meets a plane $P$ and is not perpendicular to it. The line $l$ is the orthogonal projection of the line $k$ onto the plane $P$. The line $m$ lies in the plane $P$. Then the lines $k$ and $m$ are perpendicular if and only if the lines $l$ and $m$ are perpendicular. <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Take a point $A\in k$ outside $P$ and its projection $A'\in l$. The line $AA'$ is perpendicular to $P$, so $AA'\perp m$. The lines $k$, $l$, $AA'$ lie in one plane $Q$ (the projecting plane), and $AA'$ meets $k$ at $A$ and $l$ at $A'$.</p>
+      <ul>
+        <li>($\Leftarrow$) $m\perp l$ and $m\perp AA'$, and $l$, $AA'$ intersect at $A'$. By the previous theorem (in the plane $Q$) $m\perp k$.</li>
+        <li>($\Rightarrow$) $m\perp k$ and $m\perp AA'$, and $k$, $AA'$ intersect at $A$. By the previous theorem $m\perp l$. $\blacksquare$</li>
+      </ul>
+      <p>The assumption “$k$ is not perpendicular to $P$” guarantees that the projection $l$ is a line and not a point.</p>
+    </div></details></div>
+  <div class="uwaga">The theorem is about the angle between $k$ and $m$, not about an intersection point: $m$ need not pass through the point where $k$ pierces the plane (then $k$ and $m$ are skew).</div>
+
+  <h2 id="demo">2. Interactive: rotate the line m</h2>
+  <div class="demo">
+    <p class="opis">The red line $k$ is slanted, the blue $l$ is its projection (“shadow”), the purple $m$ lies in the plane. Rotate $m$ with the slider: the right angle with $k$ and with $l$ appears at the same moment. Rotate the scene with your finger.</p>
+    <canvas id="tp-plot"></canvas>
+    <div class="sterowanie">
+      <label>rotation of $m$ <input type="range" id="tp-t" min="0" max="180" step="1" value="40"></label>
+      <label>tilt of $k$ <input type="range" id="tp-f" min="10" max="80" step="1" value="45"></label>
+      <button id="tp-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="tp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Worked example</h2>
+  <div class="przyklad">
+    <p>The edge $DA$ of a tetrahedron $ABCD$ is perpendicular to the plane $ABC$, and $\sphericalangle ABC=90^\circ$. Given: $|AB|=3$, $|BC|=4$, $|DA|=4$. Find the area of the face $BCD$.</p>
+    <ol>
+      <li>The projection of the line $DB$ onto the plane $ABC$ is $AB$ (because $D$ projects to $A$).</li>
+      <li>$BC\perp AB$, so by the three perpendiculars theorem $BC\perp DB$: the triangle $BCD$ has a right angle at $B$.</li>
+      <li>$|DB|=\sqrt{3^2+4^2}=5$, so $P=\frac12\cdot 5\cdot 4$.</li>
+    </ol>
+    <p class="odp">$P_{BCD}=10$</p>
+  </div>
+
+  <h2 id="zadania">4. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Justify that in a cube $ABCDEFGH$ the diagonal $AG$ is perpendicular to the base diagonal $BD$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The projection of $AG$ onto the plane $ABCD$ is $AC$ ($G$ projects to $C$). The diagonals of a square are perpendicular: $AC\perp BD$. By the three perpendiculars theorem <b>$AG\perp BD$</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="5" data-odp-opis="distance"><span class="poziom">medium</span>
+      <div class="tresc">The segment $SA$ of length $4$ is perpendicular to the plane of a square $ABCD$ with side $3$. Find the distance from the point $S$ to the line $BC$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The projection of $SB$ is $AB\perp BC$, so $SB\perp BC$ and the distance is $|SB|=\sqrt{16+9}$. <b>$5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60" data-odp-opis="P_b"><span class="poziom">medium</span>
+      <div class="tresc">A regular square pyramid has base edge $6$ and height $4$. Justify that the segment $SE$ ($E$ – the midpoint of edge $BC$) is the altitude of the face $BCS$, and find the lateral surface area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The foot of the height $O$ is the center of the square, $OE\perp BC$, and $OE$ is the projection of $SE$. By the three perpendiculars theorem $SE\perp BC$. $|SE|=\sqrt{4^2+3^2}=5$, $P_b=4\cdot\frac12\cdot 6\cdot 5$. <b>$P_b=60$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="60; 3/4" data-odp-opis="area of BCD; tangent of the angle"><span class="poziom">exam-level</span>
+      <div class="tresc">In triangle $ABC$: $|AB|=|AC|=10$, $|BC|=12$. The segment $DA$ of length $6$ is perpendicular to the plane $ABC$. Find the area of triangle $BCD$ and the tangent of the angle between the planes $BCD$ and $ABC$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $M$ – the midpoint of $BC$; $AM\perp BC$, $|AM|=\sqrt{100-36}=8$. $AM$ is the projection of $DM$, so $DM\perp BC$ and $|DM|=\sqrt{64+36}=10$. The area is $\frac12\cdot12\cdot10=60$. The angle between the planes is $\sphericalangle DMA$: $\tan=\frac{6}{8}$. <b>$P=60$, $\tan\alpha=\frac34$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">In a tetrahedron $ABCD$: $AB\perp CD$ and $AC\perp BD$. Show that $AD\perp BC$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Let $H$ be the projection of $A$ onto the plane $BCD$. The projection of $AB$ is $BH$, and $CD$ lies in $BCD$, so from $AB\perp CD$ (three perpendiculars theorem) $BH\perp CD$. Likewise $CH\perp BD$. Hence $H$ lies on two altitudes of the triangle $BCD$, so it is its orthocenter, and $DH\perp BC$. Again by the three perpendiculars theorem (the projection of $AD$ is $DH$) <b>$AD\perp BC$</b>. (If $H=D$, then $AD$ is perpendicular to the plane $BCD$, hence to $BC$ as well.)
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. On the exam</h2>
+  <ul>
+    <li>When you cite the theorem, <b>name all three lines</b>: which one is the slanted line, which segment is its projection, which line lies in the plane.</li>
+    <li>Typical uses: the altitude of a lateral face of a pyramid, the distance from a point to a line, a dihedral angle (both arms perpendicular to the edge).</li>
+    <li>The projection determines the foot of the perpendicular: first justify where the foot of the height lies (e.g. the center of the circumscribed circle).</li>
+    <li>In proofs, “$n\perp$ plane” requires perpendicularity to <b>two intersecting</b> lines of that plane.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("tp-plot"), { zakres: 2.6, srodek: [0, 0, 0.7], kat: [-0.5, 0.45] });
+  const O = [0, 0, 0], st = Math.PI / 180;
+  let stop = null;
+  function rysuj() {
+    const t = +$("tp-t").value * st, f = +$("tp-f").value * st;
+    const A = [2 * Math.cos(f), 0, 2 * Math.sin(f)], A1 = [A[0], 0, 0], dm = [Math.cos(t), Math.sin(t), 0];
+    const km = Math.acos(Math.abs(Math.cos(f) * Math.cos(t))) / st, lm = Math.min(t, Math.PI - t) / st;
+    const prostyK = Math.abs(km - 90) < 0.5, prostyL = Math.abs(lm - 90) < 0.5;
+    s3.rysuj(g => {
+      g.wielokat([[-2.2, -2.2, 0], [2.2, -2.2, 0], [2.2, 2.2, 0], [-2.2, 2.2, 0]], 3, { wypelnij: 0.12, grubosc: 1 });
+      g.tekst([-2.2, 2.2, 0], "P", 3, { dx: 6, dy: 14, gruby: true });
+      g.odcinek([-2.4, 0, 0], [2.4, 0, 0], 1);
+      g.odcinek(V3.razy(dm, -2.4), V3.razy(dm, 2.4), 4);
+      g.odcinek(V3.razy(A, -0.25), V3.razy(A, 1.25), 2);
+      g.odcinek(A, A1, 3, { przerywana: true });
+      g.kat(A1, A, O, 0.25, 3, { prosty: true });
+      const lk = t <= Math.PI / 2 ? [1, 0, 0] : [-1, 0, 0], kk = Math.cos(t) >= 0 ? A : V3.razy(A, -1);
+      g.kat(O, lk, dm, 0.5, 1, { prosty: prostyL });
+      g.kat(O, kk, dm, 0.8, 2, { prosty: prostyK });
+      g.punkt(A, "A", 2); g.punkt(A1, "A'", 3); g.punkt(O, "", 2);
+      g.tekst(V3.razy(A, 1.25), "k", 2, { gruby: true, dx: 4 });
+      g.tekst([2.4, 0, 0], "l", 1, { gruby: true, dx: 4 });
+      g.tekst(V3.razy(dm, 2.4), "m", 4, { gruby: true, dx: 4 });
+    });
+    tex("tp-wynik", `\\sphericalangle(k,m)=${ladnaTex(km, 1)}^\\circ,\\quad \\sphericalangle(l,m)=${ladnaTex(lm, 1)}^\\circ`);
+  }
+  $("tp-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(5000, u => { $("tp-t").value = Math.round(180 * u); rysuj(); });
+  });
+  ["tp-t", "tp-f"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); rysuj(); }));
+  rysuj();
+});
+</script>
+</body>
+</html>

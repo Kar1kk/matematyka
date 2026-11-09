@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linear systems and their geometric interpretation</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Linear systems and their geometric interpretation</h1>
+  <p class="lead">Every equation $ax+by=c$ is a line. Solving a system means finding the common point of two lines, and two lines have one common point, none, or infinitely many.</p>
+  <p class="wymagania">IV.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="metody">1. Two methods</h2>
+  <div class="dwie">
+    <div class="wzor">
+      <div class="tytul">Substitution</div>
+      $$\begin{cases} x+2y=8\\ 3x-y=3 \end{cases}$$
+      <p>From the second one $y=3x-3$. Substitute into the first: $x+6x-6=8$, so $x=2$, $y=3$.</p>
+      <dl><dt>when</dt><dd>when one of the unknowns has coefficient $\pm1$</dd></dl>
+    </div>
+    <div class="wzor">
+      <div class="tytul">Opposite coefficients (elimination)</div>
+      $$\begin{cases} 2x+3y=7 &amp;|\cdot 2\\ 3x-2y=4 &amp;|\cdot 3 \end{cases}$$
+      <p>$4x+6y=14$ and $9x-6y=12$. Add side by side: $13x=26$, $x=2$, $y=1$.</p>
+      <dl><dt>when</dt><dd>“ugly” coefficients, with no fractions along the way</dd></dl>
+    </div>
+  </div>
+  <div class="uwaga">Multiplying an equation by a number $\neq0$ does not change the line, and the sum of two equations is a new line <b>through the same common point</b>. That is why the method works (animation in section 4).</div>
+
+  <h2 id="rodzaje">2. Three kinds of systems</h2>
+  <table class="tabela">
+    <tr><th>system</th><th>lines</th><th>solutions</th></tr>
+    <tr><td>independent</td><td>intersect</td><td>exactly one $(x_0,y_0)$</td></tr>
+    <tr><td>dependent</td><td>coincide</td><td>infinitely many</td></tr>
+    <tr><td>inconsistent</td><td>parallel, distinct</td><td>none</td></tr>
+  </table>
+  <div class="wzor">
+    <div class="tytul">Quick test: the determinant</div>
+    $$\begin{cases} a_1x+b_1y=c_1\\ a_2x+b_2y=c_2 \end{cases}$$
+    $$W=a_1b_2-a_2b_1$$
+    <dl><dt>$W\neq0$</dt><dd>independent system (the lines are not parallel)</dd>
+        <dt>$W=0$</dt><dd>parallel lines: dependent or inconsistent, the calculation decides ($0=0$ or $0=5$)</dd></dl>
+  </div>
+  <p>The condition $A_1B_2-A_2B_1=0$ for parallel lines <b>is on the formula sheet</b> (general-form equations). More on the position of lines: <a href="polozenie-prostych.html">relative position of lines</a>.</p>
+  <details class="rozwin"><summary>How to write the solution of a dependent system?</summary><div>
+    <p>E.g. $\begin{cases} x-2y=2\\ -2x+4y=-4\end{cases}$: the second is the first times $-2$. All the points of the line $x-2y=2$:</p>
+    $$\left\{\left(x,\ \tfrac{x-2}{2}\right): x\in\R\right\}$$
+    <p>Just “infinitely many solutions” is not enough, give the set (the parameter $x$ arbitrary).</p>
+  </div></details>
+
+  <h2 id="demo">3. Interactive: two lines</h2>
+  <div class="demo">
+    <p class="opis">Change the coefficients. The type of the system and the common point are computed live. Try: $a_2=2$, $b_2=2$, $c_2=6$ (dependent), then $c_2=2$ (inconsistent).</p>
+    <canvas id="ul-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="ul-a1" min="-5" max="5" step="1" value="1"> <span id="ul-a1-v"></span></label>
+      <label>$b_1$ <input type="range" id="ul-b1" min="-5" max="5" step="1" value="1"> <span id="ul-b1-v"></span></label>
+      <label>$c_1$ <input type="range" id="ul-c1" min="-8" max="8" step="1" value="3"> <span id="ul-c1-v"></span></label>
+      <label>$a_2$ <input type="range" id="ul-a2" min="-5" max="5" step="1" value="1"> <span id="ul-a2-v"></span></label>
+      <label>$b_2$ <input type="range" id="ul-b2" min="-5" max="5" step="1" value="-1"> <span id="ul-b2-v"></span></label>
+      <label>$c_2$ <input type="range" id="ul-c2" min="-8" max="8" step="1" value="1"> <span id="ul-c2-v"></span></label>
+    </div>
+    <div class="wynik" id="ul-wynik"></div>
+  </div>
+
+  <h2 id="animacja">4. Animation: the opposite-coefficients method</h2>
+  <div class="demo">
+    <p class="opis">Multiplying an equation does not move the line. Adding rotates the new line (green) about the common point until it becomes vertical ($y$ disappears), then horizontal ($x$ disappears). For parallel lines the new line “runs off to infinity”.</p>
+    <canvas id="el-plot"></canvas>
+    <div class="sterowanie">
+      <label>system <select id="el-uklad">
+        <option value="0">independent</option>
+        <option value="1">inconsistent</option>
+        <option value="2">dependent</option>
+      </select></label>
+      <button id="el-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="el-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Solve the system $\begin{cases} \frac{x+1}{2}-\frac{y-1}{3}=2\\ 3(x-y)=2x-7 \end{cases}$.</p>
+    <ol>
+      <li>Get rid of the fractions (first times $6$): $3x+3-2y+2=12$, i.e. $3x-2y=7$.</li>
+      <li>Rearrange the second: $3x-3y=2x-7$, i.e. $x-3y=-7$, so $x=3y-7$.</li>
+      <li>Substitute: $3(3y-7)-2y=7$, $7y=28$, $y=4$, $x=5$.</li>
+      <li>Check in the <b>original</b> system: $\frac{6}{2}-\frac{3}{3}=2$ ✓, $3\cdot1=3=10-7$ ✓.</li>
+    </ol>
+    <p class="odp">$\begin{cases} x=5\\ y=4 \end{cases}$ (an independent system, the lines meet at $(5,4)$)</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-2; 4" data-odp-opis="x; y"><span class="poziom">easy</span>
+      <div class="tresc">Solve by the opposite-coefficients method: $\begin{cases} 3x+4y=10\\ 5x-6y=-34 \end{cases}$</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        First times $3$, second times $2$: $9x+12y=30$, $10x-12y=-68$. Add: $19x=-38$, $x=-2$. From the first one $4y=16$. <b>$x=-2,\ y=4$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Determine the number of solutions and give the geometric interpretation:<br>a) $\begin{cases} 2x-3y=6\\ -4x+6y=-12 \end{cases}$ &nbsp; b) $\begin{cases} 2x-3y=6\\ 4x-6y=5 \end{cases}$</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) The second is the first times $-2$: the same line. <b>Dependent: $\{(x,\tfrac23x-2): x\in\R\}$.</b><br>
+        b) First times $2$: $4x-6y=12$, while the second says $4x-6y=5$. Subtract: $0=7$. <b>Inconsistent, parallel lines.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Without solving, decide whether the system $\begin{cases} 6x-4y=1\\ 9x-6y=2 \end{cases}$ has a solution.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $W=6\cdot(-6)-9\cdot(-4)=0$, so the lines are parallel. Left sides: the second $=\tfrac32\cdot$ the first, but $\tfrac32\cdot1\neq2$. <b>The system is inconsistent, no solutions.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6; 3" data-odp-opis="x; y"><span class="poziom">medium</span>
+      <div class="tresc">Solve $\begin{cases} \frac{x}{2}+\frac{y}{3}=4\\ \frac{x}{3}-\frac{y}{4}=\frac54 \end{cases}$</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Times $6$ and times $12$: $3x+2y=24$, $4x-3y=15$. First times $3$, second times $2$: $9x+6y=72$, $8x-6y=30$. Add: $17x=102$, $x=6$, from the first one $2y=6$. <b>$x=6,\ y=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4" data-odp-opis="area of the triangle"><span class="poziom">exam-level</span>
+      <div class="tresc">The lines $y=x+1$, $y=-x+5$ and $y=1$ bound a triangle. Find its vertices and area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Each vertex is the solution of a system of two lines: $x+1=-x+5\Rightarrow(2,3)$; $x+1=1\Rightarrow(0,1)$; $-x+5=1\Rightarrow(4,1)$. The base on the line $y=1$ has length $4$, the altitude is $3-1=2$. <b>$(0,1),(4,1),(2,3)$, area $4$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Give the answer as a pair:</b> $x=5,\ y=4$ or $(5,4)$. Just $x$ is an unfinished task.</li>
+    <li><b>Check in the original system</b>, not the transformed one: that way a copying error shows up.</li>
+    <li><b>$0=7$</b> after subtracting means an inconsistent system, <b>$0=0$</b> a dependent one. Say so in words and give the interpretation (parallel / coinciding lines).</li>
+    <li>Dependent system: give the <b>solution set</b> with a parameter, e.g. $\{(x,2x-1): x\in\R\}$.</li>
+    <li>The vertices of a figure from the equations of its sides = solutions of systems of pairs of lines (typical in analytic geometry).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // wyraz k·v do wzoru (pomija 0 i jedynki)
+  function skladnik(k, v, pierwszy) {
+    if (Math.abs(k) < 1e-9) return "";
+    const abs = Math.abs(k);
+    const znak = k < 0 ? "-" : (pierwszy ? "" : "+");
+    return znak + (Math.abs(abs - 1) < 1e-9 ? "" : ladnaTex(abs)) + v;
+  }
+  function lewa(a, b) {
+    const s = skladnik(a, "x", true);
+    const t = skladnik(b, "y", s === "");
+    return (s + t) || "0";
+  }
+  const rown = (a, b, c) => lewa(a, b) + "=" + ladnaTex(c);
+  // rysuje prostą ax+by=c (jeśli to prosta)
+  function prostaABC(g, a, b, c, nr, przerywana) {
+    if (Math.abs(a) + Math.abs(b) < 1e-9) return;
+    if (Math.abs(b) >= Math.abs(a)) g.prosta(0, c / b, 1, (c - a) / b, nr, przerywana);
+    else g.prosta(c / a, 0, (c - b) / a, 1, nr, przerywana);
+  }
+
+  // --- 3. Dwie proste ---
+  const w1 = new Wykres($("ul-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const ids = ["ul-a1", "ul-b1", "ul-c1", "ul-a2", "ul-b2", "ul-c2"];
+  function rysujUl() {
+    const [a1, b1, c1, a2, b2, c2] = ids.map(id => +$(id).value);
+    ids.forEach(id => { $(id + "-v").textContent = ladna(+$(id).value); });
+    const W = a1 * b2 - a2 * b1;
+    const zly1 = a1 === 0 && b1 === 0, zly2 = a2 === 0 && b2 === 0;
+    let typ = "", pkt = null;
+    if (zly1 || zly2) {
+      typ = "\\text{the equation } 0=c \\text{ is not a line}";
+    } else if (W !== 0) {
+      pkt = [(c1 * b2 - c2 * b1) / W, (a1 * c2 - a2 * c1) / W];
+      typ = "\\text{independent: } (" + ladnaTex(pkt[0]) + ",\\," + ladnaTex(pkt[1]) + ")";
+    } else if (a1 * c2 - a2 * c1 === 0 && b1 * c2 - b2 * c1 === 0) {
+      typ = "\\text{dependent (same line)}";
+    } else {
+      typ = "\\text{inconsistent (parallel lines)}";
+    }
+    w1.rysuj(g => {
+      prostaABC(g, a1, b1, c1, 1, false);
+      prostaABC(g, a2, b2, c2, 4, W === 0 && !zly1 && !zly2 && typ.includes("same line"));
+      if (pkt) g.punkt(pkt[0], pkt[1], "P", 2);
+    });
+    tex("ul-wynik", "\\begin{cases}" + rown(a1, b1, c1) + "\\\\" + rown(a2, b2, c2) + "\\end{cases}\\;W=" + W + "\\;\\Rightarrow\\;" + typ);
+  }
+  ids.forEach(id => $(id).addEventListener("input", rysujUl));
+  rysujUl();
+
+  // --- 4. Animacja eliminacji ---
+  const uklady = [[2, 3, 7, 3, -2, 4], [1, -2, 2, -2, 4, 6], [1, -2, 2, -2, 4, -4]];
+  const nwd = (p, q) => { p = Math.abs(p); q = Math.abs(q); while (q) { const r = p % q; p = q; q = r; } return p || 1; };
+  const w2 = new Wykres($("el-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  let stop = null;
+  // mnożniki m1, m2 tak, by m1*E1 + m2*E2 nie miało zmiennej (indeks 1 = y, 0 = x)
+  function mnozniki(u, ktora) {
+    const k1 = u[ktora], k2 = u[3 + ktora], d = nwd(k1, k2);
+    let m1 = k2 / d, m2 = -k1 / d;
+    const inna = 1 - ktora, s = m1 * u[inna] + m2 * u[3 + inna];
+    if (s < 0 || (s === 0 && m1 < 0)) { m1 = -m1; m2 = -m2; }
+    return [m1, m2];
+  }
+  function klatkaEl(faza, t) {
+    const u = uklados();
+    const [a1, b1, c1, a2, b2, c2] = u;
+    const W = a1 * b2 - a2 * b1;
+    const [m1, m2] = mnozniki(u, 1);
+    const [n1, n2] = mnozniki(u, 0);
+    let opis = "";
+    let zielone = [];
+    const pkt = W !== 0 ? [(c1 * b2 - c2 * b1) / W, (a1 * c2 - a2 * c1) / W] : null;
+    const komb = (p, q, s) => [p * a1 + s * q * a2, p * b1 + s * q * b2, p * c1 + s * q * c2];
+    if (faza === 0) {
+      opis = "\\begin{cases}" + rown(a1, b1, c1) + "\\\\" + rown(a2, b2, c2) + "\\end{cases}";
+    } else if (faza === 1) {
+      opis = "\\begin{cases}" + rown(m1 * a1, m1 * b1, m1 * c1) + "&|\\cdot" + (m1 < 0 ? "(" + m1 + ")" : m1) + "\\\\" + rown(m2 * a2, m2 * b2, m2 * c2) + "&|\\cdot" + (m2 < 0 ? "(" + m2 + ")" : m2) + "\\end{cases}\\;\\text{the same lines}";
+    } else if (faza === 2) {
+      const L = komb(m1, m2, t);
+      zielone.push(L);
+      if (t < 1) opis = "\\text{sum with weight } " + ladnaTex(t) + ":\\;" + rown(L[0], L[1], L[2]);
+      else if (W !== 0) opis = rown(L[0], 0, L[2]) + "\\;\\Rightarrow\\;x=" + ladnaTex(pkt[0]) + "\\;\\text{(vertical)}";
+      else opis = "0=" + ladnaTex(L[2]) + "\\;\\Rightarrow\\;" + (L[2] === 0 ? "\\text{dependent}" : "\\text{inconsistent}");
+    } else {
+      zielone.push(komb(m1, m2, 1));
+      const L = komb(n1, n2, t);
+      zielone.push(L);
+      if (t < 1) opis = "x=" + ladnaTex(pkt[0]) + ",\\;\\text{now } x:\\;" + rown(L[0], L[1], L[2]);
+      else opis = "x=" + ladnaTex(pkt[0]) + ",\\;" + rown(0, L[1], L[2]) + "\\Rightarrow y=" + ladnaTex(pkt[1]);
+    }
+    w2.rysuj(g => {
+      prostaABC(g, a1, b1, c1, 1, false);
+      prostaABC(g, a2, b2, c2, 4, W === 0 && c1 * a2 === c2 * a1);
+      if (faza === 1) { g.tekst(g.z.xmin + 0.3, g.z.ymax - 0.6, "·" + m1 + " and ·" + m2 + ": the lines do not move", 3); }
+      zielone.forEach(L => prostaABC(g, L[0], L[1], L[2], 3, false));
+      if (pkt) g.punkt(pkt[0], pkt[1], faza === 3 && t >= 1 ? "(" + ladna(pkt[0]) + "; " + ladna(pkt[1]) + ")" : "P", 2);
+    });
+    tex("el-wynik", opis);
+  }
+  function uklados() { return uklady[+$("el-uklad").value]; }
+  function odtworz() {
+    if (stop) stop();
+    const u = uklados(), W = u[0] * u[4] - u[3] * u[1];
+    const fazy = [[0, 700], [1, 1500], [2, 2500]];
+    if (W !== 0) fazy.push([3, 2500]);
+    const krok = i => {
+      if (i >= fazy.length) return;
+      const [f, ms] = fazy[i];
+      stop = animuj(ms, t => klatkaEl(f, t), () => krok(i + 1));
+    };
+    krok(0);
+  }
+  $("el-start").addEventListener("click", odtworz);
+  $("el-uklad").addEventListener("change", () => { if (stop) stop(); klatkaEl(0, 0); });
+  klatkaEl(0, 0);
+});
+</script>
+</body>
+</html>

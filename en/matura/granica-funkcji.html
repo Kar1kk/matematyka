@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limit of a function (including one-sided)</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Limit of a function (including one-sided)</h1>
+  <p class="lead">A limit tells you what the values $f(x)$ <i>approach</i> as $x$ gets closer and closer to $a$, not what $f(a)$ is. The function does not even have to be defined at $a$.</p>
+  <p class="wymagania">XIII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definitions</h2>
+  <div class="definicja"><b>Definition (Heine)</b>
+    $\lim\limits_{x\to a} f(x)=g$ if for <b>every</b> sequence $(x_n)$ in the domain, $x_n\neq a$, $x_n\to a$, we have $f(x_n)\to g$.
+  </div>
+  <div class="dwie">
+    <div class="wzor"><div class="tytul">Left-hand limit</div>
+      $$\lim_{x\to a^-} f(x)$$
+      <dl><dt>$x&lt;a$</dt><dd>approaching from the left</dd></dl></div>
+    <div class="wzor"><div class="tytul">Right-hand limit</div>
+      $$\lim_{x\to a^+} f(x)$$
+      <dl><dt>$x&gt;a$</dt><dd>approaching from the right</dd></dl></div>
+  </div>
+  <div class="twierdzenie"><b>Theorem</b>
+    $\lim\limits_{x\to a} f(x)=g$ exists $\iff$ both one-sided limits exist and are equal to $g$.
+  </div>
+  <ul>
+    <li><b>Improper</b>: $f(x)\to+\infty$ or $-\infty$. E.g. $\lim\limits_{x\to0}\frac1{x^2}=+\infty$. Then the line $x=a$ is a <b>vertical asymptote</b>.</li>
+    <li><b>At infinity</b>: $\lim\limits_{x\to\pm\infty} f(x)=g$. Then the line $y=g$ is a <b>horizontal asymptote</b>.</li>
+  </ul>
+
+  <h2 id="podchodzenie">2. Interactive: approaching from the left and from the right</h2>
+  <div class="demo">
+    <p class="opis">The green point is $x=1-h$, the purple one $x=1+h$. Play the animation ($h\to0$) and watch where the values are heading. Compare a "hole" with a "jump".</p>
+    <canvas id="gr-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>function <select id="gr-f">
+        <option value="0">hole: (x²−1)/(x−1)</option>
+        <option value="1">jump: (x²−1)/|x−1|</option>
+        <option value="2">1/(x−1)²</option>
+        <option value="3">1/(x−1)</option>
+      </select></label>
+      <label>$h$ <input type="range" id="gr-h" min="0" max="1" step="0.01" value="0"> <span id="gr-h-v"></span></label>
+      <button id="gr-start">▶ Play h → 0</button>
+    </div>
+    <table class="tabela" id="gr-tab"></table>
+    <div class="wynik" id="gr-wynik"></div>
+  </div>
+
+  <h2 id="liczenie">3. How to compute limits</h2>
+  <p>When the function is "nice" at $a$ (a polynomial, a rational function with denominator $\neq0$, a square root), just <b>substitute</b>: $\lim\limits_{x\to2}(x^2+1)=5$. The limit of a sum, product, quotient is the sum, product, quotient of the limits (if they are finite and the denominator $\neq0$).</p>
+  <table class="tabela">
+    <tr><th>Symbol</th><th>Result</th></tr>
+    <tr><td>$\frac{c}{\pm\infty}$</td><td>$0$</td></tr>
+    <tr><td>$\frac{c}{0^+}$, $c&gt;0$</td><td>$+\infty$</td></tr>
+    <tr><td>$\frac{c}{0^-}$, $c&gt;0$</td><td>$-\infty$</td></tr>
+    <tr><td>$+\infty+(+\infty)$</td><td>$+\infty$</td></tr>
+    <tr><td>$-\infty+(-\infty)$</td><td>$-\infty$</td></tr>
+    <tr><td>$+\infty\cdot(+\infty)$</td><td>$+\infty$</td></tr>
+    <tr><td>$+\infty\cdot(-\infty)$</td><td>$-\infty$</td></tr>
+    <tr><td>$c\cdot(+\infty)$, $c&gt;0$</td><td>$+\infty$</td></tr>
+    <tr><td>$c\cdot(+\infty)$, $c&lt;0$</td><td>$-\infty$</td></tr>
+  </table>
+  <div class="uwaga"><b>Indeterminate forms</b>: $\frac00$, $\frac{\infty}{\infty}$, $\infty-\infty$, $0\cdot\infty$. The result can be anything, you have to transform the expression.</div>
+  <ul>
+    <li>$\frac00$ for a rational function: <b>factor and cancel</b> the factor $(x-a)$.</li>
+    <li>$\frac00$ with a square root: multiply by the <b>conjugate</b>, e.g. $\sqrt{x+4}+2$.</li>
+    <li>$\frac{\infty}{\infty}$: <b>divide</b> the numerator and the denominator by the highest power in the denominator.</li>
+    <li>$\infty-\infty$ with a square root: the conjugate, then as for $\frac{\infty}{\infty}$.</li>
+  </ul>
+
+  <h2 id="nieskonczonosc">4. Interactive: limit at infinity</h2>
+  <div class="demo">
+    <p class="opis">Zoom the view out (slider or ▶). When a limit $g$ exists, the graph "sticks" to the line $y=g$. The last function runs off to $\pm\infty$, there is no horizontal asymptote.</p>
+    <canvas id="gn-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>function <select id="gn-f">
+        <option value="0">(2x+1)/(x−1)</option>
+        <option value="1">3x/(x²+1)</option>
+        <option value="2">(x²+1)/x</option>
+      </select></label>
+      <label>range <input type="range" id="gn-r" min="0" max="1" step="0.005" value="0"> <span id="gn-r-v"></span></label>
+      <button id="gn-start">▶ Zoom out</button>
+    </div>
+    <div class="wynik" id="gn-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Find $\lim\limits_{x\to2}\frac{x^2-4}{x^2-3x+2}$.</p>
+    <ol>
+      <li>Substitution gives $\frac00$: an indeterminate form.</li>
+      <li>Factoring: $\frac{(x-2)(x+2)}{(x-2)(x-1)}=\frac{x+2}{x-1}$ for $x\neq2$.</li>
+      <li>Now substitute: $\frac{2+2}{2-1}=4$.</li>
+    </ol>
+    <p class="odp">The limit is $4$ (the graph has a "hole" at $(2,4)$).</p>
+  </div>
+  <div class="przyklad">
+    <p>Find $\lim\limits_{x\to+\infty}\frac{3x^2-x}{2x^2+5}$ and the one-sided limits of $\frac{x+1}{x-1}$ at $1$.</p>
+    <ol>
+      <li>Divide by $x^2$: $\frac{3-\frac1x}{2+\frac{5}{x^2}}\to\frac{3-0}{2+0}=\frac32$.</li>
+      <li>$x\to1^-$: numerator $\to2$, denominator $\to0^-$, so $\frac{x+1}{x-1}\to-\infty$.</li>
+      <li>$x\to1^+$: denominator $\to0^+$, so $\to+\infty$.</li>
+    </ol>
+    <p class="odp">$\frac32$; one-sided limits $-\infty$ and $+\infty$, the limit at $1$ does not exist, $x=1$ is a vertical asymptote.</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="6"><span class="poziom">easy</span>
+      <div class="tresc">Find $\lim\limits_{x\to3}\frac{x^2-9}{x-3}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{(x-3)(x+3)}{x-3}=x+3\to6$. <b>$6$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2"><span class="poziom">easy</span>
+      <div class="tresc">Find $\lim\limits_{x\to-\infty}\frac{4x^3-x}{1-2x^3}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Divide by $x^3$: $\frac{4-\frac1{x^2}}{\frac1{x^3}-2}\to\frac{4}{-2}$. <b>$-2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Find the one-sided limits of the function $f(x)=\frac{x+1}{2-x}$ at the point $2$. Does $\lim\limits_{x\to2}f(x)$ exist?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The numerator $\to3$. For $x\to2^-$: $2-x\to0^+$, so $f\to+\infty$. For $x\to2^+$: $2-x\to0^-$, so $f\to-\infty$.
+        <b>$+\infty$ and $-\infty$; the limit does not exist</b>, $x=2$ is a vertical asymptote.
+      </div></details></li>
+    <li class="zadanie" data-odp="1/4"><span class="poziom">medium</span>
+      <div class="tresc">Find $\lim\limits_{x\to0}\frac{\sqrt{x+4}-2}{x}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Multiply by the conjugate:
+        $$\frac{(x+4)-4}{x\left(\sqrt{x+4}+2\right)}=\frac{1}{\sqrt{x+4}+2}$$
+        $\to\frac1{2+2}$. <b>$\frac14$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; -4" data-odp-opis="a; b"><span class="poziom">exam-level</span>
+      <div class="tresc">Find $a$ and $b$ such that $\lim\limits_{x\to1}\frac{x^2+ax+b}{x-1}=5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The denominator $\to0$ and the limit is finite, so the numerator must also $\to0$: $1+a+b=0$. Then $1$ is a root of the numerator, and the other root is $b$ (Vieta's formulas: $x_1x_2=b$), i.e. $x^2+ax+b=(x-1)(x-b)$. The limit: $1-b=5$, so $b=-4$, $a=3$.
+        <b>$a=3$, $b=-4$</b> (check: $\frac{(x-1)(x+4)}{x-1}\to5$).
+      </div></details></li>
+    <li class="zadanie" data-odp="2"><span class="poziom">exam-level</span>
+      <div class="tresc">Find $\lim\limits_{x\to+\infty}\left(\sqrt{x^2+4x}-x\right)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The form $\infty-\infty$. Conjugate:
+        $$\frac{x^2+4x-x^2}{\sqrt{x^2+4x}+x}=\frac{4x}{\sqrt{x^2+4x}+x}$$
+        Divide by $x$ (for $x&gt;0$: $\sqrt{x^2}=x$): $\frac{4}{\sqrt{1+\frac4x}+1}\to\frac42$. <b>$2$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>Write down which form comes out of the substitution ($\frac00$, $\frac{\infty}{\infty}$), and then the transformation. A bare "$=4$" without cancelling is a lack of justification.</li>
+    <li>$\frac{c}{0}$: <b>always</b> compute the one-sided limits and check the sign of the denominator ($0^+$ or $0^-$).</li>
+    <li>Dividing by $x$ under a square root: for $x\to-\infty$ we have $\sqrt{x^2}=|x|=-x$. A classic trap.</li>
+    <li>The limit at $a$ does not depend on $f(a)$. The relation between the value and the limit is <a href="ciaglosc-darboux.html">continuity</a>.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Podchodzenie do a = 1 ---
+  const FUN = [
+    { f: x => (x * x - 1) / (x - 1), L: 2, R: 2, tL: "2", tR: "2", g: "2" },
+    { f: x => (x * x - 1) / Math.abs(x - 1), L: -2, R: 2, tL: "-2", tR: "2", g: "\\text{does not exist}" },
+    { f: x => 1 / (x - 1) ** 2, L: null, R: null, tL: "+\\infty", tR: "+\\infty", g: "+\\infty" },
+    { f: x => 1 / (x - 1), L: null, R: null, tL: "-\\infty", tR: "+\\infty", g: "\\text{does not exist}" },
+  ];
+  const gr = new Wykres($("gr-plot"), { xmin: -2, xmax: 4, ymin: -5, ymax: 6 });
+  const hZ = s => 2 * Math.pow(0.0005, s);           // suwak 0..1 → h od 2 do 0,001
+  const H_TAB = [1, 0.5, 0.1, 0.01, 0.001];
+  let stopG = null;
+  const fmt = v => Math.abs(v) >= 1e4 ? (v > 0 ? "" : "-") + "10^{" + Math.round(Math.log10(Math.abs(v))) + "}" : ladnaTex(v, 4);
+  function rysujGr() {
+    const F = FUN[+$("gr-f").value], h = hZ(+$("gr-h").value), f = F.f;
+    $("gr-h-v").textContent = ladna(h, 3);
+    const xl = 1 - h, xr = 1 + h, yl = f(xl), yr = f(xr);
+    gr.rysuj(g => {
+      g.funkcja(f, 1, { do: 1 - 1e-4 }); g.funkcja(f, 1, { od: 1 + 1e-4 });
+      g.odcinek(1, g.z.ymin, 1, g.z.ymax, 3);
+      if (F.L !== null) { g.punkt(1, F.L, "", 1, { pusty: true }); g.punkt(1, F.R, "", 1, { pusty: true }); }
+      const yc = y => Math.max(g.z.ymin + 0.2, Math.min(g.z.ymax - 0.2, y));
+      g.odcinek(xl, 0, xl, yc(yl), 3); g.odcinek(xr, 0, xr, yc(yr), 4);
+      g.punkt(xl, yc(yl), "", 3); g.punkt(xr, yc(yr), "", 4);
+      g.punkt(xl, 0, "1−h", 3, { r: 3 }); g.punkt(xr, 0, "1+h", 4, { r: 3 });
+    });
+    // tabelka: kolumny dla h, które animacja już „minęła”
+    const kol = H_TAB.filter(t => t >= h - 1e-12);
+    const wiersz = (nag, fn) => `<tr><th>${nag}</th>${kol.map(t => `<td>${fn(t)}</td>`).join("")}</tr>`;
+    $("gr-tab").innerHTML = kol.length ? wiersz("h", t => ladna(t, 3)) +
+      wiersz("f(1−h)", t => ladna(f(1 - t), 3)) + wiersz("f(1+h)", t => ladna(f(1 + t), 3)) : "";
+    tex("gr-wynik", `f(1-h)=${fmt(yl)},\\ f(1+h)=${fmt(yr)}\\qquad ` +
+      `\\lim_{x\\to1^-}f(x)=${F.tL},\\ \\lim_{x\\to1^+}f(x)=${F.tR},\\ \\lim_{x\\to1}f(x)=${F.g}`);
+  }
+  $("gr-h").addEventListener("input", () => { if (stopG) stopG(); rysujGr(); });
+  $("gr-f").addEventListener("change", () => { if (stopG) stopG(); $("gr-h").value = 0; rysujGr(); });
+  $("gr-start").addEventListener("click", () => {
+    if (stopG) stopG();
+    stopG = animuj(4000, t => { $("gr-h").value = t; rysujGr(); });
+  });
+  rysujGr();
+
+  // --- 4. Granica w nieskończoności: oddalanie widoku ---
+  const FN = [
+    { f: x => (2 * x + 1) / (x - 1), b: 1, g: 2, t: "\\lim_{x\\to\\pm\\infty}f(x)=2" },
+    { f: x => 3 * x / (x * x + 1), b: null, g: 0, t: "\\lim_{x\\to\\pm\\infty}f(x)=0" },
+    { f: x => (x * x + 1) / x, b: 0, g: null, t: "\\lim_{x\\to+\\infty}f(x)=+\\infty,\\ \\lim_{x\\to-\\infty}f(x)=-\\infty" },
+  ];
+  const gn = new Wykres($("gn-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 8 });
+  let stopN = null;
+  const ladnyKrok = r => { const p = 10 ** Math.floor(Math.log10(r)), m = r / p; return (m < 2 ? 1 : m < 5 ? 2 : 5) * p; };
+  function rysujGn() {
+    const F = FN[+$("gn-f").value], R = 6 * Math.pow(500, +$("gn-r").value);
+    $("gn-r-v").textContent = "|x| ≤ " + Math.round(R);
+    Object.assign(gn.z0, { xmin: -R, xmax: R, krokX: ladnyKrok(R / 3) });
+    const xp = 0.9 * R, yp = F.f(xp);
+    gn.rysuj(g => {
+      if (F.g !== null) g.odcinek(g.z.xmin, F.g, g.z.xmax, F.g, 2);
+      if (F.b === null) g.funkcja(F.f, 1);
+      else { const e = R * 1e-4; g.funkcja(F.f, 1, { do: F.b - e }); g.funkcja(F.f, 1, { od: F.b + e }); }
+      g.punkt(xp, Math.min(yp, g.z.ymax - 0.2), "", 2);
+    });
+    const odl = F.g === null ? "" : `,\\quad |f(x)-${F.g}|=${ladnaTex(Math.abs(yp - F.g), 4)}`;
+    tex("gn-wynik", `x=${ladnaTex(xp, 0)}:\\ f(x)=${ladnaTex(yp, 3)}${odl}\\qquad ${F.t}`);
+  }
+  $("gn-r").addEventListener("input", () => { if (stopN) stopN(); rysujGn(); });
+  $("gn-f").addEventListener("change", () => { if (stopN) stopN(); rysujGn(); });
+  $("gn-start").addEventListener("click", () => {
+    if (stopN) stopN();
+    stopN = animuj(3500, t => { $("gn-r").value = t; rysujGn(); });
+  });
+  rysujGn();
+});
+</script>
+</body>
+</html>

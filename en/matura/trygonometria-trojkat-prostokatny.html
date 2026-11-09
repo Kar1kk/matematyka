@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trigonometry in a right triangle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Trigonometry in a right triangle</h1>
+  <p class="lead">All right triangles with the same acute angle $\alpha$ are similar, so the ratios of their sides are the same. These ratios are exactly $\sin\alpha$, $\cos\alpha$, $\tan\alpha$: they depend only on the angle, not on the size of the triangle.</p>
+  <p class="wymagania">VII.4, VIII.12 (also VII.1)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definitions</h2>
+  <div class="definicja"><b>Definition</b> In a right triangle with hypotenuse $c$ and acute angle $\alpha$, opposite to which lies leg $a$ and adjacent to which lies leg $b$:
+    $$\sin\alpha=\frac{a}{c},\quad \cos\alpha=\frac{b}{c},\quad \tan\alpha=\frac{a}{b}$$
+    In words: sine = opposite / hypotenuse, cosine = adjacent / hypotenuse, tangent = opposite / adjacent.</div>
+  <div class="wzor">
+    <div class="tytul">Relations <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\sin^2\alpha+\cos^2\alpha=1$$
+    $$\tan\alpha=\frac{\sin\alpha}{\cos\alpha}$$
+    <dl><dt>proof</dt><dd>$\frac{a^2+b^2}{c^2}=\frac{c^2}{c^2}=1$ (Pythagoras); $\;\frac{a/c}{b/c}=\frac{a}{b}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Complementary angles ($\alpha+\beta=90^\circ$)</div>
+    $$\sin(90^\circ-\alpha)=\cos\alpha$$
+    $$\cos(90^\circ-\alpha)=\sin\alpha$$
+    $$\tan\alpha\cdot\tan(90^\circ-\alpha)=1$$
+    <dl><dt>why</dt><dd>for the other acute angle the roles of legs $a$ and $b$ are swapped</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>$\alpha$</th><th>$30^\circ$</th><th>$45^\circ$</th><th>$60^\circ$</th></tr>
+    <tr><td>$\sin\alpha$</td><td>$\frac12$</td><td>$\frac{\sqrt2}{2}$</td><td>$\frac{\sqrt3}{2}$</td></tr>
+    <tr><td>$\cos\alpha$</td><td>$\frac{\sqrt3}{2}$</td><td>$\frac{\sqrt2}{2}$</td><td>$\frac12$</td></tr>
+    <tr><td>$\tan\alpha$</td><td>$\frac{\sqrt3}{3}$</td><td>$1$</td><td>$\sqrt3$</td></tr>
+  </table>
+  <p>The values for $30^\circ, 45^\circ, 60^\circ$ are in the tables; where they come from (half a square, half an equilateral triangle), see the topic <a href="trygonometria-0-180.html">angles 0°–180°</a>.</p>
+  <div class="uwaga">For an acute angle $0&lt;\sin\alpha&lt;1$ and $0&lt;\cos\alpha&lt;1$ (a leg is shorter than the hypotenuse), while $\tan\alpha$ can be any positive number.</div>
+
+  <h2 id="demo">2. Interactive: the ratios depend only on the angle</h2>
+  <div class="demo">
+    <p class="opis">Drag vertex $B$ (changes the angle and the size) and point $D$ (a smaller similar triangle). The ratios of the sides in both triangles are always equal.</p>
+    <canvas id="tp-plot"></canvas>
+    <div class="wynik" id="tp-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">When the hypotenuse has length $1$, the legs <i>are</i> the sine and cosine. The tangent is the segment on the tangent line $x=1$ (a similar triangle with leg $1$). This is a bridge to the unit circle.</p>
+    <canvas id="tj-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$\alpha$ <input type="range" id="tj-a" min="1" max="80" step="1" value="37"> <span id="tj-a-v"></span></label>
+    </div>
+    <div class="wynik" id="tj-wynik"></div>
+  </div>
+
+  <h2 id="metoda">3. Method</h2>
+  <ol>
+    <li>Mark the right angle and the angle you are asked about. Name the sides relative to <b>that</b> angle: opposite, adjacent, hypotenuse.</li>
+    <li>Choose the function that links the known side and the unknown side (without the hypotenuse → $\tan$).</li>
+    <li>When one function is given and another is needed: draw a triangle with sides from the fraction and find the third side from Pythagoras.</li>
+  </ol>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>An acute angle $\alpha$ satisfies $\sin\alpha=\frac{5}{13}$. Find $\cos\alpha$ and $\tan\alpha$.</p>
+    <ol>
+      <li>A triangle with opposite side $5$ and hypotenuse $13$.</li>
+      <li>Adjacent: $\sqrt{13^2-5^2}=\sqrt{144}=12$.</li>
+      <li>$\cos\alpha=\frac{12}{13}$, $\;\tan\alpha=\frac{5}{12}$.</li>
+    </ol>
+    <p class="odp">$\cos\alpha=\frac{12}{13},\ \tan\alpha=\frac{5}{12}$</p>
+    <p>The same from the Pythagorean identity: $\cos\alpha=\sqrt{1-\frac{25}{169}}$ (positive root, because the angle is acute).</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="24" data-odp-opis="perimeter"><span class="poziom">easy</span>
+      <div class="tresc">In right triangle $ABC$ the angle at $C$ is right, $|AC|=6$ and $\tan\angle BAC=\frac43$. Find the perimeter of the triangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\tan\angle A=\frac{|BC|}{|AC|}$, so $|BC|=6\cdot\frac43=8$, $|AB|=\sqrt{36+64}=10$. <b>Perimeter $24$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5; 5sqrt(3); 25sqrt(3)/2" data-odp-opis="legs; area"><span class="poziom">easy</span>
+      <div class="tresc">The hypotenuse of a right triangle has length $10$, and one of the acute angles is $30^\circ$. Find the lengths of the legs and the area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Opposite $30^\circ$: $10\sin30^\circ=5$; adjacent to it: $10\cos30^\circ=5\sqrt3$. Area $\frac12\cdot5\cdot5\sqrt3$. <b>$5$, $5\sqrt3$, $P=\frac{25\sqrt3}{2}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="25sqrt(3)"><span class="poziom">medium</span>
+      <div class="tresc">A leg of an isosceles triangle has length $10$, and the base angle is $30^\circ$. Find the area of the triangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The altitude divides it into two right triangles: $h=10\sin30^\circ=5$, half of the base is $10\cos30^\circ=5\sqrt3$, the base is $10\sqrt3$. $P=\frac12\cdot10\sqrt3\cdot5$. <b>$P=25\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Prove that for every acute angle $\alpha$ we have $\sin\alpha+\cos\alpha&gt;1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        In a right triangle with angle $\alpha$: $\sin\alpha+\cos\alpha=\frac{a+b}{c}$. By the triangle inequality $a+b&gt;c$, so <b>$\sin\alpha+\cos\alpha&gt;1$</b>. (Algebraically: $(\sin\alpha+\cos\alpha)^2=1+2\sin\alpha\cos\alpha&gt;1$.)
+      </div></details></li>
+    <li class="zadanie" data-odp="10sqrt(3)" data-odp-opis="height in m"><span class="poziom">exam-level</span>
+      <div class="tresc">From point $A$ the top of a tower is seen at an angle of $30^\circ$ to the horizontal. After walking $20$ m towards the tower (on level ground) the angle is $60^\circ$. Find the height of the tower.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Let $h$ be the height and $x$ the distance of the second point from the base of the tower. $\tan60^\circ=\frac{h}{x}$, $\tan30^\circ=\frac{h}{x+20}$, so $x=\frac{h}{\sqrt3}$ and $x+20=h\sqrt3$.
+        Subtracting: $20=h\sqrt3-\frac{h}{\sqrt3}=\frac{2h}{\sqrt3}$, hence $h=10\sqrt3\approx17.3$. <b>$h=10\sqrt3$ m</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Relative to which angle?</b> “Opposite” changes when you change the angle. The most common mistake: $\sin$ computed for the wrong acute angle.</li>
+    <li>Find the value of another function from an auxiliary triangle or from the Pythagorean identity, always with a <b>justification of the sign</b> (“the angle is acute, so $\cos\alpha&gt;0$”).</li>
+    <li>Leave the result exact ($10\sqrt3$), do not round unless the problem says so. The CKE formula sheet contains a table of values of trigonometric functions, but in problems exact values usually suffice.</li>
+    <li>In problems with figures (rhombus, trapezoid, altitude) look for a right triangle: an altitude or a diagonal usually forms one.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const st = r => r * 180 / Math.PI;
+  // znacznik kąta prostego w punkcie (x,y), ramiona w kierunkach u i v (wektory jednostkowe)
+  const prosty = (g, x, y, u, v, s, nr) => g.wielokat([[x + u[0] * s, y + u[1] * s], [x + (u[0] + v[0]) * s, y + (u[1] + v[1]) * s], [x + v[0] * s, y + v[1] * s]], nr, { zamknij: false, grubosc: 1.5 });
+
+  // --- 2a. Dwa trójkąty podobne ---
+  const w1 = new Wykres($("tp-plot"), { xmin: -0.6, xmax: 8, ymin: -0.8, ymax: 5.4, rowneSkale: true });
+  let s = 0.5;
+  const pk = w1.przeciagaj([
+    { x: 6, y: 4, ogranicz: p => ({ x: Math.min(7.5, Math.max(1.2, p.x)), y: Math.min(5, Math.max(0.4, p.y)) }) },
+    { x: 3, y: 2, ogranicz: p => { const B = pk[0], t = Math.min(0.9, Math.max(0.15, (p.x * B.x + p.y * B.y) / (B.x ** 2 + B.y ** 2))); return { x: t * B.x, y: t * B.y }; } },
+  ], rysujTp);
+  function rysujTp() {
+    const [B, D] = pk;
+    if (Math.abs(D.x * B.y - D.y * B.x) < 1e-6) s = D.x / B.x; else { D.x = s * B.x; D.y = s * B.y; }
+    const a = B.y, b = B.x, c = Math.hypot(a, b), a2 = D.y, b2 = D.x, c2 = Math.hypot(a2, b2), al = Math.atan2(a, b);
+    w1.rysuj(g => {
+      g.wielokat([[0, 0], [b, 0], [b, a]], 1, { wypelnij: 0.12 });
+      g.wielokat([[0, 0], [b2, 0], [b2, a2]], 4, { wypelnij: 0.2 });
+      prosty(g, b, 0, [-1, 0], [0, 1], 0.3, 1); prosty(g, b2, 0, [-1, 0], [0, 1], 0.25, 4);
+      g.luk(0, 0, 0.8, 0, al, 2, { wypelnij: 0.2 });
+      g.tekst(0.9, 0.15, "α", 2, { gruby: true });
+      g.tekst(b, a / 2, "a", 1, { dx: 6, gruby: true }); g.tekst(b / 2, 0, "b", 1, { dy: 16, gruby: true });
+      g.tekst(b / 2, a / 2, "c", 1, { dx: -14, dy: -6, gruby: true });
+      g.tekst(b2, a2 / 2, "a′", 4, { dx: 6, gruby: true });
+      g.punkt(0, 0, "A", 1); g.punkt(b, 0, "C", 1); g.punkt(B.x, B.y, "B"); g.punkt(D.x, D.y, "D", 4);
+    });
+    const L = (x, y) => ladnaTex(x / y, 3);
+    tex("tp-wynik", `\\begin{array}{lll}\\alpha\\approx${ladnaTex(st(al), 1)}^\\circ & \\text{large} & \\text{small}\\\\ \\sin\\alpha & \\frac{a}{c}=${L(a, c)} & \\frac{a'}{c'}=${L(a2, c2)}\\\\ \\cos\\alpha & \\frac{b}{c}=${L(b, c)} & \\frac{b'}{c'}=${L(b2, c2)}\\\\ \\tan\\alpha & \\frac{a}{b}=${L(a, b)} & \\frac{a'}{b'}=${L(a2, b2)}\\end{array}`, true);
+  }
+  rysujTp();
+
+  // --- 2b. Przeciwprostokątna 1 ---
+  const w2 = new Wykres($("tj-plot"), { xmin: -0.25, xmax: 1.6, ymin: -0.25, ymax: 1.7, rowneSkale: true });
+  function rysujTj() {
+    const d = +$("tj-a").value, al = d * Math.PI / 180, cs = Math.cos(al), sn = Math.sin(al), tan = Math.tan(al);
+    $("tj-a-v").textContent = d + "°";
+    w2.rysuj(g => {
+      g.luk(0, 0, 1, 0, Math.PI / 2, 3, { przerywana: true, grubosc: 1.5 });
+      g.odcinek(1, -5, 1, 50, 3);
+      g.odcinek(0, 0, 1, tan, 4);
+      g.wielokat([[0, 0], [cs, 0], [cs, sn]], 1, { wypelnij: 0.12 });
+      g.odcinek(cs, 0, cs, sn, 2, false); g.odcinek(0, 0, cs, 0, 3, false);
+      g.odcinek(1, 0, 1, tan, 4, false);
+      g.luk(0, 0, 0.22, 0, al, 2);
+      g.tekst(cs, sn / 2, "sin α", 2, { dx: 5, gruby: true });
+      g.tekst(cs / 2, 0, "cos α", 3, { dy: 16, wyrownanie: "center", gruby: true });
+      g.tekst(1, Math.min(tan, g.z.ymax - 0.2) / 2 + 0.05, "tan α", 4, { dx: 6, gruby: true });
+      g.tekst(cs / 2, sn / 2, "1", 1, { dx: -12, dy: -4, gruby: true });
+      g.punkt(cs, sn, "", 2);
+    });
+    tex("tj-wynik", `\\sin\\alpha=${ladnaTex(sn, 3)},\\ \\cos\\alpha=${ladnaTex(cs, 3)},\\ \\tan\\alpha=${ladnaTex(tan, 3)},\\ \\sin^2\\alpha+\\cos^2\\alpha=1`);
+  }
+  $("tj-a").addEventListener("input", rysujTj);
+  rysujTj();
+});
+</script>
+</body>
+</html>

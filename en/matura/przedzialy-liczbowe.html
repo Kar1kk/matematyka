@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intervals</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Intervals</h1>
+  <p class="lead">An interval is the set of all numbers between two endpoints. On the number line it is drawn as a thick segment, and the endpoints as a filled dot (included) or an open dot (not included).</p>
+  <p class="wymagania">I.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Types of intervals</h2>
+  <div class="definicja"><b>Definition</b> An interval is the set of all real numbers satisfying a condition on the position relative to two numbers $a$ and $b$ (where $a&lt;b$).</div>
+
+  <table class="tabela">
+    <thead><tr><th>Notation</th><th>Inequality</th><th>Description</th><th>Drawing on the line</th></tr></thead>
+    <tbody>
+      <tr><td>$(a, b)$</td><td>$a &lt; x &lt; b$</td><td>open interval</td><td>a line with open dots at $a$ and $b$, a thick segment between them</td></tr>
+      <tr><td>$[a, b]$</td><td>$a \le x \le b$</td><td>closed interval</td><td>a line with filled dots at $a$ and $b$, a thick segment between them</td></tr>
+      <tr><td>$[a, b)$</td><td>$a \le x &lt; b$</td><td>closed on the left</td><td>filled dot at $a$, open at $b$</td></tr>
+      <tr><td>$(a, b]$</td><td>$a &lt; x \le b$</td><td>closed on the right</td><td>open dot at $a$, filled at $b$</td></tr>
+    </tbody>
+  </table>
+
+  <div class="definicja"><b>Infinite intervals</b>
+    <ul>
+      <li>$(-\infty, a) = \{x \in \R : x &lt; a\}$</li>
+      <li>$(-\infty, a] = \{x \in \R : x \le a\}$</li>
+      <li>$(a, +\infty) = \{x \in \R : x &gt; a\}$</li>
+      <li>$[a, +\infty) = \{x \in \R : x \ge a\}$</li>
+      <li>$(-\infty, +\infty) = \R$</li>
+    </ul>
+  </div>
+
+  <div class="uwaga">A <b>filled</b> dot means the number belongs to the interval ($\le$ or $\ge$). An <b>open</b> dot means it does not belong ($&lt;$ or $&gt;$).</div>
+
+  <h2 id="demo">2. Interactive drawing of intervals</h2>
+  <div class="demo">
+    <p class="opis">Set the endpoints of the interval with the sliders and choose whether each endpoint is closed (filled dot) or open (open dot).</p>
+    <canvas id="pl-plot" style="height:280px"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="pl-a" min="-6" max="6" step="0.5" value="-2"> <span id="pl-a-v"></span></label>
+      <label>$b$ <input type="range" id="pl-b" min="-6" max="6" step="0.5" value="3"> <span id="pl-b-v"></span></label>
+      <label><input type="checkbox" id="pl-lewy-dom"> left closed</label>
+      <label><input type="checkbox" id="pl-prawy-dom"> right closed</label>
+    </div>
+    <div class="wynik" id="pl-wynik"></div>
+  </div>
+
+  <h2 id="dzialania">3. Operations on intervals</h2>
+  <div class="definicja"><b>Union of intervals</b> $A \cup B$ is the set of all numbers that belong to $A$ <b>or</b> to $B$ (or to both).</div>
+  <div class="definicja"><b>Intersection</b> $A \cap B$ is the set of all numbers that belong to $A$ <b>and</b> to $B$ at the same time.</div>
+  <div class="definicja"><b>Difference of intervals</b> $A \setminus B$ is the set of numbers in $A$ that <b>do not belong</b> to $B$.</div>
+  <div class="definicja"><b>Complement of an interval</b> $A' = \R \setminus A$ is the set of all real numbers that <b>do not belong</b> to $A$.</div>
+
+  <div class="przyklad">
+    <p>Let $A = [-2, 3]$ and $B = (1, 5)$. Find $A \cup B$, $A \cap B$ and $A \setminus B$.</p>
+    <ol>
+      <li><b>Union:</b> We join both intervals. From $-2$ (closed) to $5$ (open): $A \cup B = [-2, 5)$</li>
+      <li><b>Intersection:</b> The part where they overlap: from $1$ (open, because $B$ is open) to $3$ (closed, because $A$ is closed): $A \cap B = (1, 3]$</li>
+      <li><b>Difference $A \setminus B$:</b> From $A$ we remove what is in $B$. $B$ starts at $1$ (open), so we remove $(1, 3]$. What remains is $[-2, 1]$ (because $1$ does not belong to $B$, so it stays in the difference).</li>
+    </ol>
+    <p class="odp">$A \cup B = [-2, 5)$, $A \cap B = (1, 3]$, $A \setminus B = [-2, 1]$</p>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Mark on the number line and write as an interval the set $( -3, 2] \cup [1, 4)$.</p>
+    <ol>
+      <li>The first interval: from $-3$ (open) to $2$ (closed).</li>
+      <li>The second interval: from $1$ (closed) to $4$ (open).</li>
+      <li>The two intervals overlap: the first ends at $2$, the second starts at $1$. Since $1 &lt; 2$, there is an intersection.</li>
+      <li>The union starts at $-3$ (open, because the first interval is open) and ends at $4$ (open, because the second interval is open).</li>
+    </ol>
+    <p class="odp">$( -3, 2] \cup [1, 4) = ( -3, 4)$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="przedzial: &lt;-3; 5)"><span class="poziom">easy</span>
+      <div class="tresc">Write as an interval the set of all numbers $x$ satisfying $-3 \le x &lt; 5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The left endpoint $-3$ belongs (sign $\le$), the right endpoint $5$ does not belong (sign $&lt;$).
+        <b>$[-3, 5)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Mark the interval $( -2, 3]$ on the number line.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        On the line we draw a thick segment from $-2$ to $3$. At the point $-2$ an <b>open</b> dot (open endpoint), at the point $3$ a <b>filled</b> dot (closed endpoint).
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Given the intervals $A = (-4, 1]$ and $B = [-1, 3)$, find $A \cap B$ and $A \cup B$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $A \cap B$: from $-1$ (closed, because $-1$ belongs to both intervals) to $1$ (closed, because $1\in A$ and $1\in B$): $[-1, 1]$
+        <br>
+        $A \cup B$: from $-4$ (open) to $3$ (open): $(-4, 3)$
+        <br>
+        <b>$A \cap B = [-1, 1]$, $A \cup B = (-4, 3)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-5; 0) u (2; 4&gt;"><span class="poziom">medium</span>
+      <div class="tresc">Find the difference of intervals $( -5, 4] \setminus [0, 2]$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        From the interval $( -5, 4]$ we remove all numbers from $[0, 2]$.
+        <br>
+        What remains: from $-5$ (open) to $0$ (open, because $0$ belongs to the removed interval) and from $2$ (open, because $2$ belongs to the removed one) to $4$ (closed).
+        <br>
+        <b>$( -5, 0) \cup (2, 4]$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-2; 3&gt;"><span class="poziom">exam-level</span>
+      <div class="tresc">The complement of an interval $A$ is the set $(-\infty, -2] \cup (3, +\infty)$. Find the interval $A$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The complement $A' = (-\infty, -2] \cup (3, +\infty)$ means that the numbers $x \le -2$ and $x &gt; 3$ <b>do not belong</b> to $A$.
+        <br>
+        So $A$ contains all numbers between $-2$ and $3$, except those that are already in the complement.
+        <br>
+        $-2$ belongs to the complement (closed), so it does not belong to $A$. $3$ does not belong to the complement (open), so it belongs to $A$.
+        <br>
+        <b>$A = (-2, 3]$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Always pay attention to the type of endpoints:</b> filled vs. open dots decide whether a number belongs to the interval. For a union/intersection this is crucial.</li>
+    <li><b>On the number line:</b> filled dot = square bracket $[$ or $]$, open dot = round bracket $( $ or $) $.</li>
+    <li><b>When combining intervals:</b> if the endpoints touch (e.g. $A = (1, 3)$ and $B = [3, 5)$), then in the union the point $3$ belongs, if it belongs to at least one interval.</li>
+    <li><b>Infinite intervals:</b> always written with a round bracket at $\pm\infty$, because infinity is not a number and cannot be "closed".</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Interaktywne rysowanie przedziałów ---
+  const w = new Wykres($("pl-plot"), { xmin: -8, xmax: 8, ymin: -1, ymax: 1, krokX: 1, krokY: 5 });
+  
+  function rysujPrzedzial() {
+    let a = +$("pl-a").value;
+    let b = +$("pl-b").value;
+    
+    // Zamiana miejscami jeśli a > b
+    if (a > b) {
+      [a, b] = [b, a];
+      $("pl-a").value = a;
+      $("pl-b").value = b;
+    }
+    
+    const lewyDom = $("pl-lewy-dom").checked;
+    const prawyDom = $("pl-prawy-dom").checked;
+    
+    $("pl-a-v").textContent = ladna(a);
+    $("pl-b-v").textContent = ladna(b);
+    
+    w.rysuj(g => {
+      // Rysujemy oś
+      
+      // Gruby odcinek przedziału
+      g.odcinek(a, 0, b, 0, 1, false);
+      
+      // Kółko lewe
+      g.punkt(a, 0, "", 2, { pusty: !lewyDom });
+      
+      // Kółko prawe
+      g.punkt(b, 0, "", 2, { pusty: !prawyDom });
+      
+      // Etykiety
+      g.tekst(a, -0.3, ladna(a), 1);
+      g.tekst(b, -0.3, ladna(b), 1);
+    });
+    
+    // Generujemy zapis przedziału
+    let zapis;
+    if (a === b) {
+      zapis = lewyDom && prawyDom ? `\\{ ${ladnaTex(a)} \\}` : "\\varnothing";
+    } else {
+      const lewy = lewyDom ? "[" : "(";
+      const prawy = prawyDom ? "]" : ")";
+      zapis = `${lewy}${ladnaTex(a)}, ${ladnaTex(b)}${prawy}`;
+    }
+    
+    // Nierówność
+    let nierownoscL = lewyDom ? "\\le" : "<";
+    let nierownoscP = prawyDom ? "\\le" : "<";
+    let nierownosc = `${ladnaTex(a)}${nierownoscL} x ${nierownoscP}${ladnaTex(b)}`;
+    
+    tex("pl-wynik", `\\text{Interval: } ${zapis},\\quad ${nierownosc}`);
+  }
+  
+  ["pl-a", "pl-b", "pl-lewy-dom", "pl-prawy-dom"].forEach(id => 
+    $(id).addEventListener("input", rysujPrzedzial)
+  );
+  
+  // Ustawienie początkowe: a < b (zamiana suwaków jeśli trzeba)
+  if (+$("pl-a").value > +$("pl-b").value) {
+    const tmp = $("pl-a").value;
+    $("pl-a").value = $("pl-b").value;
+    $("pl-b").value = tmp;
+  }
+  
+  rysujPrzedzial();
+});
+</script>
+</body>
+</html>

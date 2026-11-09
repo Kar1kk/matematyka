@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geometric proofs</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Geometric proofs</h1>
+  <p class="lead">A geometric proof is a chain of short steps, each with its “because…”. A drawing suggests an idea but proves nothing – the relation must hold for <i>every</i> figure satisfying the assumptions, including the ones you did not draw.</p>
+  <p class="wymagania">VIII.11 (tools: VIII.4–VIII.10)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="zapis">1. How to write a proof</h2>
+  <div class="przyklad">
+    <ol>
+      <li><b>A drawing</b> with labels (vertices, angles $\alpha,\beta$, lengths $x$). Introduce the labels in words: “let $|\angle BAC|=\alpha$”.</li>
+      <li><b>Assumption</b> – what we know. <b>Claim</b> – what we have to show. Write them in symbols.</li>
+      <li><b>Proof</b>: every sentence = a fact + a justification in brackets: “$|AS|=|SC|$ (the diagonals of a parallelogram bisect each other)”.</li>
+      <li><b>Conclusion</b>: return to the claim in words – “which was to be shown”.</li>
+    </ol>
+  </div>
+  <div class="uwaga">You must not start from the claim (“suppose that $|AK|=|BL|$, then…”) or use something that is merely “visible in the drawing” (that an angle is right, that points are collinear).</div>
+
+  <h2 id="narzedzia">2. The toolbox</h2>
+  <table class="tabela">
+    <tr><th>You want to show</th><th>Typical tool</th></tr>
+    <tr><td>equal segments</td><td>congruent triangles (SSS, SAS, ASA – on the formula sheet), isosceles triangle, tangent segments, perpendicular bisector</td></tr>
+    <tr><td>equal angles</td><td>vertical angles, corresponding and alternate angles for parallel lines, inscribed angles on the same arc, isosceles triangle</td></tr>
+    <tr><td>parallelism</td><td>equal corresponding angles, <a href="tales.html">converse of Thales' theorem</a>, midsegment</td></tr>
+    <tr><td>perpendicularity</td><td>inscribed angle subtending a semicircle, converse of the Pythagorean theorem, diagonals of a rhombus, tangent and radius</td></tr>
+    <tr><td>ratios, products of segments</td><td><a href="podobienstwo.html">similar triangles</a>, angle bisector theorem, Thales</td></tr>
+    <tr><td>relations between areas</td><td>common base or altitude, $P=\frac12ab\sin\gamma$, ratio of areas $k^2$</td></tr>
+    <tr><td>inequalities</td><td>triangle inequality, the longer side is opposite the larger angle, $\sin\alpha\le1$</td></tr>
+  </table>
+
+  <h2 id="demo">3. Interactive: always, not only in the drawing</h2>
+  <div class="demo">
+    <p class="opis">Drag the vertices of any quadrilateral – even a concave one. The midpoints of the sides always form a parallelogram whose sides are parallel to the diagonals and have half their length (Varignon's theorem, proof below).</p>
+    <canvas id="va-plot"></canvas>
+    <div class="wynik" id="va-wynik"></div>
+  </div>
+  <div class="demo">
+    <p class="opis">Drag point $P$ inside an equilateral triangle. The sum of the distances from the sides is constant and equal to the altitude – even though each of them changes. The coloured triangles are the proof “by areas” (example 2).</p>
+    <canvas id="vi-plot" style="height:300px"></canvas>
+    <div class="wynik" id="vi-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step examples</h2>
+  <div class="przyklad">
+    <p><b>Example 1.</b> Prove that the midpoints of the sides of any quadrilateral are the vertices of a parallelogram.</p>
+    <p><b>Assumption:</b> $K$, $L$, $M$, $N$ are the midpoints of sides $AB$, $BC$, $CD$, $DA$ of quadrilateral $ABCD$. <b>Claim:</b> $KLMN$ is a parallelogram.</p>
+    <ol>
+      <li>In triangle $ABC$ segment $KL$ joins the midpoints of two sides, so $KL\parallel AC$ and $|KL|=\frac12|AC|$ (midsegment of a triangle; proof: <a href="tales.html">converse of Thales' theorem</a>).</li>
+      <li>Similarly in triangle $ACD$: $NM\parallel AC$ and $|NM|=\frac12|AC|$.</li>
+      <li>Hence $KL\parallel NM$ and $|KL|=|NM|$. A quadrilateral in which two opposite sides are parallel and equal is a parallelogram.</li>
+    </ol>
+    <p class="odp">$KLMN$ is a parallelogram, which was to be shown.</p>
+  </div>
+  <div class="przyklad">
+    <p><b>Example 2.</b> Prove that the sum of the distances from any point $P$ inside an equilateral triangle to its sides equals the altitude $h$ of this triangle.</p>
+    <p><b>Assumption:</b> $ABC$ is equilateral with side $a$ and altitude $h$, $P$ is inside, $d_1,d_2,d_3$ are the distances from $P$ to $BC$, $CA$, $AB$. <b>Claim:</b> $d_1+d_2+d_3=h$.</p>
+    <ol>
+      <li>Segments $PA$, $PB$, $PC$ divide the triangle into three triangles: $P_{ABC}=P_{PBC}+P_{PCA}+P_{PAB}$.</li>
+      <li>Each has base $a$ and height $d_i$: $\frac12ah=\frac12ad_1+\frac12ad_2+\frac12ad_3$.</li>
+      <li>Dividing by $\frac12a&gt;0$: $h=d_1+d_2+d_3$.</li>
+    </ol>
+    <p class="odp">$d_1+d_2+d_3=h$, which was to be shown.</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Prove that the bisectors of two adjacent supplementary angles are perpendicular.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Supplementary adjacent angles: $\alpha+\beta=180^\circ$. The bisectors make angles $\frac\alpha2$ and $\frac\beta2$ with the common arm, so the angle between them is $\frac{\alpha+\beta}{2}=90^\circ$. <b>The bisectors are perpendicular.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">The diagonals of parallelogram $ABCD$ meet at point $S$. A line through $S$ meets sides $AB$ and $CD$ at points $K$ and $L$. Prove that $|SK|=|SL|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangles $ASK$ and $CSL$: $|AS|=|SC|$ (the diagonals of a parallelogram bisect each other), $|\angle KAS|=|\angle LCS|$ (alternate angles, $AB\parallel CD$), $|\angle ASK|=|\angle CSL|$ (vertical angles). By ASA they are congruent, so <b>$|SK|=|SL|$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">In triangle $ABC$ the altitudes $AD$ and $BE$ have equal lengths. Prove that $|AC|=|BC|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The area in two ways: $\frac12|BC|\cdot|AD|=\frac12|AC|\cdot|BE|$. Since $|AD|=|BE|&gt;0$, we divide by $\frac12|AD|$: <b>$|BC|=|AC|$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">$AD$ and $BE$ are altitudes of acute triangle $ABC$. Prove that triangles $CDE$ and $CAB$ are similar.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Let $|\angle ACB|=\gamma$. In right triangle $ADC$: $|CD|=|CA|\cos\gamma$. In right triangle $BEC$: $|CE|=|CB|\cos\gamma$. Hence $\frac{|CD|}{|CA|}=\frac{|CE|}{|CB|}=\cos\gamma$, and angle $\gamma$ is common and lies between these sides. By SAS similarity <b>$\triangle CDE\sim\triangle CAB$</b> (with scale $\cos\gamma$).
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">The diagonals of trapezoid $ABCD$ ($AB\parallel CD$) meet at point $S$. Prove that triangles $ASD$ and $BSC$ have equal areas.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangles $ABD$ and $ABC$ have the common base $AB$, and $D$ and $C$ lie on a line parallel to $AB$ – the heights are equal, so $P_{ABD}=P_{ABC}$. Subtract the area of triangle $ABS$ from both: <b>$P_{ASD}=P_{BSC}$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">On sides $AC$ and $BC$ of acute triangle $ABC$, squares $ACDE$ and $BCFG$ are constructed outwards. Prove that $|AF|=|BD|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangles $ACF$ and $DCB$: $|AC|=|DC|$ (sides of square $ACDE$), $|CF|=|CB|$ (sides of square $BCFG$), $|\angle ACF|=\gamma+90^\circ=|\angle DCB|$. By SAS they are congruent, so <b>$|AF|=|BD|$</b>. (Bonus: $AF\perp BD$, because one triangle is the other rotated by $90^\circ$ about $C$.)
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>Full marks require a justification of <b>every</b> step. For congruence/similarity give the name of the criterion and all three equalities.</li>
+    <li>Do not assume a special case (isosceles triangle, right angle) unless it is in the assumptions.</li>
+    <li>When the claim involves a ratio or a product of segments – look for similar triangles; for equal areas – a common base or height.</li>
+    <li>A proof “from the claim” is acceptable only as a chain of <b>equivalences</b> ($\iff$) ending in a true statement – it is safer to write from the assumption to the claim.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 3a. Twierdzenie Varignona ---
+  const w1 = new Wykres($("va-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const ogr = wPolu(5.5, 4);
+  const pv = w1.przeciagaj([{ x: -4, y: -2.5, ogranicz: ogr }, { x: 3, y: -3, ogranicz: ogr }, { x: 4, y: 2.5, ogranicz: ogr }, { x: -2, y: 3, ogranicz: ogr }], rysujVa);
+  function rysujVa() {
+    const [A, B, C, D] = pv;
+    const K = sr(A, B), L = sr(B, C), M = sr(C, D), N = sr(D, A);
+    const S = { x: (A.x + B.x + C.x + D.x) / 4, y: (A.y + B.y + C.y + D.y) / 4 };
+    w1.rysuj(g => {
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y], [D.x, D.y]], 1, { wypelnij: 0.08 });
+      g.odcinek(A.x, A.y, C.x, C.y, 3); g.odcinek(B.x, B.y, D.x, D.y, 4);
+      g.wielokat([[K.x, K.y], [L.x, L.y], [M.x, M.y], [N.x, N.y]], 2, { wypelnij: 0.18 });
+      g.odcinek(K.x, K.y, L.x, L.y, 3, false); g.odcinek(N.x, N.y, M.x, M.y, 3, false);
+      g.odcinek(L.x, L.y, M.x, M.y, 4, false); g.odcinek(K.x, K.y, N.x, N.y, 4, false);
+      [[A, "A"], [B, "B"], [C, "C"], [D, "D"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 1); etykieta(g, P, S, s, 1); });
+      [[K, "K"], [L, "L"], [M, "M"], [N, "N"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2, { r: 3.5 }); etykieta(g, P, S, s, 2); });
+    });
+    const f = ladnaTex;
+    tex("va-wynik", `\\begin{aligned}|KL|&=|NM|=${f(odl(K, L))}=\\tfrac12\\cdot${f(odl(A, C))}=\\tfrac12|AC|\\\\|LM|&=|KN|=${f(odl(L, M))}=\\tfrac12\\cdot${f(odl(B, D))}=\\tfrac12|BD|\\end{aligned}`);
+  }
+  rysujVa();
+
+  // --- 3b. Suma odległości w trójkącie równobocznym ---
+  const a = 6, h = a * Math.sqrt(3) / 2;
+  const TA = { x: -3, y: -1.6 }, TB = { x: 3, y: -1.6 }, TC = { x: 0, y: -1.6 + h };
+  const w2 = new Wykres($("vi-plot"), { xmin: -4.5, xmax: 4.5, ymin: -2.3, ymax: 4.3, rowneSkale: true });
+  // odległość ze znakiem od prostej PQ (dodatnia po stronie wnętrza trójkąta)
+  const dz = (X, P, Q) => ((Q.x - P.x) * (X.y - P.y) - (Q.y - P.y) * (X.x - P.x)) / odl(P, Q);
+  const pp = w2.przeciagaj([{ x: -0.6, y: 0.4, ogranicz: p => {
+    let d = [dz(p, TB, TC), dz(p, TC, TA), dz(p, TA, TB)].map(v => Math.max(0.05, v));
+    const s = d[0] + d[1] + d[2]; d = d.map(v => v * h / s);
+    return { x: (d[0] * TA.x + d[1] * TB.x + d[2] * TC.x) / h, y: (d[0] * TA.y + d[1] * TB.y + d[2] * TC.y) / h };
+  } }], rysujVi);
+  function rysujVi() {
+    const P = pp[0];
+    const boki = [[TB, TC, 1], [TC, TA, 3], [TA, TB, 4]];
+    const d = boki.map(([Q, R]) => dz(P, Q, R));
+    w2.rysuj(g => {
+      boki.forEach(([Q, R, nr]) => g.wielokat([[P.x, P.y], [Q.x, Q.y], [R.x, R.y]], nr, { wypelnij: 0.15, bezObrysu: true }));
+      g.wielokat([[TA.x, TA.y], [TB.x, TB.y], [TC.x, TC.y]], 1);
+      boki.forEach(([Q, R, nr], i) => {
+        const F = rzut(P, Q, R);
+        g.odcinek(P.x, P.y, F.x, F.y, nr === 1 ? 2 : nr, false);
+        katProsty(g, F, P, R, 0.22, nr === 1 ? 2 : nr);
+        g.tekst((P.x + F.x) / 2, (P.y + F.y) / 2, "d" + (i + 1), nr === 1 ? 2 : nr, { dx: 5, dy: -3, gruby: true });
+      });
+      g.punkt(P.x, P.y, "P", 2);
+      const S = { x: 0, y: -1.6 + h / 3 };
+      [[TA, "A"], [TB, "B"], [TC, "C"]].forEach(([Q, s]) => etykieta(g, Q, S, s, 1));
+    });
+    tex("vi-wynik", `d_1+d_2+d_3=${ladnaTex(d[0])}+${ladnaTex(d[1])}+${ladnaTex(d[2])}=${ladnaTex(d[0] + d[1] + d[2])}=h=3\\sqrt3`);
+  }
+  rysujVi();
+});
+</script>
+</body>
+</html>

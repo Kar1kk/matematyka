@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vectors</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Vectors</h1>
+  <p class="lead">A vector is a "recipe for a translation": how far right and how far up. It has no fixed place, so you can attach it anywhere, and that is exactly why vectors are so easy to add.</p>
+  <p class="wymagania">IX.R.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Coordinates and length</h2>
+  <div class="wzor">
+    <div class="tytul">The vector from $A=(x_A,y_A)$ to $B=(x_B,y_B)$</div>
+    $$\vec{AB}=[x_B-x_A,\ y_B-y_A]$$
+    $$|\vec{u}|=\sqrt{u_1^2+u_2^2}\quad\text{for }\vec u=[u_1,u_2]$$
+    <dl><dt>order</dt><dd>always <b>end minus start</b>; $\vec{BA}=-\vec{AB}$</dd>
+        <dt>equality</dt><dd>vectors are equal $\iff$ they have equal coordinates (the same length, direction and sense)</dd></dl>
+  </div>
+
+  <h2 id="dzialania">2. Addition and multiplication by a number</h2>
+  <div class="wzor">
+    <div class="tytul">Analytically: $\vec u=[u_1,u_2]$, $\vec v=[v_1,v_2]$</div>
+    $$\vec u+\vec v=[u_1+v_1,\ u_2+v_2]$$
+    $$k\cdot\vec u=[k u_1,\ k u_2]$$
+    <dl><dt>formula sheet</dt><dd>the coordinates of a vector and both operations are on the formula sheet</dd></dl>
+  </div>
+  <div class="dwie">
+    <div class="definicja"><b>Addition geometrically</b> <i>Triangle method:</i> attach $\vec v$ at the end of $\vec u$; the sum goes from the start of $\vec u$ to the end of $\vec v$. <i>Parallelogram method:</i> attach both at one point; the sum is the diagonal. Hence the rule $\vec{AB}+\vec{BC}=\vec{AC}$.</div>
+    <div class="definicja"><b>Multiplication geometrically</b> $k\cdot\vec u$ has length $|k|\cdot|\vec u|$, the same direction; the same sense for $k&gt;0$, the opposite for $k&lt;0$. Subtraction: $\vec u-\vec v=\vec u+(-\vec v)$.</div>
+  </div>
+
+  <h2 id="demo">3. Interactive: the sum of vectors</h2>
+  <div class="demo">
+    <p class="opis">Drag the tips of $\vec u$ (blue) and $\vec v$ (purple). Play both methods: the result $\vec u+\vec v$ (red) is the same.</p>
+    <canvas id="su-plot"></canvas>
+    <div class="sterowanie">
+      <button id="su-troj">▶ Triangle method</button>
+      <button id="su-rown">▶ Parallelogram method</button>
+    </div>
+    <div class="wynik" id="su-wynik"></div>
+  </div>
+
+  <h2 id="zastosowania">4. Applications</h2>
+  <table class="tabela">
+    <tr><th>task</th><th>in vector form</th></tr>
+    <tr><td>midpoint $S$ of the segment $AB$</td><td>$\vec{AS}=\frac12\vec{AB}$</td></tr>
+    <tr><td>division $|AP|:|PB|=m:n$</td><td>$\vec{AP}=\frac{m}{m+n}\vec{AB}$</td></tr>
+    <tr><td>parallelogram $ABCD$</td><td>$\vec{AB}=\vec{DC}$ (and $\vec{AD}=\vec{BC}$)</td></tr>
+    <tr><td>$\vec u\parallel\vec v$</td><td>$\vec u=k\vec v$ (for $\vec v\neq\vec 0$), i.e. $u_1v_2-u_2v_1=0$</td></tr>
+    <tr><td>$A,B,C$ collinear</td><td>$\vec{AB}\parallel\vec{AC}$</td></tr>
+    <tr><td>translation by $[p,q]$</td><td>$(x,y)\mapsto(x+p,\ y+q)$</td></tr>
+  </table>
+  <div class="demo">
+    <p class="opis">Drag $A$ and $B$, change $k$. The point $P$ satisfies $\vec{AP}=k\cdot\vec{AB}$. For $0\le k\le1$ it lies on the segment $AB$ and divides it in the ratio $k:(1-k)$; for $k&lt;0$ the sense reverses.</p>
+    <canvas id="kw-plot"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="kw-k" min="-1" max="2" step="0.05" value="0.25"> <span id="kw-k-v"></span></label>
+      <button id="kw-start">▶ Move k</button>
+    </div>
+    <div class="wynik" id="kw-wynik"></div>
+    <div class="wynik" id="kw-wynik2"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Given $A=(-1,2)$, $B=(3,-1)$, $C=(4,5)$. Find $D$ so that $ABCD$ is a parallelogram, and find $|\vec{AB}|$.</p>
+    <ol>
+      <li>$\vec{AB}=[3-(-1),\ -1-2]=[4,-3]$.</li>
+      <li>$D=(x,y)$: $\vec{DC}=[4-x,\ 5-y]$. From $\vec{AB}=\vec{DC}$: $4-x=4$, $5-y=-3$.</li>
+      <li>$D=(0,8)$. Check: $\vec{AD}=[1,6]=\vec{BC}$ ✓.</li>
+      <li>$|\vec{AB}|=\sqrt{16+9}=5$.</li>
+    </ol>
+    <p class="odp">$D=(0,8)$, $|\vec{AB}|=5$</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="8; -6; 10" data-odp-opis="x; y of the vector; length"><span class="poziom">easy</span>
+      <div class="tresc">$\vec u=[3,-1]$, $\vec v=[-2,4]$. Find $2\vec u-\vec v$ and its length.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2\vec u=[6,-2]$, $2\vec u-\vec v=[6+2,\ -2-4]=[8,-6]$, length $\sqrt{64+36}=10$. <b>$[8,-6]$, length $10$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; -3" data-odp-opis="x; y of the point A"><span class="poziom">easy</span>
+      <div class="tresc">$\vec{AB}=[-3,5]$ and $B=(1,2)$. Find $A$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $1-x_A=-3$, $2-y_A=5$. <b>$A=(4,-3)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; -2" data-odp-opis="values of m"><span class="poziom">medium</span>
+      <div class="tresc">For which $m$ are the vectors $\vec u=[m,4]$ and $\vec v=[2,m-2]$ parallel?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $m(m-2)-4\cdot2=0$, $m^2-2m-8=0$, $(m-4)(m+2)=0$. Check $m=4$: $[4,4]=2\cdot[2,2]$ ✓. <b>$m=4$ or $m=-2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; 3" data-odp-opis="x; y of the point P"><span class="poziom">medium</span>
+      <div class="tresc">The point $P$ lies on the segment $AB$, $A=(-2,1)$, $B=(7,7)$, and $|AP|:|PB|=1:2$. Find $P$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\vec{AB}=[9,6]$, $\vec{AP}=\frac13\vec{AB}=[3,2]$, $P=(-2+3,\ 1+2)$. <b>$P=(1,3)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5" data-odp-opis="m"><span class="poziom">exam-level</span>
+      <div class="tresc">The points $A=(-1,-4)$, $B=(2,2)$, $C=(m,8)$ are collinear. Find $m$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\vec{AB}=[3,6]$, $\vec{AC}=[m+1,12]$. Parallelism: $3\cdot12-6(m+1)=0$, $m+1=6$. Check: $\vec{AC}=[6,12]=2\vec{AB}$ ✓. <b>$m=5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; 2" data-odp-opis="x; y of the point G"><span class="poziom">exam-level</span>
+      <div class="tresc">A triangle $A=(-2,-1)$, $B=(4,1)$, $C=(1,6)$. $S$ is the midpoint of $BC$, and the point $G$ satisfies $\vec{AG}=\frac23\vec{AS}$. Find $G$ and compare it with the average of the vertices' coordinates.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $S=\left(\frac52,\frac72\right)$, $\vec{AS}=\left[\frac92,\frac92\right]$, $\vec{AG}=[3,3]$, $G=(1,2)$. Average: $\left(\frac{-2+4+1}{3},\frac{-1+1+6}{3}\right)=(1,2)$, the same point: it is the centroid (the intersection of the medians).
+        <b>$G=(1,2)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>$\vec{AB}$ is <b>end minus start</b>. The reverse order gives the opposite vector and a wrong result.</li>
+    <li>Parallelogram $ABCD$: the vertices go in order, so $\vec{AB}=\vec{DC}$, and <b>not</b> $\vec{AB}=\vec{CD}$.</li>
+    <li>Do not confuse the vector $[x,y]$ with the point $(x,y)$. A point is a place, a vector is a translation.</li>
+    <li>Check parallelism of vectors with $u_1v_2-u_2v_1=0$: it also works when some coordinate is zero (division would fail here).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function pierw(n) {
+    let k = 1, m = n;
+    for (let i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; }
+    return m === 1 ? `${k}` : m === 0 ? "0" : `${k === 1 ? "" : k}\\sqrt{${m}}`;
+  }
+  const wek = (x, y) => `[${ladnaTex(x)},${ladnaTex(y)}]`;
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) });
+
+  // --- 3. Suma wektorów ---
+  const w1 = new Wykres($("su-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 6, rowneSkale: true });
+  const pk = w1.przeciagaj([{ x: 4, y: 1, siatka: 1, ogranicz: ogr }, { x: 1, y: 3, siatka: 1, ogranicz: ogr }], () => { if (stop) stop(); rysujSu(tAkt); });
+  let stop = null, tryb = "troj", tAkt = 1;
+  function rysujSu(t) {
+    tAkt = t;
+    const [U, V] = pk, s = { x: U.x + V.x, y: U.y + V.y };
+    const t1 = Math.min(1, t * 1.5), t2 = Math.max(0, (t - 2 / 3) * 3);  // przesuwanie kopii, potem wzrost sumy
+    w1.rysuj(g => {
+      if (tryb === "rown" && t1 > 0) {
+        g.odcinek(V.x * t1, V.y * t1, V.x * t1 + U.x, V.y * t1 + U.y, 1, true);   // kopia u zaczepiona w końcu v
+        g.odcinek(U.x * t1, U.y * t1, U.x * t1 + V.x, U.y * t1 + V.y, 4, true);   // kopia v zaczepiona w końcu u
+      }
+      g.strzalka(0, 0, U.x, U.y, 1, "u");
+      if (tryb === "troj") g.strzalka(U.x * t1, U.y * t1, U.x * t1 + V.x, U.y * t1 + V.y, 4, "v");
+      else g.strzalka(0, 0, V.x, V.y, 4, "v");
+      if (t2 > 0) g.strzalka(0, 0, s.x * t2, s.y * t2, 2, t2 === 1 ? "u+v" : "");
+      g.punkt(U.x, U.y, "", 1, { r: 4 }); g.punkt(V.x, V.y, "", 4, { r: 4 });
+    });
+    const d2 = s.x * s.x + s.y * s.y, r = Math.round(Math.sqrt(d2));
+    tex("su-wynik", `\\vec u=${wek(U.x, U.y)},\\ \\vec v=${wek(V.x, V.y)},\\ \\vec u+\\vec v=${wek(s.x, s.y)},\\ |\\vec u+\\vec v|=${r * r === d2 ? r : pierw(d2)}`);
+  }
+  $("su-troj").addEventListener("click", () => { if (stop) stop(); tryb = "troj"; stop = animuj(2200, rysujSu); });
+  $("su-rown").addEventListener("click", () => { if (stop) stop(); tryb = "rown"; stop = animuj(2200, rysujSu); });
+  rysujSu(1);
+
+  // --- 4. k · AB i podział odcinka ---
+  const w2 = new Wykres($("kw-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 6, rowneSkale: true });
+  const pk2 = w2.przeciagaj([{ x: -3, y: -1, siatka: 1, ogranicz: ogr }, { x: 1, y: 2, siatka: 1, ogranicz: ogr }], () => rysujKw());
+  let stop2 = null;
+  function rysujKw() {
+    const k = +$("kw-k").value, [A, B] = pk2;
+    $("kw-k-v").textContent = ladna(k);
+    const d = [B.x - A.x, B.y - A.y], P = { x: A.x + k * d[0], y: A.y + k * d[1] };
+    w2.rysuj(g => {
+      g.prosta(A.x, A.y, B.x, B.y, 3, true);
+      g.strzalka(A.x, A.y, B.x, B.y, 1, "AB");
+      if (Math.abs(k) > 1e-9) g.strzalka(A.x, A.y, P.x, P.y, 2);
+      g.punkt(A.x, A.y, "A", 1); g.punkt(B.x, B.y, "B", 1);
+      g.punkt(P.x, P.y, "P", 2, { r: 6, pusty: true });
+    });
+    const dl = Math.hypot(...d);
+    tex("kw-wynik", `\\vec{AB}=${wek(d[0], d[1])},\\quad ${ladnaTex(k)}\\cdot\\vec{AB}=${wek(k * d[0], k * d[1])},\\quad P=(${ladnaTex(P.x)},\\,${ladnaTex(P.y)})`);
+    tex("kw-wynik2", `|AP|=|k|\\cdot|AB|\\approx${ladnaTex(Math.abs(k))}\\cdot${ladnaTex(dl)}` +
+      (k > 0 && k < 1 ? `,\\quad |AP|:|PB|=${ladnaTex(k)}:${ladnaTex(1 - k)}` : k < 0 ? "\\quad(\\text{opposite sense})" : ""));
+  }
+  $("kw-k").addEventListener("input", () => { if (stop2) stop2(); rysujKw(); });
+  $("kw-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    stop2 = animuj(4000, t => { $("kw-k").value = (-1 + 3 * t).toFixed(2); rysujKw(); });
+  });
+  rysujKw();
+});
+</script>
+</body>
+</html>

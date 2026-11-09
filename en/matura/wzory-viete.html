@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vieta's formulas</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Vieta's formulas</h1>
+  <p class="lead">If you know the roots, you know the coefficients: expand $a(x-x_1)(x-x_2)$ and compare with $ax^2+bx+c$. This way you get the sum and product of the roots without computing the roots themselves.</p>
+  <p class="wymagania">III.R.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. The theorem</h2>
+  <div class="twierdzenie"><b>Theorem (Vieta's formulas)</b> If $a\neq0$ and $\Delta\ge0$, and $x_1$, $x_2$ are the roots of $ax^2+bx+c=0$, then
+    $$x_1+x_2=\frac{-b}{a},\qquad x_1\cdot x_2=\frac{c}{a}$$
+    (The formulas are on the formula sheet. For $\Delta=0$ we take $x_1=x_2=x_0$.)
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>From the formulas for the roots, with $\Delta\ge0$:</p>
+      $$x_1+x_2=\frac{-b-\sqrt\Delta-b+\sqrt\Delta}{2a}$$
+      $$=\frac{-2b}{2a}=\frac{-b}{a}$$
+      $$x_1x_2=\frac{(-b-\sqrt\Delta)(-b+\sqrt\Delta)}{4a^2}$$
+      $$=\frac{b^2-\Delta}{4a^2}=\frac{b^2-b^2+4ac}{4a^2}=\frac{c}{a}$$
+      <p>In the numerator of the product we used $(u-v)(u+v)=u^2-v^2$. For $\Delta=0$ both equalities hold too ($\sqrt\Delta=0$). $\blacksquare$</p>
+      <p><i>Second way:</i> $ax^2+bx+c=a(x-x_1)(x-x_2)=ax^2-a(x_1+x_2)x+ax_1x_2$. Comparing the coefficients of $x$ and the constant terms gives $b=-a(x_1+x_2)$, $c=ax_1x_2$.</p>
+    </div></details>
+  </div>
+  <div class="uwaga">First $\Delta\ge0$ (and for "two distinct roots" $\Delta&gt;0$)! When $\Delta&lt;0$, the formulas still give numbers, but there are no roots. This is a favorite trap in problems with a parameter.</div>
+
+  <h2 id="symetryczne">2. Symmetric expressions</h2>
+  <p>Every expression that does not change when you swap $x_1\leftrightarrow x_2$ can be written in terms of $s=x_1+x_2$ and $p=x_1x_2$. These formulas are <b>not on the formula sheet</b>, derive them from the algebraic identities:</p>
+  <div class="wzor">
+    <div class="tytul">The most common</div>
+    $$x_1^2+x_2^2=s^2-2p$$
+    $$\frac1{x_1}+\frac1{x_2}=\frac{s}{p}$$
+    $$(x_1-x_2)^2=s^2-4p=\frac{\Delta}{a^2}$$
+    $$|x_1-x_2|=\frac{\sqrt\Delta}{|a|}$$
+    $$x_1^3+x_2^3=s^3-3ps$$
+    <dl><dt>$s, p$</dt><dd>$s=-\frac{b}{a}$, $p=\frac{c}{a}$</dd>
+        <dt>$\frac{s}{p}$</dt><dd>requires $p\neq0$ (no root is zero)</dd></dl>
+  </div>
+  <p>The signs of the roots can also be read from $s$ and $p$: $p&lt;0$ means roots of different signs; $p&gt;0$ and $s&gt;0$ means both positive; $p&gt;0$ and $s&lt;0$ means both negative (all for $\Delta&gt;0$). More in the topic on the parameter.</p>
+
+  <h2 id="demo">3. Interactive: roots → coefficients</h2>
+  <div class="demo">
+    <p class="opis">Drag the roots $x_1$, $x_2$ along the axis $Ox$. The parabola $y=a(x-x_1)(x-x_2)$ adjusts itself. The green point on the axis $Oy$ is $c=a\,x_1x_2$; the vertex always lies above the midpoint $\frac{x_1+x_2}{2}$.</p>
+    <canvas id="vi-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="vi-a" min="-2" max="2" step="0.25" value="1"> <span id="vi-a-v"></span></label>
+    </div>
+    <div class="wynik" id="vi-wynik"></div>
+    <div class="wynik" id="vi-wynik2"></div>
+  </div>
+
+  <h2 id="kwadrat">4. Animation: where $x_1^2+x_2^2=s^2-2p$ comes from</h2>
+  <div class="demo">
+    <p class="opis">The square with side $x_1+x_2$ consists of the squares $x_1^2$, $x_2^2$ and two rectangles $x_1x_2$. Take away the rectangles and $x_1^2+x_2^2$ remains.</p>
+    <canvas id="kw2-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$x_1$ <input type="range" id="kw2-x1" min="0.5" max="3" step="0.25" value="2"> <span id="kw2-x1-v"></span></label>
+      <label>$x_2$ <input type="range" id="kw2-x2" min="0.5" max="3" step="0.25" value="1"> <span id="kw2-x2-v"></span></label>
+      <button id="kw2-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="kw2-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>For the equation $x^2-5x+3=0$ find $x_1^2+x_2^2$, $\frac1{x_1}+\frac1{x_2}$ and $|x_1-x_2|$ without finding the roots.</p>
+    <ol>
+      <li>$\Delta=25-12=13&gt;0$: the roots exist.</li>
+      <li>$s=5$, $p=3$.</li>
+      <li>$x_1^2+x_2^2=25-6=19$; $\;\frac1{x_1}+\frac1{x_2}=\frac53$.</li>
+      <li>$|x_1-x_2|=\frac{\sqrt{13}}{1}=\sqrt{13}$.</li>
+    </ol>
+    <p class="odp">$19,\ \frac53,\ \sqrt{13}$</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-3; -5/2" data-odp-opis="sum; product"><span class="poziom">easy</span>
+      <div class="tresc">Find the sum and product of the roots of the equation $2x^2+6x-5=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\Delta=36+40=76&gt;0$. <b>$x_1+x_2=-3$, $x_1x_2=-\frac52$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Write a quadratic equation ($a=1$) whose roots are $2-\sqrt3$ and $2+\sqrt3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $s=4$, $p=(2-\sqrt3)(2+\sqrt3)=4-3=1$. The equation $x^2-sx+p=0$. <b>$x^2-4x+1=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="36"><span class="poziom">medium</span>
+      <div class="tresc">$x_1$, $x_2$ are the roots of the equation $x^2-3x-1=0$. Find $x_1^3+x_2^3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\Delta=13&gt;0$, $s=3$, $p=-1$. $x_1^3+x_2^3=s^3-3ps=27+9$. <b>$36$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2" data-odp-opis="values of m"><span class="poziom">exam-level</span>
+      <div class="tresc">Find $m$ for which the roots of the equation $x^2-2mx+m^2-1=0$ satisfy $x_1^2+x_2^2=10$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\Delta=4m^2-4m^2+4=4&gt;0$ for every $m$. $s=2m$, $p=m^2-1$, so $x_1^2+x_2^2=4m^2-2m^2+2=2m^2+2=10$, $m^2=4$.
+        <b>$m=-2$ or $m=2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1"><span class="poziom">exam-level</span>
+      <div class="tresc">Find $m$ for which the equation $x^2+2mx+m+2=0$ has roots satisfying $x_1^2+x_2^2=2$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Condition for existence: $\frac{\Delta}4=m^2-m-2=(m-2)(m+1)\ge0$, i.e. $m\in(-\infty,-1]\cup[2,\infty)$.<br>
+        $s^2-2p=4m^2-2m-4=2 \iff 2m^2-m-3=0 \iff m=-1$ or $m=\frac32$.<br>
+        $m=\frac32$ is rejected ($\Delta&lt;0$, then "$x_1^2+x_2^2$" does not exist). For $m=-1$: $(x-1)^2=0$, $1+1=2$. <b>$m=-1$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>The condition on $\Delta$ always at the start</b>, and at the end the intersection of the results. Without it you usually lose 1–2 points.</li>
+    <li><b>The condition $a\neq0$</b>, if the coefficient of $x^2$ depends on the parameter.</li>
+    <li>Transform the expression so that it contains only $x_1+x_2$ and $x_1x_2$, and <b>write down this transformation</b> (e.g. $x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2$).</li>
+    <li>With $\frac1{x_1}+\frac1{x_2}$ add $x_1x_2\neq0$, i.e. $c\neq0$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Pierwiastki → współczynniki ---
+  const w1 = new Wykres($("vi-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+  const naOsi = p => ({ x: Math.max(-5.5, Math.min(5.5, p.x)), y: 0 });
+  const pk = [{ x: -1, y: 0, siatka: 0.5, ogranicz: naOsi }, { x: 3, y: 0, siatka: 0.5, ogranicz: naOsi }];
+  function rysujVi() {
+    let a = +$("vi-a").value; if (a === 0) a = 0.25;
+    $("vi-a-v").textContent = ladna(a);
+    const [x1, x2] = [pk[0].x, pk[1].x], s = x1 + x2, p = x1 * x2, b = -a * s, c = a * p, sr = s / 2;
+    w1.rysuj(g => {
+      g.odcinek(sr, g.z.ymin, sr, g.z.ymax, 3);
+      g.funkcja(x => a * (x - x1) * (x - x2), 1);
+      g.punkt(sr, a * (sr - x1) * (sr - x2), "W", 4);
+      g.punkt(0, c, "c", 3);
+      g.punkt(x1, 0, "x₁", 2); g.punkt(x2, 0, "x₂", 2);
+    });
+    tex("vi-wynik", `x_1+x_2=${ladnaTex(s)}=\\tfrac{-b}{a},\\quad x_1x_2=${ladnaTex(p)}=\\tfrac{c}{a}`);
+    tex("vi-wynik2", `y=${a === 1 ? "" : a === -1 ? "-" : ladnaTex(a)}x^2${znakTex(b)}x${znakTex(c)},\\quad b=${ladnaTex(b)},\\;c=${ladnaTex(c)}`);
+  }
+  w1.przeciagaj(pk, rysujVi);
+  $("vi-a").addEventListener("input", rysujVi);
+  rysujVi();
+
+  // --- 4. Kwadrat (x1+x2)² ---
+  const w2 = new Wykres($("kw2-plot"), { xmin: -0.5, xmax: 13, ymin: -0.5, ymax: 6.5, rowneSkale: true, siatka: false });
+  let stop = null;
+  function rysujKw2(t) {
+    const x1 = +$("kw2-x1").value, x2 = +$("kw2-x2").value, s = x1 + x2, d = t * (s + 1);
+    $("kw2-x1-v").textContent = ladna(x1); $("kw2-x2-v").textContent = ladna(x2);
+    w2.zakres({ xmax: 2 * s + 1.5, ymax: s + 0.5 }); // kadr dopasowany do kwadratu, by nie był malutki
+    w2.rysuj(g => {
+      g.prostokat(0, 0, x1, x1, 1);
+      g.prostokat(x1, x1, x2, x2, 3);
+      g.prostokat(x1 + d, 0, x2, x1, 2);
+      g.prostokat(d, x1, x1, x2, 2);
+      g.tekst(x1 / 2, x1 / 2, "x₁²", 1, { wyrownanie: "center", gruby: true });
+      g.tekst(x1 + x2 / 2, x1 + x2 / 2, "x₂²", 3, { wyrownanie: "center", gruby: true });
+      g.tekst(x1 + d + x2 / 2, x1 / 2, "x₁x₂", 2, { wyrownanie: "center", gruby: true });
+      g.tekst(d + x1 / 2, x1 + x2 / 2, "x₁x₂", 2, { wyrownanie: "center", gruby: true });
+      if (t < 0.05) g.wielokat([[0, 0], [s, 0], [s, s], [0, s]], 4, { przerywana: true });
+    });
+    tex("kw2-wynik", `(x_1+x_2)^2=${ladnaTex(s * s)},\\;\\; 2x_1x_2=${ladnaTex(2 * x1 * x2)}\\;\\Rightarrow\\; x_1^2+x_2^2=${ladnaTex(s * s - 2 * x1 * x2)}`);
+  }
+  ["kw2-x1", "kw2-x2"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); rysujKw2(0); }));
+  $("kw2-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2000, rysujKw2); });
+  rysujKw2(0);
+});
+</script>
+</body>
+</html>

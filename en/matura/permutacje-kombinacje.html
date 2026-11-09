@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Permutations, variations, combinations</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Permutations, variations, combinations</h1>
+  <p class="lead">These are not new rules, just ready-made results of the <a href="regula-mnozenia.html">multiplication rule</a> for common situations. The only decision: does the <b>order</b> matter (a sequence) and may elements <b>repeat</b>.</p>
+  <p class="wymagania">XI.R.1 (and XI.1, XI.2)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="decyzja">1. How to tell which formula to use</h2>
+  <ol>
+    <li><b>Does swapping two chosen elements give a different outcome?</b> Yes: order matters (a sequence: a code, a podium, roles on a board). No: only the set matters (a delegation, cards in a hand, drawing “at once”).</li>
+    <li><b>Can an element repeat?</b> Yes: the digits of a code, drawing with replacement. No: people, drawing without replacement.</li>
+    <li><b>Do you take all the elements?</b> Yes: that is a permutation (an arrangement in order).</li>
+  </ol>
+  <table class="tabela">
+    <tr><th>choosing $k$ from $n$</th><th>order matters</th><th>order does not matter</th></tr>
+    <tr><th>without repetition</th><td>variations $\frac{n!}{(n-k)!}$<br>($k=n$: permutations $n!$)</td><td>combinations $\binom{n}{k}$</td></tr>
+    <tr><th>with repetition</th><td>variations $n^k$</td><td>outside the core curriculum</td></tr>
+  </table>
+  <p>A longer discussion of counting in probability: <a href="prawdopodobienstwo-klasyczne.html#zliczanie">classical probability</a>.</p>
+
+  <h2 id="wzory">2. Formulas</h2>
+  <div class="wzor">
+    <div class="tytul">Permutations of $n$ elements <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$P_n=n!=1\cdot 2\cdot\ldots\cdot n$$
+    <dl><dt>$n!$</dt><dd>$n$ options for the 1st place, then $n-1$ for the 2nd… Convention: $0!=1$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Variations without repetition <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$V_n^k=\frac{n!}{(n-k)!}$$
+    $$=n(n-1)\cdot\ldots\cdot(n-k+1)$$
+    <dl><dt>$V_n^k$</dt><dd>sequences of $k$ <b>distinct</b> elements from $n$: $k$ factors, counting down from $n$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Variations with repetition <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\overline{V}{}_n^k=n^k$$
+    <dl><dt>$n^k$</dt><dd>sequences of length $k$, with any of the $n$ elements in each place</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Combinations <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$C_n^k=\binom{n}{k}=\frac{n!}{k!\,(n-k)!}$$
+    <dl><dt>$\binom nk$</dt><dd>the number of $k$-element <b>subsets</b> of an $n$-element set</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Why combinations are variations divided by $k!$</summary><div>
+    <p>Every $k$-element set can be arranged into a sequence in $k!$ ways, and every sequence of distinct elements comes from exactly one set. So there are $k!$ times more sequences than sets:</p>
+    $$V_n^k=\binom nk\cdot k!$$
+    <p>This is exactly what you see in the animation below: a column = one set, the rows in the column = its $k!$ arrangements.</p>
+  </div></details>
+  <div class="wzor">
+    <div class="tytul">Permutations with repetition <span class="cke nie" title="This formula is not on the CKE sheet – you have to remember it or derive it">not on CKE sheet</span></div>
+    $$\frac{n!}{k_1!\,k_2!\cdot\ldots\cdot k_s!}$$
+    <dl><dt>$k_i$</dt><dd>how many times the $i$-th kind repeats, $k_1+\ldots+k_s=n$ (anagrams, sequences made from given digits)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Where this formula comes from (no memorizing needed)</summary><div>
+    <p>Number the identical letters (e.g. $A_1, A_2$); then there are $n!$ arrangements in all. Each “real” word arises from $k_1!\cdot k_2!\cdots$ such arrangements (you permute the numbered copies among themselves). You divide. Alternatively: choose the places for the letters of the first kind, $\binom{n}{k_1}$, then for the second kind, $\binom{n-k_1}{k_2}$, and so on.</p>
+  </div></details>
+
+  <h2 id="kule">3. Interactive: sequences versus sets</h2>
+  <div class="demo">
+    <p class="opis">You choose $k$ balls from $n$ colored ones. Click ▶: first all the <b>sequences</b> (variations) appear in alphabetical order, but each lands in the column of its <b>set</b>. Then one representative stays in each column: there are $k!$ times fewer sets.</p>
+    <canvas id="ku-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="ku-n" min="2" max="6" step="1" value="4"> <span id="ku-n-v"></span></label>
+      <label>$k$ <input type="range" id="ku-k" min="1" max="3" step="1" value="3"> <span id="ku-k-v"></span></label>
+      <button id="ku-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="ku-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>A group has $10$ people, including Amy. In how many ways can we choose: a) a president, a vice-president and a secretary; b) a delegation of three; c) a delegation of three that includes Amy?</p>
+    <ol>
+      <li>a) The roles are different, so swapping people changes the outcome: order matters, no repetition. $10\cdot 9\cdot 8=720$.</li>
+      <li>b) A delegation has no roles: only the set matters. $\binom{10}{3}=\frac{720}{3!}=120$.</li>
+      <li>c) Amy is certain; from the other $9$ people you pick $2$: $\binom 92=36$.</li>
+    </ol>
+    <p class="odp">a) $720$, b) $120$, c) $36$</p>
+  </div>
+  <div class="przyklad">
+    <p>How many different “words” (anagrams) can be formed from all the letters of the (Polish) word MATEMATYKA, “mathematics”?</p>
+    <ol>
+      <li>$10$ letters: M twice, A three times, T twice, and E, Y, K once each.</li>
+      <li>$\frac{10!}{2!\cdot 3!\cdot 2!}=\frac{3628800}{24}$.</li>
+    </ol>
+    <p class="odp">$151\,200$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="720; 240" data-odp-opis="all; Olivia and Peter together"><span class="poziom">easy</span>
+      <div class="tresc">In how many ways can $6$ people sit on $6$ chairs in a row? And in how many ways if Olivia and Peter want to sit next to each other?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        All: $6!=720$. Glue Olivia and Peter into one “block”: you arrange $5$ objects in $5!$ ways, and the block has $2$ orders. <b>$720$ and $2\cdot 120=240$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="30"><span class="poziom">easy</span>
+      <div class="tresc">How many different strings of letters can be formed from all the letters of the word KAJAK?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $5$ letters: K twice, A twice, J once. $\frac{5!}{2!\,2!}=\frac{120}{4}$. <b>$30$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="103776"><span class="poziom">medium</span>
+      <div class="tresc">From a deck of $52$ cards we draw $5$ at once. How many outcomes contain exactly $2$ aces?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Aces: $\binom42=6$, the other $3$ cards from the $48$ non-aces: $\binom{48}{3}=17296$. Multiplication rule. <b>$6\cdot 17296=103\,776$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="15; 63" data-odp-opis="exactly two ones; at least one"><span class="poziom">medium</span>
+      <div class="tresc">How many sequences of length $6$ with terms $0$ or $1$ have exactly two ones? How many such sequences have at least one one?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        You choose the <b>places</b> for the ones (a set of places): $\binom62=15$. There are $2^6=64$ sequences in all, and $1$ without a one. <b>$15$ and $63$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6610"><span class="poziom">exam-level</span>
+      <div class="tresc">A class has $12$ girls and $10$ boys. In how many ways can we choose a delegation of four that has at least one girl and at least one boy?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        All delegations minus all-girl minus all-boy:
+        $\binom{22}{4}-\binom{12}{4}-\binom{10}{4}=7315-495-210$. <b>$6610$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="40"><span class="poziom">exam-level</span>
+      <div class="tresc">How many six-digit numbers contain two digits $0$, three digits $1$ and one digit $2$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        All arrangements of these digits: $\frac{6!}{2!\,3!\,1!}=60$. Discard those with a zero at the start: the remaining $5$ digits ($0,1,1,1,2$) can be arranged in $\frac{5!}{3!}=20$ ways. <b>$60-20=40$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>First decide: sequence or set</b>, and state it in one sentence. Mixing them up (e.g. $\Omega$ as combinations and $A$ as variations) is a classic way to lose points.</li>
+    <li>“Drawn at once” = a set. “One after another without replacement” = variations without repetition. “With replacement” = $n^k$.</li>
+    <li><b>Elements next to each other</b>: glue them into a block and multiply by the number of arrangements inside the block.</li>
+    <li>The formula for permutations with repetition is <b>not</b> on the sheet: write briefly why you divide by $k_i!$.</li>
+    <li>Compute large binomial coefficients by canceling: $\binom{22}{4}=\frac{22\cdot21\cdot20\cdot19}{24}$, not via factorials.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const KOLORY = ["#2f5bd3", "#d2452f", "#1f8a4c", "#8a3fc4", "#e08a00", "#0aa3a3"];
+  const silnia = m => m <= 1 ? 1 : m * silnia(m - 1);
+  // all k-element sequences of distinct numbers 0..n-1, in lexicographic order
+  function ciagi(n, k) {
+    const wyn = [];
+    (function bud(pref) {
+      if (pref.length === k) { wyn.push(pref); return; }
+      for (let i = 0; i < n; i++) if (!pref.includes(i)) bud([...pref, i]);
+    })([]);
+    return wyn;
+  }
+
+  const w = new Wykres($("ku-plot"), { xmin: 0, xmax: 1, ymin: 0, ymax: 1, siatka: false, osie: false });
+  let stop = null;
+  function klatka(t) {
+    let n = +$("ku-n").value, k = +$("ku-k").value;
+    if (k > n) { k = n; $("ku-k").value = k; }
+    $("ku-n-v").textContent = n; $("ku-k-v").textContent = k;
+    const wsz = ciagi(n, k), kf = silnia(k);
+    // sets = sorted sequences, in order of first appearance in lexicographic order
+    const klucze = [...new Set(wsz.map(c => [...c].sort().join(",")))].sort();
+    const G = klucze.length, V = wsz.length;
+    const tA = Math.min(1, t / 0.55), tB = Math.max(0, Math.min(1, (t - 0.6) / 0.4));
+    const ileWidac = Math.round(tA * V);
+    w.rysuj(g => {
+      const X = p => g.wx(p), Y = p => g.wy(p);
+      const gora = 34, kol = Math.min(G, g.w < 500 ? 7 : 10), pasy = Math.ceil(G / kol);
+      const kolW = (g.w - 16) / kol, pasH = (g.h - gora - 8) / pasy, wierH = pasH / (kf + 1);
+      const r = Math.max(2.5, Math.min(9, kolW / (2.6 * k + 0.6), wierH / 2.6));
+      // urn with n balls
+      g.tekst(X(8), Y(20), "balls:", "--muted", { rozmiar: 12 });
+      for (let i = 0; i < n; i++) g.punkt(X(48 + i * 18), Y(16), "", KOLORY[i], { r: 6 });
+      const licznik = {};
+      wsz.forEach((c, idx) => {
+        if (idx >= ileWidac) return;
+        const klucz = [...c].sort().join(","), gi = klucze.indexOf(klucz);
+        const wi = licznik[gi] = (licznik[gi] ?? -1) + 1; // index of the arrangement in the column
+        const cx = 8 + (gi % kol + 0.5) * kolW, py = gora + Math.floor(gi / kol) * pasH + (wi + 0.8) * wierH;
+        const alfa = wi === 0 ? 1 : 1 - 0.85 * tB;
+        c.forEach((kula, j) => {
+          const kx = cx + (j - (k - 1) / 2) * (2.6 * r);
+          g.punkt(X(kx), Y(py), "", g.kolorA(KOLORY[kula], alfa), { r });
+        });
+      });
+      // “set” frame around the representative
+      if (tB > 0) for (let gi = 0; gi < G; gi++) {
+        const cx = 8 + (gi % kol + 0.5) * kolW, py = gora + Math.floor(gi / kol) * pasH + 0.8 * wierH;
+        const sz = k * 2.6 * r + 4, wy = 2 * r + 6;
+        g.prostokat(X(cx - sz / 2), Y(py + wy / 2), sz / g.w, wy / g.h, 4, { wypelnij: 0.12 * tB, grubosc: 1.5 });
+      }
+    });
+    const Vtex = `V=\\frac{${n}!}{${n - k}!}=${V}`;
+    let opis = "";
+    if (t < 0.01) opis = `\\text{sequences: }${Vtex}`;
+    else if (tB === 0) opis = `\\text{sequences: }${ileWidac}\\;/\\;${V}`;
+    else opis = `${Vtex},\\quad \\binom{${n}}{${k}}=\\frac{${V}}{${k}!}=${G}`;
+    tex("ku-wynik", opis);
+  }
+  $("ku-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(7000, klatka); });
+  ["ku-n", "ku-k"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatka(1); }));
+  klatka(1);
+});
+</script>
+</body>
+</html>

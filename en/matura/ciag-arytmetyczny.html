@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arithmetic sequence</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Arithmetic sequence</h1>
+  <p class="lead">At each step you add the same number $r$, so the points $(n,a_n)$ lie on one line. You compute the sum with Gauss's trick: two copies of the "staircase" fit together into a rectangle.</p>
+  <p class="wymagania">VI.4, VI.5, VI.7</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definition and formulas</h2>
+  <div class="definicja"><b>Definition</b> A sequence $(a_n)$ is <b>arithmetic</b> when the difference $a_{n+1}-a_n=r$ is constant (the same for every $n$). The number $r$ is called the <b>common difference</b> of the sequence.</div>
+  <div class="wzor">
+    <div class="tytul">The $n$-th term <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a_n=a_1+(n-1)r$$
+    $$a_n=a_k+(n-k)r$$
+    <dl><dt>$r$</dt><dd>$r&gt;0$: increasing, $r&lt;0$: decreasing, $r=0$: constant</dd>
+        <dt>graph</dt><dd>points on the line $y=rx+(a_1-r)$: an arithmetic sequence is a "linear function on $\N_+$"</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Sum of the first $n$ terms <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$S_n=\frac{a_1+a_n}{2}\cdot n$$
+    $$S_n=\frac{2a_1+(n-1)r}{2}\cdot n$$
+    <dl><dt>meaning</dt><dd>the average of the first and last term times the number of terms</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Arithmetic mean of the neighbors <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a_n=\frac{a_{n-1}+a_{n+1}}{2}$$
+    <dl><dt>$x,y,z$</dt><dd>form (in this order) an arithmetic sequence $\iff 2y=x+z$</dd></dl>
+  </div>
+
+  <div class="twierdzenie"><b>Theorem</b> In an arithmetic sequence $a_n=a_1+(n-1)r$ and $S_n=\frac{a_1+a_n}{2}\cdot n$.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>The formula for $a_n$.</b> By definition $a_{k+1}-a_k=r$ for $k=1,2,\ldots,n-1$. Add these $n-1$ equalities side by side:</p>
+      $$(a_2-a_1)+(a_3-a_2)+\ldots$$
+      $$\ldots+(a_n-a_{n-1})=(n-1)r$$
+      <p>On the left everything cancels except $a_n-a_1$, so $a_n=a_1+(n-1)r$.</p>
+      <p><b>The formula for $S_n$ (Gauss's method).</b> Write the sum twice, once in reverse:</p>
+      $$\begin{aligned}S_n&amp;=a_1+a_2+\ldots+a_n\\ S_n&amp;=a_n+a_{n-1}+\ldots+a_1\end{aligned}$$
+      <p>The terms standing one under the other are $a_k$ and $a_{n+1-k}$. Their sum is always the same:</p>
+      $$a_k+a_{n+1-k}=$$
+      $$=a_1+(k-1)r+a_1+(n-k)r$$
+      $$=2a_1+(n-1)r=a_1+a_n$$
+      <p>Adding both rows, you get $n$ pairs, each equal to $a_1+a_n$: $2S_n=n(a_1+a_n)$, so $S_n=\frac{a_1+a_n}{2}\cdot n$. Substituting $a_n=a_1+(n-1)r$, you get the second form.</p>
+      <p>This is exactly what the animation in section 3 shows: the reversed copy of the "staircase" completes it to the rectangle $n\times(a_1+a_n)$.</p>
+    </div></details></div>
+
+  <h2 id="prosta">2. Points on a line</h2>
+  <div class="demo">
+    <p class="opis">Change $a_1$ and $r$. Each step to the right by $1$ is a step up by $r$ (red arrows), so all the points lie on a line with slope $r$.</p>
+    <canvas id="ap-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a_1$ <input type="range" id="ap-a1" min="-6" max="6" step="0.5" value="-3"> <span id="ap-a1-v"></span></label>
+      <label>$r$ <input type="range" id="ap-r" min="-2" max="2" step="0.25" value="1"> <span id="ap-r-v"></span></label>
+    </div>
+    <div class="wynik" id="ap-wynik"></div>
+  </div>
+
+  <h2 id="gauss">3. Animation: the sum by Gauss's method</h2>
+  <div class="demo">
+    <p class="opis">Bars of heights $a_1,\ldots,a_n$ (blue) make up $S_n$. Click ▶: the red copy rotates by $180^\circ$ and is placed on top. The result is the rectangle $n\times(a_1+a_n)$, i.e. $2S_n$.</p>
+    <canvas id="ga-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="ga-n" min="2" max="10" step="1" value="6"> <span id="ga-n-v"></span></label>
+      <label>$a_1$ <input type="range" id="ga-a1" min="1" max="4" step="1" value="1"> <span id="ga-a1-v"></span></label>
+      <label>$r$ <input type="range" id="ga-r" min="0" max="2" step="0.5" value="1"> <span id="ga-r-v"></span></label>
+      <button id="ga-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="ga-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>In an arithmetic sequence $a_2=5$ and $a_6=17$. Find $S_{10}$.</p>
+    <ol>
+      <li>$a_6=a_2+4r$, so $17=5+4r$ and $r=3$.</li>
+      <li>$a_1=a_2-r=2$.</li>
+      <li>$S_{10}=\frac{2a_1+9r}{2}\cdot10=\frac{4+27}{2}\cdot10=155$.</li>
+    </ol>
+    <p class="odp">$S_{10}=155$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Show that the sequence $a_n=5-3n$ is arithmetic, and find the sum of its first $20$ terms.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a_{n+1}-a_n=5-3(n+1)-(5-3n)=-3$, constant, so the sequence is arithmetic, $r=-3$. $a_1=2$, $a_{20}=-55$, $S_{20}=\frac{2-55}{2}\cdot20$. <b>$S_{20}=-530$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 1/2"><span class="poziom">medium</span>
+      <div class="tresc">The numbers $x-1$, $x^2$, $4x-1$ form (in this order) an arithmetic sequence. Find $x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2x^2=(x-1)+(4x-1)$, i.e. $2x^2-5x+2=0$, $\Delta=9$, $x=\frac{5\mp3}{4}$.
+        Check: $x=2$: $1,4,7$; $x=\frac12$: $-\frac12,\frac14,1$. <b>$x=2$ or $x=\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="17157"><span class="poziom">medium</span>
+      <div class="tresc">Find the sum of all natural numbers in the interval $[100, 500]$ that are divisible by $7$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The smallest is $105=7\cdot15$, the largest $497=7\cdot71$. An arithmetic sequence, $r=7$, number of terms $n=71-15+1=57$.
+        $S=\frac{105+497}{2}\cdot57=301\cdot57$. <b>$17\,157$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">The sum of the first $n$ terms of the sequence $(a_n)$ is $S_n=n^2+2n$. Find $a_n$ and show that the sequence is arithmetic.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a_1=S_1=3$. For $n\ge2$: $a_n=S_n-S_{n-1}=n^2+2n-(n-1)^2-2(n-1)=2n+1$; the formula also works for $n=1$.
+        $a_{n+1}-a_n=2$. <b>$a_n=2n+1$, an arithmetic sequence with common difference $r=2$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="120; 20" data-odp-opis="both possible values of S_10"><span class="poziom">exam-level</span>
+      <div class="tresc">In an arithmetic sequence $a_1+a_5=14$ and $a_2\cdot a_4=45$. Find $S_{10}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a_1+a_5=2a_3$, so $a_3=7$. Then $a_2=7-r$, $a_4=7+r$, $49-r^2=45$, $r=\pm2$.
+        For $r=2$: $a_1=3$, $S_{10}=\frac{6+18}{2}\cdot10=120$. For $r=-2$: $a_1=11$, $S_{10}=\frac{22-18}{2}\cdot10=20$.
+        <b>$S_{10}=120$ or $S_{10}=20$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="18; 52" data-odp-opis="number of rows; seats in the last one"><span class="poziom">exam-level</span>
+      <div class="tresc">The first row of a hall has $18$ seats, and each next row has $2$ more than the previous one. The hall has $630$ seats in total. How many rows are there and how many seats in the last one?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $S_n=\frac{36+2(n-1)}{2}\cdot n=n(n+17)=630$, so $n^2+17n-630=0$, $\Delta=2809=53^2$, $n=\frac{-17+53}{2}=18$ (the other root is negative).
+        $a_{18}=18+17\cdot2=52$. <b>$18$ rows, $52$ seats in the last one.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Two given terms</b> ($a_k$, $a_m$): immediately $a_m-a_k=(m-k)r$. You do not need to set up a system with $a_1$.</li>
+    <li><b>Three numbers</b> in an arithmetic sequence: conveniently $a-r,\ a,\ a+r$ (sum $3a$). With the condition $2y=x+z$, <b>check</b> the numbers you obtain.</li>
+    <li><b>Number of terms</b>: from $a_k$ to $a_m$ there are $m-k+1$ terms, not $m-k$. This is the most common mistake in tasks like "the sum of numbers divisible by 7".</li>
+    <li><b>$S_n$ given by a formula</b>: $a_n=S_n-S_{n-1}$ only for $n\ge2$; check $a_1=S_1$ separately.</li>
+    <li>The proof of the formula for $S_n$ is on the list of theorems from the curriculum: be able to write it (summing forward and backward).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+
+  // --- 2. Punkty na prostej ---
+  const w1 = new Wykres($("ap-plot"), { xmin: -0.5, xmax: 10.5, ymin: -12, ymax: 14, krokY: 2 });
+  function rysujAp() {
+    const a1 = +$("ap-a1").value, r = +$("ap-r").value, N = 10;
+    $("ap-a1-v").textContent = ladna(a1); $("ap-r-v").textContent = ladna(r);
+    const a = n => a1 + (n - 1) * r;
+    const lo = Math.min(a(1), a(N), 0), hi = Math.max(a(1), a(N), 0), pad = Math.max(1, 0.12 * (hi - lo));
+    w1.zakres({ ymin: lo - pad, ymax: hi + pad, krokY: ladnyKrok(hi - lo + 2 * pad) });
+    w1.rysuj(g => {
+      g.funkcja(a, 3, { przerywana: true });
+      for (let n = 1; n < N; n++) {
+        g.odcinek(n, a(n), n + 1, a(n), 4);                 // krok w prawo o 1
+        if (Math.abs(r) > 1e-9) g.strzalka(n + 1, a(n), n + 1, a(n + 1), 2); // krok w górę o r
+      }
+      for (let n = 1; n <= N; n++) g.punkt(n, a(n), n <= 3 ? `a${"₀₁₂₃"[n]}` : "", 1);
+    });
+    const typ = r > 0 ? "increasing" : r < 0 ? "decreasing" : "constant";
+    const rT = r < 0 ? `(${ladnaTex(r)})` : ladnaTex(r);
+    const lin = Math.abs(r) < 1e-9 ? ladnaTex(a1)
+      : `${r === 1 ? "" : r === -1 ? "-" : ladnaTex(r)}n${Math.abs(a1 - r) < 1e-9 ? "" : znakTex(a1 - r)}`;
+    tex("ap-wynik", `a_n=${ladnaTex(a1)}+(n-1)\\cdot${rT}=${lin},\\quad a_{10}=${ladnaTex(a(10))}\\ (\\text{${typ}})`);
+  }
+  ["ap-a1", "ap-r"].forEach(id => $(id).addEventListener("input", rysujAp));
+  rysujAp();
+
+  // --- 3. Gauss ---
+  const w2 = new Wykres($("ga-plot"), { xmin: -0.5, xmax: 13, ymin: -1, ymax: 15, rowneSkale: false });
+  let stop = null;
+  function klatka(t) {
+    const n = +$("ga-n").value, a1 = +$("ga-a1").value, r = +$("ga-r").value;
+    $("ga-n-v").textContent = n; $("ga-a1-v").textContent = a1; $("ga-r-v").textContent = ladna(r);
+    const a = k => a1 + (k - 1) * r, H = a1 + a(n), D = n + 1;
+    Object.assign(w2.z0, { xmin: -0.5, xmax: 2 * n + 1.5, ymin: -0.22 * H - 0.3, ymax: H * 1.25 + 0.3, krokY: ladnyKrok(H * 1.2) });
+    const cx = n / 2, cy = H / 2;
+    // u: 0 → kopia stoi obok (przesunięta o D), 1 → obrócona o 180° na górze
+    const u = Math.min(1, Math.max(0, (t - 0.15) / 0.85));
+    // obrót liczony we współrzędnych znormalizowanych do prostokąta n × H (osie mają różne skale)
+    const kat = Math.PI * u, cos = Math.cos(kat), sin = Math.sin(kat), sx = n / 2, sy = H / 2;
+    const tr = ([x, y]) => {
+      const dx = (x - cx) / sx, dy = (y - cy) / sy;
+      return [cx + D * (1 - u) + sx * (cos * dx - sin * dy), cy + sy * (sin * dx + cos * dy)];
+    };
+    const S = n * (a1 + a(n)) / 2;
+    w2.rysuj(g => {
+      if (t >= 1) g.prostokat(0, 0, n, H, 3, { wypelnij: 0.08, przerywana: true });
+      for (let k = 1; k <= n; k++) g.prostokat(k - 1, 0, 1, a(k), 1, { wypelnij: 0.45 });
+      if (t > 0) for (let k = 1; k <= n; k++)
+        g.wielokat([[k - 1, 0], [k, 0], [k, a(k)], [k - 1, a(k)]].map(tr), 2, { wypelnij: 0.35 * Math.min(1, t / 0.15) });
+      g.tekst(0.5, a1 / 2, "a₁", 1, { wyrownanie: "center", dy: 5, gruby: true });
+      if (t >= 1) {
+        g.tekst(n / 2, H, `${n} · (a₁ + aₙ) = ${ladna(2 * S)} = 2Sₙ`, 3, { wyrownanie: "center", dy: -8, gruby: true });
+      }
+    });
+    tex("ga-wynik", t >= 1
+      ? `2S_{${n}}=${n}\\cdot(${ladnaTex(a1)}+${ladnaTex(a(n))})=${ladnaTex(2 * S)}\\;\\Rightarrow\\;S_{${n}}=${ladnaTex(S)}`
+      : `S_{${n}}=` + (n <= 5 ? Array.from({ length: n }, (_, i) => ladnaTex(a(i + 1))).join("+")
+          : `${ladnaTex(a(1))}+${ladnaTex(a(2))}+\\ldots+${ladnaTex(a(n))}`) + `=\\,?`);
+  }
+  $("ga-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(3000, klatka); });
+  ["ga-n", "ga-a1", "ga-r"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatka(0); }));
+  klatka(0);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exponential and logarithmic functions</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Exponential and logarithmic functions</h1>
+  <p class="lead">$y=a^x$ and $y=\log_a x$ are the same relationship read in two directions: $\log_a b=c\iff a^c=b$. Swapping the roles of $x$ and $y$ is a reflection of the graph in the line $y=x$.</p>
+  <p class="wymagania">V.14, I.5, I.9, I.R (change of base), I.8</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definitions and formulas</h2>
+  <div class="wzor">
+    <div class="tytul">Logarithm <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\log_a b=c\iff a^c=b$$
+    <dl><dt>conditions</dt><dd>$a&gt;0$, $a\neq1$, $b&gt;0$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Operations on logarithms <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\log_a(xy)=\log_a x+\log_a y$$
+    $$\log_a\frac xy=\log_a x-\log_a y$$
+    $$\log_a x^r=r\log_a x$$
+    $$\log_a b=\frac{\log_c b}{\log_c a}$$
+    <dl><dt>assumptions</dt><dd>$a,c&gt;0$, $a,c\neq1$, $x,y,b&gt;0$; the last formula (change of base) is extended level</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Proof (required on the exam): the logarithm of a product and change of base</summary><div>
+    <p><b>Product.</b> Let $u=\log_a x$, $v=\log_a y$, that is $a^u=x$, $a^v=y$. Then $xy=a^u a^v=a^{u+v}$, so by the definition $\log_a(xy)=u+v$. The quotient and the power are proved in the same way ($a^u/a^v=a^{u-v}$, $(a^u)^r=a^{ur}$).</p>
+    <p><b>Change of base.</b> Let $t=\log_a b$, that is $a^t=b$. Take the logarithm of both sides with base $c$: $\log_c a^t=\log_c b$, that is $t\log_c a=\log_c b$. Since $a\neq1$, $\log_c a\neq0$, so $t=\frac{\log_c b}{\log_c a}$.</p>
+  </div></details>
+
+  <table class="tabela">
+    <tr><th></th><th>$f(x)=a^x$</th><th>$g(x)=\log_a x$</th></tr>
+    <tr><td>domain</td><td>$\R$</td><td>$(0,\infty)$</td></tr>
+    <tr><td>range</td><td>$(0,\infty)$</td><td>$\R$</td></tr>
+    <tr><td>fixed point</td><td>$(0,1)$</td><td>$(1,0)$</td></tr>
+    <tr><td>asymptote</td><td>$y=0$</td><td>$x=0$</td></tr>
+    <tr><td>$a&gt;1$</td><td colspan="2">both increasing</td></tr>
+    <tr><td>$0&lt;a&lt;1$</td><td colspan="2">both decreasing</td></tr>
+  </table>
+  <div class="uwaga">Monotonicity of exponentiation (I.5): for $a&gt;1$, $x&lt;y$ implies $a^x&lt;a^y$, but for $0&lt;a&lt;1$ the inequality <b>changes direction</b>: $\left(\frac12\right)^x&gt;\left(\frac12\right)^3\iff x&lt;3$.</div>
+
+  <h2 id="odbicie">2. Interactive: reflection in $y=x$</h2>
+  <div class="demo">
+    <p class="opis">Drag the point $P$ along the graph of $y=a^x$. Its reflection $P'$ (swapped coordinates) always lies on $y=\log_a x$. “▶ Reflect” shows how the whole graph turns into the other one. Go from $a&gt;1$ to $a&lt;1$.</p>
+    <canvas id="ex-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="ex-a" min="0.2" max="4" step="0.05" value="2"> <span id="ex-a-v"></span></label>
+      <button id="ex-start">▶ Reflect</button>
+    </div>
+    <div class="wynik" id="ex-wynik"></div>
+  </div>
+
+  <h2 id="zastosowania">3. Applications: compound interest and decay</h2>
+  <div class="wzor">
+    <div class="tytul">Compound interest <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$K_n=K\left(1+\frac{p}{100}\right)^n$$
+    <dl><dt>$K$, $p$</dt><dd>initial capital, interest rate in % per period</dd>
+        <dt>$n$</dt><dd>number of compounding periods</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Decay (to remember)</div>
+    $$m(t)=m_0\cdot\left(\tfrac12\right)^{t/T}$$
+    <dl><dt>$T$</dt><dd>half-life: after each $T$ half remains</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">A mass of $100$ g of an isotope. After each period $T$ half remains (dashed steps). Change $T$ and move the time $t$. Note: the time to drop to $10\%$ is computed with a logarithm.</p>
+    <canvas id="rz-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$T$ <input type="range" id="rz-T" min="1" max="9" step="0.5" value="4"> <span id="rz-T-v"></span></label>
+      <label>$t$ <input type="range" id="rz-t" min="0" max="30" step="0.5" value="6"> <span id="rz-t-v"></span></label>
+      <button id="rz-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="rz-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>$10\,000$ PLN was deposited in an account paying $5\%$ per year (annual compounding). After how many full years will the amount exceed $15\,000$ PLN?</p>
+    <ol>
+      <li>$10\,000\cdot1.05^n&gt;15\,000\iff 1.05^n&gt;1.5$.</li>
+      <li>Take logarithms ($\log$ is increasing, so the sign stays): $n\log1.05&gt;\log1.5$.</li>
+      <li>$n&gt;\frac{\log1.5}{\log1.05}\approx8.31$, so the smallest integer is $n=9$.</li>
+      <li>Check: $1.05^8\cdot10\,000\approx14\,775$ PLN, $\;1.05^9\cdot10\,000\approx15\,513$ PLN.</li>
+    </ol>
+    <p class="odp">After $9$ years</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/3" data-odp-opis="a"><span class="poziom">easy</span>
+      <div class="tresc">The graph of $f(x)=a^x$ passes through the point $(-2,9)$. Find $a$ and determine the monotonicity of $f$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a^{-2}=9\iff a^2=\frac19$, and $a&gt;0$, so $a=\frac13&lt;1$. <b>$a=\frac13$, the function is decreasing</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 2" data-odp-opis="first; second value"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\log_3 54-\log_3 2$ and $2\log_5 10-\log_5 4$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\log_3\frac{54}{2}=\log_3 27=3$. $\;\log_5 100-\log_5 4=\log_5 25=2$. <b>$3$ and $2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Given that $\log_2 3=a$, express $\log_{12}18$ in terms of $a$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Change of base to $2$: $\log_{12}18=\frac{\log_2 18}{\log_2 12}=\frac{\log_2(2\cdot 9)}{\log_2(4\cdot3)}$. <b>$\log_{12}18=\frac{1+2a}{2+a}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (0; 1) u (1; 6)" data-odp-opis="domain"><span class="poziom">medium</span>
+      <div class="tresc">Find the domain of the function $f(x)=\log_x(6-x)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Base: $x&gt;0$ and $x\neq1$. The argument of the logarithm: $6-x&gt;0\iff x&lt;6$. <b>$D=(0,1)\cup(1,6)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="24; 25sqrt(2)" data-odp-opis="number of days; mass after 20 days (mg)"><span class="poziom">exam-level</span>
+      <div class="tresc">The half-life of iodine-131 is $8$ days. After how many days will $25$ mg remain from $200$ mg? How much will remain after $20$ days?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $200\cdot\left(\frac12\right)^{t/8}=25\iff\left(\frac12\right)^{t/8}=\frac18=\left(\frac12\right)^3$, so $t=24$. After $20$ days: $200\cdot2^{-20/8}=200\cdot2^{-5/2}=\frac{200}{4\sqrt2}=25\sqrt2$.
+        <b>After $24$ days; after $20$ days $25\sqrt2\approx35.36$ mg</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The domain of a logarithm</b> is two conditions on the base ($&gt;0$, $\neq1$) and one on the argument ($&gt;0$). Write them down before solving.</li>
+    <li>For a base $0&lt;a&lt;1$ the inequality <b>changes direction</b> when you drop the power or the logarithm.</li>
+    <li>Change of base: most often you reduce everything to one “convenient” base (e.g. $2$ or $10$).</li>
+    <li>Deposit problems: the question “after how many years” needs an <b>integer</b>; check both neighboring values.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Reflection a^x ↔ log_a x ---
+  const w1 = new Wykres($("ex-plot"), { xmin: -4, xmax: 7, ymin: -4, ymax: 7, rowneSkale: true });
+  const aEx = () => { const a = +$("ex-a").value; return Math.abs(a - 1) < 0.04 ? 1.05 : a; };
+  const ogrEx = p => {
+    const a = aEx();
+    let x = Math.max(-4, Math.min(4, p.x));
+    if (a ** x > 6.5) x = Math.log(6.5) / Math.log(a); // do not leave the view
+    return { x, y: a ** x };
+  };
+  const P = w1.przeciagaj([{ x: 1, y: 2, ogranicz: ogrEx }], () => rysujEx(null));
+  let stop1 = null;
+  function rysujEx(t) {
+    const a = aEx(), la = Math.log(a);
+    $("ex-a-v").textContent = ladna(a);
+    const q = ogrEx(P[0]); P[0].x = q.x; P[0].y = q.y;
+    const { x, y } = P[0];
+    w1.rysuj(g => {
+      g.prosta(0, 0, 1, 1, 3, true);
+      g.funkcja(s => a ** s, 1);
+      if (t === null) {
+        g.funkcja(s => s > 0 ? Math.log(s) / la : NaN, 4);
+        g.odcinek(x, y, y, x, 2);
+        g.punkt(x, y, "P"); g.punkt(y, x, "P'", 4);
+      } else {
+        // each point (s, a^s) travels along a segment perpendicular to y = x to (a^s, s)
+        g.parametryczna(s => s + (a ** s - s) * t, s => a ** s + (s - a ** s) * t, a > 1 ? -4 : Math.log(7) / la, a > 1 ? Math.log(7) / la : 7, 2, { kroki: 300 });
+      }
+    });
+    const mon = a > 1 ? "\\text{both increasing}" : "\\text{both decreasing}";
+    tex("ex-wynik", `${ladnaTex(a)}^{${ladnaTex(x)}}\\approx${ladnaTex(y)}\\iff\\log_{${ladnaTex(a)}}${ladnaTex(y)}\\approx${ladnaTex(x)},\\quad P'=(${ladnaTex(y)};\\,${ladnaTex(x)}),\\quad ${mon}`);
+  }
+  $("ex-a").addEventListener("input", () => { if (stop1) stop1(); rysujEx(null); });
+  $("ex-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(2200, t => rysujEx(t), () => rysujEx(null)); });
+  rysujEx(null);
+
+  // --- 3. Decay ---
+  const w2 = new Wykres($("rz-plot"), { xmin: -2, xmax: 31, ymin: -12, ymax: 112, krokX: 5, krokY: 25 });
+  let stop2 = null;
+  function rysujRz() {
+    const T = +$("rz-T").value, t = +$("rz-t").value, m = s => 100 * 0.5 ** (s / T);
+    $("rz-T-v").textContent = ladna(T); $("rz-t-v").textContent = ladna(t);
+    w2.rysuj(g => {
+      for (let k = 1; k * T <= 30; k++) {
+        g.odcinek((k - 1) * T, m((k - 1) * T), k * T, m((k - 1) * T), 3);
+        g.odcinek(k * T, m((k - 1) * T), k * T, m(k * T), 3);
+      }
+      g.odcinek(g.z.xmin, 10, g.z.xmax, 10, 4);
+      g.funkcja(m, 1, { od: 0 });
+      g.punkt(T * Math.log2(10), 10, "10%", 4);
+      g.punkt(t, m(t), `${ladna(m(t), 1)} g`, 2);
+    });
+    tex("rz-wynik", `m(${ladnaTex(t)})=100\\cdot\\left(\\tfrac12\\right)^{${ladnaTex(t)}/${ladnaTex(T)}}\\approx${ladnaTex(m(t), 1)}\\text{ g},\\quad 10\\%\\text{ at } t=T\\log_2 10\\approx${ladnaTex(T * Math.log2(10), 1)}`);
+  }
+  ["rz-T", "rz-t"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); rysujRz(); }));
+  $("rz-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(4000, t => { $("rz-t").value = Math.round(t * 60) / 2; rysujRz(); }); });
+  rysujRz();
+});
+</script>
+</body>
+</html>

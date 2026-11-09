@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proving the monotonicity of a function</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Proving the monotonicity of a function</h1>
+  <p class="lead">You take <b>any</b> two arguments $x_1&lt;x_2$ from the interval and examine the sign of the difference $f(x_2)-f(x_1)$. The whole job is to transform this difference into a product or quotient in which the sign of each factor is visible at once. Geometrically: every secant has a slope of the same sign.</p>
+  <p class="wymagania">V.R.3 (and the definitions from V.4)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definition and scheme</h2>
+  <div class="definicja"><b>Definition</b> A function $f$ is <b>increasing</b> on a set $A$ if for any $x_1,x_2\in A$:
+    $$x_1&lt;x_2\ \Rightarrow\ f(x_2)-f(x_1)&gt;0.$$
+    <b>Decreasing</b>: the difference $&lt;0$; non-decreasing: $\ge0$; non-increasing: $\le0$.</div>
+  <div class="wzor">
+    <div class="tytul">Scheme of a proof from the definition</div>
+    <ol>
+      <li>"Let $x_1,x_2\in A$ and $x_1&lt;x_2$" (arbitrary, not specific numbers!).</li>
+      <li>Compute $f(x_2)-f(x_1)$: common denominator, simplification.</li>
+      <li>Factor out $(x_2-x_1)$. You usually can, because the difference vanishes for $x_1=x_2$ (with square roots the conjugate helps).</li>
+      <li>Determine the sign of each factor using $x_1,x_2\in A$.</li>
+      <li>Conclusion: "so $f(x_2)-f(x_1)&gt;0$, i.e. $f$ is increasing on $A$".</li>
+    </ol>
+  </div>
+  <div class="uwaga">Checking a few numbers ($f(-5)&lt;f(-3)$) is <b>not</b> a proof. To <b>refute</b> monotonicity, however, a single counterexample is enough.</div>
+  <p>At the extended level monotonicity is also studied with the derivative (section XIII), but V.R.3 requires a proof from the definition.</p>
+
+  <h2 id="roznica">2. Interactive: the sign of the difference</h2>
+  <div class="demo">
+    <p class="opis">Drag the points $x_1$, $x_2$ along the graph. The vertical segment is $f(x_2)-f(x_1)$: green when positive, red when negative. For $\frac{x-1}{x+2}$ move one point to the other side of the asymptote $x=-2$ and see what happens to the sign.</p>
+    <canvas id="mo-plot"></canvas>
+    <div class="sterowanie">
+      <label>$f(x)=$ <select id="mo-f">
+        <option value="wym">(x − 1)/(x + 2)</option>
+        <option value="kw">x² − 4x</option>
+        <option value="sz">x³</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="mo-wynik"></div>
+    <div class="wynik" id="mo-znak"></div>
+  </div>
+
+  <h2 id="sieczne">3. All secants at once</h2>
+  <div class="demo">
+    <p class="opis">"▶ Draw secants" draws secants of $y=\frac{x-1}{x+2}$ through random pairs of points from the chosen set: green ones rise, red ones fall. On each of the intervals all are green (the function is increasing), but not on the whole domain.</p>
+    <canvas id="ms-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>set <select id="ms-zb">
+        <option value="L">(−∞, −2)</option>
+        <option value="P">(−2, ∞)</option>
+        <option value="D">the whole domain</option>
+      </select></label>
+      <button id="ms-start">▶ Draw secants</button>
+    </div>
+    <div class="wynik" id="ms-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Prove that the function $f(x)=\frac{x-1}{x+2}$ is increasing on the interval $(-\infty,-2)$. (An example from the core curriculum.)</p>
+    <ol>
+      <li>Let $x_1,x_2\in(-\infty,-2)$, $x_1&lt;x_2$.</li>
+      <li>$f(x_2)-f(x_1)=\frac{(x_2-1)(x_1+2)-(x_1-1)(x_2+2)}{(x_1+2)(x_2+2)}$.</li>
+      <li>Numerator: $x_1x_2+2x_2-x_1-2-(x_1x_2+2x_1-x_2-2)=3x_2-3x_1$.
+        $$f(x_2)-f(x_1)=\frac{3(x_2-x_1)}{(x_1+2)(x_2+2)}$$</li>
+      <li>$x_2-x_1&gt;0$ (because $x_1&lt;x_2$); $x_1+2&lt;0$ and $x_2+2&lt;0$ (because both $&lt;-2$), so the denominator $&gt;0$.</li>
+      <li>A positive number divided by a positive number is positive: $f(x_2)-f(x_1)&gt;0$.</li>
+    </ol>
+    <p class="odp">$f$ is increasing on $(-\infty,-2)$ $\blacksquare$</p>
+    <p>The same formula works on $(-2,\infty)$: there both factors of the denominator are positive.</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Prove from the definition that $f(x)=-3x+5$ is decreasing on $\R$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x_1&lt;x_2$: $f(x_2)-f(x_1)=-3x_2+3x_1=-3(x_2-x_1)$. Since $x_2-x_1&gt;0$, the difference is negative. <b>$f(x_2)-f(x_1)&lt;0$, so $f$ is decreasing on $\R$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Prove that $f(x)=x^2-6x$ is increasing on the interval $[3,\infty)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(x_2)-f(x_1)=x_2^2-x_1^2-6(x_2-x_1)=(x_2-x_1)(x_1+x_2-6)$. For $3\le x_1&lt;x_2$: $x_1+x_2&gt;6$, so both factors are positive.
+        <b>$f(x_2)-f(x_1)&gt;0$, $f$ is increasing on $[3,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Prove that $f(x)=\frac{2x+1}{x-1}$ is decreasing on the interval $(1,\infty)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The numerator of the difference: $(2x_2+1)(x_1-1)-(2x_1+1)(x_2-1)=-3x_2+3x_1$, so
+        $$f(x_2)-f(x_1)=\frac{-3(x_2-x_1)}{(x_1-1)(x_2-1)}.$$
+        For $1&lt;x_1&lt;x_2$ the denominator $&gt;0$, the numerator $&lt;0$. <b>$f(x_2)-f(x_1)&lt;0$, $f$ is decreasing on $(1,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Prove that $f(x)=\frac{x-1}{x+2}$ is <b>not</b> monotonic on its domain.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Counterexamples: $-3&lt;0$, but $f(-3)=4&gt;f(0)=-\frac12$, so it is not increasing (nor non-decreasing). $0&lt;1$ and $f(0)=-\frac12&lt;f(1)=0$, so it is not decreasing (nor non-increasing).
+        <b>$f$ is not monotonic on $\R\setminus\{-2\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that the function $f(x)=x^3+3x$ is increasing on $\R$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(x_2)-f(x_1)=(x_2^3-x_1^3)+3(x_2-x_1)$
+        $$=(x_2-x_1)(x_1^2+x_1x_2+x_2^2+3).$$
+        The second bracket: $x_1^2+x_1x_2+x_2^2=\left(x_1+\frac{x_2}{2}\right)^2+\frac34x_2^2\ge0$, so the whole bracket is $\ge3&gt;0$.
+        <b>Both factors are positive, so $f$ is increasing on $\R$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that $f(x)=\sqrt{x+4}$ is increasing on its domain.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $D=[-4,\infty)$. Multiply by the conjugate:
+        $$\sqrt{x_2+4}-\sqrt{x_1+4}=\frac{x_2-x_1}{\sqrt{x_2+4}+\sqrt{x_1+4}}.$$
+        The numerator $&gt;0$, the denominator $&gt;0$ (because $\sqrt{x_2+4}&gt;0$ for $x_2&gt;x_1\ge-4$). <b>$f$ is increasing on $[-4,\infty)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>Start with the sentence "Let $x_1,x_2\in A$, $x_1&lt;x_2$". Without it the proof is incomplete.</li>
+    <li>Next to <b>every</b> factor write how you know its sign (e.g. "because $x_1&lt;-2$"). That is where the marks are.</li>
+    <li>Do not divide an inequality by an expression of unknown sign. Examine the sign of the difference, do not transform $x_1&lt;x_2$.</li>
+    <li>You show the lack of monotonicity with <b>specific numbers</b>, and monotonicity only in general.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const pn = v => v < 0 ? `(${ladnaTex(v)})` : ladnaTex(v);
+  const FUN = {
+    wym: { f: x => (x - 1) / (x + 2), ogr: x => Math.abs(x + 2) < 0.45 ? -2 + (x < -2 ? -0.45 : 0.45) : x,
+      tex: (a, b) => `\\frac{3(x_2-x_1)}{(x_1+2)(x_2+2)}=\\frac{3\\cdot${pn(b - a)}}{${pn(a + 2)}\\cdot${pn(b + 2)}}` },
+    kw: { f: x => x * x - 4 * x, ogr: x => Math.max(-1.4, Math.min(5.4, x)),
+      tex: (a, b) => `(x_2-x_1)(x_1+x_2-4)=${pn(b - a)}\\cdot${pn(a + b - 4)}` },
+    sz: { f: x => x ** 3, ogr: x => Math.max(-1.8, Math.min(1.8, x)),
+      tex: (a, b) => `(x_2-x_1)(x_1^2+x_1x_2+x_2^2)=${pn(b - a)}\\cdot${pn(a * a + a * b + b * b)}` },
+  };
+
+  // --- 2. Znak różnicy ---
+  const w1 = new Wykres($("mo-plot"), { xmin: -8, xmax: 6, ymin: -6, ymax: 8 });
+  const fun = () => FUN[$("mo-f").value];
+  const ogr = p => { const x = Math.round(fun().ogr(Math.max(-7.5, Math.min(5.5, p.x))) * 20) / 20; return { x: fun().ogr(x), y: fun().f(fun().ogr(x)) }; };
+  const P = w1.przeciagaj([{ x: -6, y: 0, ogranicz: ogr }, { x: -3, y: 0, ogranicz: ogr }], rysujMo);
+  function rysujMo() {
+    const F = fun();
+    P.forEach(p => { const q = ogr(p); p.x = q.x; p.y = q.y; });
+    const [a, b] = [P[0].x, P[1].x].sort((u, v) => u - v), fa = F.f(a), fb = F.f(b), d = fb - fa;
+    const nr = d > 1e-12 ? 3 : d < -1e-12 ? 2 : 4;
+    w1.rysuj(g => {
+      if ($("mo-f").value === "wym") { g.odcinek(-2, g.z.ymin, -2, g.z.ymax, 4); g.odcinek(g.z.xmin, 1, g.z.xmax, 1, 4); }
+      g.funkcja(F.f, 1);
+      if (b - a > 1e-9) {
+        g.prosta(a, fa, b, fb, nr, true);
+        g.odcinek(a, fa, b, fa, 4);
+        g.odcinek(b, fa, b, fb, nr, false);
+      }
+      g.punkt(a, fa, "x₁", 2); g.punkt(b, fb, "x₂", 2);
+    });
+    if (b - a < 1e-9) { tex("mo-wynik", "x_1=x_2:\\ \\text{move the points apart}"); tex("mo-znak", "\\ "); return; }
+    tex("mo-wynik", `x_1=${ladnaTex(a)},\\ x_2=${ladnaTex(b)}:\\quad f(x_2)-f(x_1)=${F.tex(a, b)}`);
+    tex("mo-znak", `f(x_2)-f(x_1)\\approx${ladnaTex(d)}\\ ${d > 1e-12 ? ">0\\Rightarrow f(x_1)<f(x_2)\\ (\\text{the secant rises})" : d < -1e-12 ? "<0\\Rightarrow f(x_1)>f(x_2)\\ (\\text{the secant falls})" : "=0"}`);
+  }
+  $("mo-f").addEventListener("change", () => {
+    const start = { wym: [-6, -3], kw: [-1, 1], sz: [-1.5, 1] }[$("mo-f").value];
+    P[0].x = start[0]; P[1].x = start[1]; rysujMo();
+  });
+  rysujMo();
+
+  // --- 3. Sieczne ---
+  const f = x => (x - 1) / (x + 2);
+  const w2 = new Wykres($("ms-plot"), { xmin: -9, xmax: 7, ymin: -6, ymax: 8 });
+  let sieczne = [], p = null;
+  const losuj = zb => {
+    const L = () => -8.5 + Math.random() * 6, R = () => -1.5 + Math.random() * 8;
+    return zb === "L" ? L() : zb === "P" ? R() : (Math.random() < 0.5 ? L() : R());
+  };
+  function rysujMs() {
+    w2.rysuj(g => {
+      g.odcinek(-2, g.z.ymin, -2, g.z.ymax, 4);
+      g.funkcja(f, 1);
+      sieczne.forEach(([a, b]) => g.odcinek(a, f(a), b, f(b), f(b) > f(a) ? 3 : 2, false));
+    });
+    const r = sieczne.filter(([a, b]) => f(b) > f(a)).length, m = sieczne.length - r;
+    tex("ms-wynik", `\\text{rising secants: } ${r},\\quad \\text{falling: } ${m}\\quad ${!sieczne.length ? "" : m ? "\\Rightarrow \\text{not increasing on this set}" : "\\Rightarrow \\text{all rising}"}`);
+  }
+  $("ms-start").addEventListener("click", () => {
+    if (p) p.stop();
+    sieczne = []; const zb = $("ms-zb").value; let ost = -1;
+    p = petla(s => {
+      if (sieczne.length >= 40) { if (p) p.stop(); return; }
+      if (s - ost < 0.1) return;
+      ost = s;
+      const [a, b] = [losuj(zb), losuj(zb)].sort((u, v) => u - v);
+      if (b - a > 0.2) sieczne.push([a, b]);
+      rysujMs();
+    });
+  });
+  $("ms-zb").addEventListener("change", () => { if (p) p.stop(); sieczne = []; rysujMs(); });
+  rysujMs();
+});
+</script>
+</body>
+</html>

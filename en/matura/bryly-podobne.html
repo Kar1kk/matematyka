@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Similar solids</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Similar solids</h1>
+  <p class="lead">Enlarge a solid $2$ times: every length grows $2$ times, the area $4$ times (because it has two dimensions), and the volume $8$ times (because it has three). This one observation solves a whole class of tasks.</p>
+  <p class="wymagania">X.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="skala">1. The scale k, k², k³</h2>
+  <div class="definicja"><b>Similar solids with scale $k&gt;0$</b>: every segment of one solid is $k$ times longer than the corresponding segment of the other (the angles do not change). All spheres are similar, and so are all cubes.</div>
+  <div class="wzor">
+    <div class="tytul">Similar solids with scale $k$ (to remember)</div>
+    $$\frac{P_2}{P_1}=k^2,\qquad \frac{V_2}{V_1}=k^3$$
+    <dl><dt>$k$</dt><dd>the ratio of corresponding lengths: edges, heights, radii, diagonals</dd>
+        <dt>$P$</dt><dd>any area: total surface area, lateral area, base, cross-section</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>A cross-section parallel to the base</b> A plane parallel to the base of a pyramid (cone) cuts off a pyramid (cone) <b>similar</b> to the original with scale $k=\frac{h}{H}$, where $h$ is the distance of the plane from the apex.
+    <details class="rozwin"><summary>Why $k^3$?</summary><div>
+      With scale $k$ every base area grows $k^2$ times (similar figures), and the height $k$ times. For a prism, pyramid, cylinder and cone $V=c\cdot P_p\cdot H$, so $V$ grows $k^2\cdot k=k^3$ times. For a sphere: $V=\frac43\pi r^3$, and $r$ grows $k$ times.
+    </div></details></div>
+
+  <h2 id="demo">2. Interactive: scaling</h2>
+  <div class="demo">
+    <p class="opis">Move $k$ or press ▶ ($k$ from $1$ to $2$). Green: the original solid ($k=1$), blue: the scaled one. See how fast $k^3$ grows compared with $k$.</p>
+    <canvas id="bp-plot"></canvas>
+    <div class="sterowanie">
+      <button id="bp-szescian" class="wtorny aktywny">cube</button>
+      <button id="bp-ostroslup" class="wtorny">pyramid</button>
+      <button id="bp-stozek" class="wtorny">cone</button>
+      <label>$k$ <input type="range" id="bp-k" min="0.2" max="2.5" step="0.05" value="1.5"></label>
+      <button id="bp-start">▶ k: 1 → 2</button>
+    </div>
+    <div class="wynik" id="bp-wynik"></div>
+  </div>
+
+  <h2 id="demo2">3. Interactive: a cut-off pyramid</h2>
+  <div class="demo">
+    <p class="opis">Move the plane parallel to the base. The cut-off pyramid (red) is similar to the whole one with scale $k=\frac hH$, so its volume is $k^3$ of the whole.</p>
+    <canvas id="oc-plot"></canvas>
+    <div class="sterowanie">
+      <label>cutting height <input type="range" id="oc-t" min="0" max="0.95" step="0.01" value="0.5"></label>
+    </div>
+    <div class="wynik" id="oc-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>A pyramid of volume $54$ was cut by a plane parallel to the base, at a distance of $\frac13$ of the height from the apex. Find the volumes of the two resulting solids.</p>
+    <ol>
+      <li>The cut-off pyramid is similar with scale $k=\frac13$.</li>
+      <li>$V_{\text{small}}=k^3\cdot54=\frac{54}{27}=2$.</li>
+      <li>The other solid (a frustum): $54-2=52$.</li>
+    </ol>
+    <p class="odp">$2$ and $52$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/9; 1/27" data-odp-opis="ratio of areas; ratio of volumes (fractions)"><span class="poziom">easy</span>
+      <div class="tresc">Spheres have radii $2$ and $6$. Give the ratio of their surface areas and of their volumes.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $k=3$. <b>Areas $1:9$, volumes $1:27$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8" data-odp-opis="how many times"><span class="poziom">easy</span>
+      <div class="tresc">Cube $A$ has surface area $24$, cube $B$ has area $96$. How many times is the volume of $B$ larger than the volume of $A$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $k^2=4$, so $k=2$ and $k^3=8$ (check: $V_A=8$, $V_B=64$). <b>8 times</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4/25" data-odp-opis="ratio of areas (fraction)"><span class="poziom">medium</span>
+      <div class="tresc">The ratio of the volumes of two similar solids is $8:125$. Find the ratio of their surface areas.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $k^3=\frac{8}{125}\Rightarrow k=\frac25$, $k^2=\frac{4}{25}$. <b>$4:25$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8; 56" data-odp-opis="volumes of both solids"><span class="poziom">medium</span>
+      <div class="tresc">A cone of volume $64$ was cut by a plane parallel to the base at half of the height. Find the volumes of the resulting solids.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The small cone: $k=\frac12$, $V=\frac{64}{8}=8$. The rest: $64-8$. <b>$8$ and $56$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/8; 2^(-1/3)" data-odp-opis="fraction of capacity; fraction of height (cube root as a power, e.g. 2^(1/3))"><span class="poziom">exam-level</span>
+      <div class="tresc">A glass has the shape of a cone (apex down). Water was poured into it up to half of the height. What fraction of the glass's capacity does the water occupy? To what height must water be poured to fill half of the capacity?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The water forms a cone similar with scale $\frac12$: $\left(\frac12\right)^3=\frac18$. Half of the volume: $k^3=\frac12$, $k=\frac{1}{\sqrt[3]2}\approx0.79$. <b>$\frac18$ of the capacity; up to $\frac{1}{\sqrt[3]{2}}=\frac{\sqrt[3]{4}}{2}$ of the height ($\approx79\%$)</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10-5*4^(1/3)" data-odp-opis="distance from the base (cube root as a power, e.g. 4^(1/3))"><span class="poziom">exam-level</span>
+      <div class="tresc">A pyramid has height $10$. At what distance from the base should it be cut by a plane parallel to the base to divide it into two solids of equal volumes? Give the exact and the approximate result.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The cut-off pyramid: $k^3=\frac12$, its height $\frac{10}{\sqrt[3]2}=5\sqrt[3]4\approx7.94$. Distance from the base: $10-5\sqrt[3]4$. <b>$10-5\sqrt[3]{4}\approx2.06$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>First determine $k$ from <b>lengths</b>. If areas are given, $k=\sqrt{\text{ratio of areas}}$; if volumes, $k=\sqrt[3]{\text{ratio of volumes}}$.</li>
+    <li>For a parallel cross-section you measure $k$ from the <b>apex</b>, not from the base.</li>
+    <li>A frustum of a pyramid (cone) is a difference: $V_{\text{frustum}}=V(1-k^3)$.</li>
+    <li>Trap: a cone “$2$ times taller” with the same radius is <b>not</b> similar. Similarity requires scaling all dimensions.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- 2. skalowanie ---
+  const s3 = new Scena3D($("bp-plot"), { zakres: 2.6, srodek: [0.8, 0.8, 1] });
+  const BT = { szescian: $("bp-szescian"), ostroslup: $("bp-ostroslup"), stozek: $("bp-stozek") };
+  let typ = "szescian", stop = null;
+  const SZ = { W: [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]],
+    S: [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]] };
+  const OS = { W: [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.2]], S: [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]] };
+  function stozek(g, k, nr, o) {
+    const c = [0.5 * k, 0.5 * k, 0], S = [0.5 * k, 0.5 * k, 1.3 * k], r = 0.5 * k;
+    g.okrag(c, [0, 0, 1], r, nr, o);
+    const ex = [Math.cos(g.az), -Math.sin(g.az), 0];
+    [1, -1].forEach(z => g.odcinek(V3.dod(c, V3.razy(ex, z * r)), S, nr, o));
+  }
+  function rysuj() {
+    const k = +$("bp-k").value, sk = W => W.map(p => V3.razy(p, k));
+    s3.rysuj(g => {
+      if (typ === "stozek") { stozek(g, 1, 3, { przerywana: true }); stozek(g, k, 1, { wypelnij: 0.08 }); }
+      else { const B = typ === "szescian" ? SZ : OS; g.bryla(B.W, B.S, 3, { ukryte: false, grubosc: 1.5 }); g.bryla(sk(B.W), B.S, 1, { wypelnij: 0.08 }); }
+    });
+    tex("bp-wynik", `k=${ladnaTex(k)},\\quad \\frac{P_2}{P_1}=k^2=${ladnaTex(k * k)},\\quad \\frac{V_2}{V_1}=k^3=${ladnaTex(k ** 3)}`);
+  }
+  Object.keys(BT).forEach(t => BT[t].addEventListener("click", () => {
+    typ = t; Object.keys(BT).forEach(j => BT[j].classList.toggle("aktywny", j === t)); rysuj();
+  }));
+  $("bp-k").addEventListener("input", () => { if (stop) stop(); rysuj(); });
+  $("bp-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(3000, x => { $("bp-k").value = 1 + x; rysuj(); });
+  });
+  rysuj();
+
+  // --- 3. odcięty ostrosłup ---
+  const s4 = new Scena3D($("oc-plot"), { zakres: 2.2, srodek: [0, 0, 1.2] });
+  const H = 2.6, P = [[-1.2, -1.2, 0], [1.2, -1.2, 0], [1.2, 1.2, 0], [-1.2, 1.2, 0]], S = [0, 0, H];
+  function rysuj2() {
+    const t = +$("oc-t").value, k = 1 - t, G = P.map(p => V3.lerp(S, p, k));
+    s4.rysuj(g => {
+      g.bryla([...P, ...G], [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]], 1, { wypelnij: 0.06 });
+      g.bryla([...G, S], [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]], 2, { wypelnij: 0.2 });
+      g.odcinek(S, [0, 0, 0], 3, { przerywana: true });
+      g.punkt(S, "S", 2, { r: 3 });
+      g.tekst([0, 0, H * (1 - k / 2)], "h", 3, { dx: 6, gruby: true });
+    });
+    tex("oc-wynik", `k=\\frac hH=${ladnaTex(k)},\\quad \\frac{V_{\\text{cut off}}}{V}=k^3=${ladnaTex(k ** 3, 3)}`);
+  }
+  $("oc-t").addEventListener("input", rysuj2);
+  rysuj2();
+});
+</script>
+</body>
+</html>

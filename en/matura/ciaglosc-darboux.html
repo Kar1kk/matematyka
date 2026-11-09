@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Continuity, the intermediate value property</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Continuity, the intermediate value property</h1>
+  <p class="lead">A function continuous on an interval is a graph drawn without lifting the pencil. If such a graph starts below the axis and ends above it, it <i>must</i> cross the axis. This is the Darboux (intermediate value) property.</p>
+  <p class="wymagania">XIII.R.2, XIII.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="ciaglosc">1. Continuity</h2>
+  <div class="definicja"><b>Definition</b>
+    $f$ is <b>continuous at a point</b> $x_0$ of its domain when $\lim\limits_{x\to x_0}f(x)=f(x_0)$.
+    In practice: both one-sided limits exist and equal $f(x_0)$.
+  </div>
+  $$\lim_{x\to x_0^-}f(x)=\lim_{x\to x_0^+}f(x)=f(x_0)$$
+  <ul>
+    <li><b>Continuous on a set</b>: continuous at each of its points (at the endpoints of a closed interval a one-sided limit is enough).</li>
+    <li>Polynomials, rational functions, roots, powers, $a^x$, $\log_a x$, $\sin$, $\cos$, $\tan$ are continuous <b>on their domains</b>. The sum, difference, product, quotient and composition of continuous functions are continuous too.</li>
+    <li>A discontinuity usually appears at the <b>junction point</b> of a piecewise function. There you compute one-sided limits.</li>
+  </ul>
+  <div class="uwaga">$f(x)=\frac1x$ <b>is</b> continuous, because $0$ is not in the domain. But it is not continuous on the interval $[-1,1]$, because it is not even defined there.</div>
+
+  <h2 id="parametr">2. Interactive: choose the parameter</h2>
+  <div class="demo">
+    <p class="opis">$f(x)=x^2+1$ for $x\le1$ and $f(x)=ax-1$ for $x&gt;1$. Change $a$ until the two pieces join.</p>
+    <canvas id="cp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="cp-a" min="-2" max="6" step="0.5" value="1"> <span id="cp-a-v"></span></label>
+    </div>
+    <div class="wynik" id="cp-wynik"></div>
+  </div>
+
+  <h2 id="darboux">3. The Darboux property</h2>
+  <div class="twierdzenie"><b>Theorem (Darboux property)</b>
+    If $f$ is continuous on $[a,b]$ and $f(a)\cdot f(b)&lt;0$, then there is $c\in(a,b)$ such that $f(c)=0$.
+    <p>More generally: a function continuous on $[a,b]$ takes <b>every</b> value between $f(a)$ and $f(b)$.</p>
+  </div>
+  <ul>
+    <li>The theorem gives <b>existence</b>, not the number of zeros. You justify uniqueness separately, e.g. by monotonicity.</li>
+    <li>For an equation $g(x)=h(x)$ you apply it to the difference $f(x)=g(x)-h(x)$.</li>
+  </ul>
+  <div class="demo">
+    <p class="opis">Drag the endpoints $a$ and $b$ along the axis. When $f(a)$ and $f(b)$ have different signs, a continuous function must cross the axis. "▶ Draw" moves the pencil from $a$ to $b$. Switch to $\frac1x$ (undefined at $0$) or a function with a jump: the signs differ, but there is no zero.</p>
+    <canvas id="cd-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>function <select id="cd-f">
+        <option value="0">continuous: x³ − 3x + 1</option>
+        <option value="1">1/x (not defined at 0)</option>
+        <option value="2">discontinuous: jump at x = 1</option>
+      </select></label>
+      <button id="cd-start">▶ Draw from a to b</button>
+    </div>
+    <div class="wynik" id="cd-wynik"></div>
+  </div>
+
+  <h2 id="zapis">4. How to write it up on the exam</h2>
+  <div class="przyklad">
+    <ol>
+      <li>Define $f$ (for an equation: $f(x)=\text{left}-\text{right}$) and write <b>why it is continuous</b> on $[a,b]$ (e.g. "as a polynomial").</li>
+      <li>Compute $f(a)$ and $f(b)$, show that they have <b>opposite signs</b>.</li>
+      <li>Conclusion: "By the Darboux property there is $c\in(a,b)$ such that $f(c)=0$".</li>
+    </ol>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Justify that the equation $x^3+x-1=0$ has exactly one solution and that it lies in $(0,1)$.</p>
+    <ol>
+      <li>$f(x)=x^3+x-1$ is continuous on $\R$ (a polynomial).</li>
+      <li>$f(0)=-1&lt;0$, $f(1)=1&gt;0$, so by the Darboux property there is $c\in(0,1)$, $f(c)=0$.</li>
+      <li>Uniqueness: $x^3$ and $x-1$ are increasing, so $f$ is increasing and takes the value $0$ at most once.</li>
+    </ol>
+    <p class="odp">The equation has exactly one solution, $c\in(0,1)$.</p>
+  </div>
+  <div class="przyklad">
+    <p>For which $m$ is the function $f(x)=\frac{x^2-4}{x-2}$ for $x\neq2$, $f(2)=m$, continuous?</p>
+    <ol>
+      <li>Away from $2$ it is continuous (rational). We check only $x_0=2$.</li>
+      <li>$\lim\limits_{x\to2}\frac{(x-2)(x+2)}{x-2}=\lim\limits_{x\to2}(x+2)=4$.</li>
+      <li>Continuity at $2$: $f(2)=4$.</li>
+    </ol>
+    <p class="odp">$m=4$</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Investigate the continuity at $x_0=1$ of the function $f(x)=x+2$ for $x&lt;1$, $f(x)=3x$ for $x\ge1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\lim\limits_{x\to1^-}(x+2)=3$, $\lim\limits_{x\to1^+}3x=3$, $f(1)=3$. <b>Continuous at $1$</b> (so on all of $\R$).
+      </div></details></li>
+    <li class="zadanie" data-odp="1" data-odp-opis="a"><span class="poziom">medium</span>
+      <div class="tresc">Find $a$ for which the function $f(x)=ax+1$ for $x\le2$, $f(x)=x^2-a$ for $x&gt;2$ is continuous.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Left-hand limit and $f(2)$: $2a+1$. Right-hand: $4-a$. Condition $2a+1=4-a$. <b>$a=1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-6" data-odp-opis="k"><span class="poziom">medium</span>
+      <div class="tresc">The function $f(x)=\frac{x^2-9}{x+3}$ for $x\neq-3$ and $f(-3)=k$. For which $k$ is it continuous?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{(x-3)(x+3)}{x+3}=x-3\to-6$. <b>$k=-6$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Justify that the equation $x^5-3x+1=0$ has a solution in the interval $(0,1)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(x)=x^5-3x+1$ is continuous (a polynomial). $f(0)=1&gt;0$, $f(1)=-1&lt;0$. <b>By the Darboux property there is $c\in(0,1)$, $f(c)=0$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Justify that the equation $\cos x=x$ has a solution in the interval $\left(0,\frac{\pi}{2}\right)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(x)=\cos x-x$ is continuous (a difference of continuous functions). $f(0)=1&gt;0$, $f\left(\frac\pi2\right)=-\frac\pi2&lt;0$.
+        <b>By the Darboux property there is $c\in\left(0,\frac\pi2\right)$, $\cos c=c$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Justify that the polynomial $W(x)=x^3-6x+2$ has three real roots.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $W$ is continuous. $W(-3)=-7$, $W(0)=2$, $W(1)=-3$, $W(3)=11$. The sign changes on $(-3,0)$, $(0,1)$ and $(1,3)$, so each of these disjoint intervals contains a root (Darboux). A polynomial of degree $3$ has at most three.
+        <b>Exactly three real roots.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>Without a word about <b>continuity</b> the justification is incomplete. Write why $f$ is continuous on $[a,b]$.</li>
+    <li><b>Compute</b> the values $f(a)$, $f(b)$ <b>exactly</b> and state the sign. Numbers alone without "$&lt;0$", "$&gt;0$" are not enough.</li>
+    <li>Darboux gives "at least one". "Exactly one" additionally requires monotonicity (often from the <a href="monotonicznosc-ekstrema.html">derivative</a>).</li>
+    <li>Approximating a zero (bisection) is <b>no longer</b> in the core curriculum: it is enough to indicate an interval.</li>
+    <li>Continuity with a parameter: equate <b>both</b> one-sided limits and the value at the point.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Parametr ---
+  const cp = new Wykres($("cp-plot"), { xmin: -3, xmax: 4, ymin: -3, ymax: 9 });
+  function rysujCp() {
+    const a = +$("cp-a").value, P = a - 1, ok = Math.abs(P - 2) < 1e-9;
+    $("cp-a-v").textContent = ladna(a);
+    cp.rysuj(g => {
+      g.funkcja(x => x * x + 1, 1, { do: 1 });
+      g.funkcja(x => a * x - 1, ok ? 1 : 2, { od: 1 });
+      if (!ok) g.odcinek(1, 2, 1, P, 4);
+      g.punkt(1, P, "", ok ? 1 : 2, { pusty: true });
+      g.punkt(1, 2, ok ? "sklejone" : "f(1) = 2", 1);
+    });
+    tex("cp-wynik", `\\lim_{x\\to1^-}f(x)=2=f(1),\\quad \\lim_{x\\to1^+}f(x)=a-1=${ladnaTex(P)}` +
+      (ok ? "\\quad\\Rightarrow\\ \\text{continuous}" : "\\quad\\Rightarrow\\ \\text{jump}"));
+  }
+  $("cp-a").addEventListener("input", rysujCp);
+  rysujCp();
+
+  // --- 3. Darboux ---
+  const FUN = [
+    { f: x => x ** 3 - 3 * x + 1, ciagla: true, przerwa: null },
+    { f: x => 1 / x, ciagla: false, przerwa: 0 },
+    { f: x => x < 1 ? x - 2 : x + 1, ciagla: false, przerwa: 1 },
+  ];
+  const cd = new Wykres($("cd-plot"), { xmin: -3, xmax: 3, ymin: -5, ymax: 5 });
+  const naOsi = p => ({ x: Math.min(Math.max(p.x, -2.9), 2.9), y: 0 });
+  const konce = cd.przeciagaj([{ x: 0.6, y: 0, ogranicz: naOsi }, { x: 2.2, y: 0, ogranicz: naOsi }], () => { if (stop) stop(); rysujCd(1); });
+  let stop = null;
+  // miejsca zerowe funkcji ciągłej w (a, b): zmiany znaku + bisekcja
+  function zera(f, a, b) {
+    const w = [], n = 400;
+    for (let i = 0; i < n; i++) {
+      let u = a + (b - a) * i / n, v = a + (b - a) * (i + 1) / n;
+      if (f(u) === 0) { w.push(u); continue; }
+      if (f(u) * f(v) < 0) { for (let k = 0; k < 50; k++) { const s = (u + v) / 2; f(u) * f(s) <= 0 ? v = s : u = s; } w.push(u); }
+    }
+    return w;
+  }
+  function rysujCd(t) {
+    const F = FUN[+$("cd-f").value], f = F.f;
+    const a = Math.min(konce[0].x, konce[1].x), b = Math.max(konce[0].x, konce[1].x);
+    const fa = f(a), fb = f(b), rozne = fa * fb < 0;
+    const koniec = a + (b - a) * t;
+    const przerwaW = F.przerwa !== null && a < F.przerwa && F.przerwa < b;
+    const z = F.ciagla ? zera(f, a, koniec) : [];
+    cd.rysuj(g => {
+      const rys = (od, d, nr, op = {}) => {
+        if (F.przerwa !== null && od < F.przerwa && F.przerwa < d) {
+          g.funkcja(f, nr, { ...op, od, do: F.przerwa - 1e-3 }); g.funkcja(f, nr, { ...op, od: F.przerwa + 1e-3, do: d });
+        } else g.funkcja(f, nr, { ...op, od, do: d });
+      };
+      rys(g.z.xmin, g.z.xmax, 1, { przerywana: true });
+      if (rozne) g.obszar(() => g.z.ymax, () => g.z.ymin, a, b, 3, 0.08);
+      rys(a, koniec, 1);
+      g.odcinek(a, 0, a, fa, fa < 0 ? 2 : 3); g.odcinek(b, 0, b, fb, fb < 0 ? 2 : 3);
+      g.punkt(a, fa, "f(a)", fa < 0 ? 2 : 3); g.punkt(b, fb, "f(b)", fb < 0 ? 2 : 3);
+      g.punkt(a, 0, "a", 4, { r: 6 }); g.punkt(b, 0, "b", 4, { r: 6 });
+      z.forEach(c => g.punkt(c, 0, "c", 2, { pusty: true, r: 7 }));
+    });
+    let opis;
+    const il = fa * fb;
+    if (Math.abs(il) < 1e-9) opis = "\\text{an endpoint is a zero; the Darboux assumption is not satisfied}";
+    else if (!rozne) opis = "\\text{same signs: the Darboux assumption is not satisfied}";
+    else if (F.ciagla) opis = `\\Rightarrow\\ \\exists\\,c\\in(a,b):\\ f(c)=0` + (z.length > 1 ? `\\ (\\text{here: }${z.length})` : "");
+    else opis = przerwaW ? "\\text{but }f\\text{ is not continuous on }[a,b]\\text{: no zero}" : "";
+    tex("cd-wynik", `f(a)=${ladnaTex(fa)},\\ f(b)=${ladnaTex(fb)},\\ \\ f(a)\\cdot f(b)${rozne ? "<0" : Math.abs(il) < 1e-9 ? "=0" : ">0"}\\ \\ ${opis}`);
+  }
+  $("cd-f").addEventListener("change", () => {
+    if (stop) stop();
+    // dla funkcji nieciągłych ustaw końce po obu stronach przerwy
+    if (+$("cd-f").value === 0) { konce[0].x = 0.6; konce[1].x = 2.2; } else { konce[0].x = -1; konce[1].x = 2; }
+    rysujCd(1);
+  });
+  $("cd-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2200, rysujCd); });
+  rysujCd(1);
+});
+</script>
+</body>
+</html>

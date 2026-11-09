@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radian measure and the unit circle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Radian measure and the unit circle</h1>
+  <p class="lead">We measure an angle by the length of the arc it cuts on a circle of radius $1$. One radian is the angle for which the arc equals the radius. A full turn is the circumference, i.e. $2\pi\approx6.28$ radii.</p>
+  <p class="wymagania">VII.R.1, VII.R.2 (functions of any angle)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="radiany">1. Radians</h2>
+  <div class="definicja"><b>Definition</b> The radian measure of a central angle is the ratio of the length $l$ of the arc it subtends to the radius: $\;\alpha=\frac{l}{r}$ (radians). A full angle has $\frac{2\pi r}{r}=2\pi$ rad.</div>
+  <div class="wzor">
+    <div class="tytul">Conversion ($180^\circ=\pi$ rad)</div>
+    $$\alpha_{\text{rad}}=\alpha^\circ\cdot\frac{\pi}{180^\circ}$$
+    $$1\text{ rad}=\frac{180^\circ}{\pi}\approx57.3^\circ$$
+    <dl><dt>$l=\alpha r$</dt><dd>arc length (angle in radians)</dd>
+        <dt>$P=\frac12\alpha r^2$</dt><dd>area of a circular sector (angle in radians)</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>degrees</th><td>$30^\circ$</td><td>$45^\circ$</td><td>$60^\circ$</td><td>$90^\circ$</td><td>$120^\circ$</td><td>$180^\circ$</td><td>$270^\circ$</td><td>$360^\circ$</td></tr>
+    <tr><th>radians</th><td>$\frac\pi6$</td><td>$\frac\pi4$</td><td>$\frac\pi3$</td><td>$\frac\pi2$</td><td>$\frac{2\pi}3$</td><td>$\pi$</td><td>$\frac{3\pi}2$</td><td>$2\pi$</td></tr>
+  </table>
+  <div class="uwaga">When an angle has no degree sign, it is in radians: $\sin 2$ is the sine of $2$ rad $\approx114.6^\circ$, not $\sin2^\circ$.</div>
+
+  <h2 id="nawijanie">2. Animation: wrapping the radius</h2>
+  <div class="demo">
+    <p class="opis">A string whose length is the chosen number of radii is wrapped around the circle. The amount of string that fits is the number of radians in the angle. Try $1$, $3.14$ and $6.28$.</p>
+    <canvas id="nw-plot"></canvas>
+    <div class="sterowanie">
+      <label>string <input type="range" id="nw-l" min="0.5" max="6.28" step="0.01" value="1"> <span id="nw-l-v"></span></label>
+      <button id="nw-start">▶ Wrap</button>
+    </div>
+    <div class="wynik" id="nw-wynik"></div>
+  </div>
+
+  <h2 id="okrag">3. Functions of any angle</h2>
+  <p>A directed angle: from the positive $Ox$ half-axis <b>counterclockwise</b> is a positive angle, clockwise is negative. The rotation can be longer than a full turn.</p>
+  <div class="definicja"><b>Definition</b> For any number $x\in\R$ let $P=(x_P,y_P)$ be the endpoint of an arc of length $x$ measured on the unit circle from the point $(1,0)$. Then
+    $$\sin x=y_P,\qquad \cos x=x_P$$
+    $$\tan x=\frac{y_P}{x_P}\quad\left(x\neq\frac\pi2+k\pi\right)$$</div>
+  <p>The angles $x$ and $x+2k\pi$ ($k\in\Z$) end at the same point, so they have the same function values. The identity $\sin^2x+\cos^2x=1$ and $\tan x=\frac{\sin x}{\cos x}$ hold for every $x$ (in the domain).</p>
+  <table class="tabela">
+    <tr><th>quadrant</th><th>I</th><th>II</th><th>III</th><th>IV</th></tr>
+    <tr><td>$x$</td><td>$(0,\frac\pi2)$</td><td>$(\frac\pi2,\pi)$</td><td>$(\pi,\frac{3\pi}2)$</td><td>$(\frac{3\pi}2,2\pi)$</td></tr>
+    <tr><td>$\sin x$</td><td>$+$</td><td>$+$</td><td>$-$</td><td>$-$</td></tr>
+    <tr><td>$\cos x$</td><td>$+$</td><td>$-$</td><td>$-$</td><td>$+$</td></tr>
+    <tr><td>$\tan x$</td><td>$+$</td><td>$-$</td><td>$+$</td><td>$-$</td></tr>
+  </table>
+  <p>Mnemonic: <i>"All Students Take Calculus"</i>: in the first quadrant All are positive, in the second only Sine, in the third Tangent, and in the fourth Cosine.</p>
+
+  <div class="demo">
+    <p class="opis">Slide the angle from $-4\pi$ to $4\pi$. The spiral shows how many times and in which direction we have turned; the point $P$ and the values depend only on where the rotation ended.</p>
+    <canvas id="dk-plot"></canvas>
+    <div class="sterowanie">
+      <label>$x$ <input type="range" id="dk-x" min="-48" max="48" step="1" value="28"> <span id="dk-x-v"></span></label>
+    </div>
+    <div class="wynik" id="dk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Find $\sin\left(-\frac{7\pi}{3}\right)$ and convert $210^\circ$ to radians.</p>
+    <ol>
+      <li>Add full turns: $-\frac{7\pi}{3}+4\pi=\frac{5\pi}{3}$ (that is $300^\circ$, quadrant IV).</li>
+      <li>On the circle: $300^\circ$ is $60^\circ$ below the $Ox$ axis, so $P=\left(\frac12,-\frac{\sqrt3}2\right)$ and $\sin\frac{5\pi}3=-\frac{\sqrt3}2$.</li>
+      <li>$210^\circ\cdot\frac{\pi}{180^\circ}=\frac{7\pi}{6}$.</li>
+    </ol>
+    <p class="odp">$\sin\left(-\frac{7\pi}{3}\right)=-\frac{\sqrt3}{2},\quad 210^\circ=\frac{7\pi}{6}$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="5pi/6; 5pi/3; 315; 360/pi" data-odp-opis="150° and 300° in radians; 7π/4 and 2 rad in degrees"><span class="poziom">easy</span>
+      <div class="tresc">Convert to radians: $150^\circ$, $300^\circ$. Convert to degrees: $\frac{7\pi}{4}$, $2$ rad.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        <b>$\frac{5\pi}{6}$, $\frac{5\pi}{3}$, $315^\circ$, $\frac{360^\circ}{\pi}\approx114.6^\circ$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Determine the sign of the number $\sin200^\circ\cdot\cos300^\circ\cdot\tan100^\circ$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $200^\circ$ – quadrant III, $\sin&lt;0$; $300^\circ$ – quadrant IV, $\cos&gt;0$; $100^\circ$ – quadrant II, $\tan&lt;0$. Product: $(-)(+)(-)$. <b>Positive</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4pi; 12pi" data-odp-opis="arc length; sector area"><span class="poziom">medium</span>
+      <div class="tresc">A central angle measures $\frac{2\pi}{3}$ and the radius of the circle is $6$. Find the arc length and the area of the circular sector.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $l=\frac{2\pi}3\cdot6=4\pi$, $\;P=\frac12\cdot\frac{2\pi}3\cdot36=12\pi$. <b>$l=4\pi$, $P=12\pi$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10/3" data-odp-opis="angle in radians"><span class="poziom">medium</span>
+      <div class="tresc">A wheel of radius $30$ cm rolled without slipping for $1$ m. Through what angle (in radians and approximately in degrees) did it turn?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The distance is the arc length: $\alpha=\frac{l}{r}=\frac{100}{30}$. <b>$\frac{10}{3}$ rad $\approx191^\circ$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Find $\cos\frac{17\pi}{3}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{17\pi}3=4\pi+\frac{5\pi}3$, so $\cos\frac{17\pi}3=\cos\frac{5\pi}3$. The point for $300^\circ$: $\left(\frac12,-\frac{\sqrt3}2\right)$. <b>$\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-5/13; 5/12" data-odp-opis="sin x; tan x"><span class="poziom">exam-level</span>
+      <div class="tresc">It is known that $x\in\left(\pi,\frac{3\pi}{2}\right)$ and $\cos x=-\frac{12}{13}$. Find $\sin x$ and $\tan x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\sin^2x=1-\frac{144}{169}=\frac{25}{169}$. Quadrant III, so $\sin x&lt;0$. $\tan x=\frac{-5/13}{-12/13}$. <b>$\sin x=-\frac{5}{13}$, $\tan x=\frac{5}{12}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>A range of $x$ given in radians ($x\in(\pi,\frac{3\pi}2)$) is information about the <b>quadrant</b>, i.e. about the signs. Always use it and say so.</li>
+    <li>Large or negative angles: first subtract/add full turns $2k\pi$, then read off the circle.</li>
+    <li>The formulas for arc and sector in radians are shorter than in degrees ($l=\alpha r$ instead of $\frac{\alpha}{360^\circ}\cdot2\pi r$). Do not mix units.</li>
+    <li>On a calculator check the DEG/RAD mode (give results exactly anyway, with $\pi$ and roots).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // liczba → dokładny zapis TeX, jeśli to jedna z typowych wartości
+  const dokladna = v => {
+    const L = [[0, "0"], [0.5, "\\frac12"], [Math.SQRT2 / 2, "\\frac{\\sqrt2}2"], [Math.sqrt(3) / 2, "\\frac{\\sqrt3}2"], [1, "1"], [Math.sqrt(3) / 3, "\\frac{\\sqrt3}3"], [Math.sqrt(3), "\\sqrt3"]];
+    for (const [c, t] of L) if (Math.abs(Math.abs(v) - c) < 1e-9) return (v < 0 && c ? "-" : "") + t;
+    return "\\approx" + ladnaTex(v, 3);
+  };
+  const rowne = v => (v.startsWith("\\approx") ? "" : "=") + v;
+  // kπ/12 → TeX
+  const piTex = k => {
+    if (k === 0) return "0";
+    const g = (a, b) => b ? g(b, a % b) : Math.abs(a), d = g(k, 12), l = k / d, m = 12 / d;
+    const L = l === 1 ? "" : l === -1 ? "-" : String(l);
+    return m === 1 ? `${L}\\pi` : (l < 0 ? "-" : "") + `\\frac{${Math.abs(l) === 1 ? "" : Math.abs(l)}\\pi}{${m}}`;
+  };
+
+  // --- 2. Nawijanie ---
+  const w1 = new Wykres($("nw-plot"), { xmin: -1.5, xmax: 2.2, ymin: -1.4, ymax: 2.4, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let stop = null;
+  function nawin(t) {
+    const L = +$("nw-l").value, s = t * L, ex = Math.cos(s), ey = Math.sin(s);
+    $("nw-l-v").textContent = ladna(L) + " r";
+    w1.rysuj(g => {
+      g.okrag(0, 0, 1, 3, { przerywana: true });
+      g.odcinek(0, 0, 1, 0, 1, false); g.tekst(0.5, 0, "r = 1", 1, { dy: -6, wyrownanie: "center" });
+      if (s > 0) {
+        g.luk(0, 0, 1, 0, s, 2, { grubosc: 4 });
+        g.odcinek(0, 0, ex, ey, 1, false);
+        g.luk(0, 0, 0.25, 0, s, 4, { wypelnij: 0.15 });
+      }
+      g.odcinek(ex, ey, ex - (L - s) * ey, ey + (L - s) * ex, 2, false);
+      g.punkt(ex, ey, "", 2, { r: 4 });
+    });
+    tex("nw-wynik", `\\text{wrapped } ${ladnaTex(s)}\\text{ radii}\\quad\\Rightarrow\\ \\alpha=${ladnaTex(s)}\\text{ rad}\\approx${ladnaTex(s * 180 / Math.PI, 1)}^\\circ`);
+  }
+  $("nw-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2500, nawin); });
+  $("nw-l").addEventListener("input", () => { if (stop) stop(); nawin(0); });
+  nawin(1);
+
+  // --- 3. Dowolny kąt ---
+  const w2 = new Wykres($("dk-plot"), { xmin: -1.6, xmax: 1.6, ymin: -1.45, ymax: 1.45, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  function rysujDk() {
+    const k = +$("dk-x").value, x = k * Math.PI / 12, c = Math.cos(x), s = Math.sin(x);
+    const k0 = ((k % 24) + 24) % 24, deg = k * 15;
+    $("dk-x-v").textContent = deg + "°";
+    w2.rysuj(g => {
+      g.okrag(0, 0, 1, 3);
+      [["I", 1, 1], ["II", -1, 1], ["III", -1, -1], ["IV", 1, -1]].forEach(([n, a, b], i) => {
+        const zn = [["+", "+", "+"], ["+", "−", "−"], ["−", "−", "+"], ["−", "+", "−"]][i];
+        g.tekst(a * 1.25, b * 1.2, `${n}: sin ${zn[0]}, cos ${zn[1]}, tan ${zn[2]}`, "--plot-axis", { wyrownanie: a > 0 ? "right" : "left", dy: b > 0 ? 4 : 8, rozmiar: 12 });
+      });
+      if (k !== 0) g.parametryczna(t => (0.15 + 0.05 * Math.abs(t)) * Math.cos(t), t => (0.15 + 0.05 * Math.abs(t)) * Math.sin(t), 0, x, k > 0 ? 4 : 2, { grubosc: 2 });
+      g.odcinek(0, 0, c, 0, 3, false); g.odcinek(c, 0, c, s, 2, false);
+      g.odcinek(0, 0, c, s, 1, false);
+      g.punkt(c, s, "P");
+    });
+    const tn = Math.abs(c) < 1e-9 ? "\\text{ does not exist}" : rowne(dokladna(s / c));
+    const m = (k - k0) / 24, ob = (Math.abs(m) === 1 ? "" : Math.abs(m) + "\\cdot ") + "2\\pi";
+    const red = m === 0 || (k0 === 0 && Math.abs(m) === 1) ? "" : "=" + (k0 ? piTex(k0) + (m > 0 ? "+" : "-") : (m > 0 ? "" : "-")) + ob;
+    tex("dk-wynik", `x=${piTex(k)}${red}:\\ \\sin x${rowne(dokladna(s))},\\ \\cos x${rowne(dokladna(c))},\\ \\tan x${tn}`);
+  }
+  $("dk-x").addEventListener("input", rysujDk);
+  rysujDk();
+});
+</script>
+</body>
+</html>

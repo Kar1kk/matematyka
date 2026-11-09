@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proofs: divisibility and remainders, irrationality</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Proofs: divisibility and remainders, irrationality</h1>
+  <p class="lead">A divisibility proof is almost always the same move: write the number in general form ($2k+1$, $4k+3$, $n(n+1)$…) and <b>factor the divisor out</b>. The irrationality of a number and the infinitude of primes are proved indirectly: assume the opposite and reach a contradiction.</p>
+  <p class="wymagania">I.2 · proofs: infinitely many primes, irrationality of $\sqrt2$, $\log_2 5$</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="narzedzia">1. Tools and the write-up template</h2>
+  <div class="wzor">
+    <div class="tytul">Division with remainder (memorize)</div>
+    $$n=mk+r,\quad k\in\Z,\ \ r\in\{0,\dots,m-1\}$$
+    <dl><dt>even</dt><dd>$2k$; odd $2k+1$</dd>
+        <dt>consecutive</dt><dd>among $m$ consecutive integers exactly one is divisible by $m$; the product of two consecutive integers is even</dd>
+        <dt>remainders</dt><dd>the remainder of a sum/product = the remainder of the sum/product of the remainders, because $(mk+r)(ml+s)=m(\dots)+rs$</dd></dl>
+  </div>
+  <div class="przyklad">
+    <p><b>Write-up template for the exam</b></p>
+    <ol>
+      <li>State the assumption as a formula: “Let $n=4k+3$, where $k\in\Z$”.</li>
+      <li>Transform the expression and <b>factor out the divisor</b>: $\ldots=4(\ldots)+r$.</li>
+      <li>Name what is in the brackets: “$4k^2+6k+2$ is an integer”.</li>
+      <li>Conclusion in words: “so the number is divisible by $4$ / leaves remainder $r$”.</li>
+    </ol>
+  </div>
+
+  <h2 id="podstawa">2. Two proofs from the core curriculum</h2>
+  <div class="twierdzenie"><b>Theorem</b> The product of four consecutive natural numbers is divisible by $24$.
+    <details class="rozwin"><summary>Proof</summary><div>
+      <p>Let $P=n(n+1)(n+2)(n+3)$. Among three (and hence among four) consecutive numbers one is divisible by $3$, so $3\mid P$.</p>
+      <p>Among four consecutive numbers there are two <b>consecutive even numbers</b> $2j$ and $2j+2=2(j+1)$. Their product is $4j(j+1)$, and $j(j+1)$ is even, so $8\mid P$.</p>
+      <p>$3$ and $8$ are relatively prime, so $24=3\cdot8\mid P$. $\blacksquare$</p>
+    </div></details></div>
+  <div class="twierdzenie"><b>Theorem</b> A number that leaves remainder $3$ when divided by $4$ is not the square of an integer.
+    <details class="rozwin"><summary>Proof</summary><div>
+      <p>We check which remainders squares leave when divided by $4$. Every integer is $2j$ or $2j+1$:</p>
+      $$(2j)^2=4j^2$$
+      $$(2j+1)^2=4(j^2+j)+1$$
+      <p>So a square leaves remainder $0$ or $1$, never $3$. $\blacksquare$</p>
+    </div></details></div>
+
+  <h2 id="reszty">3. Interactive: the remainder clock</h2>
+  <div class="demo">
+    <p class="opis">The “clock” has $m$ remainders. The blue point is the remainder of $n$, the red one the remainder of $n^k$. “▶ Play” goes through consecutive $n$: only the remainders that the powers actually reach light up. For $k=2$, $m=4$ only $0$ and $1$ remain — that is the whole proof from section 2.</p>
+    <canvas id="zr-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$m$ <input type="range" id="zr-m" min="2" max="12" step="1" value="4"> <span id="zr-m-v"></span></label>
+      <label>$k$ <select id="zr-k"><option value="2">2 (square)</option><option value="3">3 (cube)</option></select></label>
+      <label>$n$ <input type="range" id="zr-n" min="0" max="30" step="1" value="7"> <span id="zr-n-v"></span></label>
+      <button id="zr-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="zr-wynik"></div>
+  </div>
+
+  <h2 id="nie-wprost">4. Indirect proofs</h2>
+  <p>Template: <b>assume the negation</b> of the claim, derive something false from it, conclude that the assumption was false.</p>
+  <div class="twierdzenie"><b>Theorem</b> $\sqrt2$ is an irrational number.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Suppose $\sqrt2=\frac pq$, where $p,q$ are positive integers and the fraction is <b>in lowest terms</b>. Then $p^2=2q^2$, so $p^2$ is even, and therefore $p$ is even (the square of an odd number is odd). Let $p=2s$:</p>
+      $$4s^2=2q^2\ \Rightarrow\ q^2=2s^2$$
+      <p>In the same way $q$ is even. But then $\frac pq$ can be reduced by $2$ — a contradiction. $\blacksquare$</p>
+    </div></details></div>
+  <div class="twierdzenie"><b>Theorem</b> $\log_2 5$ is an irrational number.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>$\log_2 5&gt;0$, because $5&gt;1$. Suppose $\log_2 5=\frac pq$, where $p,q$ are positive integers. By the definition of the logarithm:</p>
+      $$2^{p/q}=5\ \Rightarrow\ 2^p=5^q$$
+      <p>The left side is even ($p\ge1$), the right side is odd — a contradiction. $\blacksquare$ The irrationality of e.g. $\log_3 2$ or $\log 5$ is proved the same way (then $10^p=5^q$: the left side is even).</p>
+    </div></details></div>
+  <div class="twierdzenie"><b>Theorem</b> (Euclid) There are infinitely many primes.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Suppose there are finitely many: $p_1,p_2,\dots,p_k$. Let</p>
+      $$N=p_1p_2\cdots p_k+1$$
+      <p>$N&gt;1$, so it has a prime divisor $p$. By assumption $p$ is one of the $p_i$. But $p_i$ divides the product $p_1\cdots p_k$, so $N$ leaves remainder $1$ when divided by $p_i$ — it is not divisible by $p_i$. A contradiction. $\blacksquare$</p>
+    </div></details></div>
+  <div class="demo">
+    <p class="opis">Take the first $k$ primes and build $N$. “▶ Play” checks them one by one: every $p_i$ leaves remainder $1$. So the factorization of $N$ contains a prime <b>from outside the list</b>. Note: for $k=6$, $N=30031=59\cdot509$ is not prime — the proof does not require it to be.</p>
+    <canvas id="eu-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="eu-k" min="1" max="8" step="1" value="6"> <span id="eu-k-v"></span></label>
+      <button id="eu-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="eu-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Show that for every integer $n$ the number $n^3-n$ is divisible by $6$.</p>
+    <ol>
+      <li>Factor: $n^3-n=n(n^2-1)=(n-1)n(n+1)$ — a product of three consecutive integers.</li>
+      <li>Among them there is an even number, so $2\mid n^3-n$; there is also a number divisible by $3$, so $3\mid n^3-n$.</li>
+      <li>$2$ and $3$ are relatively prime.</li>
+    </ol>
+    <p class="odp">$6\mid n^3-n$ for every $n\in\Z$</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Show that the sum of three consecutive integers is divisible by $3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(n-1)+n+(n+1)=3n$, $n\in\Z$. <b>$3\mid 3n$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Show that the square of an odd number leaves remainder $1$ when divided by $8$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(2k+1)^2=4k^2+4k+1=4k(k+1)+1$. $k(k+1)$ is even, $k(k+1)=2j$, so $(2k+1)^2=8j+1$. <b>Remainder $1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2" data-odp-opis="remainder"><span class="poziom">medium</span>
+      <div class="tresc">An integer $n$ leaves remainder $2$ when divided by $5$. What remainder does $n^3+2n$ leave?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $n=5k+2$: $(5k+2)^3+2(5k+2)=125k^3+150k^2+70k+12$
+        $$=5(25k^3+30k^2+14k+2)+2$$
+        <b>Remainder $2$</b> (faster: remainders $2^3+2\cdot2=12$, and $12$ leaves remainder $2$).
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Show that a number leaving remainder $3$ when divided by $4$ is not the sum of the squares of two integers.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Squares leave remainders $0$ or $1$ (section 2). The sum of two such remainders is $0$, $1$ or $2$. <b>Remainder $3$ is impossible.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Show that for every integer $n$ the number $n^5-n$ is divisible by $30$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $n^5-n=n(n^2-1)(n^2+1)$. Write $n^2+1=(n^2-4)+5$:
+        $$n^5-n=n(n^2-1)(n^2-4)+5n(n^2-1)$$
+        $$=(n-2)(n-1)n(n+1)(n+2)$$
+        $$+\,5(n-1)n(n+1)$$
+        The first term is a product of $5$ consecutive numbers: it is divisible by $2$, $3$ and $5$. The second: $5\cdot$(a product of $3$ consecutive numbers), and that is divisible by $6$. <b>Both terms are divisible by $30$</b>, so the sum is too.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Show that $\log_3 2$ is an irrational number.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\log_3 2&gt;0$. Suppose $\log_3 2=\frac pq$, $p,q\in\N_+$. Then $3^{p/q}=2$, that is $3^p=2^q$. The left side is odd, the right side even ($q\ge1$) — a contradiction. <b>$\log_3 2\notin\Q$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Always “$k\in\Z$”</b> (or $\N$) when you write $2k+1$, $4k+3$. Without it the proof is incomplete.</li>
+    <li><b>Examples are not a proof.</b> Checking $n=1,2,3$ is good for getting a feel, but earns no points.</li>
+    <li><b>Combining divisors:</b> from $3\mid P$ and $8\mid P$ it follows that $24\mid P$, because $3$ and $8$ are relatively prime. From $4\mid P$ and $6\mid P$ it does <b>not</b> follow that $24\mid P$ (e.g. $12$).</li>
+    <li><b>Indirect proof:</b> write explicitly “Suppose that…”, point out the contradiction and finish with a conclusion.</li>
+    <li>A remainder satisfies $0\le r&lt;m$: $-1$ divided by $4$ has remainder $3$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Zegar reszt ---
+  const w1 = new Wykres($("zr-plot"), { xmin: -1.6, xmax: 1.6, ymin: -1.45, ymax: 1.45, rowneSkale: true, siatka: false, osie: false });
+  const potegaMod = (n, k, m) => { let w = 1; for (let i = 0; i < k; i++) w = (w * n) % m; return w; };
+  let stopZr = null;
+  function rysujZr(nAkt) {
+    const m = +$("zr-m").value, k = +$("zr-k").value;
+    $("zr-m-v").textContent = m; $("zr-n-v").textContent = nAkt;
+    const kat = r => Math.PI / 2 - 2 * Math.PI * r / m;
+    const P = r => [Math.cos(kat(r)), Math.sin(kat(r))];
+    const zapalone = new Set();
+    for (let n = 0; n <= nAkt; n++) zapalone.add(potegaMod(n, k, m));
+    const r = nAkt % m, rk = potegaMod(nAkt, k, m);
+    w1.rysuj(g => {
+      g.okrag(0, 0, 1, 3, { przerywana: true });
+      for (let i = 0; i < m; i++) {
+        const [x, y] = P(i);
+        g.punkt(x, y, "", zapalone.has(i) ? 2 : 3, { r: 9, pusty: !zapalone.has(i) });
+        g.tekst(x * 1.28, y * 1.28, String(i), zapalone.has(i) ? 2 : 3, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: 15 });
+      }
+      const [xa, ya] = P(r), [xb, yb] = P(rk);
+      if (r !== rk) g.strzalka(xa * 0.85, ya * 0.85, xb * 0.85, yb * 0.85, 4);
+      g.punkt(xa, ya, "", 1, { r: 6 });
+      g.punkt(xb, yb, "", 2, { r: 4 });
+    });
+    const wsz = [...zapalone].sort((a, b) => a - b).join(",\\,");
+    tex("zr-wynik", `n=${nAkt}:\\ n\\bmod ${m}=${r},\\ \\ n^{${k}}=${nAkt ** k},\\ n^{${k}}\\bmod ${m}=${rk}\\quad\\text{reachable remainders: }\\{${wsz}\\}`);
+  }
+  $("zr-start").addEventListener("click", () => {
+    if (stopZr) stopZr();
+    const m = +$("zr-m").value, N = 2 * m;
+    stopZr = animuj(N * 450, t => { const n = Math.round(t * N); $("zr-n").value = n; rysujZr(n); });
+  });
+  ["zr-m", "zr-k", "zr-n"].forEach(id => $(id).addEventListener("input", () => { if (stopZr) stopZr(); rysujZr(+$("zr-n").value); }));
+  $("zr-k").addEventListener("change", () => { if (stopZr) stopZr(); rysujZr(+$("zr-n").value); });
+  rysujZr(+$("zr-n").value);
+
+  // --- 4. Euklides ---
+  const PIERWSZE = [2, 3, 5, 7, 11, 13, 17, 19];
+  const rozklad = n => { const f = []; for (let d = 2; d * d <= n; d++) while (n % d === 0) { f.push(d); n /= d; } if (n > 1) f.push(n); return f; };
+  const w2 = new Wykres($("eu-plot"), { xmin: 0, xmax: 10, ymin: 0, ymax: 10, siatka: false, osie: false });
+  let stopEu = null;
+  function klatkaEu(t) {
+    const k = +$("eu-k").value;
+    $("eu-k-v").textContent = k;
+    const ps = PIERWSZE.slice(0, k), N = ps.reduce((a, b) => a * b, 1) + 1, fs = rozklad(N);
+    const krok = 10 / 8, x0 = 5 - krok * k / 2;
+    const ile = Math.floor(t / 0.6 * k + 1e-9); // ile p_i już sprawdzonych
+    w2.rysuj(g => {
+      g.tekst(0.1, 9.3, "the list of “all” primes:", 1, { rozmiar: 12 });
+      ps.forEach((p, i) => {
+        const x = x0 + i * krok + 0.1, spr = i < ile;
+        g.prostokat(x, 7, krok - 0.2, 1.6, spr ? 3 : 1, { wypelnij: spr ? 0.3 : 0.15 });
+        g.tekst(x + (krok - 0.2) / 2, 7.8, String(p), spr ? 3 : 1, { wyrownanie: "center", dy: 5, gruby: true });
+        if (spr) g.tekst(x + (krok - 0.2) / 2, 7, "r = 1", 3, { wyrownanie: "center", dy: 14, rozmiar: 11 });
+      });
+      g.prostokat(2.5, 3.6, 5, 1.6, 4, { wypelnij: 0.2 });
+      g.tekst(5, 4.4, "N = " + ps.join("·") + " + 1 = " + N, 4, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: k > 6 ? 11 : 13 });
+      if (t > 0.6) {
+        g.tekst(5, 2.6, "N = " + fs.join(" · "), 2, { wyrownanie: "center", dy: 5, gruby: true, rozmiar: 15 });
+        g.tekst(5, 1.2, fs.length === 1 ? "N is prime — and it is not on the list!" : "the prime divisors of N are not on the list!", 2, { wyrownanie: "center", dy: 5 });
+      }
+    });
+    const lista = fs.filter((v, i, a) => a.indexOf(v) === i).join(",\\,");
+    tex("eu-wynik", t > 0.6 ? `N=${N}${fs.length === 1 ? "\\text{ (prime)}" : "=" + fs.join("\\cdot")},\\quad ${lista}\\notin\\{${ps.join(",\\,")}\\}` : `N\\bmod p_i=1\\ \\text{for every } p_i`);
+  }
+  $("eu-start").addEventListener("click", () => { if (stopEu) stopEu(); stopEu = animuj(3500, klatkaEu); });
+  $("eu-k").addEventListener("input", () => { if (stopEu) stopEu(); klatkaEu(1); });
+  klatkaEu(1);
+});
+</script>
+</body>
+</html>

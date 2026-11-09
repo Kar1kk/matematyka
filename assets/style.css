@@ -268,7 +268,7 @@ li.zadanie.zle { box-shadow: inset 4px 0 0 #d9822b; }
 .sprawdz .jak-wpisac code { font-size: 12px; }
 
 /* Wyszukiwarka */
-#szukaj { background: none; border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 4px 9px; cursor: pointer; font-size: 14px; }
+#szukaj, #jezyk { background: none; border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 4px 9px; cursor: pointer; font-size: 14px; }
 header.top nav:empty { flex: 1; }
 #szukaj-okno { position: fixed; inset: 0; z-index: 50; background: rgb(0 0 0 / .35); display: flex; justify-content: center; align-items: flex-start; padding: 8vh 12px 12px; }
 #szukaj-okno[hidden] { display: none; }
@@ -282,3 +282,4 @@ header.top nav:empty { flex: 1; }
 .szukaj-pusto { margin: 0; padding: 12px 14px; font-size: 14px; color: var(--muted); }
 .brudnopis-info { flex-basis: 100%; font-size: 12px; color: #c0392b; }
 .brudnopis-info:empty { display: none; }
+#jezyk { text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: .03em; line-height: 1.4; }

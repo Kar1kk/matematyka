@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rational equations and inequalities</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Rational equations and inequalities</h1>
+  <p class="lead">A fraction is zero when the numerator is zero and the denominator is not. A fraction is positive when the numerator and denominator have the same sign, that is, exactly when their product is positive. You always start with the domain.</p>
+  <p class="wymagania">III.R.2, III.R.7, II.4, II.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="dziedzina">1. Domain and operations on fractions</h2>
+  <div class="definicja"><b>Domain</b> of a rational expression $\frac{V(x)}{W(x)}$: all $x$ for which $W(x)\neq0$. Write it down <b>before</b> any transformation, because after cancelling the fraction the information is lost.</div>
+  <ul>
+    <li><b>Multiplication, division:</b> factor and cancel: $\frac{x^2-4}{x}\cdot\frac{x^2}{x+2}=x(x-2)$ for $x\notin\{-2,0\}$.</li>
+    <li><b>Addition, subtraction:</b> common denominator: $\frac{1}{x+1}-\frac1x=\frac{x-(x+1)}{x(x+1)}=\frac{-1}{x(x+1)}$.</li>
+  </ul>
+
+  <h2 id="rownania">2. Equations</h2>
+  <div class="wzor">
+    <div class="tytul">A fraction equal to zero</div>
+    $$\frac{V(x)}{W(x)}=0\iff V(x)=0\ \wedge\ W(x)\neq0$$
+    <dl><dt>trap</dt><dd>a root of the numerator that also makes the denominator zero is <b>not</b> a solution</dd></dl>
+  </div>
+  <p>The equation $\frac{A}{B}=\frac{C}{D}$: after writing the domain you cross-multiply, $AD=BC$, and solve the linear or quadratic equation. At the end reject results outside the domain.</p>
+
+  <h2 id="nierownosci">3. Inequalities: do not multiply by the denominator!</h2>
+  <div class="wzor">
+    <div class="tytul">Replacing with a product</div>
+    $$\frac{V}{W}&gt;0\iff V\cdot W&gt;0$$
+    $$\frac{V}{W}\ge0\iff V\cdot W\ge0\ \wedge\ W\neq0$$
+    <dl><dt>why</dt><dd>$\frac VW$ and $V\cdot W=\frac VW\cdot W^2$ have the same sign, because $W^2&gt;0$</dd></dl>
+  </div>
+  <ol>
+    <li>Domain.</li>
+    <li>Everything on one side, common denominator: $\frac{V}{W}\;?\;0$.</li>
+    <li>Replace with $V\cdot W\;?\;0$ and solve (parabola or the wavy-curve sign chart).</li>
+    <li>Remove the zeros of the denominator from the result.</li>
+  </ol>
+  <div class="uwaga">Multiplying both sides by $W(x)$ is a mistake: you do not know the sign of $W$, so you do not know whether to reverse the inequality. See demo 5.</div>
+
+  <h2 id="demo">4. Interactive: the graph and the domain</h2>
+  <div class="demo">
+    <p class="opis">$f(x)=\frac{(x-p)(x-q)}{x-r}$. The dashed vertical line: $x=r$ is outside the domain (asymptote). Set $p=r$: the fraction cancels, but at $x=r$ a “hole” remains (open dot). Turn on $V\cdot W$: it has the same sign as $f$ everywhere in the domain.</p>
+    <canvas id="wm-plot"></canvas>
+    <div class="sterowanie">
+      <label>$p$ <input type="range" id="wm-p" min="-5" max="5" step="0.5" value="-2"> <span id="wm-p-v"></span></label>
+      <label>$q$ <input type="range" id="wm-q" min="-5" max="5" step="0.5" value="3"> <span id="wm-q-v"></span></label>
+      <label>$r$ <input type="range" id="wm-r" min="-5" max="5" step="0.5" value="1"> <span id="wm-r-v"></span></label>
+      <label>$f(x)$ <select id="wm-znak"><option value="ge">≥ 0</option><option value="gt">&gt; 0</option><option value="le">≤ 0</option><option value="lt">&lt; 0</option></select></label>
+      <label><input type="checkbox" id="wm-vw"> show $V\cdot W$</label>
+    </div>
+    <div class="wynik" id="wm-wynik"></div>
+  </div>
+
+  <h2 id="blad">5. Interactive: the mistake of multiplying by the denominator</h2>
+  <div class="demo">
+    <p class="opis">The inequality $\frac{x}{x-1}\ge k$. Green bar: the correct solution (where the graph is above the line $y=k$). Red: the result of “solving” by multiplying both sides by $x-1$. To the left of $x=1$ the denominator is negative and the wrong method gives something completely different there.</p>
+    <canvas id="bl-plot" style="height:280px"></canvas>
+    <canvas id="bl-osie" style="height:90px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="bl-k" min="-3" max="4" step="0.5" value="2"> <span id="bl-k-v"></span></label>
+    </div>
+    <div class="wynik" id="bl-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">6. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Solve the equation $\frac{(x-2)(x+3)}{(x+3)(x-1)}=0$.</p>
+    <ol>
+      <li>Domain: $x\neq-3$, $x\neq1$.</li>
+      <li>The numerator is zero for $x=2$ and $x=-3$.</li>
+      <li>$x=-3$ does not belong to the domain.</li>
+    </ol>
+    <p class="odp">$x=2$</p>
+  </div>
+  <div class="przyklad">
+    <p>Solve the inequality $\frac{x+1}{x-2}\ge2$.</p>
+    <ol>
+      <li>Domain: $x\neq2$.</li>
+      <li>$\frac{x+1}{x-2}-2\ge0 \iff \frac{x+1-2x+4}{x-2}\ge0 \iff \frac{5-x}{x-2}\ge0$.</li>
+      <li>$(5-x)(x-2)\ge0$ and $x\neq2$. A parabola with arms down, roots $2$ and $5$: $x\in[2,5]$, without $2$.</li>
+    </ol>
+    <p class="odp">$x\in(2,5]$</p>
+  </div>
+
+  <h2 id="zadania">7. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-1"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $\frac{(x-3)(x+1)}{x(x-3)}=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Domain: $x\notin\{0,3\}$. Numerator: $x=3$ (outside the domain) or $x=-1$. <b>$x=-1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-8"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $\frac{3}{x-1}=\frac{2}{x+2}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Domain: $x\notin\{-2,1\}$. Cross-multiplying: $3(x+2)=2(x-1)$, $3x+6=2x-2$. <b>$x=-8$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-3; 4)"><span class="poziom">medium</span>
+      <div class="tresc">Solve the inequality $\frac{2x-1}{x+3}&lt;1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x\neq-3$. $\frac{2x-1-(x+3)}{x+3}&lt;0 \iff \frac{x-4}{x+3}&lt;0 \iff (x-4)(x+3)&lt;0$. <b>$x\in(-3,4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $\frac{x}{x-1}-\frac{3}{x+1}=\frac{6}{x^2-1}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Domain: $x\neq\pm1$. Multiply by $(x-1)(x+1)$: $x(x+1)-3(x-1)=6 \iff x^2-2x-3=0$, $x=3$ or $x=-1$. But $-1\notin D$. <b>$x=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-oo; -3&gt; u (0; 2&gt;"><span class="poziom">exam-level</span>
+      <div class="tresc">Solve the inequality $\frac6x\ge x+1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x\neq0$. $\frac{6-x^2-x}{x}\ge0 \iff \frac{-(x+3)(x-2)}{x}\ge0 \iff \frac{(x+3)(x-2)}{x}\le0$.
+        The product $x(x+3)(x-2)\le0$, the wavy curve starting from the upper right, roots $-3,0,2$; remove $0$.
+        <b>$x\in(-\infty,-3]\cup(0,2]$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1; -3/2" data-odp-opis="solutions x"><span class="poziom">exam-level</span>
+      <div class="tresc">Solve the equation $\frac1x+\frac1{x+2}=\frac43$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x\notin\{-2,0\}$. Times $3x(x+2)$: $3(x+2)+3x=4x(x+2)$, that is $4x^2+2x-6=0$, $2x^2+x-3=0$, $\Delta=25$.
+        <b>$x=1$ or $x=-\frac32$</b> (both in the domain).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">8. On the exam</h2>
+  <ul>
+    <li><b>Domain at the beginning</b>, a check against the domain at the end. A solution outside the domain in the answer costs a point.</li>
+    <li><b>Inequalities:</b> move everything to one side and replace with a product. Multiplying by a denominator of unknown sign is a substantive error.</li>
+    <li>For $\ge$, $\le$: the zeros of the numerator belong to the set, the zeros of the denominator <b>never</b> do.</li>
+    <li>Common denominator: factor the denominators, e.g. $x^2-1=(x-1)(x+1)$, instead of multiplying them all.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{\u002c}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "[" : "("}${A}${s}${B}${p.zb ? "]" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{\u002c}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+
+  // --- 4. Wykres i dziedzina ---
+  const w1 = new Wykres($("wm-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+  function rysujWm() {
+    const p = +$("wm-p").value, q = +$("wm-q").value, r = +$("wm-r").value, zn = $("wm-znak").value, vw = $("wm-vw").checked;
+    $("wm-p-v").textContent = ladna(p); $("wm-q-v").textContent = ladna(q); $("wm-r-v").textContent = ladna(r);
+    const V = x => (x - p) * (x - q), W = x => x - r;
+    const f = x => W(x) === 0 ? NaN : V(x) / W(x);
+    const z = zbior(x => W(x) !== 0 && POR[zn](V(x) / W(x)), [p, q, r]);
+    const skrot = p === r || q === r; // licznik i mianownik mają wspólny czynnik
+    w1.rysuj(g => {
+      if (!skrot) g.odcinek(r, g.z.ymin, r, g.z.ymax, 4);
+      if (vw) g.funkcja(x => V(x) * W(x) / 6, 3, { przerywana: true });
+      g.funkcja(f, 1);
+      z.forEach(s => { if (s.a < s.b) g.funkcja(f, 2, { od: s.a, do: s.b, grubosc: 5 }); });
+      if (skrot) { const inny = p === r ? q : p; g.punkt(r, r - inny, "", 1, { pusty: true }); }
+      naOsi(g, z, 2);
+      g.punkt(r, 0, "", 4, { pusty: true });
+    });
+    tex("wm-wynik", `D=\\R\\setminus\\{${ladnaTex(r)}\\},\\quad f(x)${ZNAK[zn]}0\\iff x\\in ${zbiorTex(z)}`);
+  }
+  ["wm-p", "wm-q", "wm-r", "wm-znak", "wm-vw"].forEach(id => { $(id).addEventListener("input", rysujWm); $(id).addEventListener("change", rysujWm); });
+  rysujWm();
+
+  // --- 5. Błąd mnożenia przez mianownik ---
+  const w2 = new Wykres($("bl-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 6 });
+  const w3 = new Wykres($("bl-osie"), { xmin: -6, xmax: 6, ymin: 0.2, ymax: 2.6, krokY: 10, osie: false });
+  function rysujBl() {
+    const k = +$("bl-k").value;
+    $("bl-k-v").textContent = ladna(k);
+    const f = x => x === 1 ? NaN : x / (x - 1);
+    const kryt = [1]; if (k !== 1) kryt.push(k / (k - 1));
+    const dobry = zbior(x => x !== 1 && x / (x - 1) - k >= -1e-9, kryt);
+    const zly = zbior(x => (1 - k) * x + k >= -1e-9, kryt);
+    w2.rysuj(g => {
+      g.odcinek(1, g.z.ymin, 1, g.z.ymax, 4);
+      g.prosta(0, k, 1, k, 3, true);
+      g.funkcja(f, 1);
+      dobry.forEach(s => { if (s.a < s.b) g.funkcja(f, 3, { od: s.a, do: s.b, grubosc: 5 }); });
+    });
+    w3.rysuj(g => {
+      [[2, dobry, 3, "correct"], [1, zly, 2, "multiplying by x − 1"]].forEach(([y, z, nr, opis]) => {
+        g.odcinek(g.z.xmin, y, g.z.xmax, y, "--plot-axis", false);
+        naOsi(g, z, nr, y);
+        g.tekst(g.z.xmin, y, opis, nr, { dx: 4, dy: -9, gruby: true });
+      });
+    });
+    tex("bl-wynik", `\\text{correct: } ${zbiorTex(dobry)},\\quad \\text{wrong: } ${zbiorTex(zly)}`);
+  }
+  $("bl-k").addEventListener("input", rysujBl);
+  rysujBl();
+});
+</script>
+</body>
+</html>

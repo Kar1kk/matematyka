@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bernoulli trials</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Bernoulli trials</h1>
+  <p class="lead">You repeat the same independent experiment with two outcomes $n$ times: success (with probability $p$) or failure. One specific order of $k$ successes has probability $p^k(1-p)^{n-k}$, and there are $\binom nk$ such orders.</p>
+  <p class="wymagania">XII.R.2, XI.R.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzor">1. The formula</h2>
+  <div class="definicja"><b>Bernoulli trials</b>: $n$ <b>independent</b> trials, in each a success with the same probability $p$, a failure with $q=1-p$. $S_n$ is the number of successes.</div>
+  <div class="wzor">
+    <div class="tytul">Probability of $k$ successes <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$P(S_n=k)=\binom nk p^k(1-p)^{n-k}$$
+    <dl><dt>$\binom nk$</dt><dd>in how many ways to choose <b>which</b> $k$ of the $n$ trials are successes</dd>
+        <dt>$p^k(1-p)^{n-k}$</dt><dd>the probability of one fixed order (independence → multiplication)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Derivation: why $\binom nk$?</summary><div>
+    <p>Write the result of $n$ trials as a string of letters S (success) and F (failure), e.g. for $n=4$, $k=2$: SSFF, SFSF, SFFS, FSSF, FSFS, FFSS. Each such string has probability $p\cdot p\cdot q\cdot q=p^2q^2$ (the trials are independent, the order of the factors does not matter).</p>
+    <p>The number of strings with exactly $k$ letters S equals the number of $k$-element subsets of the positions $\{1,\ldots,n\}$, i.e. $\binom nk$ (here $\binom42=6$). The strings are disjoint events, so their probabilities add up: $\binom nk p^kq^{n-k}$.</p>
+  </div></details>
+  <div class="wzor">
+    <div class="tytul">"At least one success" (complementary event)</div>
+    $$P(S_n\ge1)=1-(1-p)^n$$
+    <dl><dt>complement</dt><dd>zero successes, i.e. all failures: $(1-p)^n$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Most likely number of successes <span class="cke nie" title="This formula is not on the CKE sheet – you must remember it or derive it">not on CKE sheet</span></div>
+    $$k_0=\lfloor (n+1)p\rfloor$$
+    <dl><dt>note</dt><dd>when $(n+1)p$ is an integer, there are <b>two</b>: $(n+1)p$ and $(n+1)p-1$</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Where does $(n+1)p$ come from? (compare neighboring terms)</summary><div>
+    $$\frac{P(S_n=k+1)}{P(S_n=k)}=\frac{(n-k)\,p}{(k+1)\,q}$$
+    <p>This ratio is $\ge1$ if and only if $(n-k)p\ge(k+1)(1-p)$, i.e. $k\le(n+1)p-1$. The bars grow as long as $k+1\le(n+1)p$, then they shrink. On the exam it is safer to simply compute and compare a few terms around $np$.</p>
+  </div></details>
+
+  <h2 id="rozklad">2. Interactive: distribution of the number of successes</h2>
+  <div class="demo">
+    <p class="opis">The bar above $k$ is $P(S_n=k)$. Change $n$ and $p$, choose an event, and the red bars add up to the result. The ▼ marker shows the most likely number of successes.</p>
+    <canvas id="be-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="be-n" min="1" max="30" step="1" value="10"> <span id="be-n-v"></span></label>
+      <label>$p$ <input type="range" id="be-p" min="0.05" max="0.95" step="0.05" value="0.3"> <span id="be-p-v"></span></label>
+      <label>event <select id="be-zd">
+        <option value="rowne">S = k</option>
+        <option value="conajmniej">S ≥ k</option>
+        <option value="conajwyzej">S ≤ k</option>
+      </select></label>
+      <label>$k$ <input type="range" id="be-k" min="0" max="10" step="1" value="3"> <span id="be-k-v"></span></label>
+    </div>
+    <div class="wynik" id="be-wynik"></div>
+    <div class="wynik" id="be-moda"></div>
+  </div>
+
+  <h2 id="galton">3. Simulation: the Galton board</h2>
+  <div class="demo">
+    <p class="opis">At each peg the ball bounces right (success, $p$) or left. After $n$ pegs it lands in bin $k$ = the number of right bounces. The numbers at the pegs are the numbers of paths to them (Pascal's triangle, i.e. $\binom ik$). The bars are the frequencies from the simulation, the red dots are the theory.</p>
+    <canvas id="ga-plot" style="height:400px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="ga-n" min="1" max="10" step="1" value="6"> <span id="ga-n-v"></span></label>
+      <label>$p$ <input type="range" id="ga-p" min="0.1" max="0.9" step="0.05" value="0.5"> <span id="ga-p-v"></span></label>
+      <button id="ga-pusc">▶ Drop 100 balls</button>
+      <button id="ga-szybko">+1000 at once</button>
+      <button id="ga-reset">↺ Reset</button>
+    </div>
+    <div class="wynik" id="ga-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>A die is rolled $5$ times. Find the probability that a six comes up: a) exactly $2$ times, b) at least once.</p>
+    <ol>
+      <li>Success: a six, $p=\frac16$, $q=\frac56$, $n=5$.</li>
+      <li>a) $P(S_5=2)=\binom52\left(\frac16\right)^2\left(\frac56\right)^3=10\cdot\frac{125}{7776}=\frac{1250}{7776}$.</li>
+      <li>b) $P(S_5\ge1)=1-\left(\frac56\right)^5=1-\frac{3125}{7776}$.</li>
+    </ol>
+    <p class="odp">a) $\frac{625}{3888}$, b) $\frac{4651}{7776}$</p>
+  </div>
+  <div class="przyklad">
+    <p>What is the minimum number of times a coin must be tossed so that the probability of getting at least one head is at least $0.99$?</p>
+    <ol>
+      <li>$1-\left(\frac12\right)^n\ge0.99 \iff 2^n\ge100$.</li>
+      <li>$2^6=64&lt;100$, $2^7=128\ge100$.</li>
+    </ol>
+    <p class="odp">$n=7$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="3/8" data-odp-opis="probability (fraction)"><span class="poziom">easy</span>
+      <div class="tresc">A coin is tossed $4$ times. Find the probability of getting exactly $2$ heads.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\binom42\left(\frac12\right)^4=\frac{6}{16}$. <b>$P=\frac38$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="135/1024" data-odp-opis="probability (fraction)"><span class="poziom">easy</span>
+      <div class="tresc">A test has $6$ questions, each with $4$ answers (one correct). A student guesses. Find the probability that they answer exactly $3$ questions correctly.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $n=6$, $p=\frac14$: $\binom63\left(\frac14\right)^3\left(\frac34\right)^3=20\cdot\frac{27}{4096}=\frac{540}{4096}$. <b>$P=\frac{135}{1024}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2304/3125" data-odp-opis="probability (fraction)"><span class="poziom">medium</span>
+      <div class="tresc">A marksman hits the target with probability $0.8$. He fires $5$ shots. Find the probability that he hits at least $4$ times.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P(S_5=4)+P(S_5=5)=5\cdot0.8^4\cdot0.2+0.8^5=0.4096+0.32768$. <b>$P=0.73728=\frac{2304}{3125}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4" data-odp-opis="n"><span class="poziom">medium</span>
+      <div class="tresc">What is the minimum number of times a die must be rolled so that the probability of rolling at least one six is greater than $\frac12$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $1-\left(\frac56\right)^n&gt;\frac12\iff\left(\frac56\right)^n&lt;\frac12$. $\left(\frac56\right)^3=\frac{125}{216}\approx0.579$, $\left(\frac56\right)^4=\frac{625}{1296}\approx0.482$. <b>$n=4$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3" data-odp-opis="number of sixes"><span class="poziom">exam-level</span>
+      <div class="tresc">A die is rolled $20$ times. What number of sixes is the most likely?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(n+1)p=\frac{21}{6}=3.5$, so $k_0=3$. Check with the ratio: $\frac{P(S=4)}{P(S=3)}=\frac{17\cdot\frac16}{4\cdot\frac56}=\frac{17}{20}&lt;1$ and $\frac{P(S=3)}{P(S=2)}=\frac{18\cdot\frac16}{3\cdot\frac56}=\frac{6}{5}&gt;1$. <b>$k=3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8" data-odp-opis="n"><span class="poziom">exam-level</span>
+      <div class="tresc">In a scheme of $n$ trials with $p=\frac13$ the probability of exactly $2$ successes equals the probability of exactly $3$ successes. Find $n$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\binom n2\left(\frac13\right)^2\left(\frac23\right)^{n-2}=\binom n3\left(\frac13\right)^3\left(\frac23\right)^{n-3}$. Divide both sides by $\left(\frac13\right)^2\left(\frac23\right)^{n-3}$: $\binom n2\cdot\frac23=\binom n3\cdot\frac13$, i.e. $2\binom n2=\binom n3$. Hence $n(n-1)=\frac{n(n-1)(n-2)}{6}$, $n-2=6$. <b>$n=8$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Write down the parameters:</b> "success: …, $n=…$, $p=…$". Without this it is hard to get full marks, and it is easy to confuse $p$ with $q$.</li>
+    <li>The scheme works only for <b>independent</b> trials with the <b>same</b> $p$. Drawing without replacement is <b>not</b> Bernoulli (use combinations).</li>
+    <li>"At least one" → $1-q^n$. "At least two" → $1-P(S=0)-P(S=1)$.</li>
+    <li>A question about the minimum $n$: solve the inequality $q^n&lt;\ldots$ by checking successive powers (logarithms are fine too). Give the smallest $n$.</li>
+    <li>Leave the result as a fraction, e.g. $\frac{625}{3888}$; do not round unless the task tells you to.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const C = (n, k) => { let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return Math.round(r); };
+  const B = (n, k, p) => C(n, k) * p ** k * (1 - p) ** (n - k);
+  const krok = M => { const e = 10 ** Math.floor(Math.log10(M / 4)); return [1, 2, 2.5, 5, 10].map(m => m * e).find(s => M / s <= 5); };
+  const mody = (n, p) => { const P = [...Array(n + 1).keys()].map(k => B(n, k, p)), m = Math.max(...P); return P.map((v, k) => (v > m * (1 - 1e-9) ? k : -1)).filter(k => k >= 0); };
+
+  // --- 2. Rozkład ---
+  const w1 = new Wykres($("be-plot"), { xmin: -0.8, xmax: 10.8, ymin: -0.03, ymax: 0.3, krokY: 0.05 });
+  function rysujBe() {
+    const n = +$("be-n").value, p = +$("be-p").value, zd = $("be-zd").value;
+    $("be-k").max = n; if (+$("be-k").value > n) $("be-k").value = n;
+    const k = +$("be-k").value;
+    $("be-n-v").textContent = n; $("be-p-v").textContent = ladna(p); $("be-k-v").textContent = k;
+    const P = [...Array(n + 1).keys()].map(j => B(n, j, p)), m = Math.max(...P), mo = mody(n, p);
+    const wyb = j => (zd === "rowne" ? j === k : zd === "conajmniej" ? j >= k : j <= k);
+    Object.assign(w1.z0, { xmin: -0.8, xmax: n + 0.8, ymax: m * 1.22, ymin: -m * 0.1, krokX: n <= 15 ? 1 : 5, krokY: krok(m * 1.2) });
+    let suma = 0;
+    w1.rysuj(g => {
+      P.forEach((v, j) => { if (wyb(j)) suma += v; g.prostokat(j - 0.38, 0, 0.76, v, wyb(j) ? 2 : 1, { wypelnij: wyb(j) ? 0.6 : 0.3, grubosc: 1.2 }); });
+      mo.forEach(j => g.tekst(j, P[j], "▼", 4, { dy: -6, wyrownanie: "center", rozmiar: 14 }));
+    });
+    const op = zd === "rowne" ? "=" : zd === "conajmniej" ? "\\ge" : "\\le";
+    let s = `P(S_{${n}}${op}${k})\\approx${ladnaTex(suma, 4)}`;
+    if (zd === "rowne") s = `P(S_{${n}}=${k})=\\binom{${n}}{${k}}\\cdot(${ladnaTex(p)})^{${k}}\\cdot(${ladnaTex(1 - p)})^{${n - k}}\\approx${ladnaTex(suma, 4)}`;
+    if (zd === "conajmniej" && k === 1) s += `=1-(${ladnaTex(1 - p)})^{${n}}`;
+    tex("be-wynik", s);
+    tex("be-moda", `(n+1)p=${ladnaTex((n + 1) * p, 3)}\\;\\Rightarrow\\;k_0=${mo.join("\\text{ and }")}`);
+  }
+  ["be-n", "be-p", "be-zd", "be-k"].forEach(id => $(id).addEventListener("input", rysujBe));
+  rysujBe();
+
+  // --- 3. Deska Galtona ---
+  const w2 = new Wykres($("ga-plot"), { xmin: -6, xmax: 6, ymin: -7.6, ymax: 11.4, siatka: false, osie: false });
+  const BAZA = -6.6, H = 8.2, YK = 3, DT = 0.11; // podstawa koszy, wysokość, poziom wyjścia z deski, czas na rząd
+  let kosze = [], N = 0, kulki = [], czas = 0, ptl = null;
+  const rzadY = (i, n) => 10 - i * (10 - YK) / n; // rząd i: od y = 10 do YK
+  function droga(n, p) { // punkty łamanej i kosz
+    const pts = [[0, 11]]; let r = 0;
+    for (let i = 0; i < n; i++) { pts.push([r - i / 2, rzadY(i, n) + 0.3]); if (Math.random() < p) r++; }
+    pts.push([r - n / 2, YK]);
+    return { pts, k: r };
+  }
+  function polozenie(b) {
+    const u = (czas - b.t0) / DT, i = Math.max(0, Math.min(b.pts.length - 2, Math.floor(u))), f = Math.max(0, Math.min(1, u - i));
+    const [x1, y1] = b.pts[i], [x2, y2] = b.pts[i + 1];
+    return [x1 + (x2 - x1) * f, y1 + (y2 - y1) * f];
+  }
+  function rysujGa() {
+    const n = +$("ga-n").value, p = +$("ga-p").value;
+    $("ga-n-v").textContent = n; $("ga-p-v").textContent = ladna(p);
+    const P = [...Array(n + 1).keys()].map(k => B(n, k, p)), m = Math.max(...P), skala = H / (m * 1.15);
+    w2.rysuj(g => {
+      for (let i = 0; i < n; i++) for (let j = 0; j <= i; j++) {
+        const x = j - i / 2, y = rzadY(i, n);
+        g.punkt(x, y, "", "--plot-axis", { r: 3 });
+        if (n <= 8) g.tekst(x, y, String(C(i, j)), "--plot-axis", { dx: 6, dy: -3, rozmiar: 10 });
+      }
+      P.forEach((v, k) => {
+        const x = k - n / 2;
+        const f = N ? kosze[k] / N : 0;
+        if (f > 0) g.prostokat(x - 0.35, BAZA, 0.7, f * skala, 1, { wypelnij: 0.45, grubosc: 1 });
+        g.punkt(x, BAZA + v * skala, "", 2, { r: 4 });
+        g.tekst(x, BAZA, String(k), 1, { dy: 15, wyrownanie: "center", gruby: true, rozmiar: 12 });
+        g.tekst(x, YK, String(C(n, k)), 4, { dy: -4, wyrownanie: "center", rozmiar: 10, gruby: true });
+      });
+      g.odcinek(-n / 2 - 0.6, BAZA, n / 2 + 0.6, BAZA, "--plot-axis", false);
+      kulki.forEach(b => { const [x, y] = polozenie(b); g.punkt(x, y, "", 4, { r: 4 }); });
+    });
+    const k0 = P.indexOf(m);
+    tex("ga-wynik", N ? `\\text{balls: }${N},\\;\\text{in bin }${k0}\\text{: }${ladnaTex(kosze[k0] / N, 3)}\\;\\text{(theory }${ladnaTex(P[k0], 3)})` : `\\text{balls: }0,\\;P(S_{${n}}=${k0})\\approx${ladnaTex(P[k0], 3)}`);
+  }
+  function reset() { if (ptl) { ptl.stop(); ptl = null; } kulki = []; N = 0; kosze = Array(+$("ga-n").value + 1).fill(0); rysujGa(); }
+  function laduj(b) { kosze[b.k]++; N++; }
+  $("ga-pusc").addEventListener("click", () => {
+    const n = +$("ga-n").value, p = +$("ga-p").value;
+    for (let j = 0; j < 100; j++) kulki.push({ ...droga(n, p), t0: czas + j * 0.06 });
+    if (ptl) return;
+    let poprz = null;
+    ptl = petla(s => {
+      czas += poprz === null ? 0 : s - poprz; poprz = s;
+      kulki = kulki.filter(b => { if ((czas - b.t0) / DT >= b.pts.length - 1) { laduj(b); return false; } return true; });
+      rysujGa();
+      if (!kulki.length) { ptl.stop(); ptl = null; }
+    });
+  });
+  $("ga-szybko").addEventListener("click", () => {
+    const n = +$("ga-n").value, p = +$("ga-p").value;
+    for (let j = 0; j < 1000; j++) laduj(droga(n, p));
+    rysujGa();
+  });
+  $("ga-reset").addEventListener("click", reset);
+  ["ga-n", "ga-p"].forEach(id => $(id).addEventListener("input", reset));
+  reset();
+});
+</script>
+</body>
+</html>

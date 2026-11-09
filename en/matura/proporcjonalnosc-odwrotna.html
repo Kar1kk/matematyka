@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inverse proportionality: f(x) = a/x</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Inverse proportionality: f(x) = a/x</h1>
+  <p class="lead">Two quantities are inversely proportional when their product is constant: $x\cdot y=a$. Twice as many workers, half the time. On the graph every rectangle “under” the hyperbola has the same area $|a|$.</p>
+  <p class="wymagania">V.13, V.12</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Definition and properties</h2>
+  <div class="definicja"><b>Definition</b> Quantities $x$ and $y$ are <b>inversely proportional</b> if $y=\frac{a}{x}$ for some $a\neq0$, that is $x\cdot y=a$. The number $a$ is the constant of proportionality.</div>
+  <table class="tabela">
+    <tr><th></th><th>$a&gt;0$</th><th>$a&lt;0$</th></tr>
+    <tr><td>quadrants</td><td>I and III</td><td>II and IV</td></tr>
+    <tr><td>monotonicity</td><td>decreasing on $(-\infty,0)$ and on $(0,\infty)$</td><td>increasing on $(-\infty,0)$ and on $(0,\infty)$</td></tr>
+    <tr><td colspan="3">domain $=\R\setminus\{0\}$, $\;\text{range}=\R\setminus\{0\}$, asymptotes: $x=0$ and $y=0$, center of symmetry $(0,0)$</td></tr>
+  </table>
+  <div class="uwaga">$f(x)=\frac{1}{x}$ is <b>not</b> decreasing on its whole domain: $-1&lt;1$, yet $f(-1)=-1&lt;f(1)=1$. It decreases separately on each of the two intervals.</div>
+  <div class="wzor">
+    <div class="tytul">A shifted hyperbola (V.12)</div>
+    $$f(x)=\frac{a}{x-p}+q$$
+    <dl><dt>$[p,q]$</dt><dd>the translation vector of the graph of $y=\frac{a}{x}$</dd>
+        <dt>asymptotes</dt><dd>$x=p$ and $y=q$; $\;\text{domain}=\R\setminus\{p\}$, $\text{range}=\R\setminus\{q\}$</dd></dl>
+  </div>
+  <p>You can bring the formula $\frac{cx+d}{x-p}$ to this form by dividing the numerator: e.g. $\frac{2x+1}{x-1}=2+\frac{3}{x-1}$ (example below).</p>
+
+  <h2 id="pole">2. Interactive: constant area</h2>
+  <div class="demo">
+    <p class="opis">Drag the point $P$ along the hyperbola. The rectangle with vertices $(0,0)$ and $P$ changes shape, but its area does not change, because $x\cdot y=a$. “▶ Flatten” moves $P$ to the right.</p>
+    <canvas id="ho-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="ho-a" min="-8" max="8" step="0.5" value="4"> <span id="ho-a-v"></span></label>
+      <button id="ho-start">▶ Flatten</button>
+    </div>
+    <div class="wynik" id="ho-wynik"></div>
+  </div>
+
+  <h2 id="przesuniecie">3. Translation by the vector $[p,q]$</h2>
+  <div class="demo">
+    <p class="opis">Dashed: $y=\frac{a}{x}$. “▶ Translate”: the whole graph together with its asymptotes moves by the vector $[p,q]$.</p>
+    <canvas id="hp-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="hp-a" min="-6" max="6" step="1" value="3"> <span id="hp-a-v"></span></label>
+      <label>$p$ <input type="range" id="hp-p" min="-4" max="4" step="0.5" value="2"> <span id="hp-p-v"></span></label>
+      <label>$q$ <input type="range" id="hp-q" min="-3" max="3" step="0.5" value="1"> <span id="hp-q-v"></span></label>
+      <button id="hp-start">▶ Translate</button>
+    </div>
+    <div class="wynik" id="hp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>Write $f(x)=\frac{2x+1}{x-1}$ in the form $\frac{a}{x-p}+q$, and give the asymptotes, the range and the monotonicity.</p>
+    <ol>
+      <li>Numerator divided by denominator: $2x+1=2(x-1)+3$.</li>
+      <li>$f(x)=\frac{2(x-1)+3}{x-1}=2+\frac{3}{x-1}$, that is $a=3$, $p=1$, $q=2$.</li>
+      <li>This is $y=\frac3x$ translated by $[1,2]$: asymptotes $x=1$, $y=2$, range $=\R\setminus\{2\}$.</li>
+      <li>$a=3&gt;0$, so it decreases on each interval of the domain.</li>
+    </ol>
+    <p class="odp">$f(x)=\frac{3}{x-1}+2$; decreasing on $(-\infty,1)$ and on $(1,\infty)$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-6; -3/2" data-odp-opis="a; f(4)"><span class="poziom">easy</span>
+      <div class="tresc">The graph of $f(x)=\frac ax$ passes through the point $(-2,3)$. Find $a$ and compute $f(4)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a=x\cdot y=(-2)\cdot3=-6$. $f(4)=\frac{-6}{4}$. <b>$a=-6$, $f(4)=-1.5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="15" data-odp-opis="number of workers"><span class="poziom">easy</span>
+      <div class="tresc">$6$ workers do a certain job in $10$ days. How many workers (working at the same pace) will do it in $4$ days? Write the number of days $d$ as a function of the number of workers $n$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $n\cdot d=6\cdot10=60$, so $d(n)=\frac{60}{n}$ and $n=\frac{60}{4}$. <b>$15$ workers; $d(n)=\frac{60}{n}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1" data-odp-opis="zero"><span class="poziom">medium</span>
+      <div class="tresc">For $f(x)=\frac{3}{x+2}-1$ give the domain, the range, the asymptotes and the zero.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac3x$ translated by $[-2,-1]$. $\frac{3}{x+2}=1\iff x+2=3$.
+        <b>domain $=\R\setminus\{-2\}$, range $=\R\setminus\{-1\}$, asymptotes $x=-2$, $y=-1$, zero $x=1$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (0; 3&gt;" data-odp-opis="set of x"><span class="poziom">medium</span>
+      <div class="tresc">Read from the graph (or justify) for which $x$ the function $f(x)=\frac6x$ takes values not less than $2$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        For $x&lt;0$ we have $f(x)&lt;0$, so no. For $x&gt;0$ the function is decreasing and $f(3)=2$, so $f(x)\ge2\iff 0&lt;x\le3$. <b>$x\in(0,3]$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (2; 5)" data-odp-opis="solution of the inequality f(x) &gt; 0"><span class="poziom">exam-level</span>
+      <div class="tresc">The graph of the function $f(x)=\frac{a}{x-p}+q$ has asymptotes $x=2$ and $y=-1$ and passes through the point $(3,2)$. Find $a$ and solve the inequality $f(x)&gt;0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $p=2$, $q=-1$. $f(3)=\frac a1-1=2$, so $a=3$. $f(x)&gt;0\iff\frac{3}{x-2}&gt;1$. For $x&lt;2$ the left side is negative. For $x&gt;2$: $3&gt;x-2\iff x&lt;5$. The zero $x=5$ is also visible on the graph.
+        <b>$a=3$, $\;f(x)&gt;0\iff x\in(2,5)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Monotonicity:</b> always two separate intervals, never “decreasing on $\R\setminus\{0\}$”.</li>
+    <li>Recognize inverse proportionality in the statement: “constant product” (time × speed = distance, price × quantity = amount).</li>
+    <li>From the asymptotes you get $p$ and $q$ at once; you find $a$ from one point of the graph.</li>
+    <li>With an inequality $\frac{a}{x-p}&gt;c$ do not multiply “blindly” by $x-p$: consider the sign of the denominator, or multiply by $(x-p)^2$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Constant area ---
+  const w1 = new Wykres($("ho-plot"), { xmin: -8, xmax: 8, ymin: -6, ymax: 6, rowneSkale: true });
+  const aHo = () => +$("ho-a").value || 0.5;
+  // x such that |y| ≤ 5.5 and the point stays in view
+  const ogrHo = x => {
+    const a = aHo(), min = Math.max(0.3, Math.abs(a) / 5.5), s = x < 0 ? -1 : 1;
+    return s * Math.min(7.5, Math.max(min, Math.abs(x)));
+  };
+  const P = w1.przeciagaj([{ x: 2, y: 2, ogranicz: p => { const x = ogrHo(p.x); return { x, y: aHo() / x }; } }], () => rysujHo());
+  let stop1 = null;
+  function rysujHo() {
+    const a = aHo();
+    $("ho-a-v").textContent = ladna(a);
+    P[0].x = ogrHo(P[0].x); P[0].y = a / P[0].x;
+    const { x, y } = P[0];
+    w1.rysuj(g => {
+      g.prostokat(0, 0, x, y, 2, { wypelnij: 0.25 });
+      g.tekst(x / 2, y / 2, `area = ${ladna(Math.abs(a))}`, 2, { wyrownanie: "center", gruby: true });
+      g.funkcja(t => a / t, 1);
+      g.odcinek(0, g.z.ymin, 0, g.z.ymax, 3); g.odcinek(g.z.xmin, 0, g.z.xmax, 0, 3);
+      g.punkt(x, y, "P");
+    });
+    tex("ho-wynik", `P\\approx(${ladnaTex(x)};\\,${ladnaTex(y)}),\\quad x\\cdot y=${ladnaTex(a)}=a\\ \\text{(constant)},\\quad \\text{area}=|a|=${ladnaTex(Math.abs(a))}`);
+  }
+  $("ho-a").addEventListener("input", () => { if (stop1) stop1(); rysujHo(); });
+  $("ho-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    const s = P[0].x < 0 ? -1 : 1, x0 = Math.abs(aHo()) / 5.5, x1 = 7.5;
+    stop1 = animuj(2500, t => { P[0].x = s * Math.max(0.3, x0 + (x1 - x0) * t); rysujHo(); });
+  });
+  rysujHo();
+
+  // --- 3. Translation ---
+  const w2 = new Wykres($("hp-plot"), { xmin: -8, xmax: 8, ymin: -6, ymax: 6 });
+  let stop2 = null;
+  function klatka(t) {
+    const a = +$("hp-a").value || 1, p = +$("hp-p").value, q = +$("hp-q").value;
+    $("hp-a-v").textContent = ladna(a); $("hp-p-v").textContent = ladna(p); $("hp-q-v").textContent = ladna(q);
+    const pk = p * t, qk = q * t;
+    w2.rysuj(g => {
+      g.funkcja(x => a / x, 3, { przerywana: true });
+      g.odcinek(pk, g.z.ymin, pk, g.z.ymax, 4); g.odcinek(g.z.xmin, qk, g.z.xmax, qk, 4);
+      if (t > 0 && (p || q)) g.strzalka(0, 0, pk, qk, 2);
+      g.funkcja(x => a / (x - pk) + qk, 1);
+    });
+    const ul = `\\frac{${ladnaTex(a)}}{x${znakTex(-pk)}}`.replace("x+0}", "x}");
+    tex("hp-wynik", `y=${ul}${Math.abs(qk) < 1e-9 ? "" : znakTex(qk)},\\quad \\text{asymptotes: } x=${ladnaTex(pk)},\\ y=${ladnaTex(qk)},\\quad \\text{range}=\\R\\setminus\\{${ladnaTex(qk)}\\}`);
+  }
+  $("hp-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(2000, klatka); });
+  ["hp-a", "hp-p", "hp-q"].forEach(id => $(id).addEventListener("input", () => { if (stop2) stop2(); klatka(1); }));
+  klatka(0);
+});
+</script>
+</body>
+</html>

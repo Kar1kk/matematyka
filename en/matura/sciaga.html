@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheat sheet: formulas not on the CKE sheet</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav>› <a href="index.html">Extended level</a> › Cheat sheet</nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Cheat sheet: formulas not on the CKE sheet</h1>
+  <p class="lead">These are <b>not</b> on the CKE formula sheet (“Wybrane wzory matematyczne”, 2023 edition), yet they come in handy on the exam. Memorise them or be able to derive them quickly. The link next to each item leads to the topic.</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="algebra">1. Algebra and numbers</h2>
+  <div class="wzor"><div class="tytul">Sum of powers, odd n · <a href="symbol-newtona.html">topic</a></div>
+    $$a^n+b^n=(a+b)\,\cdot$$
+    $$(a^{n-1}-a^{n-2}b+\ldots+b^{n-1})$$
+    <dl><dt>note</dt><dd>only for odd $n$ (substitute $-b$ for $b$ in the formula for $a^n-b^n$, which <b>is</b> on the sheet)</dd></dl></div>
+  <div class="wzor"><div class="tytul">Bézout's theorem · <a href="dzielenie-wielomianow.html">topic</a></div>
+    $$W(a)=0\iff (x-a)\mid W(x)$$
+    <dl><dt>remainder</dt><dd>of the division by $x-a$ equals $W(a)$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Viète: symmetric expressions · <a href="wzory-viete.html">topic</a></div>
+    $$x_1^2+x_2^2=s^2-2p$$
+    $$x_1^3+x_2^3=s^3-3ps$$
+    <dl><dt>$s,\,p$</dt><dd>$s=x_1+x_2$, $p=x_1x_2$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Logarithm, a power in the base · <a href="logarytmy.html">topic</a></div>
+    $$\log_{a^k}b=\tfrac1k\log_a b$$</div>
+
+  <h2 id="procenty">2. Percentages</h2>
+  <div class="wzor"><div class="tytul">Compounding more often than annually · <a href="procenty.html">topic</a></div>
+    $$K=K_0\left(1+\tfrac{p}{100m}\right)^{mn}$$</div>
+  <div class="wzor"><div class="tytul">Loan instalment (derive it) · <a href="procenty.html">topic</a></div>
+    $$R=\frac{Kq^n(q-1)}{q^n-1}$$
+    <dl><dt>$q$</dt><dd>$1+\frac{r}{100}$, $r$ – interest rate per period</dd></dl></div>
+
+  <h2 id="planimetria">3. Plane geometry</h2>
+  <div class="wzor"><div class="tytul">Square and the “set squares” · <a href="trygonometria-trojkat-prostokatny.html">topic</a></div>
+    $$d=a\sqrt2$$
+    <dl><dt>$45^\circ$</dt><dd>sides $a,\ a,\ a\sqrt2$</dd>
+        <dt>$30^\circ,60^\circ$</dt><dd>sides $a,\ a\sqrt3,\ 2a$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Regular polygon · <a href="czworokaty.html">topic</a></div>
+    $$\text{interior angle}=\tfrac{(n-2)\cdot180^\circ}{n}$$
+    $$\text{diagonals: }\tfrac{n(n-3)}{2}$$
+    <dl><dt>hexagon</dt><dd>6 equilateral triangles, $R=a$</dd></dl></div>
+  <div class="wzor"><div class="tytul">Area of a tangential quadrilateral · <a href="czworokaty-okrag.html">topic</a></div>
+    $$P=p\cdot r$$
+    <dl><dt>$p$</dt><dd>half the perimeter; tangential trapezoid: $h=2r$</dd></dl></div>
+  <ul>
+    <li>A tangent is <b>perpendicular to the radius</b> at the point of tangency · <a href="katy-w-okregu.html">topic</a></li>
+    <li>The medians of a triangle divide each other in the ratio $2:1$ from the vertex · <a href="punkty-szczegolne.html">topic</a></li>
+    <li>The incentre is the intersection of the angle bisectors; the circumcentre, of the perpendicular bisectors · <a href="punkty-szczegolne.html">topic</a></li>
+  </ul>
+
+  <h2 id="analityczna">4. Analytic geometry</h2>
+  <ul>
+    <li>A line is tangent to a circle $\iff$ the distance of the centre from the line $=r$ · <a href="prosta-i-okrag.html">topic</a></li>
+  </ul>
+
+  <h2 id="stereometria">5. Solid geometry</h2>
+  <div class="wzor"><div class="tytul">Cube, regular tetrahedron · <a href="graniastoslupy.html">topic</a></div>
+    $$d_{\text{cube}}=a\sqrt3$$
+    $$H_{\text{tetrahedron}}=\tfrac{a\sqrt6}{3}$$
+    <dl><dt>$H$</dt><dd>the foot at the centre of the base triangle (<a href="ostroslupy.html">pyramids</a>)</dd></dl></div>
+
+  <h2 id="kombinatoryka">6. Combinatorics and probability</h2>
+  <div class="wzor"><div class="tytul">Permutations with repetitions · <a href="permutacje-kombinacje.html">topic</a></div>
+    $$\frac{n!}{k_1!\,k_2!\cdot\ldots\cdot k_s!}$$</div>
+  <div class="wzor"><div class="tytul">Sum of binomial coefficients · <a href="symbol-newtona.html">topic</a></div>
+    $$\tbinom n0+\tbinom n1+\ldots+\tbinom nn=2^n$$</div>
+  <div class="wzor"><div class="tytul">Most likely number of successes · <a href="schemat-bernoulliego.html">topic</a></div>
+    $$k_0=\lfloor (n+1)p\rfloor$$
+    <dl><dt>note</dt><dd>when $(n+1)p\in\mathbb Z$, there are two: $(n+1)p$ and $(n+1)p-1$</dd></dl></div>
+  <ul><li>The multiplication and addition rules (split into cases) · <a href="regula-mnozenia.html">topic</a></li></ul>
+
+  <h2 id="pochodna">7. Derivative</h2>
+  <ul>
+    <li>$f'\gt 0$ on an interval $\Rightarrow f$ increasing; $f'\lt 0\Rightarrow$ decreasing · <a href="monotonicznosc-ekstrema.html">topic</a></li>
+    <li>Extremum at $x_0$: $f'(x_0)=0$ <b>and</b> $f'$ changes sign · <a href="monotonicznosc-ekstrema.html">topic</a></li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+</body>
+</html>

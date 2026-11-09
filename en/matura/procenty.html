@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percentages, compound interest, deposits and loans</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Percentages, compound interest, deposits and loans</h1>
+  <p class="lead">A change by $p\%$ is a <b>multiplication</b> by $1\pm\frac{p}{100}$. Successive changes are multiplied, not added — hence compound interest, which is just an ordinary geometric sequence.</p>
+  <p class="wymagania">I.8 (with VI.6: geometric sequence)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="procenty">1. Percentages and percentage points</h2>
+  <div class="wzor">
+    <div class="tytul">A change by $p\%$ (to memorize)</div>
+    $$\text{increase: } a\cdot\left(1+\tfrac{p}{100}\right)$$
+    $$\text{decrease: } a\cdot\left(1-\tfrac{p}{100}\right)$$
+    <dl><dt>by what %</dt><dd>$\frac{\text{new}-\text{old}}{\text{old}}\cdot100\%$ — always relative to the <b>original</b> value</dd></dl>
+  </div>
+  <div class="definicja"><b>Percentage points</b> measure the difference of two quantities expressed in percent. An interest rate going from $5\%$ to $7\%$: an increase by $2$ <b>percentage points</b>, but by $\frac{2}{5}=40\%$.</div>
+  <div class="uwaga">After a $20\%$ discount you must raise the price by $25\%$, not $20\%$, to get back: $0.8\cdot1.25=1$.</div>
+
+  <h2 id="plus-minus">2. Interactive: $+p\%$, then $-p\%$</h2>
+  <div class="demo">
+    <p class="opis">A price of $100$ PLN rises by $p\%$, then falls by $p\%$. Click “▶ Play” and see that it does not return to $100$. The loss is always $\frac{p^2}{100}\%$, and the order of the changes does not matter.</p>
+    <canvas id="pm-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$p$ <input type="range" id="pm-p" min="0" max="90" step="5" value="20"> <span id="pm-p-v"></span></label>
+      <button id="pm-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="pm-wynik"></div>
+  </div>
+
+  <h2 id="skladany">3. Compound interest and deposits</h2>
+  <div class="wzor">
+    <div class="tytul">Compound interest <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$K_n=K_0\left(1+\frac{p}{100}\right)^n$$
+    <dl><dt>$K_0$</dt><dd>initial capital</dd>
+        <dt>$p$</dt><dd>annual interest rate in %, compounded yearly</dd>
+        <dt>$n$</dt><dd>number of years</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Compounding $m$ times a year <span class="cke nie" title="This formula is not on the CKE sheet – you must remember it or derive it">not on CKE sheet</span></div>
+    $$K=K_0\left(1+\frac{p}{100m}\right)^{mn}$$
+    <dl><dt>where from</dt><dd>one period is $\frac1m$ of a year: the rate per period is $\frac pm\%$, there are $mn$ periods</dd></dl>
+  </div>
+  <div class="uwaga"><b>The Belka tax</b> (real life): $19\%$ of the <b>interest</b>, collected at every compounding. $81\%$ of the interest remains, so in practice the rate per period is $0.81\cdot\frac{p}{m}\%$.</div>
+  <div class="demo">
+    <p class="opis">Bars: the capital at the end of each year. Red dots: the same deposit with yearly compounding. Increase $m$: the profit grows, but more and more slowly. Tick the tax and compare.</p>
+    <canvas id="ks-plot"></canvas>
+    <div class="sterowanie">
+      <label>$K_0$ <input type="range" id="ks-K" min="1000" max="20000" step="1000" value="10000"> <span id="ks-K-v"></span></label>
+      <label>$p$ <input type="range" id="ks-p" min="1" max="15" step="0.5" value="8"> <span id="ks-p-v"></span></label>
+      <label>$n$ <input type="range" id="ks-n" min="1" max="30" step="1" value="10"> <span id="ks-n-v"></span></label>
+      <label>$m$ <select id="ks-m">
+        <option value="1">1 (year)</option><option value="2">2 (half-year)</option>
+        <option value="4" selected>4 (quarter)</option><option value="12">12 (month)</option>
+      </select></label>
+      <label><input type="checkbox" id="ks-belka"> 19% tax</label>
+    </div>
+    <div class="wynik" id="ks-wynik"></div>
+  </div>
+
+  <h2 id="kredyt">4. A loan repaid in equal instalments</h2>
+  <p>The debt grows every month by interest (multiplication by $q=1+\frac{r}{100}$), and the instalment $R$ reduces it. After $n$ instalments the debt should be $0$.</p>
+  <div class="wzor">
+    <div class="tytul">Instalment <span class="cke nie" title="This formula is not on the CKE sheet – you must remember it or derive it">not on CKE sheet – derive it</span></div>
+    $$K q^n=R\left(1+q+\dots+q^{n-1}\right)$$
+    $$R=\frac{K q^n (q-1)}{q^n-1}$$
+    <dl><dt>$K$, $r$</dt><dd>the loan amount, the interest rate per period (e.g. a month) in %</dd>
+        <dt>cost</dt><dd>$nR-K$ (the sum of instalments minus the borrowed amount)</dd></dl>
+  </div>
+  <details class="rozwin"><summary>Where does this equation come from?</summary><div>
+    <p>The debt after $k$ months: $D_k=D_{k-1}\cdot q-R$, $D_0=K$. Expanding:</p>
+    $$D_n=Kq^n-R(q^{n-1}+\dots+q+1)$$
+    <p>The condition $D_n=0$ and the sum of a geometric sequence (on the formula sheet, see <a href="ciag-geometryczny.html">geometric sequence</a>) give the formula for $R$. Intuition: each instalment “repays” a part of the debt together with the interest accrued until the end.</p>
+  </div></details>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>A deposit of $10\,000$ PLN for $2$ years, $4\%$ per year, quarterly compounding, a $19\%$ tax on interest at every compounding. How much will we withdraw?</p>
+    <ol>
+      <li>The rate per quarter: $\frac{4\%}{4}=1\%$; after tax $0.81\cdot1\%=0.81\%$ remains.</li>
+      <li>The number of quarters: $4\cdot2=8$.</li>
+      <li>$K=10\,000\cdot1.0081^8\approx10\,666.67$.</li>
+    </ol>
+    <p class="odp">approx. $10\,666.67$ PLN (without the tax it would be $10\,828.57$ PLN)</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="246.4"><span class="poziom">easy</span>
+      <div class="tresc">A price of $250$ PLN rose by $12\%$, and then fell by $12\%$. What is the final price?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $250\cdot1.12\cdot0.88=$ <b>$246.40$ PLN</b> (a decrease by $1.44\%$)
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 100/3" data-odp-opis="p.p.; %"><span class="poziom">easy</span>
+      <div class="tresc">The interest rate of a loan rose from $6\%$ to $8\%$. By how many percentage points, and by how many percent?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The difference is $8-6=2$, relatively $\frac26=\frac13$. <b>By $2$ p.p., i.e. by $33\frac13\%$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="450; 25" data-odp-opis="price; increase in %"><span class="poziom">medium</span>
+      <div class="tresc">After a $20\%$ discount a jacket costs $360$ PLN. How much did it cost before the discount, and by what percent would the new price have to be raised to get back to the old one?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $0.8x=360\Rightarrow x=450$. $\frac{450}{360}=1.25$. <b>$450$ PLN, an increase by $25\%$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="8.39" data-odp-opis="difference in PLN"><span class="poziom">medium</span>
+      <div class="tresc">$5000$ PLN for a year, $6\%$ per year. How much more does monthly compounding give than yearly (without tax)?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Monthly: $5000\cdot1.005^{12}\approx5308.39$ PLN. Yearly: $5000\cdot1.06=5300$ PLN. <b>approx. $8.39$ PLN more</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="15"><span class="poziom">exam-level</span>
+      <div class="tresc">A deposit at $5\%$ per year with yearly compounding. After how many full years does the capital at least double for the first time?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $1.05^n\ge2\iff n\ge\frac{\log 2}{\log1.05}\approx14.2$ (see <a href="logarytmy.html">logarithms</a>). Check: $1.05^{14}\approx1.98$, $1.05^{15}\approx2.08$. <b>After $15$ years</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1066.19; 794.28" data-odp-opis="instalment; cost"><span class="poziom">exam-level</span>
+      <div class="tresc">A loan of $12\,000$ PLN is repaid in $12$ equal monthly instalments (the first after a month), interest $1\%$ per month. Find the instalment and the cost of the loan.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $q=1.01$: $R=\frac{12\,000\cdot1.01^{12}\cdot0.01}{1.01^{12}-1}\approx1066.19$ PLN. Cost: $12\cdot1066.19-12\,000\approx794.28$ PLN. <b>Instalment approx. $1066.19$ PLN, cost approx. $794$ PLN</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Successive changes are multiplied:</b> $+10\%$ and $+10\%$ make $\cdot1.21$, i.e. $+21\%$, not $+20\%$.</li>
+    <li><b>Percentage points ≠ percent.</b> Read what is being asked.</li>
+    <li><b>Compounding $m$ times a year:</b> rate $\frac pm$, exponent $mn$. A typical mistake: $\left(1+\frac{p}{100}\right)^{mn}$.</li>
+    <li><b>Round at the end</b>, to the grosz (0.01 PLN); keep intermediate powers exact (in the calculator).</li>
+    <li>“After how many years…” is an exponential inequality: a logarithm or checking successive $n$. Give the number of <b>full</b> years.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. +p%, potem -p% ---
+  const w1 = new Wykres($("pm-plot"), { xmin: 0, xmax: 4, ymin: -15, ymax: 200, krokX: 10, krokY: 20 });
+  let stopPm = null;
+  function klatkaPm(t) {
+    const p = +$("pm-p").value / 100;
+    $("pm-p-v").textContent = $("pm-p").value + "%";
+    const t1 = Math.min(1, t * 2), t2 = Math.max(0, t * 2 - 1);
+    const h1 = 100, h2 = 100 + 100 * p * t1, hk = 100 * (1 + p), h3 = hk - hk * p * t2;
+    w1.rysuj(g => {
+      g.odcinek(0, 100, 4, 100, 3, true);
+      g.prostokat(0.6, 0, 0.8, h1, 1);
+      g.prostokat(1.6, 0, 0.8, h2, 1);
+      if (t2 > 0) g.prostokat(2.6, 0, 0.8, h3, 4);
+      if (t2 >= 1 && p > 0) g.prostokat(2.6, h3, 0.8, 100 - h3, 2, { wypelnij: 0.5 });
+      g.tekst(1, h1, "100", 1, { dy: -6, wyrownanie: "center", gruby: true });
+      g.tekst(2, h2, ladna(h2), 1, { dy: -6, wyrownanie: "center", gruby: true });
+      if (t2 > 0) g.tekst(3, h3, ladna(h3), 4, { dy: -6, wyrownanie: "center", gruby: true });
+      g.tekst(1, 0, "start", 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(2, 0, "+" + ladna(p * 100) + "%", 1, { dy: 14, wyrownanie: "center" });
+      g.tekst(3, 0, "−" + ladna(p * 100) + "%", 4, { dy: 14, wyrownanie: "center" });
+    });
+    const a = ladnaTex(1 + p), b = ladnaTex(1 - p), w = ladnaTex((1 + p) * (1 - p), 4);
+    tex("pm-wynik", `${a}\\cdot${b}=1-${ladnaTex(p, 4)}^2=${w}\\ \\Rightarrow\\ \\text{change } ${ladnaTex(-p * p * 100)}\\%`);
+  }
+  $("pm-start").addEventListener("click", () => { if (stopPm) stopPm(); stopPm = animuj(2400, klatkaPm); });
+  $("pm-p").addEventListener("input", () => { if (stopPm) stopPm(); klatkaPm(1); });
+  klatkaPm(0);
+
+  // --- 3. Procent składany ---
+  const w2 = new Wykres($("ks-plot"), { xmin: -0.8, xmax: 11, ymin: 0, ymax: 25000, formatY: v => ladna(v / 1000) + " tys." });
+  const ladnyKrok = v => { const e = 10 ** Math.floor(Math.log10(v)), m = v / e; return (m < 2 ? 1 : m < 5 ? 2 : 5) * e; };
+  function rysujKs() {
+    const K0 = +$("ks-K").value, p = +$("ks-p").value, n = +$("ks-n").value, m = +$("ks-m").value;
+    const belka = $("ks-belka").checked, wsp = belka ? 0.81 : 1;
+    $("ks-K-v").textContent = K0 + " PLN"; $("ks-p-v").textContent = ladna(p) + "%"; $("ks-n-v").textContent = n;
+    const K = k => K0 * (1 + wsp * p / (100 * m)) ** (m * k);
+    const Kr = k => K0 * (1 + wsp * p / 100) ** k;
+    const ymax = K(n) * 1.15;
+    w2.zakres({ xmax: n + 0.8, ymax, krokY: ladnyKrok(ymax / 5), krokX: n > 15 ? 5 : n > 6 ? 2 : 1 });
+    w2.rysuj(g => {
+      const s = Math.min(0.7, 0.7 * 12 / n);
+      for (let k = 0; k <= n; k++) g.prostokat(k - s / 2, 0, s, K(k), 1, { wypelnij: 0.35 });
+      g.odcinek(-0.8, K0, n + 0.8, K0, 3, true);
+      for (let k = 1; k <= n; k++) g.punkt(k, Kr(k), "", 2, { r: 3.5 });
+    });
+    const ef = ((1 + wsp * p / (100 * m)) ** m - 1) * 100;
+    tex("ks-wynik", `K_{${n}}\\approx${ladnaTex(K(n))}\\text{ PLN},\\ \\text{interest}\\approx${ladnaTex(K(n) - K0)}\\text{ PLN},\\ \\text{yearly compounding: }${ladnaTex(Kr(n))}\\text{ PLN},\\ \\text{effective rate } ${ladnaTex(ef, 3)}\\%`);
+  }
+  ["ks-K", "ks-p", "ks-n", "ks-m", "ks-belka"].forEach(id => { $(id).addEventListener("input", rysujKs); $(id).addEventListener("change", rysujKs); });
+  rysujKs();
+});
+</script>
+</body>
+</html>

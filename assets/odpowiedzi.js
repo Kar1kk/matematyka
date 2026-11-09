@@ -8,12 +8,14 @@
 // Zbiory liczbowe w przedziałach: oo / ∞ / inf; nawiasy domknięte < > ⟨ ⟩ [ ]; suma: u, U, ∪.
 
 (function (glob) {
+  const EN = typeof document !== "undefined" && document.documentElement.lang === "en";
+  const T = (pl, en) => EN ? en : pl;
   // --- kalkulator ---
   function oblicz(s) {
     s = String(s).toLowerCase().replace(/\s+/g, "").replace(/−/g, "-").replace(/·|×/g, "*").replace(/:/g, "/")
       .replace(/π/g, "pi").replace(/∛/g, "cbrt").replace(/√/g, "sqrt").replace(/,/g, ".");
     let i = 0;
-    const blad = () => { throw new Error("Nie rozumiem: " + s); };
+    const blad = () => { throw new Error(T("Nie rozumiem: ", "Can't read: ") + s); };
     const znak = () => s[i];
     function suma() {
       let v = iloczyn();
@@ -67,11 +69,11 @@
       const m = c.match(/^([(<])(.*)[;,|](.*)([)>])$/);
       // przecinek dziesiętny vs separator: przy dwóch przecinkach separatorem jest średnik albo środkowy przecinek
       let a, b;
-      if (!m) throw new Error("Zły zapis przedziału: " + c);
+      if (!m) throw new Error(T("Zły zapis przedziału: ", "Bad interval: ") + c);
       const srodek = c.slice(1, -1);
       const sep = srodek.includes(";") ? ";" : ",";
       const k = srodek.split(sep);
-      if (k.length !== 2) throw new Error("Zły zapis przedziału: " + c);
+      if (k.length !== 2) throw new Error(T("Zły zapis przedziału: ", "Bad interval: ") + c);
       const kon = t => t === "-oo" ? -Infinity : t === "+oo" || t === "oo" ? Infinity : oblicz(t);
       a = kon(k[0]); b = kon(k[1]);
       return { a, b, la: c[0] === "<", pb: c[c.length - 1] === ">" };
@@ -85,7 +87,7 @@
   }
 
   // --- liczby ---
-  const czesci = s => String(s).split(/;|\blub\b|\bi\b/).map(t => t.replace(/^[^=]*=/, "").trim()).filter(Boolean);
+  const czesci = s => String(s).split(/;|\blub\b|\bi\b|\bor\b|\band\b/).map(t => t.replace(/^[^=]*=/, "").trim()).filter(Boolean);
   const liczby = s => czesci(s).map(oblicz);
   // Klucz zapisany jako ułamek dziesiętny z ≥ 2 miejscami (np. 1066.19) to wynik przybliżony:
   // uznaj też inne rozsądne zaokrąglenie (różnica do 0,1% wartości, min. 0,05 — np. 8,4 dla 8,39).
@@ -116,10 +118,11 @@
     try {
       if (/^przedzial:/i.test(klucz)) {
         const ok = rowneZbiory(przedzialy(wpis), przedzialy(klucz.replace(/^przedzial:/i, "")));
-        return { ok, komunikat: ok ? "" : "Sprawdź końce i nawiasy." };
+        return { ok, komunikat: ok ? "" : T("Sprawdź końce i nawiasy.", "Check the endpoints and brackets.") };
       }
       const k = liczby(klucz), o = liczby(wpis);
-      if (o.length !== k.length) return { ok: false, komunikat: `Oczekuję ${k.length === 1 ? "jednej wartości" : k.length + " wartości (rozdziel średnikiem)"}.` };
+      if (o.length !== k.length) return { ok: false, komunikat: k.length === 1 ? T("Oczekuję jednej wartości.", "Expected one value.")
+        : T(`Oczekuję ${k.length} wartości (rozdziel średnikiem).`, `Expected ${k.length} values (separate them with a semicolon).`) };
       return { ok: rowneLiczby(o, k, tolerancje(klucz), przyblizenia(wpis)), komunikat: "" };
     } catch (e) {
       return { ok: false, blad: true, komunikat: e.message };

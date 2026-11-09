@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quadrilaterals and regular polygons</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Quadrilaterals and regular polygons</h1>
+  <p class="lead">Every “special” quadrilateral is a parallelogram, a trapezoid or a kite with extra conditions – and the diagonals tell you almost everything: do they bisect each other, are they equal, are they perpendicular. A regular polygon is $n$ identical isosceles triangles around a center.</p>
+  <p class="wymagania">VIII.3, VIII.4, VIII.12</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="czworokaty">1. Quadrilaterals: angles and diagonals</h2>
+  <p>The angles of a quadrilateral add up to $360^\circ$ (a diagonal splits it into two triangles); for an $n$-gon: $(n-2)\cdot180^\circ$.</p>
+  <table class="tabela">
+    <tr><th>Figure</th><th>Angles</th><th>Diagonals</th></tr>
+    <tr><td><b>Trapezoid</b> (at least 1 pair of parallel sides)</td><td>angles at one leg: sum $180^\circ$</td><td>in an isosceles one: equal</td></tr>
+    <tr><td><b>Parallelogram</b></td><td>opposite equal, adjacent: sum $180^\circ$</td><td>bisect each other</td></tr>
+    <tr><td><b>Rectangle</b></td><td>all $90^\circ$</td><td>bisect each other + equal</td></tr>
+    <tr><td><b>Rhombus</b></td><td>as in a parallelogram</td><td>bisect each other + perpendicular + bisect the angles</td></tr>
+    <tr><td><b>Square</b></td><td>all $90^\circ$</td><td>everything at once, $d=a\sqrt2$</td></tr>
+    <tr><td><b>Kite</b></td><td>a pair of equal angles at the “side” vertices</td><td>perpendicular, the axis of symmetry bisects the other one</td></tr>
+  </table>
+  <div class="uwaga">By the CKE definition <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> a trapezoid has <i>at least</i> one pair of parallel sides – so a parallelogram is also a trapezoid. Isosceles trapezoid: the angles at each base are equal, the diagonals are equal, and a circle can be circumscribed about it.</div>
+  <div class="wzor"><div class="tytul">Areas <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$P_{\text{trapezoid}}=\frac{a+b}{2}\cdot h$$
+    $$P_{\text{parallelogram}}=ah=ab\sin\alpha$$
+    $$P_{\text{rhombus}}=\tfrac12 d_1d_2=a^2\sin\alpha$$
+    $$P=\tfrac12 d_1d_2\sin\gamma$$
+    <dl><dt>$\frac12d_1d_2\sin\gamma$</dt><dd>works for every convex quadrilateral, $\gamma$ – the angle between the diagonals (the sheet lists it under the parallelogram)</dd>
+        <dt>$\frac12d_1d_2$</dt><dd>rhombus, square, kite – perpendicular diagonals</dd></dl>
+  </div>
+
+  <h2 id="demo-czworokat">2. Interactive: recognize the quadrilateral</h2>
+  <div class="demo">
+    <p class="opis">Drag the vertices (step 0.5). The page recognizes the type of quadrilateral and checks the diagonals. Try to make a rhombus that is not a square, and an isosceles trapezoid.</p>
+    <canvas id="cz-plot"></canvas>
+    <div class="wynik" id="cz-typ"></div>
+    <div class="wynik" id="cz-wynik"></div>
+  </div>
+
+  <h2 id="foremne">3. Regular polygons</h2>
+  <div class="definicja"><b>Definition</b> A regular polygon has all sides equal and all angles equal. It has a center – the common center of the circumscribed and inscribed circles.</div>
+  <div class="wzor"><div class="tytul">Regular $n$-gon <span class="cke nie" title="This formula is not on the CKE sheet – you have to remember it or derive it">not on CKE sheet</span></div>
+    $$\text{interior angle}=\frac{(n-2)\cdot180^\circ}{n}$$
+    $$\text{exterior angle}=\frac{360^\circ}{n}$$
+    $$\text{number of diagonals}=\frac{n(n-3)}{2}$$
+    <dl><dt>$\frac{360^\circ}{n}$</dt><dd>the central angle, at which one side is seen from the center</dd>
+        <dt>$n(n-3)$</dt><dd>from each of the $n$ vertices there are $n-3$ diagonals (not to itself and not to the two neighbors), each counted twice</dd></dl>
+  </div>
+  <div class="wzor"><div class="tytul">Regular hexagon with side $a$</div>
+    $$P=6\cdot\frac{a^2\sqrt3}{4}=\frac{3a^2\sqrt3}{2}$$
+    <dl><dt>$2a$</dt><dd>long diagonal (the diameter of the circumscribed circle, $R=a$)</dd>
+        <dt>$a\sqrt3$</dt><dd>short diagonal (two altitudes of an equilateral triangle)</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Change $n$. The green diagonals from one vertex split the polygon into $n-2$ triangles – hence the angle sum $(n-2)\cdot180^\circ$. Switch to “all diagonals” to count them.</p>
+    <canvas id="wf-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="wf-n" min="3" max="12" step="1" value="6"> <span id="wf-n-v"></span></label>
+      <label><input type="checkbox" id="wf-wszystkie"> all diagonals</label>
+      <label><input type="checkbox" id="wf-okregi" checked> circumscribed and inscribed circles</label>
+    </div>
+    <div class="wynik" id="wf-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>A regular hexagon has side $4$. Find its area and the lengths of its diagonals.</p>
+    <ol>
+      <li>The diagonals through the center split it into 6 equilateral triangles with side $4$: $P=6\cdot\frac{16\sqrt3}{4}=24\sqrt3$.</li>
+      <li>The long diagonal is two sides of such triangles: $2\cdot4=8$.</li>
+      <li>The short diagonal is two altitudes: $2\cdot\frac{4\sqrt3}{2}=4\sqrt3$.</li>
+    </ol>
+    <p class="odp">$P=24\sqrt3$, diagonals $8$ and $4\sqrt3$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="150; 54" data-odp-opis="angle in degrees; number of diagonals"><span class="poziom">easy</span>
+      <div class="tresc">Find the interior angle and the number of diagonals of a regular dodecagon.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{10\cdot180^\circ}{12}=150^\circ$, $\frac{12\cdot9}{2}=54$. <b>$150^\circ$, $54$ diagonals</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">The interior angle of a regular polygon is $140^\circ$. How many sides does this polygon have?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The exterior angle is $180^\circ-140^\circ=40^\circ=\frac{360^\circ}{n}$, so <b>$n=9$</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="13; 120; 120/13" data-odp-opis="side; area; height"><span class="poziom">medium</span>
+      <div class="tresc">The diagonals of a rhombus have lengths $10$ and $24$. Find the side, the area and the height of the rhombus.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The diagonals bisect each other at a right angle: $a=\sqrt{5^2+12^2}=13$. $P=\frac12\cdot10\cdot24=120$, $h=\frac{P}{a}=\frac{120}{13}$. <b>$a=13$, $P=120$, $h=\frac{120}{13}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12; 108; 15" data-odp-opis="height; area; diagonal"><span class="poziom">medium</span>
+      <div class="tresc">An isosceles trapezoid has bases $14$ and $4$ and leg $13$. Find its height, area and the length of its diagonal.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The foot of the altitude cuts off $\frac{14-4}{2}=5$ from the longer base: $h=\sqrt{169-25}=12$. $P=\frac{14+4}{2}\cdot12=108$. The diagonal is the hypotenuse of a triangle with legs $h=12$ and $14-5=9$: $\sqrt{144+81}=15$. <b>$h=12$, $P=108$, $d=15$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="30sqrt(3); 2sqrt(19); 14" data-odp-opis="area; diagonals"><span class="poziom">exam-level</span>
+      <div class="tresc">A parallelogram has sides $6$ and $10$ and an acute angle $60^\circ$. Find its area and the lengths of its diagonals.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P=6\cdot10\cdot\sin60^\circ=30\sqrt3$. The shorter diagonal lies opposite the $60^\circ$ angle, the longer opposite $120^\circ$ (<a href="rozwiazywanie-trojkatow.html">law of cosines</a>):
+        $$d_1^2=36+100-120\cdot\tfrac12=76$$
+        $$d_2^2=36+100+120\cdot\tfrac12=196$$
+        <b>$P=30\sqrt3$, $d_1=2\sqrt{19}$, $d_2=14$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">In trapezoid $ABCD$ ($AB\parallel CD$) the diagonals meet at point $S$. $|AB|=12$, $|CD|=4$, and the area of triangle $CDS$ is $3$. Find the area of the trapezoid.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\triangle ABS\sim\triangle CDS$ (alternate angles) with scale $k=3$, so $P_{ABS}=9\cdot3=27$ (<a href="podobienstwo.html">areas of similar figures</a>). $|AS|=3|SC|$, and triangles $BSC$ and $BSA$ share the altitude from $B$, so $P_{BSC}=\frac{27}{3}=9$; likewise $P_{ASD}=9$. $P=3+27+9+9$. <b>$P=48$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Trapezoid:</b> almost always draw two altitudes from the ends of the shorter base – you get two right triangles and a rectangle.</li>
+    <li><b>Rhombus:</b> the halves of the diagonals and the side form a right triangle. This is the key to 90% of rhombus problems.</li>
+    <li>Do not assume from the picture that the diagonals are perpendicular or equal – you may use only the properties of the given figure.</li>
+    <li><b>Regular polygon:</b> join the center to the vertices – you get $n$ isosceles triangles with angle $\frac{360^\circ}{n}$ at the center and legs $R$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- geometry helpers (points are objects {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // angle QPR at vertex P (radians, 0..π)
+  // arc of angle QPR at vertex P (the smaller of the two angles), radius r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // right-angle marker at P between arms PQ and PR (small square side s)
+  // orthogonal projection of point P onto line AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // intersection point of lines AB and CD (null if parallel)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // label of point P offset away from point S (e.g. the center of the figure)
+  // drag constraints: rectangle [-X, X] x [-Y, Y]; circle with center S and radius r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Recognizing the quadrilateral ---
+  const w1 = new Wykres($("cz-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const ogr1 = wPolu(5.5, 4);
+  const pc = w1.przeciagaj([{ x: -3, y: -2, siatka: 0.5, ogranicz: ogr1 }, { x: 2, y: -2, siatka: 0.5, ogranicz: ogr1 },
+    { x: 3.5, y: 2, siatka: 0.5, ogranicz: ogr1 }, { x: -1.5, y: 2, siatka: 0.5, ogranicz: ogr1 }], rysujCz);
+  const wek = (P, Q) => ({ x: Q.x - P.x, y: Q.y - P.y });
+  const iloczynW = (u, v) => u.x * v.y - u.y * v.x;
+  const iloczynS = (u, v) => u.x * v.x + u.y * v.y;
+  const rowne = (a, b) => Math.abs(a - b) < 1e-6;
+  function typCzworokata(A, B, C, D) {
+    const ab = wek(A, B), bc = wek(B, C), cd = wek(C, D), da = wek(D, A);
+    const zn = [iloczynW(da, ab), iloczynW(ab, bc), iloczynW(bc, cd), iloczynW(cd, da)];
+    if (zn.some(z => Math.abs(z) < 1e-9)) return "Three vertices on one line – this is not a quadrilateral.";
+    const dod = zn.filter(z => z > 0).length;
+    if (dod === 2) return "The sides cross – this is not a quadrilateral (swap the order of the vertices).";
+    if (dod !== 0 && dod !== 4) return "Concave quadrilateral.";
+    const p1 = Math.abs(iloczynW(ab, cd)) < 1e-9, p2 = Math.abs(iloczynW(bc, da)) < 1e-9;
+    const L = [ab, bc, cd, da].map(v => Math.hypot(v.x, v.y));
+    const prosty = Math.abs(iloczynS(ab, bc)) < 1e-9;
+    if (p1 && p2) {
+      const romb = rowne(L[0], L[1]);
+      if (romb && prosty) return "Square";
+      if (romb) return "Rhombus";
+      if (prosty) return "Rectangle";
+      return "Parallelogram";
+    }
+    if (p1 || p2) {
+      const rr = rowne(odl(A, C), odl(B, D));
+      const katP = [[da, ab], [ab, bc], [bc, cd], [cd, da]].some(([u, v]) => Math.abs(iloczynS(u, v)) < 1e-9);
+      return rr ? "Isosceles trapezoid" : katP ? "Right trapezoid" : "Trapezoid";
+    }
+    if ((rowne(L[0], L[3]) && rowne(L[1], L[2])) || (rowne(L[0], L[1]) && rowne(L[2], L[3]))) return "Kite";
+    return "General convex quadrilateral";
+  }
+  function rysujCz() {
+    const [A, B, C, D] = pc;
+    const S = { x: (A.x + B.x + C.x + D.x) / 4, y: (A.y + B.y + C.y + D.y) / 4 };
+    const typ = typCzworokata(A, B, C, D);
+    const X = przeciecie(A, C, B, D);
+    w1.rysuj(g => {
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y], [D.x, D.y]], 1, { wypelnij: 0.12 });
+      g.odcinek(A.x, A.y, C.x, C.y, 3); g.odcinek(B.x, B.y, D.x, D.y, 4);
+      [[D, A, B], [A, B, C], [B, C, D], [C, D, A]].forEach(([P, W, Q]) => lukKata(g, W, P, Q, 0.45, 2));
+      if (X) g.punkt(X.x, X.y, "", 3, { r: 3.5 });
+      [[A, "A"], [B, "B"], [C, "C"], [D, "D"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, S, s, 2); });
+    });
+    const katy = [kat(A, D, B), kat(B, A, C), kat(C, B, D), kat(D, C, A)];
+    $("cz-typ").textContent = typ;
+    if (X && !typ.includes("not a quadrilateral") && !typ.includes("Concave")) {
+      const polowy = rowne(odl(A, X), odl(X, C)) && rowne(odl(B, X), odl(X, D));
+      const tn = b => (b ? "\\checkmark" : "\\times");
+      tex("cz-wynik", `\\alpha=${stopnie(katy[0])},\\ \\beta=${stopnie(katy[1])},\\ \\gamma=${stopnie(katy[2])},\\ \\delta=${stopnie(katy[3])}` +
+        `\\\\ \\text{diagonals: bisect each other }${tn(polowy)},\\ \\text{equal }${tn(rowne(odl(A, C), odl(B, D)))},\\ \\text{perpendicular }${tn(Math.abs(iloczynS(wek(A, C), wek(B, D))) < 1e-9)}`);
+    } else tex("cz-wynik", "");
+  }
+  rysujCz();
+
+  // --- 3. Regular polygon ---
+  const w2 = new Wykres($("wf-plot"), { xmin: -4, xmax: 4, ymin: -3.6, ymax: 3.6, rowneSkale: true, siatka: false, osie: false });
+  function rysujWf() {
+    const n = +$("wf-n").value, R = 3;
+    $("wf-n-v").textContent = n;
+    const P = [...Array(n)].map((_, i) => { const t = Math.PI / 2 + 2 * Math.PI * i / n; return { x: R * Math.cos(t), y: R * Math.sin(t) }; });
+    const r = R * Math.cos(Math.PI / n), O = { x: 0, y: 0 };
+    w2.rysuj(g => {
+      if ($("wf-okregi").checked) { g.okrag(0, 0, R, 4, { przerywana: true }); g.okrag(0, 0, r, 4, { przerywana: true }); }
+      g.wielokat(P.map(p => [p.x, p.y]), 1, { wypelnij: 0.12 });
+      if ($("wf-wszystkie").checked) {
+        for (let i = 0; i < n; i++) for (let j = i + 2; j < n; j++) if (!(i === 0 && j === n - 1)) g.odcinek(P[i].x, P[i].y, P[j].x, P[j].y, 3);
+      } else for (let j = 2; j < n - 1; j++) g.odcinek(P[0].x, P[0].y, P[j].x, P[j].y, 3, false);
+      lukKata(g, P[1], P[0], P[2], 0.5, 2);
+      g.odcinek(0, 0, P[1].x, P[1].y, 4); g.odcinek(0, 0, P[2].x, P[2].y, 4);
+      lukKata(g, O, P[1], P[2], 0.4, 4);
+      P.forEach(p => g.punkt(p.x, p.y, "", 2, { r: 3.5 }));
+    });
+    tex("wf-wynik", `\\text{interior angle}=\\tfrac{${n - 2}\\cdot180^\\circ}{${n}}=${ladnaTex((n - 2) * 180 / n, 2)}^\\circ,\\ \\ \\text{central}=${ladnaTex(360 / n, 2)}^\\circ,\\ \\ \\text{diagonals}: ${n * (n - 3) / 2}`);
+  }
+  ["wf-n", "wf-wszystkie", "wf-okregi"].forEach(id => $(id).addEventListener("input", rysujWf));
+  rysujWf();
+});
+</script>
+</body>
+</html>

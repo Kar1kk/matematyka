@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linear function</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Linear function</h1>
+  <p class="lead">A step of $1$ to the right always changes the value by the same amount: by $a$. That is why the graph is a line, $a$ says how steeply it goes, and $b$ where it crosses the $Oy$ axis.</p>
+  <p class="wymagania">V.5, V.6, V.11</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. The formula and the meaning of the coefficients</h2>
+  <div class="wzor">
+    <div class="tytul">Linear function</div>
+    $$f(x)=ax+b$$
+    <dl><dt>$a$</dt><dd>slope: by how much $f(x)$ changes when $x$ increases by $1$. $a&gt;0$: increasing, $a&lt;0$: decreasing, $a=0$: constant</dd>
+        <dt>$b$</dt><dd>constant term: $f(0)=b$, so the graph crosses $Oy$ at $(0,b)$</dd>
+        <dt>$x_0$</dt><dd>zero (root) (when $a\neq0$): $x_0=-\frac{b}{a}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Angle of inclination and two points <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$a=\tan\alpha,\qquad a=\frac{y_B-y_A}{x_B-x_A}$$
+    <dl><dt>$\alpha$</dt><dd>the angle between the line and the positive half of the $Ox$ axis (measured upward from the axis); $a&lt;0 \iff \alpha$ is obtuse</dd>
+        <dt>$A,B$</dt><dd>any two points of the graph, $x_A\neq x_B$</dd></dl>
+  </div>
+  <div class="uwaga">The lines $y=a_1x+b_1$ and $y=a_2x+b_2$ are <b>parallel</b> $\iff a_1=a_2$, and <b>perpendicular</b> $\iff a_1\cdot a_2=-1$. A vertical line $x=c$ is not the graph of a function.</div>
+  <p><b>In word problems</b> (V.11): $a$ is the rate of change (PLN per km, liters per minute), $b$ is the starting value (a fixed fee, an initial amount).</p>
+
+  <h2 id="wspolczynniki">2. Interactive: what $a$ and $b$ do</h2>
+  <div class="demo">
+    <p class="opis">The green segment is a step of $1$ to the right, the red one is the change by $a$. The purple arc is the angle $\alpha$ for which $\tan\alpha=a$. “▶ Steps” shows that each step to the right gives the same increase.</p>
+    <canvas id="la-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="la-a" min="-3" max="3" step="0.1" value="1.5"> <span id="la-a-v"></span></label>
+      <label>$b$ <input type="range" id="la-b" min="-4" max="4" step="0.5" value="-1"> <span id="la-b-v"></span></label>
+      <button id="la-start">▶ Steps</button>
+    </div>
+    <div class="wynik" id="la-wynik"></div>
+  </div>
+
+  <h2 id="dwa-punkty">3. The formula from two points</h2>
+  <div class="demo">
+    <p class="opis">Drag the points $A$ and $B$. The slope is always the quotient $\Delta y/\Delta x$, no matter which two points of the line you choose.</p>
+    <canvas id="dp-plot"></canvas>
+    <div class="wynik" id="dp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>Find the formula of the linear function whose graph passes through $A=(-1,5)$ and $B=(3,-3)$. Give its zero.</p>
+    <ol>
+      <li>$a=\frac{-3-5}{3-(-1)}=\frac{-8}{4}=-2$.</li>
+      <li>Substitute $A$ into $y=-2x+b$: $5=-2\cdot(-1)+b$, so $b=3$.</li>
+      <li>Check with $B$: $-2\cdot3+3=-3$ ✓.</li>
+      <li>$-2x+3=0\iff x=\frac32$.</li>
+    </ol>
+    <p class="odp">$f(x)=-2x+3$, $\;x_0=1.5$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="sqrt(3); -2" data-odp-opis="a; b in the formula y = ax + b"><span class="poziom">easy</span>
+      <div class="tresc">A line inclined to the $Ox$ axis at an angle of $60^\circ$ passes through the point $P=(\sqrt3,1)$. Find its equation.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a=\tan60^\circ=\sqrt3$. $1=\sqrt3\cdot\sqrt3+b=3+b$, so $b=-2$. <b>$y=\sqrt3x-2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1/2; 3" data-odp-opis="a; b in the formula f(x) = ax + b"><span class="poziom">easy</span>
+      <div class="tresc">Find the formula of the linear function whose graph is parallel to the line $y=-\frac12x+4$ and passes through the point $(4,1)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Parallel, so $a=-\frac12$. $1=-\frac12\cdot4+b$, so $b=3$. <b>$f(x)=-\frac12x+3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; -6" data-odp-opis="a; b in the formula f(x) = ax + b"><span class="poziom">medium</span>
+      <div class="tresc">A linear function $f$ has zero $3$ and $f(2)=f(-1)+6$. Find its formula.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(2)-f(-1)=a\cdot(2-(-1))=3a=6$, so $a=2$. From $f(3)=0$: $6+b=0$, $b=-6$. <b>$f(x)=2x-6$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-1; 3)" data-odp-opis="set of values of m"><span class="poziom">medium</span>
+      <div class="tresc">For which $m$ is the function $f(x)=(2m-6)x+m+1$ decreasing and its graph crosses the $Oy$ axis above the $Ox$ axis?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Decreasing: $2m-6&lt;0\iff m&lt;3$. The crossing with $Oy$ is at $(0,m+1)$, so $m+1&gt;0\iff m&gt;-1$. <b>$m\in(-1,3)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="55; 20" data-odp-opis="cost of the ride in PLN; number of km"><span class="poziom">exam-level</span>
+      <div class="tresc">The price of a taxi ride is a fixed fee plus a rate for each kilometer. For $4$ km someone paid $22$ PLN, and for $10$ km $40$ PLN. How much does a $15$ km ride cost? How many kilometers can you ride for $70$ PLN?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $k(x)=ax+b$. $a=\frac{40-22}{10-4}=3$ PLN/km, $b=22-3\cdot4=10$ PLN. $k(15)=55$, and $3x+10=70\iff x=20$.
+        <b>$55$ PLN; $20$ km</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Always check the formula</b> with the second point. It takes 10 seconds, and a sign error in $a$ is the most common slip.</li>
+    <li>$\tan\alpha=a$ refers to the angle with the <b>positive</b> half of the $Ox$ axis. For $a&lt;0$ the angle is obtuse, e.g. $a=-1\Rightarrow\alpha=135^\circ$.</li>
+    <li>In problems with a parameter write the conditions separately ($a&lt;0$, $b&gt;0$) and take the <b>intersection</b>.</li>
+    <li>Word problem: name the variables with units and state the domain (e.g. $x\ge0$ km).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // the formula y = ax + b in a nice form
+  const wzor = (a, b) => {
+    a = Math.round(a * 100) / 100; b = Math.round(b * 100) / 100;
+    const ax = a === 0 ? "" : a === 1 ? "x" : a === -1 ? "-x" : `${ladnaTex(a)}x`;
+    if (!ax) return ladnaTex(b);
+    return b === 0 ? ax : `${ax}${znakTex(b)}`;
+  };
+
+  // --- 2. The coefficients a and b ---
+  const w1 = new Wykres($("la-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  let stop = null;
+  function rysujLa(t = null) {
+    const a = +$("la-a").value, b = +$("la-b").value;
+    $("la-a-v").textContent = ladna(a); $("la-b-v").textContent = ladna(b);
+    const f = x => a * x + b;
+    w1.rysuj(g => {
+      if (t !== null) {
+        // steps from x = -4: k steps of 1 to the right
+        const k = Math.floor(t * 8.99);
+        for (let i = 0; i < k; i++) {
+          const x = -4 + i;
+          g.odcinek(x, f(x), x + 1, f(x), 3, false); g.odcinek(x + 1, f(x), x + 1, f(x + 1), 2, false);
+        }
+        g.punkt(-4 + k, f(-4 + k), "", 2);
+      } else {
+        g.odcinek(0, b, 1, b, 3, false); g.odcinek(1, b, 1, b + a, 2, false);
+        g.tekst(0.5, b, "1", 3, { dy: a >= 0 ? 16 : -6, wyrownanie: "center", gruby: true });
+        g.tekst(1, b + a / 2, "a", 2, { dx: 6, gruby: true });
+      }
+      if (Math.abs(a) > 0.01) {
+        const x0 = -b / a, al = a > 0 ? Math.atan(a) : Math.PI + Math.atan(a);
+        if (x0 > g.z.xmin && x0 < g.z.xmax) {
+          g.luk(x0, 0, 0.9, 0, al, 4, { wypelnij: 0.2 });
+          g.tekst(x0 + 1.25 * Math.cos(al / 2), 1.25 * Math.sin(al / 2), "α", 4, { wyrownanie: "center", gruby: true });
+          g.punkt(x0, 0, "", 4, { r: 4 });
+        }
+      }
+      g.funkcja(f, 1);
+      g.punkt(0, b, "b", 2);
+    });
+    const al = Math.abs(a) < 0.01 ? 0 : (a > 0 ? Math.atan(a) : Math.PI + Math.atan(a)) * 180 / Math.PI;
+    const mon = a > 0.001 ? "\\text{increasing}" : a < -0.001 ? "\\text{decreasing}" : "\\text{constant}";
+    const zero = Math.abs(a) > 0.001 ? `,\\quad x_0=${ladnaTex(-b / a)}` : "";
+    tex("la-wynik", `f(x)=${wzor(a, b)},\\quad \\tan\\alpha=${ladnaTex(a)}\\Rightarrow\\alpha\\approx${ladnaTex(al, 1)}^\\circ,\\quad ${mon}${zero}`);
+  }
+  $("la-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(3200, t => rysujLa(t), () => rysujLa(1)); });
+  ["la-a", "la-b"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); rysujLa(); }));
+  rysujLa();
+
+  // --- 3. Two points ---
+  const w2 = new Wykres($("dp-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-5.5, Math.min(5.5, p.x)), y: Math.max(-4.5, Math.min(4.5, p.y)) });
+  const pkt = w2.przeciagaj([{ x: -2, y: -1, siatka: 0.5, ogranicz: ogr }, { x: 2, y: 2, siatka: 0.5, ogranicz: ogr }], rysujDp);
+  function rysujDp() {
+    const [A, B] = pkt, dx = B.x - A.x, dy = B.y - A.y;
+    w2.rysuj(g => {
+      if (dx !== 0 || dy !== 0) g.prosta(A.x, A.y, B.x, B.y, 1);
+      if (dx !== 0) {
+        g.odcinek(A.x, A.y, B.x, A.y, 3, false); g.odcinek(B.x, A.y, B.x, B.y, 2, false);
+        g.tekst((A.x + B.x) / 2, A.y, `Δx = ${ladna(dx)}`, 3, { dy: dy >= 0 ? 16 : -6, wyrownanie: "center" });
+        g.tekst(B.x, (A.y + B.y) / 2, `Δy = ${ladna(dy)}`, 2, { dx: 6 });
+      }
+      g.punkt(A.x, A.y, "A"); g.punkt(B.x, B.y, "B");
+    });
+    if (dx === 0) { tex("dp-wynik", dy === 0 ? "A=B:\\ \\text{choose two different points}" : `x=${ladnaTex(A.x)}:\\ \\text{a vertical line, not the graph of a function}`); return; }
+    const a = dy / dx, b = A.y - a * A.x, rw = v => Math.abs(v * 100 - Math.round(v * 100)) < 1e-9 ? "=" : "\\approx";
+    tex("dp-wynik", `a=\\frac{\\Delta y}{\\Delta x}=\\frac{${ladnaTex(dy)}}{${ladnaTex(dx)}}${rw(a)}${ladnaTex(a)},\\quad b=y_A-a\\,x_A${rw(b)}${ladnaTex(b)},\\quad y=${wzor(a, b)}`);
+  }
+  rysujDp();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Equations and inequalities with a parameter</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Equations and inequalities with a parameter</h1>
+  <p class="lead">The parameter $m$ is a knob: every setting gives a different equation, i.e. a different parabola. The question “for which $m$…” always has an answer in the form of a set on the $m$-axis, assembled from a few simple conditions.</p>
+  <p class="wymagania">III.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. Solution outline</h2>
+  <ol>
+    <li><b>Does the coefficient of $x^2$ depend on $m$?</b> If so, treat the case $a=0$ separately: a linear equation. Check whether the condition of the task holds then.</li>
+    <li><b>Case $a\neq0$:</b> translate the statement into the conditions from the table below ($\Delta$, Vieta's formulas, $f(k)$, vertex).</li>
+    <li>Solve each condition separately: you get sets on the $m$-axis.</li>
+    <li>Take the <b>intersection</b> of the conditions ($\cap$) and add ($\cup$) the result from the case $a=0$.</li>
+  </ol>
+
+  <h2 id="warunki">2. Table of conditions ($a\neq0$)</h2>
+  <table class="tabela">
+    <tr><th>Requirement</th><th>Conditions</th></tr>
+    <tr><td>two distinct solutions</td><td>$\Delta&gt;0$</td></tr>
+    <tr><td>exactly one</td><td>$\Delta=0$ (+ the case $a=0$!)</td></tr>
+    <tr><td>no solutions</td><td>$\Delta&lt;0$</td></tr>
+    <tr><td>two distinct positive</td><td>$\Delta&gt;0$, $x_1x_2&gt;0$, $x_1+x_2&gt;0$</td></tr>
+    <tr><td>two distinct negative</td><td>$\Delta&gt;0$, $x_1x_2&gt;0$, $x_1+x_2&lt;0$</td></tr>
+    <tr><td>of opposite signs</td><td>$x_1x_2&lt;0$, i.e. $\frac{c}{a}&lt;0$ (then $\Delta&gt;0$ automatically)</td></tr>
+  </table>
+  <p>Roots relative to a number $k$: let $f(x)=ax^2+bx+c$, $x_w=\frac{-b}{2a}$ (the $x$-coordinate of the vertex).</p>
+  <table class="tabela">
+    <tr><th>Requirement</th><th>Conditions</th></tr>
+    <tr><td>$k$ lies between the roots</td><td>$a\cdot f(k)&lt;0$ (and nothing else!)</td></tr>
+    <tr><td>both roots $&gt;k$</td><td>$\Delta\ge0$, $a\cdot f(k)&gt;0$, $x_w&gt;k$</td></tr>
+    <tr><td>both roots $&lt;k$</td><td>$\Delta\ge0$, $a\cdot f(k)&gt;0$, $x_w&lt;k$</td></tr>
+    <tr><td>both in $(k_1,k_2)$</td><td>$\Delta\ge0$, $a f(k_1)&gt;0$, $a f(k_2)&gt;0$, $k_1&lt;x_w&lt;k_2$</td></tr>
+    <tr><td>exactly one in $(k_1,k_2)$</td><td>$f(k_1)\cdot f(k_2)&lt;0$ (a sufficient condition; treat the cases $f(k_1)=0$ or $f(k_2)=0$ separately)</td></tr>
+  </table>
+  <div class="uwaga">For “two distinct” replace $\Delta\ge0$ with $\Delta&gt;0$. The condition “both $&gt;k$” can also be written using Vieta (when $\Delta\ge0$): $(x_1-k)+(x_2-k)&gt;0$ and $(x_1-k)(x_2-k)&gt;0$, i.e. $s-2k&gt;0$ and $p-ks+k^2&gt;0$.</div>
+  <details class="rozwin"><summary>Where does $a\cdot f(k)&lt;0$ come from?</summary><div>
+    <p>$a\cdot f(k)=a^2(k-x_1)(k-x_2)$. Since $a^2&gt;0$, the sign depends on $(k-x_1)(k-x_2)$: it is negative exactly when $k$ is between the roots. If there are no roots, $a\cdot f(k)&gt;0$ for every $k$, so the condition by itself forces $\Delta&gt;0$.</p>
+  </div></details>
+
+  <h2 id="liniowe">3. Linear equations with a parameter</h2>
+  <p>The form $A(m)\cdot x=B(m)$. Consider when $A(m)=0$:</p>
+  <div class="przyklad">
+    <p>$(m^2-1)x=m+1$</p>
+    <ol>
+      <li>$m=1$: $0\cdot x=2$, contradiction: $\varnothing$.</li>
+      <li>$m=-1$: $0\cdot x=0$, an identity: $\R$.</li>
+      <li>$m\neq\pm1$: $x=\frac{m+1}{(m-1)(m+1)}=\frac{1}{m-1}$.</li>
+    </ol>
+  </div>
+  <p>For the inequality $A(m)\cdot x&gt;B(m)$: treat $A&gt;0$ (sign unchanged), $A&lt;0$ (sign reversed) and $A=0$ separately.</p>
+
+  <h2 id="demo">4. Interactive: a family of parabolas and the parameter map</h2>
+  <div class="demo">
+    <p class="opis">Move $m$: the upper graph shows the parabola for the current $m$ (dashed: other $m$ from the family). The lower strip is the <b>$m$-axis</b>: in red are all the $m$ for which the chosen condition holds. The family $(m-1)x^2+\ldots$ shows the case $a=0$ (the isolated point $m=1$).</p>
+    <canvas id="pm-plot" style="height:300px"></canvas>
+    <canvas id="pm-mapa" style="height:90px"></canvas>
+    <div class="sterowanie">
+      <label>$m$ <input type="range" id="pm-m" min="-5" max="5" step="0.1" value="2.5"> <span id="pm-m-v"></span></label>
+      <label>family <select id="pm-rodz"><option value="A">x² − 2mx + m + 2</option><option value="B">(m−1)x² + 2mx + m + 2</option></select></label>
+      <label>condition <select id="pm-war"><option value="dwa">two distinct</option><option value="jedno">exactly one</option><option value="brak">none</option><option value="dod">two distinct positive</option><option value="uj">two distinct negative</option><option value="znaki">of opposite signs</option></select></label>
+    </div>
+    <div class="wynik" id="pm-wynik"></div>
+    <div class="wynik" id="pm-mapa-w"></div>
+  </div>
+
+  <h2 id="przedzial">5. Interactive: both roots in an interval</h2>
+  <div class="demo">
+    <p class="opis">The family $f(x)=x^2-2mx+m+2$. Drag the endpoints $k_1$, $k_2$ (green) and move $m$. Try to find an $m$ for which $f(k_1)&gt;0$, $f(k_2)&gt;0$ and $\Delta&gt;0$, and yet the roots lie outside the interval: this is why the condition on the vertex is needed.</p>
+    <canvas id="pp-plot" style="height:300px"></canvas>
+    <canvas id="pp-mapa" style="height:90px"></canvas>
+    <div class="sterowanie">
+      <label>$m$ <input type="range" id="pp-m" min="-5" max="5" step="0.05" value="2.3"> <span id="pp-m-v"></span></label>
+    </div>
+    <div class="wynik" id="pp-wynik"></div>
+    <div class="wynik" id="pp-mapa-w"></div>
+  </div>
+
+  <h2 id="przyklad">6. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>For which $m$ does the equation $(m-1)x^2+2mx+m+2=0$ have two distinct negative roots?</p>
+    <ol>
+      <li>$m=1$: $2x+3=0$, one solution, so the condition fails. From now on $m\neq1$.</li>
+      <li>$\Delta=4m^2-4(m-1)(m+2)=8-4m&gt;0 \iff m&lt;2$.</li>
+      <li>$x_1x_2=\frac{m+2}{m-1}&gt;0 \iff (m+2)(m-1)&gt;0 \iff m\in(-\infty,-2)\cup(1,\infty)$.</li>
+      <li>$x_1+x_2=\frac{-2m}{m-1}&lt;0 \iff m(m-1)&gt;0 \iff m\in(-\infty,0)\cup(1,\infty)$.</li>
+      <li>Intersection: $m&lt;-2$ or $1&lt;m&lt;2$.</li>
+    </ol>
+    <p class="odp">$m\in(-\infty,-2)\cup(1,2)$</p>
+    <p>Check it on the map in demo 4 (the family $(m-1)x^2\ldots$, “two distinct negative”).</p>
+  </div>
+  <div class="przyklad">
+    <p>For which $m$ are both roots of $x^2-2mx+m+2=0$ distinct and lie in $(0,4)$?</p>
+    <ol>
+      <li>$\frac{\Delta}{4}=m^2-m-2=(m-2)(m+1)&gt;0 \iff m\in(-\infty,-1)\cup(2,\infty)$.</li>
+      <li>$f(0)=m+2&gt;0 \iff m&gt;-2$.</li>
+      <li>$f(4)=18-7m&gt;0 \iff m&lt;\frac{18}{7}$.</li>
+      <li>$x_w=m\in(0,4)$.</li>
+      <li>Intersection: $2&lt;m&lt;\frac{18}7$.</li>
+    </ol>
+    <p class="odp">$m\in\left(2,\frac{18}{7}\right)$</p>
+  </div>
+
+  <h2 id="zadania">7. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="przedzial: (-oo; 4)" data-odp-opis="set of m"><span class="poziom">easy</span>
+      <div class="tresc">For which $m$ does the equation $x^2+4x+m=0$ have two distinct solutions?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\Delta=16-4m&gt;0$. <b>$m&lt;4$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $mx-2=2x+m^2-6$ depending on $m$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(m-2)x=m^2-4=(m-2)(m+2)$. For $m=2$: $0=0$. For $m\neq2$ we divide by $m-2$.
+        <b>$m=2$: $x\in\R$; $\;m\neq2$: $x=m+2$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (2; oo)" data-odp-opis="set of m"><span class="poziom">medium</span>
+      <div class="tresc">For which $m$ does the inequality $mx^2+4x+m&gt;0$ hold for every real number?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $m=0$: $4x&gt;0$ does not hold for every $x$. For $m\neq0$ the parabola must lie entirely above the axis: $m&gt;0$ and $\Delta=16-4m^2&lt;0$, i.e. $m^2&gt;4$. Together: <b>$m&gt;2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (2; oo)" data-odp-opis="set of m"><span class="poziom">exam-level</span>
+      <div class="tresc">For which $m$ does the equation $x^2-2(m+1)x+m+7=0$ have two distinct positive roots?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac\Delta4=(m+1)^2-(m+7)=m^2+m-6=(m+3)(m-2)&gt;0$: $m&lt;-3$ or $m&gt;2$.<br>
+        $x_1x_2=m+7&gt;0$: $m&gt;-7$. $\;x_1+x_2=2(m+1)&gt;0$: $m&gt;-1$.
+        <b>$m\in(2,\infty)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; -1; 3" data-odp-opis="values of m"><span class="poziom">exam-level</span>
+      <div class="tresc">For which $m$ does the equation $(m+1)x^2-4x+m-2=0$ have exactly one solution?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $m=-1$: $-4x-3=0$, one solution $x=-\frac34$. ✓<br>
+        $m\neq-1$: $\Delta=16-4(m+1)(m-2)=-4(m-3)(m+2)=0 \iff m=3$ or $m=-2$.
+        <b>$m\in\{-2,-1,3\}$</b> (a forgotten case $a=0$ is a typical lost point).
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (3; 7)" data-odp-opis="set of m"><span class="poziom">exam-level</span>
+      <div class="tresc">For which $m$ does the equation $x^2-2mx+m+6=0$ have two distinct roots, both greater than $1$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac\Delta4=m^2-m-6=(m-3)(m+2)&gt;0$: $m&lt;-2$ or $m&gt;3$.<br>
+        $f(1)=7-m&gt;0$: $m&lt;7$. $\;x_w=m&gt;1$.<br>
+        Intersection: <b>$m\in(3,7)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">8. On the exam</h2>
+  <ul>
+    <li><b>Treat the case $a=0$</b> explicitly and write down the conclusion, even when it gives nothing. A point is usually lost for omitting it.</li>
+    <li><b>List the conditions in points</b> (1°, 2°, 3°) before calculating. Correct conditions and solving some of them earn partial points.</li>
+    <li><b>“Two solutions” in task statements</b> usually means two distinct ones, i.e. $\Delta&gt;0$. “Two roots (not necessarily distinct)” means $\Delta\ge0$.</li>
+    <li>At the end, the <b>intersection on the $m$-axis</b>: draw it. Watch the endpoints (strict or non-strict inequalities).</li>
+    <li>Turn conditions with $\frac{c}{a}$ into a product: $\frac{m+2}{m-1}&gt;0 \iff (m+2)(m-1)&gt;0$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- pomocniki: zbiór {x : pred(x)}; pred zmienia wartość tylko w punktach kryt ---
+  function zbior(pred, kryt) {
+    const k = kryt.filter(isFinite).sort((u, v) => u - v).filter((v, i, t) => i === 0 || v - t[i - 1] > 1e-9);
+    if (!k.length) return pred(0) ? [{ a: -Infinity, b: Infinity, za: false, zb: false }] : [];
+    const n = k.length, sr = i => i === 0 ? k[0] - 1 : i === n ? k[n - 1] + 1 : (k[i - 1] + k[i]) / 2;
+    const odc = [], pkt = k.map(pred), w = [];
+    for (let i = 0; i <= n; i++) odc.push(pred(sr(i)));
+    let b = null;
+    for (let i = 0; i <= n; i++) {
+      if (odc[i]) {
+        if (!b) b = { a: i ? k[i - 1] : -Infinity, za: false };
+        if (i === n) { b.b = Infinity; b.zb = false; w.push(b); b = null; }
+        else if (!pkt[i] || !odc[i + 1]) { b.b = k[i]; b.zb = pkt[i]; w.push(b); b = null; }
+      } else if (i < n && pkt[i]) {
+        if (odc[i + 1]) b = { a: k[i], za: true };
+        else w.push({ a: k[i], b: k[i], za: true, zb: true });
+      }
+    }
+    return w;
+  }
+  function zbiorTex(z) {
+    if (!z.length) return "\\varnothing";
+    const L = z[z.length - 1];
+    if (z[0].a === -Infinity && L.b === Infinity && z.every(p => p.a < p.b) &&
+        z.slice(1).every((p, i) => p.a === z[i].b && !p.za && !z[i].zb))
+      return z.length === 1 ? "\\R" : "\\R\\setminus\\{" + z.slice(1).map(p => ulamekTex(p.a)).join(",\\,") + "\\}";
+    const cz = [];
+    z.forEach((p, i) => {
+      if (p.a === p.b) { // kolejne pojedyncze punkty łączymy w jeden zbiór {a, b, …}
+        if (i && z[i - 1].a === z[i - 1].b) cz[cz.length - 1].push(ulamekTex(p.a)); else cz.push([ulamekTex(p.a)]);
+        return;
+      }
+      const A = ulamekTex(p.a), B = ulamekTex(p.b), s = (A + B).includes("{,"+"}") ? ";\\," : ",\\,";
+      cz.push(`${p.za ? "[" : "("}${A}${s}${B}${p.zb ? "]" : ")"}`);
+    });
+    return cz.map(c => Array.isArray(c) ? `\\{${c.join(c.some(v => v.includes("{,"+"}")) ? ";\\," : ",\\,")}\\}` : c).join("\\cup");
+  }
+  function naOsi(g, z, nr = 2, y = 0) {
+    const c = g.ctx;
+    z.forEach(p => {
+      const A = Math.max(p.a, g.z.xmin), B = Math.min(p.b, g.z.xmax);
+      if (p.a < p.b && A < B) {
+        c.strokeStyle = g.kolorA(nr, 0.45); c.lineWidth = 8; c.setLineDash([]);
+        c.beginPath(); c.moveTo(g.sx(A), g.sy(y)); c.lineTo(g.sx(B), g.sy(y)); c.stroke();
+      }
+      if (isFinite(p.a)) g.punkt(p.a, y, "", nr, { pusty: !p.za });
+      if (isFinite(p.b) && p.b !== p.a) g.punkt(p.b, y, "", nr, { pusty: !p.zb });
+    });
+  }
+  const POR = {
+    gt: d => d > 1e-9, ge: d => d >= -1e-9, lt: d => d < -1e-9, le: d => d <= 1e-9, eq: d => Math.abs(d) <= 1e-9,
+  };
+  const ZNAK = { gt: ">", ge: "\\ge", lt: "<", le: "\\le", eq: "=" };
+  const ODWR = { gt: "lt", ge: "le", lt: "gt", le: "ge", eq: "eq" };
+  // miejsca zerowe funkcji f na [lo, hi]: zmiany znaku na siatce + bisekcja
+  function zera(f, lo = -6, hi = 6, h = 0.01) {
+    const w = [];
+    let x0 = lo, y0 = f(lo);
+    if (y0 === 0) w.push(lo);
+    for (let i = 1; x0 < hi; i++) {
+      const x1 = lo + i * h, y1 = f(x1);
+      if (y1 === 0) w.push(x1);
+      else if (y0 * y1 < 0) {
+        let a = x0, b = x1;
+        for (let j = 0; j < 60; j++) { const c = (a + b) / 2; if (f(a) * f(c) <= 0) b = c; else a = c; }
+        w.push((a + b) / 2);
+      }
+      x0 = x1; y0 = y1;
+    }
+    return w;
+  }
+  const E = 1e-9;
+  const RODZ = {
+    A: m => [1, -2 * m, m + 2],
+    B: m => [m - 1, 2 * m, m + 2],
+  };
+  function warunek(war, a, b, c) {
+    if (Math.abs(a) < E) { // równanie liniowe bx + c = 0
+      const jedno = Math.abs(b) >= E;
+      return war === "jedno" ? jedno : war === "brak" ? !jedno && Math.abs(c) >= E : false;
+    }
+    const d = b * b - 4 * a * c, s = -b / a, p = c / a;
+    switch (war) {
+      case "dwa": return d > E;
+      case "jedno": return Math.abs(d) <= E;
+      case "brak": return d < -E;
+      case "dod": return d > E && p > E && s > E;
+      case "uj": return d > E && p > E && s < -E;
+      case "znaki": return p < -E;
+    }
+  }
+  function pierwiastki(a, b, c) {
+    if (Math.abs(a) < E) return Math.abs(b) < E ? [] : [-c / b];
+    const d = b * b - 4 * a * c;
+    if (d < -E) return [];
+    if (Math.abs(d) <= E) return [-b / (2 * a)];
+    return [(-b - Math.sqrt(d)) / (2 * a), (-b + Math.sqrt(d)) / (2 * a)].sort((u, v) => u - v);
+  }
+  function rysujMape(w, z, m) {
+    w.rysuj(g => {
+      naOsi(g, z, 2, 0);
+      g.odcinek(m, -0.9, m, 0.9, 1, true);
+      g.punkt(m, 0, "", 1, { r: 4 });
+      g.tekst(g.z.xmax, 0, "m", 4, { dx: -14, dy: -8, gruby: true });
+    });
+  }
+
+  // --- 4. Rodzina parabol i mapa parametru ---
+  const w1 = new Wykres($("pm-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 8 });
+  const w1m = new Wykres($("pm-mapa"), { xmin: -5.5, xmax: 5.5, ymin: -1, ymax: 1, krokY: 10 });
+  function rysujPm() {
+    const m = +$("pm-m").value, rodz = RODZ[$("pm-rodz").value], war = $("pm-war").value;
+    $("pm-m-v").textContent = ladna(m);
+    const [a, b, c] = rodz(m), xs = pierwiastki(a, b, c), ok = warunek(war, a, b, c);
+    w1.rysuj(g => {
+      for (let k = -4; k <= 4; k++) { const [A, B, C] = rodz(k); g.funkcja(x => A * x * x + B * x + C, 3, { przerywana: true, grubosc: 1 }); }
+      g.funkcja(x => a * x * x + b * x + c, ok ? 2 : 1);
+      xs.forEach(x => g.punkt(x, 0, x > E ? "+" : x < -E ? "−" : "0", x > E ? 3 : 2));
+    });
+    // mapa: kandydaci na końce przedziałów = zera a(m), b(m), c(m), Δ(m)
+    const kryt = [0, 1, 2].flatMap(i => zera(t => rodz(t)[i]));
+    kryt.push(...zera(t => { const [A, B, C] = rodz(t); return B * B - 4 * A * C; }));
+    const z = zbior(t => warunek(war, ...rodz(t)), kryt);
+    rysujMape(w1m, z, m);
+    const d = b * b - 4 * a * c;
+    const opis = xs.length === 2 ? `x_1=${ladnaTex(xs[0])},\\;x_2=${ladnaTex(xs[1])}` : xs.length === 1 ? `x_0=${ladnaTex(xs[0])}` : "\\text{none}";
+    tex("pm-wynik", `a=${ladnaTex(a)},\\;\\Delta=${Math.abs(a) < E ? "\\text{—}" : ladnaTex(d)},\\;${opis}\\;\\Rightarrow\\;${ok ? "\\text{condition holds}" : "\\text{no}"}`);
+    tex("pm-mapa-w", `\\text{the condition holds for } m\\in ${zbiorTex(z)}`);
+  }
+  ["pm-m", "pm-rodz", "pm-war"].forEach(id => $(id).addEventListener("input", rysujPm));
+  rysujPm();
+
+  // --- 5. Oba pierwiastki w przedziale (k1, k2) ---
+  const w2 = new Wykres($("pp-plot"), { xmin: -3, xmax: 7, ymin: -4, ymax: 8 });
+  const w2m = new Wykres($("pp-mapa"), { xmin: -5.5, xmax: 5.5, ymin: -1, ymax: 1, krokY: 10 });
+  const oy = p => ({ x: Math.max(-2.5, Math.min(6.5, p.x)), y: 0 });
+  const kk = [{ x: 0, y: 0, siatka: 0.5, ogranicz: oy }, { x: 4, y: 0, siatka: 0.5, ogranicz: oy }];
+  const fA = (m, x) => x * x - 2 * m * x + m + 2;
+  function wPrzedziale(m, k1, k2) {
+    const d = 4 * m * m - 4 * (m + 2);
+    return d > E && fA(m, k1) > E && fA(m, k2) > E && m > k1 + E && m < k2 - E;
+  }
+  function rysujPp() {
+    const m = +$("pp-m").value, k1 = Math.min(kk[0].x, kk[1].x), k2 = Math.max(kk[0].x, kk[1].x);
+    $("pp-m-v").textContent = ladna(m);
+    const d = 4 * m * m - 4 * (m + 2), xs = pierwiastki(1, -2 * m, m + 2);
+    const prawda = xs.length === 2 && xs.every(x => x > k1 + E && x < k2 - E);
+    w2.rysuj(g => {
+      g.wielokat([[k1, g.z.ymin], [k2, g.z.ymin], [k2, g.z.ymax], [k1, g.z.ymax]], 3, { wypelnij: 0.1, bezObrysu: true });
+      g.funkcja(x => fA(m, x), prawda ? 2 : 1);
+      g.odcinek(m, 0, m, fA(m, m), 4);
+      g.punkt(m, fA(m, m), "W", 4);
+      [k1, k2].forEach((k, i) => { g.odcinek(k, 0, k, fA(m, k), 3); g.punkt(k, fA(m, k), "", 3, { r: 4 }); g.punkt(k, 0, `k${i + 1}`, 3); });
+      xs.forEach(x => g.punkt(x, 0, "", 2, { r: 4 }));
+    });
+    const t = b => b ? "\\checkmark" : "\\times";
+    tex("pp-wynik", `\\Delta>0\\,${t(d > E)},\\ f(k_1)>0\\,${t(fA(m, k1) > E)},\\ f(k_2)>0\\,${t(fA(m, k2) > E)},\\ k_1<x_w<k_2\\,${t(m > k1 + E && m < k2 - E)}\\quad\\Rightarrow\\ \\text{both in the interval: }${t(prawda)}`);
+    const kryt = [...zera(t => 4 * t * t - 4 * (t + 2)), ...zera(t => fA(t, k1)), ...zera(t => fA(t, k2)), k1, k2];
+    const z = zbior(t => wPrzedziale(t, k1, k2), kryt);
+    rysujMape(w2m, z, m);
+    tex("pp-mapa-w", `\\text{both roots in }(${ladnaTex(k1)};\\,${ladnaTex(k2)})\\text{ for } m\\in ${zbiorTex(z)}`);
+  }
+  w2.przeciagaj(kk, rysujPp);
+  $("pp-m").addEventListener("input", rysujPp);
+  rysujPp();
+});
+</script>
+</body>
+</html>

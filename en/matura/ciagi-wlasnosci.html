@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sequences: general term, recursion, monotonicity</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Sequences: general term, recursion, monotonicity</h1>
+  <p class="lead">A sequence is a function whose arguments are only the natural numbers $1, 2, 3, \ldots$ Its graph is separate points $(n, a_n)$, and you read monotonicity from the sign of the "jump" $a_{n+1}-a_n$.</p>
+  <p class="wymagania">VI.1–VI.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definitions</h2>
+  <div class="definicja"><b>A numerical sequence</b> is a function $a\colon \N_+\to\R$. Instead of $a(n)$ we write $a_n$ and call it the $n$-th term. A sequence may be finite (domain $\{1,\ldots,k\}$).</div>
+  <div class="dwie">
+    <div class="wzor">
+      <div class="tytul">General term</div>
+      $$a_n=\frac{2n-1}{n+1}$$
+      <dl><dt>$a_5$</dt><dd>substitute $n=5$: $a_5=\frac{9}{6}=\frac32$</dd></dl>
+    </div>
+    <div class="wzor">
+      <div class="tytul">Recursive formula</div>
+      $$a_1=2,\quad a_{n+1}=3a_n-2$$
+      <dl><dt>next terms</dt><dd>$a_2=4$, $a_3=10$, $a_4=28$: each term from the previous one</dd></dl>
+    </div>
+  </div>
+  <div class="definicja"><b>Monotonicity</b> A sequence $(a_n)$ is
+    <b>increasing</b> when $a_{n+1}&gt;a_n$ for every $n$; <b>decreasing</b> when $a_{n+1}&lt;a_n$; <b>constant</b> when $a_{n+1}=a_n$;
+    <b>non-decreasing</b> ($\ge$) and <b>non-increasing</b> ($\le$). Monotonic = one of these types.</div>
+  <div class="wzor">
+    <div class="tytul">How to test monotonicity</div>
+    $$a_{n+1}-a_n\ \gtrless\ 0\ ?$$
+    <dl><dt>difference</dt><dd>simplify $a_{n+1}-a_n$ to a single fraction and test the sign <b>for all</b> $n\in\N_+$</dd>
+        <dt>quotient</dt><dd>only when all $a_n&gt;0$: $\frac{a_{n+1}}{a_n}&gt;1$ ⇒ increasing, $&lt;1$ ⇒ decreasing (handy with powers and factorials)</dd></dl>
+  </div>
+  <div class="uwaga">To show that a sequence is <b>not</b> monotonic, a counterexample is enough: three terms, e.g. $a_1&lt;a_2$ and $a_2&gt;a_3$. On the other hand, "the first terms increase" proves nothing.</div>
+
+  <h2 id="wykres">2. The graph of a sequence and its "jumps"</h2>
+  <div class="demo">
+    <p class="opis">Choose a sequence and click ▶: the points $(n,a_n)$ appear, with the bars $a_{n+1}-a_n$ below. All green (above the axis) = increasing sequence, all red = decreasing, mixed = not monotonic.</p>
+    <canvas id="cw-plot" style="height:260px"></canvas>
+    <canvas id="cw-roz" style="height:170px;margin-top:6px"></canvas>
+    <div class="sterowanie">
+      <label>sequence <select id="cw-wzor">
+        <option value="0">aₙ = (2n − 1)/(n + 1)</option>
+        <option value="1">aₙ = n² − 9n</option>
+        <option value="2">aₙ = 6/n</option>
+        <option value="3">aₙ = (−1)ⁿ · 4/n</option>
+        <option value="4">aₙ = 2ⁿ/n!</option>
+      </select></label>
+      <label>$n$ up to <input type="range" id="cw-n" min="2" max="12" step="1" value="10"> <span id="cw-n-v"></span></label>
+      <button id="cw-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="cw-wynik"></div>
+  </div>
+
+  <h2 id="rekurencja">3. Recursion step by step</h2>
+  <div class="demo">
+    <p class="opis">Each next term is computed from the previous one. Click "Step" and watch the point "jump" to the next $n$. Change $a_1$: for $a_{n+1}=2a_n-3$ and $a_1=3$ the sequence is constant, for $a_1&gt;3$ it increases, for $a_1&lt;3$ it decreases.</p>
+    <canvas id="rk-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>formula <select id="rk-wzor">
+        <option value="0">aₙ₊₁ = 2aₙ − 3</option>
+        <option value="1">aₙ₊₁ = ½aₙ + 2</option>
+        <option value="2">aₙ₊₁ = −½aₙ + 3</option>
+      </select></label>
+      <label>$a_1$ <input type="range" id="rk-a1" min="-2" max="6" step="0.5" value="4"> <span id="rk-a1-v"></span></label>
+      <button id="rk-krok">Step →</button>
+      <button id="rk-reset">↺ Restart</button>
+    </div>
+    <div class="wynik" id="rk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>Investigate the monotonicity of the sequence $a_n=\frac{2n-1}{n+1}$.</p>
+    <ol>
+      <li>$a_{n+1}=\frac{2(n+1)-1}{(n+1)+1}=\frac{2n+1}{n+2}$.</li>
+      <li>$a_{n+1}-a_n=\frac{(2n+1)(n+1)-(2n-1)(n+2)}{(n+1)(n+2)}$.</li>
+      <li>Numerator: $(2n^2+3n+1)-(2n^2+3n-2)=3$.</li>
+      <li>$a_{n+1}-a_n=\frac{3}{(n+1)(n+2)}&gt;0$ for every $n\in\N_+$ (the denominator is positive).</li>
+    </ol>
+    <p class="odp">The sequence is increasing.</p>
+  </div>
+  <div class="przyklad">
+    <p>Is the sequence $a_n=n^2-9n$ monotonic? Which term is the smallest?</p>
+    <ol>
+      <li>$a_{n+1}-a_n=(n+1)^2-9(n+1)-n^2+9n=2n-8$.</li>
+      <li>$2n-8&lt;0$ for $n&lt;4$, $=0$ for $n=4$, $&gt;0$ for $n&gt;4$: the sequence first decreases, then increases.</li>
+      <li>The smallest are $a_4=a_5=-20$ (for $n=4$ the difference is $0$).</li>
+    </ol>
+    <p class="odp">Not monotonic (e.g. $a_1&gt;a_2$, $a_5&lt;a_6$); the smallest terms: $a_4=a_5=-20$.</p>
+  </div>
+
+  <h2 id="zadania">5. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="3; 4" data-odp-opis="indices n of the negative terms"><span class="poziom">easy</span>
+      <div class="tresc">A sequence is given by the formula $a_n=n^2-7n+10$. Which terms of this sequence are negative?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $n^2-7n+10=(n-2)(n-5)&lt;0 \iff 2&lt;n&lt;5$, and $n\in\N_+$, so $n\in\{3,4\}$. <b>The negative ones are $a_3=a_4=-2$.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">A sequence is defined recursively: $a_1=2$, $a_{n+1}=3a_n-2$. Find $a_4$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a_2=3\cdot2-2=4$, $a_3=3\cdot4-2=10$, $a_4=3\cdot10-2=28$. <b>$a_4=28$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Investigate the monotonicity of the sequence $a_n=\frac{3n+1}{n+2}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a_{n+1}-a_n=\frac{3n+4}{n+3}-\frac{3n+1}{n+2}=\frac{(3n+4)(n+2)-(3n+1)(n+3)}{(n+2)(n+3)}$. Numerator: $3n^2+10n+8-(3n^2+10n+3)=5$.
+        Hence $a_{n+1}-a_n=\frac{5}{(n+2)(n+3)}&gt;0$. <b>The sequence is increasing.</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Investigate the monotonicity of the sequence $a_n=\frac{2^n}{n!}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        All terms are positive, so use the quotient: $\frac{a_{n+1}}{a_n}=\frac{2^{n+1}}{(n+1)!}\cdot\frac{n!}{2^n}=\frac{2}{n+1}$.
+        For $n=1$ the quotient is $1$ ($a_1=a_2=2$), for $n\ge2$ it is $&lt;1$. <b>The sequence is non-increasing, but not decreasing</b> (since $a_1=a_2$).
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (-1; oo)" data-odp-opis="set of values of k"><span class="poziom">exam-level</span>
+      <div class="tresc">Find all values of the parameter $k$ for which the sequence $a_n=\frac{kn-1}{n+1}$ is increasing.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Separate the integer part: $a_n=\frac{k(n+1)-k-1}{n+1}=k-\frac{k+1}{n+1}$. Hence
+        $a_{n+1}-a_n=(k+1)\left(\frac{1}{n+1}-\frac{1}{n+2}\right)=\frac{k+1}{(n+1)(n+2)}$.
+        The denominator is positive, so the difference is positive for every $n$ if and only if $k+1&gt;0$. <b>$k&gt;-1$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Pattern:</b> find $a_{n+1}$ (substitute $n+1$ <i>in parentheses</i>), compute $a_{n+1}-a_n$, bring to a common denominator, justify the sign "for every $n\in\N_+$". Without that sentence you lose a point.</li>
+    <li><b>The quotient</b> only for sequences with positive terms. You compare with $1$, not with $0$.</li>
+    <li><b>A quadratic sequence</b> $a_n=an^2+bn+c$: the vertex $p$ need not be a natural number. The smallest/largest term is at the natural number closest to $p$ (check both neighbors).</li>
+    <li><b>"Which terms are…"</b>: you solve an inequality, but the answer is only $n\in\N_+$. A common mistake: giving an interval instead of the indices.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Pomocnik: zmiana zakresu wykresu (wykres.js nie ma do tego metody)
+  const rown = (x, m = 2) => (Math.abs(Math.round(x * 10 ** m) / 10 ** m - x) < 1e-9 ? "=" : "\\approx ") + ladnaTex(x, m);
+  const ladnyKrok = d => { const s = d / 7, p = 10 ** Math.floor(Math.log10(s)), m = s / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+  function zakresY(w, lo, hi) {
+    lo = Math.min(lo, 0); hi = Math.max(hi, 0);
+    const pad = (hi - lo) * 0.12 || 1;
+    Object.assign(w.z0, { ymin: lo - pad, ymax: hi + pad, krokY: ladnyKrok(hi - lo + 2 * pad) });
+  }
+  const silnia = n => n <= 1 ? 1 : n * silnia(n - 1);
+
+  // --- 2. Wykres ciągu i różnice ---
+  const CIAGI = [
+    { f: n => (2 * n - 1) / (n + 1), tex: "\\frac{2n-1}{n+1}", opis: "increasing" },
+    { f: n => n * n - 9 * n, tex: "n^2-9n", opis: "not monotonic (decreasing up to } n=4\\text{, then increasing)" },
+    { f: n => 6 / n, tex: "\\frac{6}{n}", opis: "decreasing" },
+    { f: n => (-1) ** n * 4 / n, tex: "(-1)^n\\cdot\\frac{4}{n}", opis: "not monotonic (alternating signs)" },
+    { f: n => 2 ** n / silnia(n), tex: "\\frac{2^n}{n!}", opis: "non-increasing (} a_1=a_2\\text{, then decreasing)" },
+  ];
+  const w1 = new Wykres($("cw-plot"), { xmin: -0.5, xmax: 12.8, ymin: -1, ymax: 3 });
+  const w2 = new Wykres($("cw-roz"), { xmin: -0.5, xmax: 12.8, ymin: -1, ymax: 1 });
+  let stop1 = null;
+  function klatka1(t) {
+    const c = CIAGI[+$("cw-wzor").value], N = +$("cw-n").value;
+    $("cw-n-v").textContent = N;
+    const a = [], d = [];
+    for (let n = 1; n <= N; n++) a.push(c.f(n));
+    for (let n = 1; n < N; n++) d.push(a[n] - a[n - 1]);
+    zakresY(w1, Math.min(...a), Math.max(...a));
+    zakresY(w2, Math.min(...d), Math.max(...d));
+    const ile = t * N; // ile punktów już widać (ułamek = pojawianie się)
+    w1.rysuj(g => {
+      a.forEach((v, i) => {
+        const n = i + 1;
+        if (n > ile + 1e-9) return;
+        if (n > 1) g.odcinek(n - 1, a[i - 1], n, v, 3);
+        g.punkt(n, v, N <= 8 || n === 1 || n === N ? `a${String(n).replace(/\d/g, x => "₀₁₂₃₄₅₆₇₈₉"[x])}` : "", 1);
+      });
+    });
+    w2.rysuj(g => {
+      d.forEach((v, i) => {
+        const n = i + 1;
+        if (n + 1 > ile + 1e-9) return;
+        const nr = Math.abs(v) < 1e-12 ? 4 : v > 0 ? 3 : 2;
+        g.prostokat(n + 0.2, 0, 0.6, v, nr, { wypelnij: 0.55 });
+      });
+      g.tekst(g.z.xmax, g.z.ymax, "aₙ₊₁ − aₙ ", 4, { dy: 16, wyrownanie: "right" });
+    });
+    tex("cw-wynik", `a_n=${c.tex}\\;\\Rightarrow\\;\\text{${c.opis}}`);
+  }
+  $("cw-start").addEventListener("click", () => { if (stop1) stop1(); stop1 = animuj(2500, klatka1); });
+  ["cw-wzor", "cw-n"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); klatka1(1); }));
+  klatka1(1);
+
+  // --- 3. Rekurencja krok po kroku ---
+  const REK = [
+    { f: x => 2 * x - 3, tex: (n, p) => `2a_{${n}}-3=2\\cdot(${ladnaTex(p)})-3` },
+    { f: x => x / 2 + 2, tex: (n, p) => `\\tfrac12 a_{${n}}+2=\\tfrac12\\cdot(${ladnaTex(p)})+2` },
+    { f: x => -x / 2 + 3, tex: (n, p) => `-\\tfrac12 a_{${n}}+3=-\\tfrac12\\cdot(${ladnaTex(p)})+3` },
+  ];
+  const MAXN = 10;
+  const w3 = new Wykres($("rk-plot"), { xmin: -0.5, xmax: 10.8, ymin: -2, ymax: 8 });
+  let wyr = [], stop3 = null;
+  function wyrazy() {
+    const r = REK[+$("rk-wzor").value], a1 = +$("rk-a1").value;
+    $("rk-a1-v").textContent = ladna(a1);
+    const a = [a1];
+    for (let n = 1; n < MAXN; n++) a.push(r.f(a[n - 1]));
+    // ograniczenie zakresu, by wybuchające ciągi (2aₙ−3) nie spłaszczały wykresu
+    const widoczne = a.map(v => Math.max(-60, Math.min(60, v)));
+    zakresY(w3, Math.min(...widoczne), Math.max(...widoczne));
+    return a;
+  }
+  function klatka3(k, t) { // k = liczba gotowych wyrazów, t = postęp skoku do wyrazu k+1
+    const a = wyrazy(), r = REK[+$("rk-wzor").value];
+    w3.rysuj(g => {
+      for (let n = 1; n <= k; n++) {
+        if (n > 1) g.odcinek(n - 1, a[n - 2], n, a[n - 1], 3);
+        g.punkt(n, a[n - 1], k <= 6 ? `a${"₀₁₂₃₄₅₆₇₈₉"[n] || ""}` : "", 1);
+      }
+      if (t > 0 && k < MAXN) {
+        const x = k + t, y = a[k - 1] + (a[k] - a[k - 1]) * t;
+        g.strzalka(k, a[k - 1], x, y, 2);
+        g.punkt(x, y, "", 2);
+      }
+    });
+    const n = Math.min(k, MAXN);
+    tex("rk-wynik", n === 1 ? `a_1=${ladnaTex(a[0])}` :
+      `a_{${n}}=${r.tex(n - 1, a[n - 2])}${rown(a[n - 1], 3)}`);
+  }
+  let k = 1;
+  const reset = () => { if (stop3) stop3(); k = 1; klatka3(1, 0); };
+  $("rk-krok").addEventListener("click", () => {
+    if (stop3) stop3();
+    if (k >= MAXN) { k = 1; klatka3(1, 0); return; }
+    const k0 = k;
+    stop3 = animuj(600, t => klatka3(k0, t), () => { k = k0 + 1; klatka3(k, 0); });
+  });
+  $("rk-reset").addEventListener("click", reset);
+  ["rk-wzor", "rk-a1"].forEach(id => $(id).addEventListener("input", reset));
+  reset();
+});
+</script>
+</body>
+</html>

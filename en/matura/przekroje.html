@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cross-sections of a cube and regular pyramids</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Cross-sections of a cube and regular pyramids</h1>
+  <p class="lead">A plane cuts a solid along a polygon. Its sides lie on the faces of the solid, so you build the section face by face: you join points lying on the same face, and on parallel faces you draw parallel segments.</p>
+  <p class="wymagania">X.R.2 (the cross-section of a cuboid was removed from the core curriculum; the cube and regular pyramids remain)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="zasady">1. How to find a cross-section</h2>
+  <ol>
+    <li>Two points of the plane lying on the <b>same face</b> are joined by a segment: it is a side of the section.</li>
+    <li>The plane cuts <b>parallel</b> faces along <b>parallel</b> segments.</li>
+    <li>When a point is missing, extend a side of the section until it meets the line of an edge of the same face (a point on the extension of the edge, the so-called trace), then join it to a point on the adjacent face.</li>
+    <li>A section has at most as many sides as the solid has faces: in a cube from $3$ to $6$, in a square pyramid from $3$ to $5$.</li>
+  </ol>
+  <table class="tabela">
+    <tr><th>cross-section of a cube (edge $a$)</th><th>plane through</th><th>area</th></tr>
+    <tr><td>equilateral triangle</td><td>$B$, $D$, $E$</td><td>$\frac{a^2\sqrt3}{2}$</td></tr>
+    <tr><td>rectangle (diagonal)</td><td>$A$, $C$, $G$</td><td>$a^2\sqrt2$</td></tr>
+    <tr><td>rhombus</td><td>$A$, $G$, midpoint of $BF$</td><td>$\frac{a^2\sqrt6}{2}$</td></tr>
+    <tr><td>regular hexagon</td><td>midpoints of $6$ edges</td><td>$\frac{3a^2\sqrt3}{4}$</td></tr>
+  </table>
+  <div class="uwaga">Notation: bottom base $ABCD$, top base $EFGH$, $E$ above $A$. A cross-section of a cube is never a heptagon or a regular pentagon.</div>
+
+  <h2 id="demo">2. Interactive: cross-sections of a cube</h2>
+  <div class="demo">
+    <p class="opis">Choose a ready-made type or three points of your own (vertices and edge midpoints). The slider moves the plane in parallel: watch a triangle turn into a hexagon. Rotate the cube with your finger.</p>
+    <canvas id="pr-plot"></canvas>
+    <div class="sterowanie">
+      <button id="pr-t1" class="wtorny">triangle</button>
+      <button id="pr-t2" class="wtorny">rectangle</button>
+      <button id="pr-t3" class="wtorny">square</button>
+      <button id="pr-t4" class="wtorny">trapezoid</button>
+      <button id="pr-t5" class="wtorny">rhombus</button>
+      <button id="pr-t6" class="wtorny">pentagon</button>
+      <button id="pr-t7" class="wtorny">hexagon</button>
+      <label>$P_1$ <select id="pr-p1"></select></label>
+      <label>$P_2$ <select id="pr-p2"></select></label>
+      <label>$P_3$ <select id="pr-p3"></select></label>
+      <label>shift <input type="range" id="pr-s" min="-1.6" max="1.6" step="0.02" value="0"></label>
+    </div>
+    <div class="wynik" id="pr-wynik"></div>
+  </div>
+
+  <h2 id="demo2">3. Interactive: cross-sections of a pyramid</h2>
+  <div class="demo">
+    <p class="opis">A regular square pyramid ($a=4$, $H=4$). Choose the kind of plane and vary the parameter. For the plane through edge $AB$, see when the trapezoid turns into a triangle.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="sterowanie">
+      <button id="po-m1" class="wtorny aktywny">through edge AB</button>
+      <button id="po-m2" class="wtorny">parallel to the base</button>
+      <button id="po-m3" class="wtorny">through S and diagonal AC</button>
+      <label>parameter <input type="range" id="po-x" min="0.05" max="0.95" step="0.01" value="0.35"></label>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>A regular square pyramid $ABCDS$ has base edge $6$ and height $3\sqrt3$. A plane passes through edge $AB$ and makes an angle of $30^\circ$ with the base. Find the area of the cross-section.</p>
+    <ol>
+      <li>$M$, $N$ are the midpoints of $AB$ and $CD$. In triangle $MNS$: $|MN|=6$, $\tan\sphericalangle SMN=\frac{3\sqrt3}{3}=\sqrt3$, so the angle at $M$ is $60^\circ$ and triangle $MNS$ is equilateral.</li>
+      <li>$AB\parallel CD$, so $AB$ is parallel to plane $CDS$ and the cutting plane meets face $CDS$ along $KL\parallel CD$. The section is the trapezoid $ABLK$.</li>
+      <li>The line from $M$ at $30^\circ$ is the bisector of the $60^\circ$ angle, so it hits the midpoint $P$ of segment $SN$; $|MP|=\frac{6\sqrt3}{2}=3\sqrt3$ (the altitude of the equilateral triangle) and this is the height of the trapezoid.</li>
+      <li>$P$ is the midpoint of $SN$, so $KL$ is a midsegment of triangle $CDS$: $|KL|=3$.</li>
+    </ol>
+    <p class="odp">$P=\frac{6+3}{2}\cdot3\sqrt3=\frac{27\sqrt3}{2}$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="16sqrt(2)" data-odp-opis="area"><span class="poziom">easy</span>
+      <div class="tresc">A cube has edge $4$. Find the area of the cross-section by the plane through the base diagonal $AC$ and vertex $G$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The section is the rectangle $ACGE$ with sides $4\sqrt2$ and $4$. <b>$16\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2sqrt(3); sqrt(2)" data-odp-opis="area; tan α"><span class="poziom">easy</span>
+      <div class="tresc">A cube has edge $2$. Find the area of the cross-section by plane $BDE$ and the tangent of the angle between this plane and the base.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The sides $BD$, $DE$, $EB$ are face diagonals: an equilateral triangle with side $2\sqrt2$, $P=\frac{8\sqrt3}{4}$. The angle: $\tan=\frac{|AE|}{|AO|}=\frac{2}{\sqrt2}$. <b>$P=2\sqrt3$, $\tan\alpha=\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12sqrt(3)" data-odp-opis="area"><span class="poziom">medium</span>
+      <div class="tresc">A plane passes through the midpoints of edges $BC$, $DH$ and $EF$ of a cube with edge $4$. Determine the shape and area of the cross-section.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The plane passes through the midpoints of six edges (also $CD$, $HE$, $BF$): a regular hexagon with side $\frac{4\sqrt2}{2}=2\sqrt2$. $P=6\cdot\frac{8\sqrt3}{4}$. <b>Regular hexagon, $P=12\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12sqrt(2)" data-odp-opis="area"><span class="poziom">medium</span>
+      <div class="tresc">A regular square pyramid has base edge $6$ and height $4$. Find the area of the cross-section by the plane through the apex $S$ and a diagonal of the base.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Triangle $ACS$: base $6\sqrt2$, height $H=4$. <b>$12\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="18" data-odp-opis="area"><span class="poziom">exam-level</span>
+      <div class="tresc">A cube has edge $4$. A plane passes through vertices $B$, $D$ and the midpoint $M$ of edge $EF$. Determine the cross-section and find its area.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Faces $ABCD$ and $EFGH$ are parallel, so in the top face the side of the section is $MN\parallel BD$; $N$ is the midpoint of $EH$. The section is the isosceles trapezoid $BDNM$, $|BD|=4\sqrt2$, $|MN|=2\sqrt2$, leg $|BM|=\sqrt{16+4}=2\sqrt5$. Height: $\sqrt{20-(\sqrt2)^2}=\sqrt{18}=3\sqrt2$. $P=\frac{4\sqrt2+2\sqrt2}{2}\cdot3\sqrt2$. <b>Trapezoid, $P=18$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3sqrt(11)" data-odp-opis="area"><span class="poziom">exam-level</span>
+      <div class="tresc">All edges of the regular square pyramid $ABCDS$ have length $4$. Find the area of the cross-section by the plane through edge $AB$ and the midpoint of edge $SC$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $AB\parallel CD$, so the plane cuts face $CDS$ along $KL\parallel CD$, where $K$, $L$ are the midpoints of $SC$, $SD$: $|KL|=2$. Trapezoid $ABKL$. $H=\sqrt{16-8}=2\sqrt2$. The height of the trapezoid in the plane of symmetry: $M=(0,-2,0)$, midpoint of $KL$: $P=(0,1,\sqrt2)$, $|MP|=\sqrt{9+2}=\sqrt{11}$. $P=\frac{4+2}{2}\cdot\sqrt{11}$. <b>$3\sqrt{11}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>First <b>justify the shape</b> of the section (parallel segments on parallel faces, equal sides from symmetry), then compute the area.</li>
+    <li>Area of a trapezoid: its height usually lies in a plane of symmetry of the solid; compute it from a triangle in that plane.</li>
+    <li>Area of a section and an angle: $P_{\text{projection}}=P\cdot\cos\varphi$, where $\varphi$ is the angle between the cutting plane and the base (worth remembering, handy for checking).</li>
+    <li>A plane through a base edge of a pyramid: when it is inclined to the base exactly like a lateral face, the section is that face (a triangle); when it is inclined more steeply, it does not enter the pyramid (only the edge remains).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const { odj, dod, razy, il, wek, dl, norm } = V3;
+  // przekrój wielościanu wypukłego płaszczyzną n·x = c (krawędzie: pary indeksów)
+  function przekroj(W, KR, n, c) {
+    const pts = [], dodaj = p => { if (!pts.some(q => dl(odj(p, q)) < 1e-7)) pts.push(p); };
+    KR.forEach(([i, j]) => {
+      const fi = il(n, W[i]) - c, fj = il(n, W[j]) - c;
+      if (Math.abs(fi) < 1e-9) dodaj(W[i]);
+      if (Math.abs(fj) < 1e-9) dodaj(W[j]);
+      if (fi * fj < -1e-18) dodaj(V3.lerp(W[i], W[j], fi / (fi - fj)));
+    });
+    if (pts.length < 3) return { pts: [], pole: 0 };
+    const s = V3.sr(...pts), u = norm(odj(pts[0], s)), v = wek(norm(n), u);
+    pts.sort((p, q) => Math.atan2(il(odj(p, s), v), il(odj(p, s), u)) - Math.atan2(il(odj(q, s), v), il(odj(q, s), u)));
+    let x = [0, 0, 0];
+    pts.forEach((p, i) => { x = dod(x, wek(p, pts[(i + 1) % pts.length])); });
+    return { pts, pole: Math.abs(il(x, norm(n))) / 2 };
+  }
+  function nazwa(p) {
+    const n = p.length, bok = i => dl(odj(p[(i + 1) % n], p[i])), b = [...Array(n).keys()].map(bok);
+    const rowne = b.every(x => Math.abs(x - b[0]) < 1e-6);
+    if (n === 3) return rowne ? "equilateral triangle" : (Math.abs(b[0] - b[1]) < 1e-6 || Math.abs(b[1] - b[2]) < 1e-6 || Math.abs(b[0] - b[2]) < 1e-6) ? "isosceles triangle" : "triangle";
+    if (n === 4) {
+      const kier = i => odj(p[(i + 1) % 4], p[i]), rown = (i, j) => dl(wek(kier(i), kier(j))) < 1e-6;
+      const prosty = Math.abs(il(kier(0), kier(1))) < 1e-6;
+      if (rown(0, 2) && rown(1, 3)) return rowne ? (prosty ? "square" : "rhombus") : (prosty ? "rectangle" : "parallelogram");
+      if (rown(0, 2) || rown(1, 3)) return (rown(0, 2) ? Math.abs(b[1] - b[3]) : Math.abs(b[0] - b[2])) < 1e-6 ? "isosceles trapezoid" : "trapezoid";
+      return "quadrilateral";
+    }
+    const s = V3.sr(...p), r = p.map(q => dl(odj(q, s)));
+    if (n === 5) return "pentagon";
+    return rowne && r.every(x => Math.abs(x - r[0]) < 1e-6) ? "regular hexagon" : "hexagon";
+  }
+
+  // --- 2. sześcian ---
+  const NZ = "ABCDEFGH", W = [[0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 2], [2, 0, 2], [2, 2, 2], [0, 2, 2]];
+  const KRN = ["AB", "BC", "CD", "DA", "EF", "FG", "GH", "HE", "AE", "BF", "CG", "DH"];
+  const KR = KRN.map(k => [NZ.indexOf(k[0]), NZ.indexOf(k[1])]);
+  const SC = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]];
+  const PKT = {};
+  NZ.split("").forEach((k, i) => { PKT[k] = W[i]; });
+  KRN.forEach((k, i) => { PKT["mid " + k] = V3.lerp(W[KR[i][0]], W[KR[i][1]], 0.5); });
+  ["pr-p1", "pr-p2", "pr-p3"].forEach(id => Object.keys(PKT).forEach(k => { const o = document.createElement("option"); o.value = k; o.textContent = k; $(id).appendChild(o); }));
+  const PS = ["pr-p1", "pr-p2", "pr-p3"].map(id => $(id));
+  const TYPY = { "pr-t1": ["B", "D", "E"], "pr-t2": ["A", "C", "G"], "pr-t3": ["mid AE", "mid BF", "mid CG"], "pr-t4": ["B", "D", "mid EF"],
+    "pr-t5": ["A", "G", "mid BF"], "pr-t6": ["mid AB", "mid DA", "G"], "pr-t7": ["mid BC", "mid DH", "mid EF"] };
+  const s3 = new Scena3D($("pr-plot"), { zakres: 2.3, srodek: [1, 1, 1], kat: [-0.9, 0.55] });
+  function rysuj() {
+    const q = ["pr-p1", "pr-p2", "pr-p3"].map(id => PKT[$(id).value]), sh = +$("pr-s").value;
+    const n0 = wek(odj(q[1], q[0]), odj(q[2], q[0])), ok = dl(n0) > 1e-9, n = ok ? norm(n0) : [0, 0, 1];
+    const c = il(n, q[0]) + sh, wyn = ok ? przekroj(W, KR, n, c) : { pts: [], pole: 0 };
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.04 });
+      if (wyn.pts.length) g.wielokat(wyn.pts, 2, { wypelnij: 0.35, grubosc: 2.5 });
+      NZ.split("").forEach((k, i) => g.tekst(W[i], k, "--muted", { dx: 5, dy: -6, gruby: true }));
+      if (Math.abs(sh) < 1e-9) q.forEach(p => g.punkt(p, "", 4, { r: 5 }));
+    });
+    let opis = "";
+    if (!ok) opis = "\\text{points are collinear: they do not determine a plane}";
+    else if (!wyn.pts.length) opis = "\\text{the plane does not cut the cube}";
+    else opis = `\\text{${nazwa(wyn.pts)}},\\quad P=${ladnaTex(wyn.pole, 3)}\\ \\ (a=2)`;
+    tex("pr-wynik", opis);
+  }
+  Object.keys(TYPY).forEach(id => $(id).addEventListener("click", () => {
+    TYPY[id].forEach((p, i) => { PS[i].value = p; });
+    $("pr-s").value = 0;
+    Object.keys(TYPY).forEach(j => $(j).classList.toggle("aktywny", j === id));
+    rysuj();
+  }));
+  ["pr-p1", "pr-p2", "pr-p3"].forEach(id => $(id).addEventListener("change", rysuj));
+  $("pr-s").addEventListener("input", rysuj);
+  TYPY["pr-t7"].forEach((p, i) => { PS[i].value = p; });
+  $("pr-t7").classList.add("aktywny");
+  rysuj();
+
+  // --- 3. ostrosłup ---
+  const WO = [[-2, -2, 0], [2, -2, 0], [2, 2, 0], [-2, 2, 0], [0, 0, 4]], NO = "ABCDS";
+  const KO = [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4], [1, 4], [2, 4], [3, 4]];
+  const SO = [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]];
+  const MO = { "po-m1": 1, "po-m2": 2, "po-m3": 3 };
+  let tryb = 1;
+  const s4 = new Scena3D($("po-plot"), { zakres: 3, srodek: [0, 0, 1.6] });
+  function rysuj2() {
+    const x = +$("po-x").value;
+    let n, c, opis;
+    if (tryb === 1) { const f = x * Math.PI / 2; n = [0, -Math.sin(f), Math.cos(f)]; c = 2 * Math.sin(f); opis = `\\varphi=${ladnaTex(x * 90, 1)}^\\circ`; }
+    else if (tryb === 2) { n = [0, 0, 1]; c = 4 * x; opis = `h=${ladnaTex(4 * x)}`; }
+    else { n = norm([1, -1, 0]); c = 0; opis = "ACS"; }
+    const wyn = przekroj(WO, KO, n, c);
+    s4.rysuj(g => {
+      g.bryla(WO, SO, 1, { wypelnij: 0.04 });
+      if (wyn.pts.length) g.wielokat(wyn.pts, 2, { wypelnij: 0.35, grubosc: 2.5 });
+      NO.split("").forEach((k, i) => g.tekst(WO[i], k, "--muted", { dx: 5, dy: -6, gruby: true }));
+    });
+    tex("po-wynik", wyn.pts.length ? `${opis}:\\ \\text{${nazwa(wyn.pts)}},\\quad P=${ladnaTex(wyn.pole, 3)}` : `${opis}:\\ \\text{no section}`);
+  }
+  Object.keys(MO).forEach(id => $(id).addEventListener("click", () => {
+    tryb = MO[id]; Object.keys(MO).forEach(j => $(j).classList.toggle("aktywny", j === id)); rysuj2();
+  }));
+  $("po-x").addEventListener("input", rysuj2);
+  rysuj2();
+});
+</script>
+</body>
+</html>

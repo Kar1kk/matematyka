@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The concept of a function and its properties (reading from a graph)</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>The concept of a function and its properties (reading from a graph)</h1>
+  <p class="lead">A function assigns to each argument <b>exactly one</b> value. Almost everything the exam asks about can be read from the graph by projecting it onto the axes: the $Ox$ axis shows arguments, the $Oy$ axis shows values.</p>
+  <p class="wymagania">V.1–V.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. What a function is</h2>
+  <div class="definicja"><b>Definition</b> A function $f\colon X\to Y$ assigns to <b>each</b> element $x\in X$ <b>exactly one</b> element $f(x)\in Y$. The set $X$ is the <b>domain</b> ($D_f$), and the set of all values taken is the <b>range</b> ($\operatorname{range} f$).</div>
+  <p>A function can be given by a verbal description, a table, a graph (diagram), a plot, or a formula – also by <b>different formulas on different intervals</b>:</p>
+  <div class="wzor">
+    <div class="tytul">Piecewise function</div>
+    $$f(x)=\begin{cases} x+3, &amp; x&lt;-1\\ x^2-1, &amp; x\ge -1\end{cases}$$
+    <dl><dt>$f(-2)$</dt><dd>$-2&lt;-1$, so the first formula: $f(-2)=1$</dd>
+        <dt>$f(2)$</dt><dd>$2\ge-1$, so the second formula: $f(2)=3$</dd></dl>
+  </div>
+  <div class="uwaga">If a formula contains a fraction, a root or a logarithm and no domain is given, the domain is <b>all $x$ for which the formula makes sense</b>: denominator $\neq0$, under an even-degree root $\ge0$, under a logarithm $&gt;0$.</div>
+
+  <h2 id="test">2. Is this the graph of a function?</h2>
+  <div class="demo">
+    <p class="opis">Drag the red point along the $Ox$ axis. A curve is the graph of a function when <b>every</b> vertical line meets it at most once.</p>
+    <canvas id="tp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>curve <select id="tp-krzywa">
+        <option value="par">parabola y = x²/2 − 2</option>
+        <option value="okr">circle x² + y² = 9</option>
+        <option value="lez">“sideways” parabola x = y²/2 − 2</option>
+      </select></label>
+    </div>
+    <div class="wynik" id="tp-wynik"></div>
+  </div>
+
+  <h2 id="odczyt">3. What you read from a graph</h2>
+  <table class="tabela">
+    <tr><th>Question</th><th>How to read it</th></tr>
+    <tr><td>domain</td><td>projection of the graph onto the $Ox$ axis</td></tr>
+    <tr><td>range</td><td>projection of the graph onto the $Oy$ axis</td></tr>
+    <tr><td>zeros</td><td>first coordinates of the common points with the $Ox$ axis</td></tr>
+    <tr><td>$f(x)&gt;c$</td><td>the part of the graph <b>above</b> the line $y=c$, projected onto $Ox$</td></tr>
+    <tr><td>max and min on $[a,b]$</td><td>the highest and lowest point of the graph over $[a,b]$</td></tr>
+  </table>
+  <div class="definicja"><b>Definition</b> A function $f$ is <b>increasing</b> on a set $A$ if for any $x_1,x_2\in A$:
+    $$x_1&lt;x_2\ \Rightarrow\ f(x_1)&lt;f(x_2).$$
+    <b>Decreasing</b>: $f(x_1)&gt;f(x_2)$. <b>Non-decreasing</b>: $f(x_1)\le f(x_2)$, <b>non-increasing</b>: $f(x_1)\ge f(x_2)$, <b>constant</b>: $f(x_1)=f(x_2)$.</div>
+  <div class="uwaga"><b>Do not join</b> intervals of monotonicity with the symbol $\cup$. The function in the demo decreases on $[-6,-4]$ and on $[1,5]$, but it does not decrease on their union: $-6&lt;1$, yet $f(-6)=2&lt;f(1)=4$.</div>
+
+  <h2 id="wykres">4. Interactive: reading from a graph</h2>
+  <div class="demo">
+    <p class="opis">Turn on the properties one by one. For $f(x)&gt;c$ move the line $y=c$; for the maximum and minimum change the interval $[a,b]$. Note the open point at $x=7$: the function is not defined there.</p>
+    <canvas id="wl-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="wl-dz" checked> domain</label>
+      <label><input type="checkbox" id="wl-zw"> range</label>
+      <label><input type="checkbox" id="wl-mz"> zeros</label>
+      <label><input type="checkbox" id="wl-mon"> monotonicity</label>
+      <label><input type="checkbox" id="wl-wc"> $f(x)&gt;c$</label>
+      <label>$c$ <input type="range" id="wl-c" min="-5" max="5" step="0.5" value="1"> <span id="wl-c-v"></span></label>
+      <label><input type="checkbox" id="wl-mm"> max and min on $[a,b]$</label>
+      <label>$a$ <input type="range" id="wl-a" min="-6" max="6.5" step="0.5" value="-3"> <span id="wl-a-v"></span></label>
+      <label>$b$ <input type="range" id="wl-b" min="-6" max="6.5" step="0.5" value="4"> <span id="wl-b-v"></span></label>
+    </div>
+    <div class="wynik" id="wl-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Find the zeros and the range of the function $f$ from section 1 (the piecewise formula).</p>
+    <ol>
+      <li>For $x&lt;-1$: $x+3=0 \iff x=-3$, and $-3&lt;-1$, so this is a zero.</li>
+      <li>For $x\ge-1$: $x^2-1=0\iff x=\pm1$. Both satisfy $x\ge-1$, so both count.</li>
+      <li>Values: for $x&lt;-1$ we have $x+3&lt;2$, that is $(-\infty,2)$. For $x\ge-1$: $x^2\ge0$, so $x^2-1\ge-1$, that is $[-1,\infty)$.</li>
+      <li>The union $(-\infty,2)\cup[-1,\infty)=\R$.</li>
+    </ol>
+    <p class="odp">Zeros: $-3,\ -1,\ 1$; $\;\operatorname{range} f=\R$</p>
+    <p>Trap: for every formula check that the $x$ you found lies in <b>its</b> interval.</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-5" data-odp-opis="f(4)"><span class="poziom">easy</span>
+      <div class="tresc">Find the domain of $f(x)=\sqrt{x+5}-2x$ and compute $f(4)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x+5\ge0\iff x\ge-5$. $f(4)=\sqrt9-8=3-8$. <b>$D_f=[-5,\infty)$, $f(4)=-5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">For the function in the demo in section 4, give the set of all $x$ for which $f(x)\ge2$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The line $y=2$ meets the graph at $x=-2$ and $x=2$ (the segments $y=2x+6$ and $y=-2x+6$). Between them the graph is above the line. But there is also the left endpoint: $f(-6)=2$, and further on the graph drops below the line. That is a <b>single point</b>.
+        <b>$\{-6\}\cup[-2,2]$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 1-sqrt(2); 1+sqrt(2)"><span class="poziom">medium</span>
+      <div class="tresc">Find the zeros of $f(x)=\begin{cases}2x+4, &amp; x\le-1\\ x^2-2x-1, &amp; x&gt;-1\end{cases}$</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2x+4=0\iff x=-2\le-1$ ✓. $x^2-2x-1=0$: $\Delta=8$, $x=1\pm\sqrt2$. Since $1-\sqrt2\approx-0.41&gt;-1$, both fit.
+        <b>$x\in\{-2,\ 1-\sqrt2,\ 1+\sqrt2\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; -2" data-odp-opis="largest; smallest value"><span class="poziom">medium</span>
+      <div class="tresc">For the function in the demo in section 4, give the largest and smallest value on the interval $[-5,3]$ and the arguments at which they are attained.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Values at the endpoints and at the break points: $f(-5)=0$, $f(-4)=-2$, $f(-1)=f(1)=4$, $f(3)=0$.
+        <b>The largest is $4$ for every $x\in[-1,1]$, the smallest is $-2$ for $x=-4$.</b> Check in the demo: $a=-5$, $b=3$.
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-4; 5&gt;" data-odp-opis="range"><span class="poziom">exam-level</span>
+      <div class="tresc">The function $f(x)=x^2-6x+5$ has domain $[0,5]$. Give its range and determine the number of solutions of $f(x)=m$ depending on $m$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The vertex is $W=(3,-4)$, $f(0)=5$, $f(5)=0$, so $\operatorname{range} f=[-4,5]$. The line $y=m$ meets the graph (an arc from $(0,5)$ through $W$ to $(5,0)$):
+        twice when $-4&lt;m\le0$; once when $m=-4$ or $0&lt;m\le5$; never outside $\text{range}$.
+        <b>2 solutions for $m\in(-4,0]$; 1 for $m=-4$ or $m\in(0,5]$; 0 for $m&lt;-4$ or $m&gt;5$.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Open and filled dots</b> at the ends of a graph decide the brackets: filled $[\ ]$, open $(\ )$. The most common lost point.</li>
+    <li>Give <b>monotonicity</b> as separate intervals, never as a union. You may close the endpoints if they belong to the domain.</li>
+    <li>The <b>largest value</b> is a number ($y$), while the <b>argument</b> at which it is attained is $x$. Read what they ask for.</li>
+    <li>For $f(x)\ge c$ check <b>isolated points</b> (the end of the domain, a vertex touching the line $y=c$).</li>
+    <li>Piecewise function: a solution from each formula must lie in its interval.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const pr = (L, R, lz, pz) => `${lz ? "[" : "("}${ladnaTex(L)},\\,${ladnaTex(R)}${pz ? "]" : ")"}`;
+
+  // --- 2. Test pionowej prostej ---
+  const w0 = new Wykres($("tp-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const P = w0.przeciagaj([{ x: 1, y: 0, ogranicz: p => ({ x: Math.max(-5.5, Math.min(5.5, Math.round(p.x * 10) / 10)), y: 0 }) }], rysujTp);
+  function rysujTp() {
+    const k = $("tp-krzywa").value, t = P[0].x;
+    let ys = [];
+    if (k === "par") ys = [t * t / 2 - 2];
+    if (k === "okr") ys = Math.abs(t) < 3 ? [Math.sqrt(9 - t * t), -Math.sqrt(9 - t * t)] : Math.abs(t) === 3 ? [0] : [];
+    if (k === "lez") ys = t > -2 ? [Math.sqrt(2 * (t + 2)), -Math.sqrt(2 * (t + 2))] : t === -2 ? [0] : [];
+    w0.rysuj(g => {
+      if (k === "par") g.funkcja(x => x * x / 2 - 2, 1);
+      if (k === "okr") g.okrag(0, 0, 3, 1);
+      if (k === "lez") g.parametryczna(y => y * y / 2 - 2, y => y, -5, 5, 1);
+      g.odcinek(t, g.z.ymin, t, g.z.ymax, ys.length > 1 ? 2 : 3);
+      ys.forEach(y => g.punkt(t, y, "", ys.length > 1 ? 2 : 3));
+      g.punkt(t, 0, "x", 2);
+    });
+    const werdykt = k === "par" ? "\\text{every vertical line: 1 point} \\Rightarrow \\text{this is the graph of a function}"
+      : "\\text{some lines hit 2 points} \\Rightarrow \\text{this is not the graph of a function}";
+    tex("tp-wynik", `x=${ladnaTex(t)}:\\ ${ys.length}\\ \\text{pts.}\\quad ${werdykt}`);
+  }
+  $("tp-krzywa").addEventListener("change", rysujTp);
+  rysujTp();
+
+  // --- 4. Odczyt z wykresu ---
+  const W = [[-6, 2], [-4, -2], [-1, 4], [1, 4], [5, -4], [7, -2]]; // łamana, x=7 poza dziedziną
+  const f = x => {
+    if (x < -6 || x >= 7) return NaN;
+    for (let i = 0; i < W.length - 1; i++) {
+      const [x1, y1] = W[i], [x2, y2] = W[i + 1];
+      if (x <= x2) return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+    }
+    return NaN;
+  };
+  // zbiór {x : f(x) > c} jako lista przedziałów
+  function zbiorWiekszych(c) {
+    const pts = W.map(p => p[0]);
+    for (let i = 0; i < W.length - 1; i++) {
+      const [x1, y1] = W[i], [x2, y2] = W[i + 1];
+      if ((y1 - c) * (y2 - c) < 0) pts.push(x1 + (c - y1) * (x2 - x1) / (y2 - y1));
+    }
+    pts.sort((u, v) => u - v);
+    const kaw = [];
+    for (let k = 0; k < pts.length - 1; k++) {
+      if (pts[k + 1] - pts[k] < 1e-9 || !(f((pts[k] + pts[k + 1]) / 2) > c)) continue;
+      const ost = kaw[kaw.length - 1];
+      if (ost && Math.abs(ost.R - pts[k]) < 1e-9 && f(pts[k]) > c) ost.R = pts[k + 1]; else kaw.push({ L: pts[k], R: pts[k + 1] });
+    }
+    return kaw.map(({ L, R }) => ({ L, R, lz: f(L) > c, pz: R < 7 && f(R) > c }));
+  }
+  // zbiór argumentów z [a,b], w których f = M (punkty lub przedziały)
+  function argumenty(a, b, M) {
+    const kaw = []; let start = null, poprz = null;
+    for (let i = 0; i <= Math.round((b - a) * 100); i++) {
+      const x = Math.round(a * 100 + i) / 100;
+      if (Math.abs(f(x) - M) < 1e-9) { if (start === null) start = x; poprz = x; }
+      else if (start !== null) { kaw.push([start, poprz]); start = null; }
+    }
+    if (start !== null) kaw.push([start, poprz]);
+    return kaw;
+  }
+  const argTex = kaw => kaw.map(([L, R]) => L === R ? `x=${ladnaTex(L)}` : `x\\in${pr(L, R, true, true)}`).join("\\text{ or }");
+
+  const w = new Wykres($("wl-plot"), { xmin: -7.5, xmax: 8, ymin: -5.5, ymax: 5.5 });
+  function rysujWl() {
+    const c = +$("wl-c").value;
+    let a = +$("wl-a").value, b = +$("wl-b").value;
+    $("wl-c-v").textContent = ladna(c); $("wl-a-v").textContent = ladna(a); $("wl-b-v").textContent = ladna(b);
+    if (a > b) [a, b] = [b, a];
+    const on = id => $(id).checked, linie = [];
+    let M = 0, m = 0, argM = [], argm = [];
+    if (on("wl-mm")) {
+      const ys = [];
+      for (let i = 0; i <= Math.round((b - a) * 100); i++) ys.push(f(Math.round(a * 100 + i) / 100));
+      M = Math.max(...ys); m = Math.min(...ys); argM = argumenty(a, b, M); argm = argumenty(a, b, m);
+    }
+    w.rysuj(g => {
+      if (on("wl-mm")) g.prostokat(a, g.z.ymin, b - a, g.z.ymax - g.z.ymin, 4, { wypelnij: 0.12, bezObrysu: true });
+      if (on("wl-wc")) {
+        g.odcinek(g.z.xmin, c, g.z.xmax, c, 2);
+        zbiorWiekszych(c).forEach(({ L, R, lz, pz }) => {
+          g.funkcja(f, 3, { od: L, do: R, grubosc: 5 });
+          g.odcinek(L, 0, R, 0, 3, false);
+          g.punkt(L, 0, "", 3, { pusty: !lz, r: 4 }); g.punkt(R, 0, "", 3, { pusty: !pz, r: 4 });
+        });
+      }
+      if (on("wl-mon")) {
+        for (let i = 0; i < W.length - 1; i++) {
+          const [x1, y1] = W[i], [x2, y2] = W[i + 1];
+          g.odcinek(x1, y1, x2, y2, y2 > y1 ? 3 : y2 < y1 ? 2 : 4, false);
+        }
+      } else g.funkcja(f, 1, { od: -6, do: 7 });
+      g.punkt(-6, 2, "", 1); g.punkt(7, -2, "", 1, { pusty: true });
+      if (on("wl-dz")) {
+        g.odcinek(-6, 2, -6, 0, 3); g.odcinek(7, -2, 7, 0, 3);
+        g.odcinek(-6, 0, 7, 0, 3, false);
+        g.punkt(-6, 0, "", 3, { r: 4 }); g.punkt(7, 0, "", 3, { pusty: true, r: 4 });
+      }
+      if (on("wl-zw")) {
+        g.odcinek(-1, 4, 0, 4, 4); g.odcinek(5, -4, 0, -4, 4);
+        g.odcinek(0, -4, 0, 4, 4, false);
+        g.punkt(0, 4, "", 4, { r: 4 }); g.punkt(0, -4, "", 4, { r: 4 });
+      }
+      if (on("wl-mz")) [-5, -3, 3].forEach(x => g.punkt(x, 0, ladna(x), 2));
+      if (on("wl-mm")) {
+        [[argM, M, "max"], [argm, m, "min"]].forEach(([kaw, y, nazwa]) => kaw.forEach(([L, R], i) => {
+          if (R > L) g.odcinek(L, y, R, y, 2, false);
+          g.punkt(L, y, i ? "" : nazwa, 2); if (R > L) g.punkt(R, y, "", 2);
+        }));
+      }
+    });
+    if (on("wl-dz")) linie.push("D_f=[-6,\\,7)");
+    if (on("wl-zw")) linie.push("\\operatorname{range} f=[-4,\\,4]");
+    if (on("wl-mz")) linie.push("\\text{zeros: } -5,\\ -3,\\ 3");
+    if (on("wl-mon")) linie.push("\\text{increasing (green): } [-4,-1],\\ [5,7);\\quad \\text{decreasing (red): } [-6,-4],\\ [1,5];\\quad \\text{constant: } [-1,1]");
+    if (on("wl-wc")) {
+      const z = zbiorWiekszych(c);
+      linie.push(`f(x)>${ladnaTex(c)}\\iff x\\in ${z.length ? z.map(p => pr(p.L, p.R, p.lz, p.pz)).join("\\cup") : "\\emptyset"}`);
+    }
+    if (on("wl-mm")) {
+      linie.push(`\\text{on } [${ladnaTex(a)},${ladnaTex(b)}]:\\ f_{\\max}=${ladnaTex(M)}\\ \\text{for } ${argTex(argM)}`);
+      linie.push(`f_{\\min}=${ladnaTex(m)}\\ \\text{for } ${argTex(argm)}`);
+    }
+    const box = $("wl-wynik"); box.innerHTML = "";
+    linie.forEach(s => { const d = document.createElement("div"); box.appendChild(d); tex(d, s); });
+  }
+  ["wl-dz", "wl-zw", "wl-mz", "wl-mon", "wl-wc", "wl-mm"].forEach(id => $(id).addEventListener("change", rysujWl));
+  ["wl-c", "wl-a", "wl-b"].forEach(id => $(id).addEventListener("input", rysujWl));
+  rysujWl();
+});
+</script>
+</body>
+</html>

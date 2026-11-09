@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relative position of lines, perpendicular lines</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Relative position of lines, perpendicular lines</h1>
+  <p class="lead">Two lines in the plane either intersect (one common point) or are parallel. Everything is decided by direction: the same direction means parallel, rotated by $90^\circ$ means perpendicular.</p>
+  <p class="wymagania">IX.1, IX.2, IX.R.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="warunki">1. Conditions for parallelism and perpendicularity</h2>
+  <table class="tabela">
+    <tr><th></th><th>$y=a_1x+b_1$<br>$y=a_2x+b_2$</th><th>$A_1x+B_1y+C_1=0$<br>$A_2x+B_2y+C_2=0$</th></tr>
+    <tr><td>parallel</td><td>$a_1=a_2$</td><td>$A_1B_2-A_2B_1=0$</td></tr>
+    <tr><td>perpendicular</td><td>$a_1\cdot a_2=-1$</td><td>$A_1A_2+B_1B_2=0$</td></tr>
+    <tr><td>intersecting</td><td>$a_1\neq a_2$</td><td>$A_1B_2-A_2B_1\neq0$</td></tr>
+  </table>
+  <p>All four conditions are on the formula sheet. Parallel lines with $b_1=b_2$ (or proportional $A,B,C$) are the same line, i.e. <b>coincident</b>.</p>
+  <div class="uwaga">The condition $a_1a_2=-1$ does not cover the pair “horizontal + vertical” ($x=c$ has no $a$). The general form always works.</div>
+  <div class="definicja"><b>The intersection point</b> is the solution of the system of equations of both lines. The system has one solution (the lines intersect), no solution (parallel and distinct) or infinitely many (they coincide).</div>
+  <details class="rozwin"><summary>Why $a_1a_2=-1$?</summary><div>
+    <p>Shift both lines so that they pass through $O$: $y=a_1x$, $y=a_2x$. The points $P=(1,a_1)$ and $Q=(1,a_2)$ lie on them. Angle $POQ$ is right $\iff |OP|^2+|OQ|^2=|PQ|^2$:</p>
+    $$1+a_1^2+1+a_2^2=(a_1-a_2)^2$$
+    $$2=-2a_1a_2\iff a_1a_2=-1$$
+  </div></details>
+
+  <h2 id="demo">2. Interactive: two lines</h2>
+  <div class="demo">
+    <p class="opis">Drag the points: the blue line passes through $P_1,Q_1$, the purple one through $P_2,Q_2$. Try to make the lines parallel and perpendicular; watch both conditions.</p>
+    <canvas id="pp-plot"></canvas>
+    <div class="wynik" id="pp-w1"></div>
+    <div class="wynik" id="pp-w2"></div>
+    <div class="wynik" id="pp-w3"></div>
+  </div>
+
+  <h2 id="prostopadla">3. A parallel and a perpendicular line through a point</h2>
+  <div class="wzor">
+    <div class="tytul">Given a line $y=ax+b$ and a point $P=(x_0,y_0)$</div>
+    $$\parallel:\ y-y_0=a(x-x_0)$$
+    $$\perp:\ y-y_0=-\tfrac{1}{a}(x-x_0)$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Given a line $Ax+By+C=0$</div>
+    $$\parallel:\ Ax+By+C'=0$$
+    $$\perp:\ Bx-Ay+C''=0$$
+    <dl><dt>$C',C''$</dt><dd>find them by substituting the coordinates of $P$</dd></dl>
+  </div>
+  <div class="demo">
+    <p class="opis">Drag the points of line $l$ and point $P$, then ▶. A copy of $l$ moves to $P$ (parallel) and then rotates by $90^\circ$ (perpendicular). $F$ is the projection of $P$ onto $l$.</p>
+    <canvas id="pk-plot"></canvas>
+    <div class="sterowanie"><button id="pk-start">▶ Construct</button></div>
+    <div class="wynik" id="pk-w1"></div>
+    <div class="wynik" id="pk-w2"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Find the line perpendicular to $l\colon y=2x-1$ passing through $P=(-2,5)$, and the point $F$ where it meets $l$.</p>
+    <ol>
+      <li>$a_\perp=-\frac12$, because $2\cdot\left(-\frac12\right)=-1$.</li>
+      <li>$y-5=-\frac12(x+2)$, so $y=-\frac12x+4$.</li>
+      <li>The system: $2x-1=-\frac12x+4$, so $\frac52x=5$, $x=2$, $y=3$.</li>
+      <li>Check: $F$ lies on both lines: $2\cdot2-1=3$, $-1+4=3$ ✓.</li>
+    </ol>
+    <p class="odp">$y=-\frac12x+4$, $F=(2,3)$</p>
+    <p>Incidentally: $|PF|=\sqrt{16+4}=2\sqrt5$ is the distance from $P$ to line $l$, computed without a separate formula (you can also use the formula from the CKE sheet: $l\colon 2x-y-1=0$, $d=\frac{|2\cdot(-2)-5-1|}{\sqrt{2^2+1}}=\frac{10}{\sqrt5}=2\sqrt5$).</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="3; 2/5" data-odp-opis="m (parallel); m (perpendicular)"><span class="poziom">easy</span>
+      <div class="tresc">For what $m$ are the lines $y=(2m-1)x+3$ and $y=5x-2$ parallel, and for what $m$ perpendicular?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Parallel: $2m-1=5$. Perpendicular: $(2m-1)\cdot5=-1$, so $2m-1=-\frac15$. <b>Parallel for $m=3$, perpendicular for $m=\frac25$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 1" data-odp-opis="x; y"><span class="poziom">easy</span>
+      <div class="tresc">Find the common point of the lines $x+2y-4=0$ and $3x-y-5=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        From the first, $x=4-2y$. Into the second: $12-6y-y-5=0$, $y=1$, $x=2$. Check: $6-1-5=0$ ✓. <b>$(2,1)$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Through $P=(2,-1)$ draw a line parallel and a line perpendicular to $3x-4y+1=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Parallel: $3x-4y+C=0$, $6+4+C=0$, $C=-10$. Perpendicular: $4x+3y+C=0$, $8-3+C=0$, $C=-5$.
+        <b>$3x-4y-10=0$ and $4x+3y-5=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 2; 0" data-odp-opis="two values of m (parallel); m (perpendicular)"><span class="poziom">medium</span>
+      <div class="tresc">The lines $mx+2y-1=0$ and $2x+my+3=0$. For what $m$ are they parallel, and for what perpendicular?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Parallel: $m\cdot m-2\cdot2=0$, $m=\pm2$. Do they coincide? For $m=2$: $2x+2y-1=0$ and $2x+2y+3=0$, different $C$; for $m=-2$: $-2x+2y-1=0$ and $2x-2y+3=0$, i.e. $x-y+\frac12=0$ and $x-y+\frac32=0$, also different. Perpendicular: $2m+2m=0$, $m=0$ (the horizontal line $y=\frac12$ and the vertical line $x=-\frac32$).
+        <b>Parallel for $m\in\{-2,2\}$, perpendicular for $m=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="6; 1" data-odp-opis="x; y of point P'"><span class="poziom">exam-level</span>
+      <div class="tresc">Find the point $P'$ symmetric to $P=(-2,5)$ with respect to the line $y=2x-1$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        From the example: the projection of $P$ onto the line is $F=(2,3)$ and $F$ is the midpoint of $PP'$. $P'=(2\cdot2+2,\ 2\cdot3-5)$. <b>$P'=(6,1)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 8; 3; 2; 20" data-odp-opis="a; b of the altitude y = ax + b; x; y of point H; area"><span class="poziom">exam-level</span>
+      <div class="tresc">A triangle has vertices $A=(-3,-1)$, $B=(5,3)$, $C=(1,6)$. Find the equation of the altitude from $C$, its foot $H$ and the area of the triangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a_{AB}=\frac{4}{8}=\frac12$, so the altitude has $a=-2$, $y-6=-2(x-1)$, $y=-2x+8$. Line $AB$: $y=\frac12x+\frac12$. The system: $-2x+8=\frac12x+\frac12$, $x=3$, $y=2$. $|CH|=\sqrt{4+16}=2\sqrt5$, $|AB|=\sqrt{64+16}=4\sqrt5$, $P=\frac12\cdot4\sqrt5\cdot2\sqrt5=20$.
+        <b>$y=-2x+8$, $H=(3,2)$, area $20$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>A line perpendicular to a <b>vertical</b> line $x=c$ is horizontal: $y=y_0$ (and vice versa). Here $-\frac1a$ will not work.</li>
+    <li>In problems with a parameter, for “parallel” check whether for the $m$ you found the lines <b>coincide</b>, if the problem speaks of distinct lines.</li>
+    <li>Always check the intersection point in <b>both</b> equations. It takes 10 seconds and catches most mistakes.</li>
+    <li>Altitude of a triangle, perpendicular bisector of a segment, projection of a point onto a line: all of these are a perpendicular line through a point plus a system of equations.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nwd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  function ulamek(p, q) {
+    if (q < 0) { p = -p; q = -q; }
+    const g = nwd(p, q) || 1; p /= g; q /= g;
+    if (q === 1) return `${p}`;
+    return `${p < 0 ? "-" : ""}\\frac{${Math.abs(p)}}{${q}}`;
+  }
+  function ogolna(A, B, C) {
+    const g = nwd(nwd(A, B), C) || 1; A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    let s = "";
+    const wyraz = (k, zm) => { if (!k) return; s += (k < 0 ? "-" : s ? "+" : "") + (zm && Math.abs(k) === 1 ? "" : Math.abs(k)) + zm; };
+    wyraz(A, "x"); wyraz(B, "y"); wyraz(C, "");
+    return s + "=0";
+  }
+  function kierunkowa(A, B, C) {
+    if (B === 0) return `x=${ulamek(-C, A)}`;
+    let s = "y=";
+    if (A !== 0) { const u = ulamek(-A, B); s += (u === "1" ? "" : u === "-1" ? "-" : u) + "x"; }
+    if (C !== 0 || A === 0) { const u = ulamek(-C, B); s += (A !== 0 && !u.startsWith("-") ? "+" : "") + u; }
+    return s;
+  }
+  // prosta przez dwa punkty całkowite → [A, B, C] skrócone
+  function wspolczynniki(P, Q) {
+    let A = Q.y - P.y, B = P.x - Q.x, C = -(A * P.x + B * P.y);
+    const g = nwd(nwd(A, B), C) || 1; A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    return [A, B, C];
+  }
+  // znaczek kąta prostego w (X,Y) między kierunkami u i v
+  function katProsty(g, X, Y, u, v, nr = 2) {
+    const s = 0.45, nu = Math.hypot(...u), nv = Math.hypot(...v);
+    const a = [u[0] / nu * s, u[1] / nu * s], b = [v[0] / nv * s, v[1] / nv * s];
+    g.wielokat([[X + a[0], Y + a[1]], [X + a[0] + b[0], Y + a[1] + b[1]], [X + b[0], Y + b[1]]], nr, { zamknij: false, grubosc: 1.5 });
+  }
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-4, Math.min(5, p.y)) });
+
+  // --- 2. Dwie proste ---
+  const w1 = new Wykres($("pp-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 6, rowneSkale: true });
+  const pk1 = w1.przeciagaj([[-4, -2], [2, 1], [-2, 4], [2, -2]].map(([x, y]) => ({ x, y, siatka: 1, ogranicz: ogr })), rysujPP);
+  function rysujPP() {
+    const [P1, Q1, P2, Q2] = pk1;
+    const zle = (P1.x === Q1.x && P1.y === Q1.y) || (P2.x === Q2.x && P2.y === Q2.y);
+    const [A1, B1, C1] = zle ? [0, 0, 0] : wspolczynniki(P1, Q1), [A2, B2, C2] = zle ? [0, 0, 0] : wspolczynniki(P2, Q2);
+    const W = A1 * B2 - A2 * B1, S = A1 * A2 + B1 * B2;
+    const pokryte = W === 0 && A1 * C2 - A2 * C1 === 0 && B1 * C2 - B2 * C1 === 0;
+    w1.rysuj(g => {
+      if (!zle) {
+        g.prosta(P1.x, P1.y, Q1.x, Q1.y, 1);
+        g.prosta(P2.x, P2.y, Q2.x, Q2.y, 4, pokryte);
+        if (W !== 0) {
+          const X = (B1 * C2 - B2 * C1) / W, Y = (A2 * C1 - A1 * C2) / W;
+          if (S === 0) katProsty(g, X, Y, [Q1.x - P1.x, Q1.y - P1.y], [Q2.x - P2.x, Q2.y - P2.y]);
+          g.punkt(X, Y, "", 2, { r: 6, pusty: true });
+        }
+      }
+      g.punkt(P1.x, P1.y, "P₁", 1); g.punkt(Q1.x, Q1.y, "Q₁", 1);
+      g.punkt(P2.x, P2.y, "P₂", 4); g.punkt(Q2.x, Q2.y, "Q₂", 4);
+    });
+    if (zle) { tex("pp-w1", "\\text{Move the points apart: a line needs two different points}"); tex("pp-w2", ""); tex("pp-w3", ""); return; }
+    const op = (A, B, C, i) => `l_${i}\\colon ${ogolna(A, B, C)}` + (B ? `,\\ ${kierunkowa(A, B, C)}` : "\\ (\\text{vertical})");
+    tex("pp-w1", op(A1, B1, C1, 1) + "\\qquad " + op(A2, B2, C2, 2));
+    let iloczyn = "";
+    if (B1 && B2) iloczyn = `,\\quad a_1a_2=${ulamek(A1 * A2, B1 * B2)}`;
+    tex("pp-w2", `A_1B_2-A_2B_1=${W},\\quad A_1A_2+B_1B_2=${S}${iloczyn}`);
+    let opis;
+    if (pokryte) opis = "\\textbf{coincide}";
+    else if (W === 0) opis = "\\textbf{parallel, distinct}";
+    else {
+      const X = ulamek(B1 * C2 - B2 * C1, W), Y = ulamek(A2 * C1 - A1 * C2, W);
+      opis = `\\textbf{${S === 0 ? "perpendicular" : "intersecting"}}\\text{ at }\\left(${X},\\ ${Y}\\right)`;
+    }
+    tex("pp-w3", "\\Rightarrow\\ " + opis);
+  }
+  rysujPP();
+
+  // --- 3. Konstrukcja prostej równoległej i prostopadłej ---
+  const w2 = new Wykres($("pk-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 6, rowneSkale: true });
+  const pk2 = w2.przeciagaj([[-4, -3], [2, 1], [-3, 2]].map(([x, y]) => ({ x, y, siatka: 1, ogranicz: ogr })), () => { if (stop) stop(); klatka(tAkt); });
+  let stop = null, tAkt = 0;
+  function klatka(t) {
+    tAkt = t;
+    const [K, L, P] = pk2;
+    if (K.x === L.x && K.y === L.y) { w2.rysuj(g => { g.punkt(K.x, K.y, "K", 1); g.punkt(P.x, P.y, "P"); }); return; }
+    const [A, B, C] = wspolczynniki(K, L);
+    const n = A * P.x + B * P.y + C, m = A * A + B * B;
+    const F = { x: P.x - A * n / m, y: P.y - B * n / m };           // rzut P na l
+    const d = [L.x - K.x, L.y - K.y];                                 // kierunek l
+    const t1 = Math.min(1, t * 2), t2 = Math.max(0, t * 2 - 1);
+    const sx = (P.x - F.x) * t1, sy = (P.y - F.y) * t1;                // przesunięcie kopii
+    const fi = Math.PI / 2 * t2, r = [d[0] * Math.cos(fi) - d[1] * Math.sin(fi), d[0] * Math.sin(fi) + d[1] * Math.cos(fi)];
+    w2.rysuj(g => {
+      g.prosta(K.x, K.y, L.x, L.y, 1);
+      if (t > 0) {
+        if (t1 === 1) g.prosta(P.x, P.y, P.x + d[0], P.y + d[1], 3, true);
+        const ox = F.x + sx, oy = F.y + sy;
+        g.prosta(ox, oy, ox + r[0], oy + r[1], 2);
+        const k = 1.6 / Math.hypot(...r);
+        g.strzalka(ox, oy, ox + r[0] * k, oy + r[1] * k, 2);
+      }
+      if (t === 1) { katProsty(g, F.x, F.y, d, n ? [P.x - F.x, P.y - F.y] : [-d[1], d[0]], 3); g.punkt(F.x, F.y, "F", 3); }
+      g.punkt(K.x, K.y, "", 1); g.punkt(L.x, L.y, "l", 1); g.punkt(P.x, P.y, "P", 2);
+    });
+    tex("pk-w1", `l\\colon ${ogolna(A, B, C)}`);
+    if (t < 1) { tex("pk-w2", t ? "\\dots" : "\\text{Press Construct}"); return; }
+    const par = ogolna(A, B, -(A * P.x + B * P.y)), prp = ogolna(B, -A, -(B * P.x - A * P.y));
+    const Fx = ulamek(P.x * m - A * n, m), Fy = ulamek(P.y * m - B * n, m);
+    tex("pk-w1", `l\\colon ${ogolna(A, B, C)},\\quad \\parallel\\colon ${par}`);
+    tex("pk-w2", `\\perp\\colon ${prp},\\quad F=\\left(${Fx},\\ ${Fy}\\right)`);
+  }
+  $("pk-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2600, klatka); });
+  klatka(0);
+});
+</script>
+</body>
+</html>

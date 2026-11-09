@@ -1,5 +1,9 @@
 // Wspólne zachowania strony: motyw, wzory KaTeX, nawigacja, postęp, listy z dzialy.js.
 
+// Język: strony w en/ mają <html lang="en">; T("po polsku", "in English")
+const EN = document.documentElement.lang === "en";
+const T = (pl, en) => EN ? en : pl;
+
 (function motyw() {
   try {
     const t = localStorage.getItem("motyw");
@@ -19,6 +23,17 @@
   dodaj("meta", { name: "theme-color", content: "#111111" });
   if ("serviceWorker" in navigator && location.protocol !== "file:")
     addEventListener("load", () => navigator.serviceWorker.register(new URL("sw.js", korzen).href, { updateViaCache: "none" }).catch(() => {}));
+})();
+
+// Zapamiętany wybór języka: polska strona startowa (też aplikacja z ekranu głównego) przechodzi na angielską
+(function jezykStartowy() {
+  const skrypt = document.currentScript;
+  if (EN || !skrypt) return;
+  const korzen = new URL("../", skrypt.src);
+  const tu = decodeURIComponent(location.pathname).slice(decodeURIComponent(korzen.pathname).length);
+  let jez = null;
+  try { jez = localStorage.getItem("jezyk"); } catch (e) {}
+  if (jez === "en" && (tu === "" || tu === "index.html")) location.replace(new URL("en/", korzen).href);
 })();
 
 // Makra KaTeX: polskie oznaczenia
@@ -90,7 +105,7 @@ function eksportujPostep() {
 // Łączy z obecnym postępem: opanowane sumują się, przy powtórkach wygrywa wyższy etap
 function importujPostep(tekst) {
   const { dane } = JSON.parse(tekst);
-  if (!dane || typeof dane !== "object") throw new Error("To nie jest plik postępu.");
+  if (!dane || typeof dane !== "object") throw new Error(T("To nie jest plik postępu.", "This is not a progress file."));
   let n = 0;
   for (const [k, v] of Object.entries(dane)) {
     if (!KLUCZE_POSTEPU.test(k) || typeof v !== "string") continue;
@@ -134,21 +149,21 @@ function panelKontynuuj(el, prefiks) {
   const { ostatni, nastepny, powtorki, opan, razem } = propozycje();
   const link = (t, opis) => t ? `<a class="karta" href="${prefiks}${t.plik}"><span class="znacznik">${opis}</span>
     <h3>${t.nazwa}</h3><p>${t.dzial.nr}. ${t.dzial.nazwa}</p></a>` : "";
-  const naglowek = document.getElementById("podsumowanie") ? "" : `<div class="kontynuuj-naglowek"><b>Twoja nauka</b> · opanowane ${opan} z ${razem}
+  const naglowek = document.getElementById("podsumowanie") ? "" : `<div class="kontynuuj-naglowek"><b>${T("Twoja nauka", "Your progress")}</b> · ${T("opanowane", "mastered")} ${opan} ${T("z", "of")} ${razem}
       <div class="pasek"><div style="width:${100 * opan / razem}%"></div></div></div>`;
-  const lista = powtorki.length ? `<div class="powtorki"><b>Do powtórki dziś (${powtorki.length}):</b>
+  const lista = powtorki.length ? `<div class="powtorki"><b>${T("Do powtórki dziś", "To review today")} (${powtorki.length}):</b>
       ${powtorki.map(t => `<a href="${prefiks}${t.plik}">${t.nazwa}</a>`).join(" · ")}</div>`
-    : opan ? `<div class="powtorki">Na dziś nic do powtórki ✓</div>` : "";
-  el.innerHTML = naglowek + lista + `<div class="siatka">${link(ostatni, "ostatnio otwarty")}${link(nastepny, ostatni ? "proponowany następny" : "zacznij tutaj")}${link(powtorki[0], "powtórka")}</div>
-    <div class="postep-plik"><button type="button" data-akcja="eksport">Zapisz postęp do pliku</button>
-      <label><input type="file" accept=".json,application/json" hidden>Wczytaj postęp z pliku</label>
+    : opan ? `<div class="powtorki">${T("Na dziś nic do powtórki ✓", "Nothing to review today ✓")}</div>` : "";
+  el.innerHTML = naglowek + lista + `<div class="siatka">${link(ostatni, T("ostatnio otwarty", "last opened"))}${link(nastepny, ostatni ? T("proponowany następny", "suggested next") : T("zacznij tutaj", "start here"))}${link(powtorki[0], T("powtórka", "review"))}</div>
+    <div class="postep-plik"><button type="button" data-akcja="eksport">${T("Zapisz postęp do pliku", "Save progress to a file")}</button>
+      <label><input type="file" accept=".json,application/json" hidden>${T("Wczytaj postęp z pliku", "Load progress from a file")}</label>
       <span class="info"></span></div>`;
   const info = el.querySelector(".info");
   el.querySelector("[data-akcja=eksport]").onclick = eksportujPostep;
   el.querySelector("input[type=file]").onchange = e => {
     const f = e.target.files[0]; if (!f) return;
-    f.text().then(t => { const n = importujPostep(t); info.textContent = `Wczytano ${n} wpisów — odświeżam…`; setTimeout(() => location.reload(), 800); })
-      .catch(err => { info.textContent = "Błąd: " + (err.message || "zły plik"); });
+    f.text().then(t => { const n = importujPostep(t); info.textContent = T(`Wczytano ${n} wpisów — odświeżam…`, `Loaded ${n} entries — reloading…`); setTimeout(() => location.reload(), 800); })
+      .catch(err => { info.textContent = T("Błąd: ", "Error: ") + (err.message || T("zły plik", "bad file")); });
   };
 }
 
@@ -167,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const spis = document.querySelector(".spis[data-auto]");
   if (spis) {
     const h2 = [...document.querySelectorAll("main h2[id]")];
-    spis.innerHTML = `<b>Na tej stronie</b><ol>${h2.map(h => `<li><a href="#${h.id}">${h.textContent.replace(/^\d+\.\s*/, "")}</a></li>`).join("")}</ol>`;
+    spis.innerHTML = `<b>${T("Na tej stronie", "On this page")}</b><ol>${h2.map(h => `<li><a href="#${h.id}">${h.textContent.replace(/^\d+\.\s*/, "")}</a></li>`).join("")}</ol>`;
   }
 
   // --- Strona tematu: okruszki, sąsiedzi, opanowane ---
@@ -178,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (i >= 0) {
     const t = tematy[i];
     const nav = document.querySelector("header.top nav");
-    if (nav) nav.innerHTML = `› <a href="index.html">Matura rozszerzona</a> › ${t.dzial.nr}. ${t.dzial.nazwa}`;
+    if (nav) nav.innerHTML = `› <a href="index.html">${T("Matura rozszerzona", "Matura, extended level")}</a> › ${t.dzial.nr}. ${t.dzial.nazwa}`;
     const main = document.querySelector("main");
     pamiec.set("ostatni", plik);
 
@@ -187,8 +202,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const nazwa = p => (tematy.find(x => x.plik === p) || { nazwa: p }).nazwa;
       const z = document.createElement("p");
       z.className = "wymaga";
-      z.innerHTML = "<b>Zanim zaczniesz:</b> " + t.wymaga.map(p =>
-        `<a href="${p}">${nazwa(p)}</a>${opanowany(p) ? ` <span class="ok" title="Opanowane">✓</span>` : ""}`).join(", ");
+      z.innerHTML = `<b>${T("Zanim zaczniesz:", "Before you start:")}</b> ` + t.wymaga.map(p =>
+        `<a href="${p}">${nazwa(p)}</a>${opanowany(p) ? ` <span class="ok" title="${T("Opanowane", "Mastered")}">✓</span>` : ""}`).join(", ");
       const po = main.querySelector("p.wymagania") || main.querySelector("p.lead") || main.querySelector("h1");
       po.after(z);
     }
@@ -199,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
     op.className = "opanowane";
     const odswiezOp = () => {
       const ok = pamiec.get(klucz);
-      op.innerHTML = `<button>${ok ? "✓ Opanowane — cofnij" : "Oznacz jako opanowane"}</button>`;
+      op.innerHTML = `<button>${ok ? T("✓ Opanowane — cofnij", "✓ Mastered — undo") : T("Oznacz jako opanowane", "Mark as mastered")}</button>`;
       op.classList.toggle("tak", !!ok);
       op.querySelector("button").onclick = () => {
         if (ok) { pamiec.set(klucz, null); pamiec.set("powtorka:" + plik, null); }
@@ -217,13 +232,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const st = stanPowtorki(plik), etap = st ? st.etap : 0;
       const pw = document.createElement("div");
       pw.className = "powtorka-temat";
-      pw.innerHTML = `<b>Powtórka</b> (${etap + 1}. z kolei). Przejrzyj wzory i zrób jedno zadanie maturalne bez podglądania.
-        <div><button data-o="tak">Pamiętam ✓</button> <button data-o="nie">Nie pamiętam</button></div>`;
+      pw.innerHTML = T(`<b>Powtórka</b> (${etap + 1}. z kolei). Przejrzyj wzory i zrób jedno zadanie maturalne bez podglądania.`,
+        `<b>Review</b> (no. ${etap + 1}). Go over the formulas and solve one exam-level task without peeking.`)
+        + `<div><button data-o="tak">${T("Pamiętam ✓", "I remember ✓")}</button> <button data-o="nie">${T("Nie pamiętam", "I don't remember")}</button></div>`;
       pw.querySelectorAll("button").forEach(b => b.onclick = () => {
         const tak = b.dataset.o === "tak";
         ustawPowtorke(plik, tak ? etap + 1 : 0);
         const st2 = stanPowtorki(plik);
-        pw.innerHTML = `${tak ? "Świetnie." : "Nic straconego — wróci jutro."} Następna powtórka: <b>${st2.termin}</b>.`;
+        pw.innerHTML = `${tak ? T("Świetnie.", "Great.") : T("Nic straconego — wróci jutro.", "No problem — it will come back tomorrow.")} ${T("Następna powtórka", "Next review")}: <b>${st2.termin}</b>.`;
       });
       const po = main.querySelector("p.wymaga") || main.querySelector("p.wymagania") || main.querySelector("h1");
       po.after(pw);
@@ -257,14 +273,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (poziomy && typeof POZIOMY !== "undefined") {
     poziomy.innerHTML = POZIOMY.map(p => p.link
       ? `<a class="karta" href="${p.link}"><h3>${p.nazwa}</h3><p>${p.opis}</p></a>`
-      : `<div class="karta wylaczona"><h3>${p.nazwa}<span class="znacznik">wkrótce</span></h3><p>${p.opis}</p></div>`
+      : `<div class="karta wylaczona"><h3>${p.nazwa}<span class="znacznik">${T("wkrótce", "coming soon")}</span></h3><p>${p.opis}</p></div>`
     ).join("");
   }
 
   const dzialy = document.getElementById("lista-dzialow");
   if (dzialy && typeof DZIALY_MATURA !== "undefined") {
-    const R = t => t.r ? ` <span class="znacznik r" title="Tylko zakres rozszerzony">R</span>` : "";
-    const ok = t => t.plik && pamiec.get("opanowane:" + t.plik) ? ` <span class="ok" title="Opanowane">✓</span>` : "";
+    const R = t => t.r ? ` <span class="znacznik r" title="${T("Tylko zakres rozszerzony", "Extended level only")}">R</span>` : "";
+    const ok = t => t.plik && pamiec.get("opanowane:" + t.plik) ? ` <span class="ok" title="${T("Opanowane", "Mastered")}">✓</span>` : "";
     let razemG = 0, razemO = 0, razem = 0;
     dzialy.innerHTML = DZIALY_MATURA.map(d => {
       const wlasne = d.tematy.filter(t => !t.odsylacz);
@@ -272,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const opan = wlasne.filter(t => t.plik && opanowany(t.plik)).length;
       razemG += gotowe; razemO += opan; razem += wlasne.length;
       const li = d.tematy.map(t => t.odsylacz
-        ? `<li><a href="${t.plik}">${t.nazwa}</a>${R(t)} <span class="odsylacz">→ ten sam temat co w dziale ${(DZIALY_MATURA.find(x => x !== d && x.tematy.some(y => y.plik === t.plik && !y.odsylacz)) || {}).nr}</span></li>`
+        ? `<li><a href="${t.plik}">${t.nazwa}</a>${R(t)} <span class="odsylacz">→ ${T("ten sam temat co w dziale", "same topic as in section")} ${(DZIALY_MATURA.find(x => x !== d && x.tematy.some(y => y.plik === t.plik && !y.odsylacz)) || {}).nr}</span></li>`
         : t.plik
         ? `<li><a href="${t.plik}">${t.nazwa}</a>${R(t)}${ok(t)}</li>`
         : `<li class="brak">${t.nazwa}${R(t)}</li>`).join("");
@@ -281,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <ul>${li}</ul></details>`;
     }).join("");
     const pod = document.getElementById("podsumowanie");
-    if (pod) pod.innerHTML = `Gotowe tematy: <b>${razemG}</b> z ${razem} · opanowane: <b>${razemO}</b>
+    if (pod) pod.innerHTML = `${T("Gotowe tematy", "Topics ready")}: <b>${razemG}</b> ${T("z", "of")} ${razem} · ${T("opanowane", "mastered")}: <b>${razemO}</b>
       <div class="pasek"><div style="width:${razemG ? 100 * razemO / razemG : 0}%"></div></div>`;
   }
 
@@ -306,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function liczbaZWyniku(html) {
   let t = html.replace(/<[^>]+>/g, "").replace(/\$/g, "").replace(/\{,\}/g, ".")
     .replace(/\\[,;!]/g, "").replace(/\s+/g, " ").trim().replace(/\.$/, "");
-  t = t.replace(/\s*(zł|cm\S*|m|%|°|\^\{?\\circ\}?|\\%)\s*$/, "");
+  t = t.replace(/\s*(zł|PLN|cm\S*|m|%|°|\^\{?\\circ\}?|\\%)\s*$/, "");
   t = t.split(/=|\\approx/).pop().trim().replace(/−/g, "-");
   let m;
   if ((m = t.match(/^-?\d+(\.\d+)?$/))) return { v: +t, przybl: /\\approx/.test(html) || /\.\d{2,}$/.test(t) };
@@ -346,7 +362,7 @@ function sprawdzSie(plik) {
     const oc = zadania.map((_, i) => pamiec.get(klucz(i))).filter(v => v !== null);
     const dobre = oc.filter(v => v === "1").length;
     wynikEl.textContent = oc.length ? `${dobre}/${zadania.length}` : "";
-    wynikEl.title = oc.length ? `Dobrze: ${dobre}, źle: ${oc.length - dobre}, nierozwiązane: ${zadania.length - oc.length}` : "";
+    wynikEl.title = oc.length ? T(`Dobrze: ${dobre}, źle: ${oc.length - dobre}, nierozwiązane: ${zadania.length - oc.length}`, `Right: ${dobre}, wrong: ${oc.length - dobre}, unsolved: ${zadania.length - oc.length}`) : "";
     wynikEl.classList.toggle("komplet", dobre === zadania.length);
   };
 
@@ -355,7 +371,7 @@ function sprawdzSie(plik) {
     if (!rozw) return;
     const b = [...rozw.querySelectorAll("b")].pop();
     // dowód kończący się liczbą (np. „= 2”) to nie zadanie z wynikiem do wpisania
-    const dowod = /(^|\s)(wykaż|udowodnij|uzasadnij|pokaż, że)/i.test(li.querySelector(".tresc")?.textContent || "");
+    const dowod = /(^|\s)(wykaż|udowodnij|uzasadnij|pokaż, że|prove|show that|justify|explain why)/i.test(li.querySelector(".tresc")?.textContent || "");
     const wynik = b && !dowod ? liczbaZWyniku(b.innerHTML) : null;
     const pasek = document.createElement("div");
     pasek.className = "sprawdz";
@@ -371,40 +387,42 @@ function sprawdzSie(plik) {
     if (kluczOdp) {
       // jawny klucz odpowiedzi (assets/odpowiedzi.js): liczby z π, √, kilka wartości albo przedziały
       const przedz = /^przedzial:/i.test(kluczOdp);
-      const opis = li.dataset.odpOpis || (przedz ? "zbiór, np. (-oo; -1) u <2; 3>" : "wynik, np. 2pi, 3sqrt(2), 1/2; 4");
-      pasek.innerHTML = `<input type="text" placeholder="${opis.replace(/"/g, "&quot;")}" aria-label="Twoja odpowiedź">
-        <button type="button">Sprawdź</button><span class="komunikat"></span>
-        <details class="jak-wpisac"><summary>jak wpisać?</summary>π: <code>pi</code> · pierwiastek: <code>sqrt(3)</code> lub <code>√3</code> ·
-        kilka wartości: <code>2; 1/2</code> · przedziały: <code>(-oo; -1) u &lt;2; 3&gt;</code> (domknięty: &lt; &gt; lub [ ]) · zbiór pusty: <code>{}</code></details>`;
+      const opis = li.dataset.odpOpis || (przedz ? T("zbiór, np. (-oo; -1) u <2; 3>", "set, e.g. (-oo; -1) u [2; 3]") : T("wynik, np. 2pi, 3sqrt(2), 1/2; 4", "answer, e.g. 2pi, 3sqrt(2), 1/2; 4"));
+      pasek.innerHTML = `<input type="text" placeholder="${opis.replace(/"/g, "&quot;")}" aria-label="${T("Twoja odpowiedź", "Your answer")}">
+        <button type="button">${T("Sprawdź", "Check")}</button><span class="komunikat"></span>
+        ${T(`<details class="jak-wpisac"><summary>jak wpisać?</summary>π: <code>pi</code> · pierwiastek: <code>sqrt(3)</code> lub <code>√3</code> ·
+        kilka wartości: <code>2; 1/2</code> · przedziały: <code>(-oo; -1) u &lt;2; 3&gt;</code> (domknięty: &lt; &gt; lub [ ]) · zbiór pusty: <code>{}</code></details>`,
+        `<details class="jak-wpisac"><summary>how to type?</summary>π: <code>pi</code> · root: <code>sqrt(3)</code> or <code>√3</code> ·
+        several values: <code>2; 1/2</code> · intervals: <code>(-oo; -1) u [2; 3]</code> (closed: [ ]) · empty set: <code>{}</code></details>`)}`;
       const inp = pasek.querySelector("input"), kom = pasek.querySelector(".komunikat");
       const sprawdz = () => {
         if (!inp.value.trim()) return;
-        if (typeof ocenOdpowiedz !== "function") { kom.textContent = "Moduł oceny jeszcze się wczytuje…"; return; }
+        if (typeof ocenOdpowiedz !== "function") { kom.textContent = T("Moduł oceny jeszcze się wczytuje…", "The checker is still loading…"); return; }
         const r = ocenOdpowiedz(inp.value, kluczOdp);
-        if (r.blad) { kom.textContent = r.komunikat + " (zob. „jak wpisać?”)"; return; }
-        kom.textContent = r.ok ? "✓ Dobrze!" : "✗ Nie. " + (r.komunikat || "Spróbuj jeszcze raz albo otwórz rozwiązanie.");
+        if (r.blad) { kom.textContent = r.komunikat + T(" (zob. „jak wpisać?”)", " (see “how to type?”)"); return; }
+        kom.textContent = r.ok ? T("✓ Dobrze!", "✓ Correct!") : T("✗ Nie. ", "✗ No. ") + (r.komunikat || T("Spróbuj jeszcze raz albo otwórz rozwiązanie.", "Try again or open the solution."));
         ocena(r.ok);
       };
       pasek.querySelector("button").onclick = sprawdz;
       inp.addEventListener("keydown", e => { if (e.key === "Enter") sprawdz(); });
       li.insertBefore(pasek, rozw);
     } else if (wynik) {
-      pasek.innerHTML = `<input type="text" inputmode="decimal" placeholder="Twój wynik (np. 2,5 lub 5/2)" aria-label="Twój wynik">
-        <button type="button">Sprawdź</button><span class="komunikat"></span>`;
+      pasek.innerHTML = `<input type="text" inputmode="decimal" placeholder="${T("Twój wynik (np. 2,5 lub 5/2)", "Your answer (e.g. 2.5 or 5/2)")}" aria-label="${T("Twój wynik", "Your answer")}">
+        <button type="button">${T("Sprawdź", "Check")}</button><span class="komunikat"></span>`;
       const inp = pasek.querySelector("input"), kom = pasek.querySelector(".komunikat");
       const sprawdz = () => {
         const odp = liczbaZOdpowiedzi(inp.value);
-        if (isNaN(odp)) { kom.textContent = "Wpisz liczbę, np. 2,5 albo 5/2."; return; }
+        if (isNaN(odp)) { kom.textContent = T("Wpisz liczbę, np. 2,5 albo 5/2.", "Enter a number, e.g. 2.5 or 5/2."); return; }
         const ok = zgodne(odp, wynik);
-        kom.textContent = ok ? "✓ Dobrze!" : "✗ Nie — spróbuj jeszcze raz albo otwórz rozwiązanie.";
+        kom.textContent = ok ? T("✓ Dobrze!", "✓ Correct!") : T("✗ Nie — spróbuj jeszcze raz albo otwórz rozwiązanie.", "✗ No — try again or open the solution.");
         ocena(ok);
       };
       pasek.querySelector("button").onclick = sprawdz;
       inp.addEventListener("keydown", e => { if (e.key === "Enter") sprawdz(); });
       li.insertBefore(pasek, rozw);
     } else {
-      pasek.innerHTML = `<span>Jak poszło?</span> <button type="button" data-ok="1">Umiałem ✓</button>
-        <button type="button" data-ok="0">Nie umiałem</button>`;
+      pasek.innerHTML = `<span>${T("Jak poszło?", "How did it go?")}</span> <button type="button" data-ok="1">${T("Umiałem ✓", "Got it ✓")}</button>
+        <button type="button" data-ok="0">${T("Nie umiałem", "Didn't get it")}</button>`;
       pasek.querySelectorAll("button").forEach(btn => btn.onclick = () => ocena(btn.dataset.ok === "1"));
       pasek.hidden = true;
       rozw.addEventListener("toggle", () => { if (rozw.open) pasek.hidden = false; });
@@ -416,7 +434,7 @@ function sprawdzSie(plik) {
   // Zerowanie wyników tematu
   if (naglowek) {
     const zeruj = document.createElement("button");
-    zeruj.type = "button"; zeruj.className = "zeruj-zadania"; zeruj.textContent = "wyczyść wyniki";
+    zeruj.type = "button"; zeruj.className = "zeruj-zadania"; zeruj.textContent = T("wyczyść wyniki", "clear results");
     zeruj.onclick = () => {
       zadania.forEach((li, i) => { pamiec.set(klucz(i), null); li.classList.remove("dobrze", "zle"); });
       document.querySelectorAll(".sprawdz .komunikat").forEach(k => k.textContent = "");
@@ -434,15 +452,15 @@ function brudnopis(li, przed, klucz) {
   const btn = document.createElement("button");
   btn.type = "button"; btn.className = "brudnopis-przycisk";
   const ma = () => !!pamiec.get(klucz);
-  const opis = () => btn.textContent = (box.hidden ? "✎ Brudnopis" : "✎ Schowaj brudnopis") + (ma() && box.hidden ? " (zapisany)" : "");
+  const opis = () => btn.textContent = (box.hidden ? T("✎ Brudnopis", "✎ Scratchpad") : T("✎ Schowaj brudnopis", "✎ Hide scratchpad")) + (ma() && box.hidden ? T(" (zapisany)", " (saved)") : "");
   const box = document.createElement("div");
   box.className = "brudnopis"; box.hidden = true;
   box.innerHTML = `<div class="narzedzia">
-      <button type="button" data-n="pioro" class="wl" title="Pióro">✎ pióro</button>
-      <button type="button" data-n="gumka" title="Gumka: przeciągnij po kresce">⌫ gumka</button>
-      <button type="button" data-n="cofnij" title="Cofnij ostatnią kreskę">↶ cofnij</button>
-      <button type="button" data-n="wyczysc" title="Wyczyść kartkę">wyczyść</button>
-      <button type="button" data-n="wyzej" title="Dłuższa kartka">+ miejsce</button>
+      <button type="button" data-n="pioro" class="wl" title="${T("Pióro", "Pen")}">✎ ${T("pióro", "pen")}</button>
+      <button type="button" data-n="gumka" title="${T("Gumka: przeciągnij po kresce", "Eraser: drag over a stroke")}">⌫ ${T("gumka", "eraser")}</button>
+      <button type="button" data-n="cofnij" title="${T("Cofnij ostatnią kreskę", "Undo last stroke")}">↶ ${T("cofnij", "undo")}</button>
+      <button type="button" data-n="wyczysc" title="${T("Wyczyść kartkę", "Clear the page")}">${T("wyczyść", "clear")}</button>
+      <button type="button" data-n="wyzej" title="${T("Dłuższa kartka", "Longer page")}">+ ${T("miejsce", "space")}</button>
       <span class="brudnopis-info" role="status"></span>
     </div><canvas></canvas>`;
   li.insertBefore(btn, przed); li.insertBefore(box, przed);
@@ -453,7 +471,7 @@ function brudnopis(li, przed, klucz) {
   const info = box.querySelector(".brudnopis-info");
   const zapisz = () => {
     const ok = pamiec.set(klucz, kreski.length ? JSON.stringify({ h: wys, k: kreski }) : null);
-    info.textContent = ok ? "" : "Brak miejsca w pamięci przeglądarki — ten rysunek nie zostanie zapisany. Wyczyść stare brudnopisy.";
+    info.textContent = ok ? "" : T("Brak miejsca w pamięci przeglądarki — ten rysunek nie zostanie zapisany. Wyczyść stare brudnopisy.", "Browser storage is full — this drawing won't be saved. Clear old scratchpads.");
   };
   const kolor = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
@@ -508,7 +526,7 @@ function brudnopis(li, przed, klucz) {
       c.style.cursor = n === "gumka" ? "cell" : "crosshair";
     }
     if (n === "cofnij") { kreski.pop(); zapisz(); rysuj(); }
-    if (n === "wyczysc" && (!kreski.length || confirm("Wyczyścić brudnopis tego zadania?"))) { kreski = []; zapisz(); rysuj(); }
+    if (n === "wyczysc" && (!kreski.length || confirm(T("Wyczyścić brudnopis tego zadania?", "Clear the scratchpad for this task?")))) { kreski = []; zapisz(); rysuj(); }
     if (n === "wyzej") { wys = Math.min(wys + 0.4, 3); zapisz(); rysuj(); }
   });
   btn.onclick = () => { box.hidden = !box.hidden; opis(); if (!box.hidden) rysuj(); };
@@ -538,21 +556,21 @@ function szukaj(zapytanie) {
 }
 function otworzSzukanie() {
   const baza = new URL("../", document.querySelector('script[src*="site.js"]').src);
-  const prefiks = new URL("matura/", baza).href;
+  const prefiks = new URL(T("matura/", "en/matura/"), baza).href;
   let okno = document.getElementById("szukaj-okno");
   if (!okno) {
     okno = document.createElement("div");
     okno.id = "szukaj-okno";
-    okno.innerHTML = `<div class="szukaj-panel" role="dialog" aria-label="Szukaj">
-        <input type="search" placeholder="Szukaj tematu, wzoru, twierdzenia…" aria-label="Szukaj">
-        <ul class="szukaj-wyniki"></ul><p class="szukaj-pusto">Wpisz np. „Viète”, „styczna”, „pole trójkąta”.</p></div>`;
+    okno.innerHTML = `<div class="szukaj-panel" role="dialog" aria-label="${T("Szukaj", "Search")}">
+        <input type="search" placeholder="${T("Szukaj tematu, wzoru, twierdzenia…", "Search topics, formulas, theorems…")}" aria-label="${T("Szukaj", "Search")}">
+        <ul class="szukaj-wyniki"></ul><p class="szukaj-pusto">${T("Wpisz np. „Viète”, „styczna”, „pole trójkąta”.", "Try e.g. “Vieta”, “tangent”, “area of a triangle”.")}</p></div>`;
     document.body.appendChild(okno);
     const inp = okno.querySelector("input"), ul = okno.querySelector("ul"), pusto = okno.querySelector(".szukaj-pusto");
-    const TYP = { s: "sekcja", w: "wzór", d: "definicja", t: "twierdzenie" };
+    const TYP = EN ? { s: "section", w: "formula", d: "definition", t: "theorem" } : { s: "sekcja", w: "wzór", d: "definicja", t: "twierdzenie" };
     const pokaz = () => {
       const w = szukaj(inp.value);
       pusto.hidden = !!w.length;
-      if (inp.value.trim() && !w.length) pusto.textContent = "Nic nie znaleziono.";
+      if (inp.value.trim() && !w.length) pusto.textContent = T("Nic nie znaleziono.", "Nothing found.");
       const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
       ul.innerHTML = w.map((r, j) => `<li><a href="${prefiks}${r.s.p}${r.kot ? "#" + r.kot : ""}"${j ? "" : ' class="akt"'}>
         <b>${esc(r.tekst)}</b><span>${esc(r.typ ? TYP[r.typ] + " · " + r.s.n : r.s.d)}</span></a></li>`).join("");
@@ -569,7 +587,7 @@ function otworzSzukanie() {
     });
     okno.addEventListener("click", e => { if (e.target === okno) okno.hidden = true; });
     if (typeof INDEKS === "undefined") {
-      const sk = document.createElement("script"); sk.src = new URL("assets/indeks.js", baza).href;
+      const sk = document.createElement("script"); sk.src = new URL(T("assets/indeks.js", "assets/indeks-en.js"), baza).href;
       sk.onload = pokaz; document.head.appendChild(sk);
     }
   }
@@ -580,9 +598,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const motyw = document.getElementById("motyw");
   if (!motyw) return;
   const b = document.createElement("button");
-  b.id = "szukaj"; b.title = "Szukaj (/)"; b.setAttribute("aria-label", "Szukaj"); b.textContent = "🔍";
+  b.id = "szukaj"; b.title = T("Szukaj (/)", "Search (/)"); b.setAttribute("aria-label", T("Szukaj", "Search")); b.textContent = "🔍";
   b.onclick = otworzSzukanie;
   motyw.before(b);
+  if (EN) motyw.title = "Toggle theme";
+
+  // Przełącznik języka: ta sama strona w drugiej wersji (en/… ↔ …), z kotwicą
+  const korzen = new URL("../", document.querySelector('script[src*="site.js"]').src);
+  const jez = document.createElement("a");
+  jez.id = "jezyk"; jez.textContent = EN ? "PL" : "EN";
+  jez.title = EN ? "Wersja polska" : "English version";
+  jez.setAttribute("lang", EN ? "pl" : "en"); jez.setAttribute("hreflang", EN ? "pl" : "en");
+  let sciezka = decodeURIComponent(location.pathname).slice(decodeURIComponent(korzen.pathname).length);
+  sciezka = EN ? sciezka.replace(/^en(\/|$)/, "") : "en/" + sciezka;
+  jez.href = new URL(sciezka, korzen).href + location.hash;
+  jez.onclick = () => pamiec.set("jezyk", EN ? "pl" : "en");
+  motyw.after(jez);
   document.addEventListener("keydown", e => {
     const okno = document.getElementById("szukaj-okno");
     if (e.key === "Escape" && okno) okno.hidden = true;

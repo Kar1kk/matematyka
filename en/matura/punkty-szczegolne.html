@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Special points of a triangle, the angle bisector theorem</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Special points of a triangle, the angle bisector theorem</h1>
+  <p class="lead">Four “centers” of a triangle: equally far from the vertices (circumcircle), equally far from the sides (incircle), the intersection of the altitudes, and the centroid. The fact that three lines always meet at one point is not obvious at all – and you must be able to prove it.</p>
+  <p class="wymagania">VIII.10</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="punkty">1. Four special points</h2>
+  <table class="tabela">
+    <tr><th>Point</th><th>Intersection of</th><th>Worth knowing</th></tr>
+    <tr><td>$O$ – circumcenter</td><td>perpendicular bisectors of the sides</td><td>$|OA|=|OB|=|OC|=R$; inside an acute triangle, at the midpoint of the hypotenuse of a right triangle, outside an obtuse triangle</td></tr>
+    <tr><td>$I$ – incenter</td><td>angle bisectors</td><td>equally distant from the sides (by $r$), always inside</td></tr>
+    <tr><td>$H$ – orthocenter</td><td>lines containing the altitudes</td><td>outside an obtuse triangle, at the right-angle vertex of a right triangle</td></tr>
+    <tr><td>$G$ – centroid</td><td>medians</td><td>divides each median in the ratio $2:1$ counting from the vertex</td></tr>
+  </table>
+  <div class="wzor"><div class="tytul">Radii <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$R=\frac{abc}{4P},\qquad \frac{a}{\sin\alpha}=2R$$
+    $$r=\frac{P}{p},\qquad p=\frac{a+b+c}{2}$$
+    <dl><dt>equilateral</dt><dd>all four points coincide: $r=\frac13h$, $R=\frac23h$ (because $G$ divides the altitude $2:1$)</dd>
+        <dt>right</dt><dd>$R=\frac c2$, $r=\frac{a+b-c}{2}$</dd></dl>
+  </div>
+
+  <h2 id="demo">2. Interactive: four centers</h2>
+  <div class="demo">
+    <p class="opis">Drag the vertices and toggle the points. See when $O$ and $H$ leave the triangle (obtuse angle) and that $G$ always divides a median $2:1$.</p>
+    <canvas id="ps-plot"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="ps-o" checked> $O$: perpendicular bisectors and circumcircle</label>
+      <label><input type="checkbox" id="ps-i"> $I$: angle bisectors and incircle</label>
+      <label><input type="checkbox" id="ps-h"> $H$: altitudes</label>
+      <label><input type="checkbox" id="ps-g"> $G$: medians</label>
+      <label><input type="checkbox" id="ps-e"> Euler line (beyond the curriculum)</label>
+    </div>
+    <div class="wynik" id="ps-wynik"></div>
+    <div class="wynik" id="ps-opis"></div>
+  </div>
+  <p>Fun fact (beyond the curriculum): $O$, $G$, $H$ always lie on one line (the Euler line) and $|HG|=2|GO|$.</p>
+
+  <h2 id="dowody">3. Why do these lines meet?</h2>
+  <div class="twierdzenie"><b>The perpendicular bisectors of the sides meet at one point</b>
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>The perpendicular bisector of a segment is the set of points equally distant from its endpoints.</p>
+      <ol>
+        <li>The perpendicular bisectors of $AB$ and $BC$ are not parallel (because $AB$ and $BC$ are not), so they meet at a point $O$.</li>
+        <li>$O$ lies on the perpendicular bisector of $AB$: $|OA|=|OB|$. $O$ lies on the perpendicular bisector of $BC$: $|OB|=|OC|$.</li>
+        <li>Hence $|OA|=|OC|$, so $O$ also lies on the perpendicular bisector of $AC$. $\blacksquare$</li>
+      </ol>
+      <p>Incidentally: $O$ is the center of the circumcircle. In the same way (an angle bisector = the points equally distant from the arms of the angle) one proves that the angle bisectors meet at one point.</p>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>Corollary: the lines containing the altitudes meet at one point</b>
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Through each vertex of triangle $ABC$ draw a line parallel to the opposite side. This produces a triangle $A'B'C'$ ($A'$ opposite $A$, etc.).</p>
+      <ol>
+        <li>$ABA'C$ and $AC'BC$ are parallelograms (opposite sides parallel), so $|BA'|=|AC|=|BC'|$. Hence $B$ is the midpoint of $A'C'$.</li>
+        <li>The altitude from $B$ is perpendicular to $AC$, hence also to $A'C'\parallel AC$, and passes through the midpoint $B$ of the segment $A'C'$ – so it is its <b>perpendicular bisector</b>.</li>
+        <li>Likewise the other altitudes are perpendicular bisectors of the sides of $A'B'C'$. The perpendicular bisectors meet at one point, so the altitudes do too. $\blacksquare$</li>
+      </ol>
+    </div></details>
+  </div>
+  <div class="twierdzenie"><b>The medians meet at one point and divide each other in the ratio $2:1$</b>
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>$K$ – midpoint of $BC$, $L$ – midpoint of $AC$; the medians $AK$ and $BL$ meet at $G$.</p>
+      <ol>
+        <li>$LK$ is a midsegment: $LK\parallel AB$, $|LK|=\frac12|AB|$ (<a href="tales.html">proof from Thales</a>).</li>
+        <li>$\triangle GAB\sim\triangle GKL$ (AAA: vertical angles at $G$ and alternate angles at the parallel lines $AB$, $KL$) with scale $\frac{|AB|}{|KL|}=2$. Hence $|AG|=2|GK|$ and $|BG|=2|GL|$.</li>
+        <li>So the median $BL$ meets $AK$ at a point dividing $AK$ in the ratio $2:1$ from $A$. The same argument for the medians $AK$ and $CM$ ($M$ – midpoint of $AB$) shows that $CM$ meets $AK$ at a point dividing $AK$ in the ratio $2:1$ from $A$, that is, <b>at the same point</b> $G$. So all three medians pass through $G$. $\blacksquare$</li>
+      </ol>
+    </div></details>
+  </div>
+
+  <h2 id="dwusieczna">4. The angle bisector theorem</h2>
+  <div class="twierdzenie"><b>The angle bisector theorem</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    If $CD$ is the bisector of angle $ACB$ in triangle $ABC$ and $D$ lies on side $AB$, then
+    $$\frac{|AD|}{|BD|}=\frac{|AC|}{|BC|}$$
+    The bisector divides the opposite side in the ratio of the adjacent sides.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Compare the areas of triangles $ACD$ and $BCD$ in two ways. Let $|\angle ACD|=|\angle DCB|=\varphi$.</p>
+      <ol>
+        <li>Common altitude from $C$ to line $AB$: $\frac{P_{ACD}}{P_{BCD}}=\frac{|AD|}{|BD|}$.</li>
+        <li>Formula $P=\frac12ab\sin\gamma$: $\frac{P_{ACD}}{P_{BCD}}=\frac{\frac12|AC|\cdot|CD|\sin\varphi}{\frac12|BC|\cdot|CD|\sin\varphi}=\frac{|AC|}{|BC|}$.</li>
+      </ol>
+      <p>The left-hand sides are equal, so the right-hand sides are too. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="demo">
+    <p class="opis">Drag the vertices. The bisector of angle $C$ always divides $AB$ in the ratio $|AC|:|BC|$. The green and purple triangles have areas in the same ratio – that is the whole proof.</p>
+    <canvas id="dw-plot" style="height:300px"></canvas>
+    <div class="wynik" id="dw-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>A triangle has sides $13$, $14$, $15$. Find the radii of the incircle and circumcircle.</p>
+    <ol>
+      <li>$p=21$, Heron's formula: $P=\sqrt{21\cdot8\cdot7\cdot6}=\sqrt{7056}=84$.</li>
+      <li>$r=\frac{P}{p}=\frac{84}{21}=4$.</li>
+      <li>$R=\frac{abc}{4P}=\frac{13\cdot14\cdot15}{336}=\frac{2730}{336}=\frac{65}{8}$.</li>
+    </ol>
+    <p class="odp">$r=4$, $R=\frac{65}{8}=8.125$</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="6; 9" data-odp-opis="lengths AD; BD"><span class="poziom">easy</span>
+      <div class="tresc">In triangle $ABC$: $|AC|=8$, $|BC|=12$, $|AB|=15$. The bisector of angle $C$ meets $AB$ at $D$. Find $|AD|$ and $|BD|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|AD|:|BD|=8:12=2:3$, so $|AD|=\frac25\cdot15$. <b>$|AD|=6$, $|BD|=9$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="sqrt(3); 2sqrt(3)" data-odp-opis="r; R"><span class="poziom">easy</span>
+      <div class="tresc">Find the radii of the incircle and circumcircle of an equilateral triangle with side $6$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $h=3\sqrt3$, $r=\frac13h$, $R=\frac23h$. <b>$r=\sqrt3$, $R=2\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5; 2; 10/3" data-odp-opis="R; r; distance CG"><span class="poziom">medium</span>
+      <div class="tresc">The legs of a right triangle have lengths $6$ and $8$. Find $R$, $r$, and the distance from the centroid to the right-angle vertex.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $c=10$, $R=\frac c2=5$, $r=\frac{6+8-10}{2}=2$. The median from the right angle goes to the midpoint of the hypotenuse (the circumcenter), so its length is $R=5$; $G$ divides it $2:1$. <b>$R=5$, $r=2$, $|CG|=\frac{10}{3}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10/3; 169/24" data-odp-opis="r; R"><span class="poziom">medium</span>
+      <div class="tresc">An isosceles triangle has base $10$ and legs $13$. Find $r$ and $R$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $h=\sqrt{169-25}=12$, $P=60$, $p=18$. $r=\frac{60}{18}=\frac{10}{3}$, $R=\frac{10\cdot13\cdot13}{4\cdot60}=\frac{1690}{240}$. <b>$r=\frac{10}{3}$, $R=\frac{169}{24}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">The medians $AK$ and $BL$ of triangle $ABC$ are perpendicular, $|AK|=9$, $|BL|=12$. Find $|AB|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $G$ divides the medians $2:1$: $|AG|=6$, $|BG|=8$, and angle $AGB$ is right. $|AB|=\sqrt{36+64}$. <b>$|AB|=10$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that if the centroid of a triangle coincides with the incenter, then the triangle is equilateral.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Line $CG$ contains the median from $C$, and line $CI$ the bisector of angle $C$. Since $G=I$, the median and the bisector from $C$ reach the same point $D$ of side $AB$. By the angle bisector theorem $\frac{|AC|}{|BC|}=\frac{|AD|}{|BD|}=1$, so $|AC|=|BC|$. In the same way from vertex $A$: $|AB|=|AC|$. <b>The triangle is equilateral.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>Do not mix up the points: the <b>circumcircle</b> – perpendicular bisectors, the <b>incircle</b> – angle bisectors. This is the most common mistake.</li>
+    <li>Medians are divided $2:1$ counting <b>from the vertex</b>; in an equilateral triangle this gives $r=\frac13h$, $R=\frac23h$.</li>
+    <li>Angle bisector theorem: the ratio of the segments on the side = the ratio of the <b>adjacent</b> sides (the ones next to those segments).</li>
+    <li>When a task involves $P$, $r$, $R$ – write down all area formulas from the formula sheet and combine them: $P=pr=\frac{abc}{4R}$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Punkty szczególne ---
+  const w1 = new Wykres($("ps-plot"), { xmin: -6, xmax: 6, ymin: -4.5, ymax: 4.5, rowneSkale: true });
+  const ogr = wPolu(4.5, 3.3);
+  const pt = w1.przeciagaj([{ x: -3, y: -2, ogranicz: ogr }, { x: 3.5, y: -2, ogranicz: ogr }, { x: -0.5, y: 2.8, ogranicz: ogr }], rysujPs);
+  const okragOpisany = (A, B, C) => {
+    const d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y)), s = P => P.x * P.x + P.y * P.y;
+    return { x: (s(A) * (B.y - C.y) + s(B) * (C.y - A.y) + s(C) * (A.y - B.y)) / d, y: (s(A) * (C.x - B.x) + s(B) * (A.x - C.x) + s(C) * (B.x - A.x)) / d };
+  };
+  function rysujPs() {
+    const [A, B, C] = pt;
+    const a = odl(B, C), b = odl(A, C), c = odl(A, B);
+    const pole = Math.abs((B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x)) / 2;
+    const ok = pole > 0.3 && Math.min(a, b, c) > 0.3;
+    const pkt = [[A, "A"], [B, "B"], [C, "C"]];
+    const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+    let O = G, R = 0, I = G, r = 0, H = G;
+    if (ok) {
+      O = okragOpisany(A, B, C); R = odl(O, A);
+      I = { x: (a * A.x + b * B.x + c * C.x) / (a + b + c), y: (a * A.y + b * B.y + c * C.y) / (a + b + c) }; r = 2 * pole / (a + b + c);
+      H = { x: A.x + B.x + C.x - 2 * O.x, y: A.y + B.y + C.y - 2 * O.y };
+    }
+    w1.rysuj(g => {
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1, { wypelnij: 0.1 });
+      if (ok && $("ps-o").checked) {
+        [[A, B], [B, C], [C, A]].forEach(([P, Q]) => { const M = sr(P, Q); g.prosta(M.x, M.y, M.x - (Q.y - P.y), M.y + (Q.x - P.x), 3, true); katProsty(g, M, Q, O, 0.2, 3); });
+        g.okrag(O.x, O.y, R, 3); g.punkt(O.x, O.y, "O", 3);
+      }
+      if (ok && $("ps-i").checked) {
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(([W, P, Q]) => { const D = przeciecie(W, I, P, Q); if (D) g.odcinek(W.x, W.y, D.x, D.y, 4); });
+        g.okrag(I.x, I.y, r, 4); g.punkt(I.x, I.y, "I", 4);
+      }
+      if (ok && $("ps-h").checked) {
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(([W, P, Q]) => { const D = rzut(W, P, Q); g.prosta(W.x, W.y, D.x, D.y, 2, true); g.odcinek(W.x, W.y, D.x, D.y, 2, false); });
+        g.punkt(H.x, H.y, "H", 2);
+      }
+      if (ok && $("ps-g").checked) {
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(([W, P, Q]) => { const M = sr(P, Q); g.odcinek(W.x, W.y, M.x, M.y, 1); g.punkt(M.x, M.y, "", 1, { r: 3 }); });
+        g.punkt(G.x, G.y, "G", 1);
+      }
+      if (ok && $("ps-e").checked && odl(O, H) > 0.05) { g.prosta(O.x, O.y, H.x, H.y, 4, false); g.punkt(O.x, O.y, "O", 3, { r: 3.5 }); g.punkt(H.x, H.y, "H", 2, { r: 3.5 }); g.punkt(G.x, G.y, "G", 1, { r: 3.5 }); }
+      pkt.forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, G, s, 2); });
+    });
+    if (!ok) { tex("ps-wynik", "\\text{spread the vertices apart}"); $("ps-opis").textContent = ""; return; }
+    const kw = [a * a, b * b, c * c].sort((u, v) => u - v), roz = kw[2] - kw[0] - kw[1];
+    const K = sr(B, C);
+    tex("ps-wynik", `R=${ladnaTex(R)},\\ \\ r=${ladnaTex(r)},\\ \\ |AG|:|GK|=${ladnaTex(odl(A, G))}:${ladnaTex(odl(G, K))}=2:1`);
+    $("ps-opis").textContent = Math.abs(roz) < 0.05 * kw[2] ? "Right (or nearly right) triangle: O at the midpoint of the hypotenuse, H at the right-angle vertex." :
+      roz < 0 ? "Acute triangle: O and H lie inside." : "Obtuse triangle: O and H lie outside.";
+  }
+  ["ps-o", "ps-i", "ps-h", "ps-g", "ps-e"].forEach(id => $(id).addEventListener("change", rysujPs));
+  rysujPs();
+
+  // --- 4. Dwusieczna ---
+  const w2 = new Wykres($("dw-plot"), { xmin: -5, xmax: 5, ymin: -3, ymax: 3.6, rowneSkale: true });
+  const ogr2 = wPolu(4.7, 3.3);
+  const pd = w2.przeciagaj([{ x: -4, y: -2.2, ogranicz: ogr2 }, { x: 4, y: -2.2, ogranicz: ogr2 }, { x: -2, y: 2.8, ogranicz: ogr2 }], rysujDw);
+  function rysujDw() {
+    const [A, B, C] = pd;
+    const a = odl(B, C), b = odl(A, C);
+    const ok = a > 0.2 && b > 0.2 && odl(A, B) > 0.2;
+    const D = ok ? { x: (a * A.x + b * B.x) / (a + b), y: (a * A.y + b * B.y) / (a + b) } : sr(A, B);
+    const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+    w2.rysuj(g => {
+      g.wielokat([[A.x, A.y], [D.x, D.y], [C.x, C.y]], 3, { wypelnij: 0.2, bezObrysu: true });
+      g.wielokat([[D.x, D.y], [B.x, B.y], [C.x, C.y]], 4, { wypelnij: 0.2, bezObrysu: true });
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1);
+      g.odcinek(C.x, C.y, D.x, D.y, 2, false);
+      if (ok) { lukKata(g, C, A, D, 0.6, 2); lukKata(g, C, D, B, 0.75, 2); }
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, G, s, 2); });
+      g.punkt(D.x, D.y, "", 2, { r: 3.5 }); etykieta(g, D, C, "D", 2);
+    });
+    if (!ok) { tex("dw-wynik", "\\text{spread the vertices apart}"); return; }
+    tex("dw-wynik", `\\frac{|AD|}{|BD|}=\\frac{${ladnaTex(odl(A, D))}}{${ladnaTex(odl(B, D))}}=${ladnaTex(odl(A, D) / odl(B, D))},\\qquad \\frac{|AC|}{|BC|}=\\frac{${ladnaTex(b)}}{${ladnaTex(a)}}=${ladnaTex(b / a)}`);
+  }
+  rysujDw();
+});
+</script>
+</body>
+</html>

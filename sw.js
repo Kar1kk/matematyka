@@ -2,7 +2,7 @@
 // Strategia: przy instalacji pobiera wszystkie strony i zasoby; potem „najpierw sieć,
 // pamięć bez internetu” — online zawsze najnowsza wersja.
 // Przy większej zmianie struktury podbij WERSJA (stara pamięć zostanie usunięta).
-const WERSJA = "v8";
+const WERSJA = "v9";
 const PAMIEC = "matematyka-" + WERSJA;
 
 importScripts("assets/dzialy.js"); // DZIALY_MATURA → lista stron tematów
@@ -15,10 +15,13 @@ const KATEX_FONTY = ["AMS-Regular", "Caligraphic-Bold", "Caligraphic-Regular", "
 const PLIKI = [
   "./", "index.html", "manifest.webmanifest",
   "assets/style.css", "assets/site.js", "assets/dzialy.js", "assets/wykres.js", "assets/bryly3d.js",
-  "assets/odpowiedzi.js", "assets/indeks.js", "assets/katex/katex.min.css", "assets/katex/katex.min.js", "assets/katex/contrib/auto-render.min.js",
+  "assets/odpowiedzi.js", "assets/indeks.js", "assets/indeks-en.js", "assets/katex/katex.min.css", "assets/katex/katex.min.js", "assets/katex/contrib/auto-render.min.js",
   "assets/ikony/ikona-192.png",
   "matura/index.html", "matura/usuniete.html", "matura/sciaga.html",
   ...new Set(DZIALY_MATURA.flatMap(d => d.tematy.filter(t => t.plik).map(t => "matura/" + t.plik))),
+  // wersja angielska: te same pliki w en/
+  "en/", "en/index.html", "en/matura/index.html", "en/matura/usuniete.html", "en/matura/sciaga.html",
+  ...new Set(DZIALY_MATURA.flatMap(d => d.tematy.filter(t => t.plik).map(t => "en/matura/" + t.plik))),
   ...KATEX_FONTY,
 ];
 

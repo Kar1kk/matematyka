@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classical probability</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Classical probability</h1>
+  <p class="lead">When all outcomes are equally likely, probability is plain counting: how many outcomes favour the event, divided by how many there are in total. The whole difficulty lies in counting correctly, that is, in combinatorics.</p>
+  <p class="wymagania">XII.1, XI.1, XI.2, XI.R.1, XI.R.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="model">1. The classical model</h2>
+  <div class="definicja"><b>Definition</b> $\Omega$ is a finite set of elementary events, each of which is <b>equally likely</b>. For an event $A\subset\Omega$:
+    $$P(A)=\frac{|A|}{|\Omega|}$$
+  </div>
+  <div class="wzor">
+    <div class="tytul">Properties <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$0\le P(A)\le 1,\qquad P(A')=1-P(A)$$
+    $$P(A\cup B)=P(A)+P(B)-P(A\cap B)$$
+    <dl><dt>$A'$</dt><dd>the complementary event: $A$ did not occur. Worth using when the statement says “at least one”</dd>
+        <dt>$A\cap B$</dt><dd>the intersection, counted twice in $P(A)+P(B)$, so you subtract it once</dd></dl>
+  </div>
+
+  <h2 id="zliczanie">2. Counting: rules and formulas</h2>
+  <p><b>Multiplication rule:</b> a procedure made of stages with $k_1, k_2,\ldots$ possibilities has $k_1\cdot k_2\cdot\ldots$ outcomes. <b>Addition rule:</b> you add disjoint cases.</p>
+  <table class="tabela">
+    <tr><th>choosing $k$ out of $n$</th><th>order matters</th><th>order does not matter</th></tr>
+    <tr><th>without repetition</th><td>arrangements $\frac{n!}{(n-k)!}$</td><td>combinations $\binom{n}{k}$</td></tr>
+    <tr><th>with repetition</th><td>arrangements $n^k$</td><td>(not on the exam)</td></tr>
+  </table>
+  <p>Permutations (arranging all $n$ in order): $n!$. All these formulas are on the formula sheet.</p>
+  <p><b>Permutations with repetition</b> (e.g. anagrams of a word with repeated letters): if among $n$ elements there are $k_1$ identical ones of one kind, $k_2$ of another, etc., then the number of arrangements is $\frac{n!}{k_1!\,k_2!\cdots}$. E.g. the word MAMA ($n=4$, two M's, two A's): $\frac{4!}{2!\,2!}=6$.</p>
+  <div class="wzor">
+    <div class="tytul">Binomial coefficient</div>
+    $$\binom{n}{k}=\frac{n!}{k!\,(n-k)!}$$
+    $$\binom{n}{k}=\binom{n}{n-k},\qquad \binom{n}{2}=\frac{n(n-1)}{2}$$
+  </div>
+  <details class="rozwin"><summary>Where does $\binom nk$ come from? (arrangements divided by $k!$)</summary><div>
+    The number of sequences of $k$ distinct elements out of $n$ is $n(n-1)\cdots(n-k+1)=\frac{n!}{(n-k)!}$. Each $k$-element <b>set</b> gives $k!$ such sequences (its permutations). So the number of sets is $\frac{n!}{(n-k)!\,k!}$.
+  </div></details>
+  <div class="uwaga">Drawing “all at once” can be counted with combinations, or as drawing “one after another” with arrangements. The result is the same, as long as you count $\Omega$ and $A$ in <b>the same</b> way.</div>
+
+  <h2 id="kostki">3. Interactive: two dice</h2>
+  <div class="demo">
+    <p class="opis">Each cell is one outcome $(a,b)$, $|\Omega|=36$ in total. Choose an event and see which cells favour it. In the event $A\cup B$ you count the purple cells (the intersection) once.</p>
+    <canvas id="ko-plot" style="height:340px"></canvas>
+    <div class="sterowanie">
+      <label>event <select id="ko-zd">
+        <option value="suma">sum = k</option>
+        <option value="sumaw">sum ≥ k</option>
+        <option value="iloczyn">product is even</option>
+        <option value="szostka">at least one 6</option>
+        <option value="dublet">double (a = b)</option>
+        <option value="suma-lub">sum = k or double</option>
+      </select></label>
+      <label>$k$ <input type="range" id="ko-k" min="2" max="12" step="1" value="7"> <span id="ko-k-v"></span></label>
+      <button id="ko-przec">Show A′</button>
+    </div>
+    <div class="wynik" id="ko-wynik"></div>
+  </div>
+
+  <h2 id="symulacja">4. Simulation: the frequency converges to P</h2>
+  <div class="demo">
+    <p class="opis">We roll two dice and check the event chosen above (the last roll is marked on the grid). The blue line is the frequency $\frac{\text{hits}}{n}$, the green one is $P(A)$. At first the frequency jumps around, then it settles down.</p>
+    <canvas id="sy-plot" style="height:260px"></canvas>
+    <div class="sterowanie">
+      <button id="sy-1">Roll 1×</button>
+      <button id="sy-start">▶ Keep rolling</button>
+      <button id="sy-reset">↺ Reset</button>
+    </div>
+    <div class="wynik" id="sy-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>An urn contains $5$ white balls and $3$ black ones. We draw $2$ balls at once. Find the probability that both are of the same colour.</p>
+    <ol>
+      <li>$\Omega$: two-element subsets of the $8$ balls, $|\Omega|=\binom82=28$.</li>
+      <li>$A$: two white <b>or</b> two black (disjoint, so we add): $|A|=\binom52+\binom32=10+3=13$.</li>
+      <li>$P(A)=\frac{13}{28}$ (an irreducible fraction).</li>
+    </ol>
+    <p class="odp">$P(A)=\frac{13}{28}$</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="5/36" data-odp-opis="probability (fraction)"><span class="poziom">easy</span>
+      <div class="tresc">A die is rolled twice. Find the probability that the sum of the pips equals $8$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|\Omega|=36$, $A=\{(2,6),(3,5),(4,4),(5,3),(6,2)\}$. <b>$P(A)=\frac{5}{36}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7/15" data-odp-opis="probability (fraction)"><span class="poziom">easy</span>
+      <div class="tresc">One number is drawn from the set $\{1,2,\ldots,30\}$. Find the probability that it is divisible by $3$ or by $5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Divisible by $3$: $10$, by $5$: $6$, by $15$ (both at once): $2$. $|A\cup B|=10+6-2=14$. <b>$P=\frac{14}{30}=\frac{7}{15}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="63/125" data-odp-opis="probability (fraction)"><span class="poziom">medium</span>
+      <div class="tresc">A four-digit number is drawn. Find the probability that all its digits are different.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|\Omega|=9000$. First digit: $9$ possibilities (not $0$), second: $9$ (now including $0$, excluding the first), third: $8$, fourth: $7$. $|A|=9\cdot9\cdot8\cdot7=4536$. <b>$P=\frac{4536}{9000}=\frac{63}{125}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="1/5" data-odp-opis="probability (fraction)"><span class="poziom">medium</span>
+      <div class="tresc">Ten people, including Anna and Bob, line up in a queue at random. Find the probability that Anna and Bob stand next to each other.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|\Omega|=10!$. Glue Anna and Bob into one “block”: you arrange $9$ objects in $9!$ ways, and the block in $2$ ways (AB or BA). $|A|=2\cdot9!$. <b>$P=\frac{2\cdot9!}{10!}=\frac{1}{5}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="5/6" data-odp-opis="probability (fraction)"><span class="poziom">exam-level</span>
+      <div class="tresc">A box contains $6$ white balls and $4$ black ones. We draw $3$ balls at once. Find the probability that at least one of them is black.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        “At least one” → the complementary event $A'$: all white. $|\Omega|=\binom{10}3=120$, $|A'|=\binom63=20$. $P(A)=1-\frac{20}{120}$. <b>$P(A)=\frac{5}{6}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="16" data-odp-opis="n"><span class="poziom">exam-level</span>
+      <div class="tresc">The number $n$ is even. Two numbers are drawn at once from the set $\{1,2,\ldots,n\}$. The probability that both are even equals $\frac{7}{30}$. Find $n$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        There are $\frac n2$ even numbers. $P=\frac{\binom{n/2}{2}}{\binom n2}=\frac{\frac n2\left(\frac n2-1\right)}{n(n-1)}=\frac{n-2}{4(n-1)}$. The equation $\frac{n-2}{4(n-1)}=\frac{7}{30}$ gives $30n-60=28n-28$, $n=16$. Check: $\frac{\binom82}{\binom{16}2}=\frac{28}{120}=\frac{7}{30}$. <b>$n=16$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Always describe $\Omega$</b> and give $|\Omega|$ (e.g. “$\Omega$: two-element sequences from $\{1,\ldots,6\}$, $|\Omega|=36$”). Without it, it is safer not to count on full marks.</li>
+    <li><b>Give the result as an irreducible fraction</b> (or an exact decimal). An approximation without being asked for it is an error.</li>
+    <li>“At least one”, “at most $n-1$” → compute $P(A')$.</li>
+    <li><b>A consistent model:</b> do not count $\Omega$ with combinations and $A$ with arrangements. With dice, the outcomes $(1,2)$ and $(2,1)$ are <b>two</b> different elementary events.</li>
+    <li>Four-digit numbers: the first digit $\neq0$. For digits like “even and without repetition” split into cases (last digit $0$ or not).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nwd = (a, b) => (b ? nwd(b, a % b) : a);
+  const ulamek = (a, b) => { if (a === 0) return "0"; if (a === b) return "1"; const d = nwd(a, b); return `\\frac{${a / d}}{${b / d}}`; };
+
+  // --- 3. Siatka 6×6 ---
+  const w1 = new Wykres($("ko-plot"), { xmin: -0.9, xmax: 6.4, ymin: -0.9, ymax: 6.4, rowneSkale: true, siatka: false, osie: false });
+  let przec = false, ostatni = null;
+  const zdarzenia = {
+    suma: (a, b, k) => a + b === k,
+    sumaw: (a, b, k) => a + b >= k,
+    iloczyn: (a, b) => (a * b) % 2 === 0,
+    szostka: (a, b) => a === 6 || b === 6,
+    dublet: (a, b) => a === b,
+  };
+  function stan() {
+    const zd = $("ko-zd").value, k = +$("ko-k").value;
+    if (zd === "suma-lub") return { A: (a, b) => a + b === k, B: (a, b) => a === b, zd, k };
+    return { A: (a, b) => zdarzenia[zd](a, b, k), zd, k };
+  }
+  function rysujKo() {
+    const { A, B, zd, k } = stan();
+    $("ko-k-v").textContent = k;
+    $("ko-przec").disabled = !!B;
+    if (B && przec) { przec = false; $("ko-przec").textContent = "Show A′"; }
+    $("ko-k").disabled = !["suma", "sumaw", "suma-lub"].includes(zd);
+    let nA = 0, nB = 0, nAB = 0;
+    w1.rysuj(g => {
+      for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) {
+        const x = a - 1, y = 6 - b; // b rośnie w dół, jak w tabeli
+        const wA = A(a, b), wB = B ? B(a, b) : false;
+        nA += wA; nB += wB; nAB += wA && wB;
+        let nr = "--plot-axis", kr = 0.06;
+        if (wA && wB) { nr = 4; kr = 0.55; } else if (wA) { nr = 1; kr = 0.45; } else if (wB) { nr = 3; kr = 0.4; }
+        else if (przec && !B) { nr = 2; kr = 0.35; }
+        g.prostokat(x + 0.04, y + 0.04, 0.92, 0.92, nr, { wypelnij: kr, grubosc: 1 });
+        g.tekst(x + 0.5, y + 0.5, String(zd === "iloczyn" ? a * b : a + b), "--plot-axis", { dy: 5, wyrownanie: "center", rozmiar: 12 });
+      }
+      for (let i = 1; i <= 6; i++) {
+        g.tekst(i - 0.5, 6, String(i), 1, { dy: -6, wyrownanie: "center", gruby: true });
+        g.tekst(0, 6 - i + 0.5, String(i), 1, { dx: -12, dy: 5, wyrownanie: "center", gruby: true });
+      }
+      g.tekst(0, 6, "b ↓  a →", "--plot-axis", { dx: -4, dy: -6, wyrownanie: "right", rozmiar: 11 });
+      if (ostatni) g.punkt(ostatni[0] - 0.5, 6 - ostatni[1] + 0.5, "", 2, { r: 7 });
+    });
+    let s;
+    if (B) s = `|A\\cup B|=${nA}+${nB}-${nAB}=${nA + nB - nAB},\\; P(A\\cup B)=${ulamek(nA + nB - nAB, 36)}`;
+    else s = `P(A)=\\frac{${nA}}{36}=${ulamek(nA, 36)}` + (przec ? `,\\quad P(A')=${ulamek(36 - nA, 36)}` : "");
+    tex("ko-wynik", s);
+    return B ? (nA + nB - nAB) / 36 : nA / 36;
+  }
+  $("ko-przec").addEventListener("click", () => { przec = !przec; $("ko-przec").textContent = przec ? "Hide A′" : "Show A′"; rysujKo(); });
+  ["ko-zd", "ko-k"].forEach(id => $(id).addEventListener("input", () => { resetSy(); rysujKo(); }));
+
+  // --- 4. Symulacja ---
+  const w2 = new Wykres($("sy-plot"), { xmin: 0, xmax: 50, ymin: -0.08, ymax: 1.05, krokX: 10, krokY: 0.25 });
+  let n = 0, traf = 0, hist = [], p = null;
+  const krok = N => { const e = 10 ** Math.floor(Math.log10(N / 5)); return [1, 2, 5, 10].map(m => m * e).find(s => N / s <= 6); };
+  function rzut() {
+    const a = 1 + Math.floor(Math.random() * 6), b = 1 + Math.floor(Math.random() * 6);
+    const { A, B } = stan();
+    n++; if (A(a, b) || (B && B(a, b))) traf++;
+    hist.push(traf / n); ostatni = [a, b];
+  }
+  function rysujSy() {
+    const P = rysujKo();
+    const N = Math.max(50, n);
+    w2.z0.xmax = N * 1.02; w2.z0.krokX = krok(N);
+    w2.rysuj(g => {
+      g.odcinek(0, P, N * 1.02, P, 3, false);
+      if (hist.length > 1) {
+        const co = Math.max(1, Math.floor(hist.length / 600)), pts = [];
+        for (let i = 0; i < hist.length; i += co) pts.push([i + 1, hist[i]]);
+        pts.push([hist.length, hist[hist.length - 1]]);
+        g.wielokat(pts, 1, { zamknij: false, grubosc: 2 });
+      }
+    });
+    const cz = n ? `,\\;\\text{frequency }\\frac{${traf}}{${n}}\\approx${ladnaTex(traf / n, 3)}` : "";
+    tex("sy-wynik", `n=${n},\\;\\text{hits: }${traf}${cz},\\; ${stan().B ? "P(A\\cup B)" : "P(A)"}\\approx${ladnaTex(P, 3)}`);
+  }
+  function stopSy() { if (p) { p.stop(); p = null; } $("sy-start").textContent = "▶ Rzucaj"; }
+  function resetSy() { stopSy(); n = 0; traf = 0; hist = []; ostatni = null; rysujSy(); }
+  $("sy-1").addEventListener("click", () => { rzut(); rysujSy(); });
+  $("sy-start").addEventListener("click", () => {
+    if (p) { stopSy(); return; }
+    $("sy-start").textContent = "⏸ Stop";
+    p = petla(() => { const ile = n < 100 ? 1 : n < 1000 ? 5 : 25; for (let i = 0; i < ile; i++) rzut(); rysujSy(); if (n >= 20000) stopSy(); });
+  });
+  $("sy-reset").addEventListener("click", resetSy);
+  resetSy();
+});
+</script>
+</body>
+</html>

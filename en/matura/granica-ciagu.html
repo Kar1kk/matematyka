@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limit of a sequence, the squeeze theorem</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Limit of a sequence, the squeeze theorem</h1>
+  <p class="lead">$g$ is the limit when around $g$ you can draw an <i>arbitrarily</i> narrow strip and still, from some point on, all the terms fit inside it. In practice you compute limits with a few techniques: dividing by the highest power, the conjugate, the squeeze theorem.</p>
+  <p class="wymagania">VI.R.1</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definition and basic limits</h2>
+  <div class="definicja"><b>Definition</b> A sequence $(a_n)$ is <b>convergent</b> to $g$ (we write $\lim\limits_{n\to\infty}a_n=g$) when for every $\varepsilon&gt;0$ there is $N$ such that for all $n\ge N$:
+    $$|a_n-g|&lt;\varepsilon$$
+    In words: in every strip $(g-\varepsilon,\,g+\varepsilon)$ lie <b>almost all</b> the terms (all except finitely many). A sequence that has no limit is <b>divergent</b>.</div>
+  <div class="definicja"><b>Divergence to $\pm\infty$</b> $\lim a_n=+\infty$ when for every $M$ almost all terms are $&gt;M$ (analogously $-\infty$: $&lt;M$). E.g. $n^2$, $\sqrt n$, $2^n$ tend to $+\infty$, while $(-1)^n$ and $(-2)^n$ have no limit, neither finite nor infinite.</div>
+  <div class="wzor">
+    <div class="tytul">Limits you rely on</div>
+    $$\lim_{n\to\infty}\frac{1}{n^k}=0\quad(k&gt;0)$$
+    $$\lim_{n\to\infty}\sqrt[n]{a}=1\quad(a&gt;0)$$
+    $$\lim_{n\to\infty}q^n=0\quad(|q|&lt;1)$$
+    <dl><dt>also</dt><dd>$\frac{c}{n}\to0$, $\frac{1}{\sqrt n}\to0$, $\left(\frac23\right)^n\to0$; $\ q^n\to+\infty$ for $q&gt;1$</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>Theorem (operations on limits)</b> If $\lim a_n=a$ and $\lim b_n=b$ (numbers), then
+    $$\lim(a_n\pm b_n)=a\pm b$$
+    $$\lim(a_n\cdot b_n)=a\cdot b$$
+    $$\lim\frac{a_n}{b_n}=\frac ab\quad(b\neq0\ \text{and}\ b_n\neq0)$$
+    With infinities: if $a_n\to+\infty$, then $\frac{1}{a_n}\to0$; if $a_n\to+\infty$ and $b_n\to b&gt;0$, then $a_nb_n\to+\infty$; if $a_n\to0$ and $a_n&gt;0$, then $\frac1{a_n}\to+\infty$.</div>
+  <div class="uwaga"><b>Indeterminate forms:</b> $\left[\frac{\infty}{\infty}\right]$, $[\infty-\infty]$, $[0\cdot\infty]$, $\left[\frac00\right]$. The result can be anything, so first transform the expression. $\infty-\infty$ is <b>not</b> $0$, and $\frac\infty\infty$ is <b>not</b> $1$.</div>
+  <div class="twierdzenie"><b>Squeeze theorem</b> If $a_n\le b_n\le c_n$ (for almost all $n$) and $\lim a_n=\lim c_n=g$, then $\lim b_n=g$.
+    <details class="rozwin"><summary>Why it works (sketch)</summary><div>
+      <p>Take the strip $(g-\varepsilon,g+\varepsilon)$. From some point on $a_n$ and $c_n$ are in the strip. $b_n$ lies between them, and the strip is an interval, so it is in the strip too. The strip was arbitrary, hence $b_n\to g$.</p>
+    </div></details></div>
+
+  <h2 id="pasek">2. The $\varepsilon$-strip</h2>
+  <div class="demo">
+    <p class="opis">The green strip is $(g-\varepsilon,\,g+\varepsilon)$. Narrow it with the slider or ▶. The vertical line shows $N$: from it on all terms are in the strip (blue), the red ones fell out. For a convergent sequence $N$ always exists, it just grows. For $(-1)^n$ with $\varepsilon\le2$ it does not exist.</p>
+    <canvas id="ep-plot" style="height:320px"></canvas>
+    <div class="sterowanie">
+      <label>sequence <select id="ep-wzor">
+        <option value="0">aₙ = (2n + 1)/n,  g = 2</option>
+        <option value="1">aₙ = 1 + (−1)ⁿ·3/n,  g = 1</option>
+        <option value="2">aₙ = 2 − 0.8ⁿ,  g = 2</option>
+        <option value="3">aₙ = (−1)ⁿ,  is g = 1?</option>
+      </select></label>
+      <label>$\varepsilon$ <input type="range" id="ep-e" min="0.05" max="2.5" step="0.05" value="0.5"> <span id="ep-e-v"></span></label>
+      <button id="ep-start">▶ Narrow ε</button>
+    </div>
+    <div class="wynik" id="ep-wynik"></div>
+  </div>
+
+  <h2 id="trzy">3. Three sequences: the squeeze</h2>
+  <div class="demo">
+    <p class="opis">The red points $b_n$ jump irregularly, but they always lie between $a_n$ and $c_n$ (dashed lines), which tend to the same limit. Click ▶ and watch the "jaws" close on $b_n$.</p>
+    <canvas id="tc-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>example <select id="tc-wzor">
+        <option value="0">bₙ = 2 + 3·sin(n)/n</option>
+        <option value="1">bₙ = ⁿ√(2ⁿ + 3ⁿ)</option>
+      </select></label>
+      <button id="tc-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="tc-wynik"></div>
+  </div>
+
+  <h2 id="metoda">4. Method</h2>
+  <ul>
+    <li><b>Quotient of polynomials</b> $\left[\frac\infty\infty\right]$: divide the numerator and denominator by the <b>highest power of the denominator</b>. Result: equal degrees → the ratio of the leading coefficients; lower numerator → $0$; higher numerator → $\pm\infty$.</li>
+    <li><b>Powers</b> $2^n, 5^n$: divide by the power with the largest base (then the rest is $q^n\to0$).</li>
+    <li><b>Difference of square roots</b> $[\infty-\infty]$: multiply and divide by the conjugate, $\sqrt A-\sqrt B=\frac{A-B}{\sqrt A+\sqrt B}$.</li>
+    <li><b>Bounded expressions</b> ($\sin n$, $(-1)^n$) or $\sqrt[n]{\ldots}$: estimate from both sides and use the squeeze theorem.</li>
+  </ul>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Find $\lim\limits_{n\to\infty}\frac{3n^2-n+1}{1-2n^2}$.</p>
+    <ol>
+      <li>The form $\left[\frac\infty\infty\right]$; divide the numerator and denominator by $n^2$:
+        $$\frac{3-\frac1n+\frac1{n^2}}{\frac1{n^2}-2}$$</li>
+      <li>$\frac1n\to0$, $\frac1{n^2}\to0$, so by the theorem on the limit of a quotient: $\frac{3-0+0}{0-2}$.</li>
+    </ol>
+    <p class="odp">$-\frac32$</p>
+  </div>
+  <div class="przyklad">
+    <p>Find $\lim\limits_{n\to\infty}\left(\sqrt{n^2+4n}-n\right)$.</p>
+    <ol>
+      <li>The form $[\infty-\infty]$; multiply by the conjugate:
+        $$\frac{(n^2+4n)-n^2}{\sqrt{n^2+4n}+n}$$
+        $$=\frac{4n}{\sqrt{n^2+4n}+n}$$</li>
+      <li>Divide by $n$ (under the root by $n^2$, since $n=\sqrt{n^2}$ for $n&gt;0$):
+        $$\frac{4}{\sqrt{1+\frac4n}+1}\to\frac{4}{1+1}$$</li>
+    </ol>
+    <p class="odp">$2$</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Find $\lim\limits_{n\to\infty}\frac{2n^3-n}{4n^3+5n^2+1}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Divide by $n^3$: $\frac{2-\frac1{n^2}}{4+\frac5n+\frac1{n^3}}\to\frac24$. <b>$\frac12$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Find the limits: a) $\lim\frac{n^2+1}{n+3}$, b) $\lim\frac{n+1}{n^2+3}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) Divide by $n$: $\frac{n+\frac1n}{1+\frac3n}$; the numerator $\to+\infty$, the denominator $\to1&gt;0$. <b>$+\infty$</b><br>
+        b) Divide by $n^2$: $\frac{\frac1n+\frac1{n^2}}{1+\frac3{n^2}}\to\frac01$. <b>$0$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Find $\lim\limits_{n\to\infty}\frac{2^{n+1}+5^n}{5^{n+1}-3}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Divide by $5^n$: $\frac{2\cdot\left(\frac25\right)^n+1}{5-\frac{3}{5^n}}$. Since $\left(\frac25\right)^n\to0$ and $\frac3{5^n}\to0$: <b>$\frac15$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Find $\lim\limits_{n\to\infty}\left(\sqrt{n^2+3n}-\sqrt{n^2-n}\right)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Conjugate: $\frac{(n^2+3n)-(n^2-n)}{\sqrt{n^2+3n}+\sqrt{n^2-n}}=\frac{4n}{\sqrt{n^2+3n}+\sqrt{n^2-n}}$.
+        Divide by $n$: $\frac{4}{\sqrt{1+\frac3n}+\sqrt{1-\frac1n}}\to\frac42$. <b>$2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Find $\lim\limits_{n\to\infty}\sqrt[n]{4^n+7^n}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Estimate: $7^n\le4^n+7^n\le2\cdot7^n$, so $7\le\sqrt[n]{4^n+7^n}\le7\sqrt[n]2$.
+        $\lim7=7$ and $\lim7\sqrt[n]2=7\cdot1=7$. By the squeeze theorem: <b>$7$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Find $p$ for which $\lim\limits_{n\to\infty}\frac{(p-1)n^2+n}{1+3+5+\ldots+(2n-1)}=3$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The denominator is the sum of $n$ terms of an arithmetic sequence: $\frac{1+(2n-1)}{2}\cdot n=n^2$. Then
+        $\frac{(p-1)n^2+n}{n^2}=p-1+\frac1n\to p-1$. The condition is $p-1=3$. <b>$p=4$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Justify</b>: write what you divide by and which terms tend to $0$. The bare result without transformations usually does not earn full points.</li>
+    <li><b>Most common mistakes</b>: $\infty-\infty=0$, $\frac\infty\infty=1$, taking $n$ out from under the root without squaring ($\sqrt{n^2+4n}=n\sqrt{1+\frac4n}$, and not $n\sqrt{n+4}$).</li>
+    <li><b>Squeeze theorem</b>: write both inequalities, compute the limits of both outer sequences and cite the theorem by name.</li>
+    <li><b>A limit only makes sense for $n\to\infty$</b>: do not substitute "$n=\infty$", just use $\frac1n\to0$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Pasek ε ---
+  const CIAGI = [
+    { f: n => (2 * n + 1) / n, g: 2, ymin: -0.5, ymax: 3.5 },
+    { f: n => 1 + (-1) ** n * 3 / n, g: 1, ymin: -2.5, ymax: 3.5 },
+    { f: n => 2 - 0.8 ** n, g: 2, ymin: -0.5, ymax: 3 },
+    { f: n => (-1) ** n, g: 1, ymin: -3.5, ymax: 3.5 },
+  ];
+  const NMAX = 40;
+  const w1 = new Wykres($("ep-plot"), { xmin: -1, xmax: NMAX + 1, krokX: 5, ymin: -1, ymax: 4 });
+  function szukajN(c, e) { // najmniejsze N, od którego |aₙ − g| < ε (sprawdzamy do 10⁵)
+    let ost = 0;
+    for (let n = 1; n <= 100000; n++) if (Math.abs(c.f(n) - c.g) >= e) ost = n;
+    return ost > 50000 ? null : ost + 1;
+  }
+  let stop1 = null;
+  function rysujEp(e) {
+    const c = CIAGI[+$("ep-wzor").value];
+    $("ep-e-v").textContent = ladna(e);
+    Object.assign(w1.z0, { ymin: c.ymin, ymax: c.ymax });
+    const N = szukajN(c, e);
+    w1.rysuj(g => {
+      g.prostokat(0, c.g - e, NMAX + 1, 2 * e, 3, { wypelnij: 0.18, przerywana: true });
+      g.odcinek(0, c.g, NMAX + 1, c.g, 3);
+      g.tekst(NMAX + 1, c.g, "g", 3, { dx: -14, dy: -6, gruby: true });
+      if (N !== null && N <= NMAX) {
+        g.odcinek(N - 0.5, g.z.ymin, N - 0.5, g.z.ymax, 4, false);
+        g.tekst(N - 0.5, g.z.ymax, `N = ${N}`, 4, { dx: 5, dy: 16, gruby: true });
+      }
+      for (let n = 1; n <= NMAX; n++) {
+        const v = c.f(n), w = Math.abs(v - c.g) < e;
+        g.punkt(n, v, "", w ? 1 : 2, { r: 3.5 });
+      }
+    });
+    const ileOut = Array.from({ length: 100000 }, (_, i) => i + 1).filter(n => Math.abs(c.f(n) - c.g) >= e).length;
+    tex("ep-wynik", N === null
+      ? `\\varepsilon=${ladnaTex(e)}:\\ \\text{infinitely many terms outside the strip} \\Rightarrow ${c.g}\\text{ is not the limit}`
+      : `\\varepsilon=${ladnaTex(e)}:\\ |a_n-${c.g}|<\\varepsilon\\ \\text{for } n\\ge N=${N}` +
+        (N > NMAX ? "\\ (\\text{off the chart})" : "") + `,\\ \\text{outside the strip: } ${ileOut}`);
+  }
+  $("ep-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    stop1 = animuj(4000, t => { const e = 2 * (0.05 / 2) ** t; $("ep-e").value = e; rysujEp(e); });
+  });
+  ["ep-wzor", "ep-e"].forEach(id => $(id).addEventListener("input", () => { if (stop1) stop1(); rysujEp(+$("ep-e").value); }));
+  rysujEp(+$("ep-e").value);
+
+  // --- 3. Trzy ciągi ---
+  const TC = [
+    { a: n => 2 - 3 / n, b: n => 2 + 3 * Math.sin(n) / n, c: n => 2 + 3 / n, g: 2, ymin: -1.5, ymax: 5.5,
+      tex: ["2-\\tfrac3n", "2+\\tfrac{3\\sin n}{n}", "2+\\tfrac3n"] },
+    { a: () => 3, b: n => (2 ** n + 3 ** n) ** (1 / n), c: n => 3 * 2 ** (1 / n), g: 3, ymin: 2, ymax: 6.5,
+      tex: ["3", "\\sqrt[n]{2^n+3^n}", "3\\sqrt[n]2"] },
+  ];
+  const w2 = new Wykres($("tc-plot"), { xmin: -1, xmax: NMAX + 1, krokX: 5, ymin: -1, ymax: 6 });
+  let stop2 = null;
+  function klatkaTc(t) {
+    const z = TC[+$("tc-wzor").value];
+    Object.assign(w2.z0, { ymin: z.ymin, ymax: z.ymax });
+    const ile = Math.max(1, Math.round(t * NMAX));
+    w2.rysuj(g => {
+      g.odcinek(0, z.g, NMAX + 1, z.g, 3);
+      g.funkcja(z.a, 1, { przerywana: true, od: 1, do: ile });
+      g.funkcja(z.c, 1, { przerywana: true, od: 1, do: ile });
+      g.obszar(z.c, z.a, 1, ile, 1, 0.08);
+      for (let n = 1; n <= ile; n++) {
+        g.punkt(n, z.a(n), "", 1, { r: 2.5 }); g.punkt(n, z.c(n), "", 1, { r: 2.5 });
+        g.punkt(n, z.b(n), "", 2, { r: 4 });
+      }
+      g.tekst(1, z.c(1), "cₙ", 1, { dx: 6, dy: -4, gruby: true });
+      g.tekst(1, z.a(1), "aₙ", 1, { dx: 6, dy: 14, gruby: true });
+    });
+    const n = ile;
+    tex("tc-wynik", `${z.tex[0]}\\le ${z.tex[1]}\\le ${z.tex[2]};\\quad n=${n}:\\ ${ladnaTex(z.a(n), 3)}\\le ${ladnaTex(z.b(n), 3)}\\le ${ladnaTex(z.c(n), 3)}`);
+  }
+  $("tc-start").addEventListener("click", () => { if (stop2) stop2(); stop2 = animuj(4000, klatkaTc); });
+  $("tc-wzor").addEventListener("input", () => { if (stop2) stop2(); klatkaTc(1); });
+  klatkaTc(1);
+});
+</script>
+</body>
+</html>

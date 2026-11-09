@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optimization with a quadratic function</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Optimization with a quadratic function</h1>
+  <p class="lead">“Largest area”, “smallest cost”: the quantity you are optimizing is written as a function of one variable. If it turns out to be a parabola, the answer sits at the vertex, provided the vertex belongs to the domain.</p>
+  <p class="wymagania">XIII (basic level), V.10, V.11</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. The 5-step scheme</h2>
+  <ol>
+    <li><b>Variable</b>: call one quantity $x$ (e.g. the width). Express the others through $x$ using the condition of the problem.</li>
+    <li><b>Domain</b>: lengths $&gt;0$, constraints from the statement. Write it out explicitly, e.g. $x\in(0,10)$.</li>
+    <li><b>Objective function</b>: $P(x)=ax^2+bx+c$.</li>
+    <li><b>Vertex</b>: $p=\frac{-b}{2a}$. Check whether $p$ belongs to the domain and what the sign of $a$ is.</li>
+    <li><b>Answer</b> the question from the statement: the dimensions <i>and</i> the value (area, cost).</li>
+  </ol>
+  <div class="wzor">
+    <div class="tytul">Greatest/least value on $[ \alpha,\beta]$ (V.10)</div>
+    $$p\in[ \alpha,\beta]:\ f(p),\ f(\alpha),\ f(\beta)$$
+    $$p\notin[ \alpha,\beta]:\ f(\alpha),\ f(\beta)$$
+    <p>You compare only these candidates: the largest of them is the maximum, the smallest is the minimum.</p>
+    <dl><dt>$a&lt;0$</dt><dd>arms down, the vertex is a <b>maximum</b></dd>
+        <dt>$a&gt;0$</dt><dd>arms up, the vertex is a <b>minimum</b></dd></dl>
+  </div>
+  <div class="uwaga">When the domain is an <b>open</b> interval (e.g. $x\in(0,10)$), the values at the endpoints are not attained. Then for $a&lt;0$ (arms down) a greatest value exists only if the vertex is inside the interval; for $a&gt;0$ the vertex gives the <b>least</b> value (and there is no greatest one).</div>
+
+  <h2 id="plot">2. Interactive: a fence against a wall</h2>
+  <div class="demo">
+    <p class="opis">You have $20$ m of fencing for three sides of a rectangle; the fourth side is a wall. Drag the corner (or the slider $x$) and watch the point travel along the parabola $P(x)=x(20-2x)$. Shorten the wall and the vertex falls out of the domain.</p>
+    <canvas id="ok-plac" style="height:260px"></canvas>
+    <canvas id="ok-wyk" style="height:240px;margin-top:8px"></canvas>
+    <div class="sterowanie">
+      <label>$x$ <input type="range" id="ok-x" min="0.2" max="9.8" step="0.1" value="2"> <span id="ok-x-v"></span></label>
+      <label>wall <input type="range" id="ok-s" min="4" max="20" step="1" value="20"> <span id="ok-s-v"></span></label>
+      <button id="ok-start">▶ Find the maximum</button>
+    </div>
+    <div class="wynik" id="ok-wynik"></div>
+  </div>
+
+  <h2 id="przedzial">3. Interactive: is the vertex in the interval?</h2>
+  <div class="demo">
+    <p class="opis">Drag the ends of the interval $\alpha$, $\beta$ along the $Ox$ axis. When the vertex falls outside the interval, both extrema land at the endpoints.</p>
+    <canvas id="pw-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label><input type="checkbox" id="pw-znak"> arms down</label>
+    </div>
+    <div class="wynik" id="pw-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>With $20$ m of fencing we enclose a rectangular pen against a wall (fencing on three sides). Which dimensions give the largest area?</p>
+    <ol>
+      <li>$x$: the side perpendicular to the wall. The side parallel to it: $20-2x$.</li>
+      <li>Domain: $x&gt;0$ and $20-2x&gt;0$, that is $x\in(0,10)$.</li>
+      <li>$P(x)=x(20-2x)=-2x^2+20x$, $a=-2&lt;0$.</li>
+      <li>$p=\frac{-20}{-4}=5\in(0,10)$, so the maximum is at $x=5$: $P(5)=5\cdot10=50$.</li>
+    </ol>
+    <p class="odp">Dimensions $5$ m × $10$ m, area $50\ \text{m}^2$.</p>
+  </div>
+  <div class="przyklad">
+    <p>The same, but the wall is only $8$ m long.</p>
+    <ol>
+      <li>New condition: $20-2x\le 8$, that is $x\ge6$. Domain: $x\in[6,10)$.</li>
+      <li>$p=5\notin[6,10)$, and on this domain the parabola is decreasing.</li>
+      <li>The greatest value is at the left end: $P(6)=6\cdot8=48$.</li>
+    </ol>
+    <p class="odp">Dimensions $6$ m × $8$ m, area $48\ \text{m}^2$ (check in the demo: wall $8$).</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="6; 6" data-odp-opis="both numbers"><span class="poziom">easy</span>
+      <div class="tresc">The sum of two numbers is $12$. For which numbers is their product the greatest?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $f(x)=x(12-x)=-x^2+12x$, $x\in\R$. $p=6$, $a&lt;0$. <b>The numbers $6$ and $6$, product $36$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; -4" data-odp-opis="both numbers"><span class="poziom">easy</span>
+      <div class="tresc">The difference of two numbers is $8$. For which numbers is their product the least?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The numbers $x$ and $x-8$: $f(x)=x^2-8x$, $a&gt;0$, $p=4$. <b>The numbers $4$ and $-4$, product $-16$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="25" data-odp-opis="price (PLN)"><span class="poziom">medium</span>
+      <div class="tresc">At a cinema ticket price of $20$ PLN, $300$ people come. Each price increase of $1$ PLN reduces the audience by $10$. Which price gives the greatest revenue?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        An increase of $k$ PLN, $k\in[-20,30]$:
+        $$R(k)=(20+k)(300-10k)$$
+        $$=-10k^2+100k+6000$$
+        $p=5$ belongs to the domain, $a&lt;0$. <b>Price $25$ PLN, $250$ viewers, revenue $6250$ PLN.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12" data-odp-opis="greatest area"><span class="poziom">medium</span>
+      <div class="tresc">A rectangle with two sides lying on the legs is inscribed in a right triangle with legs $6$ and $8$. Find the greatest possible area of the rectangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Setup: the right-angle vertex at $(0,0)$, the hypotenuse $\frac{x}{6}+\frac{y}{8}=1$. The vertex $(x,y)$ of the rectangle lies on it: $y=8-\frac43x$, $x\in(0,6)$.
+        $$P(x)=x\left(8-\tfrac43x\right)$$
+        $p=3$, $y=4$. <b>The greatest area is $12$</b> (half the area of the triangle).
+      </div></details></li>
+    <li class="zadanie" data-odp="8/5; 11/5" data-odp-opis="x; y of point P"><span class="poziom">exam-level</span>
+      <div class="tresc">On the line $y=2x-1$ find the point $P$ closest to the point $A=(4,1)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P=(x,2x-1)$. Minimize the squared distance (it has its minimum at the same $x$):
+        $$d^2(x)=(x-4)^2+(2x-2)^2$$
+        $$=5x^2-16x+20$$
+        $p=\frac{16}{10}=\frac85$, $d^2=7.2$. <b>$P=\left(\frac85,\frac{11}{5}\right)$, $|AP|=\frac{6\sqrt5}{5}$</b> (agrees with the formula for the distance from a point to a line).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The domain</b> is a separate point in the marking scheme. Without it you do not know whether the vertex “counts”.</li>
+    <li>They ask for the <b>dimensions</b> and you give only $x$? Lost point. Answer in a full sentence: the dimensions and the value.</li>
+    <li>Vertex outside the domain: the function is monotonic on the domain, and the extremum is at an endpoint (provided the endpoint belongs to the domain).</li>
+    <li>Distance: optimize $d^2$ instead of $d$. The square root is increasing, so the minimum is at the same place.</li>
+    <li>If the objective function turns out cubic or rational, you need the <a href="optymalizacja-pochodna.html">derivative</a>.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. A fence against a wall ---
+  const L = 20, P = x => x * (L - 2 * x);
+  const plac = new Wykres($("ok-plac"), { xmin: -1, xmax: 21, ymin: -10.5, ymax: 1.5, krokX: 2, krokY: 2, rowneSkale: true, podpisy: false });
+  const wyk = new Wykres($("ok-wyk"), { xmin: -0.5, xmax: 10.5, ymin: -6, ymax: 58, krokX: 1, krokY: 10 });
+  let x = 2, stop = null;
+  const minX = () => Math.max(0.2, (L - +$("ok-s").value) / 2);
+  const rog = plac.przeciagaj([{ x: 0, y: 0, ogranicz: p => ({ x: p.x, y: p.y }) }], pk => {
+    if (stop) stop();
+    x = Math.min(9.8, Math.max(minX(), -pk[0].y));
+    $("ok-x").value = x; rysujOk();
+  });
+  function rysujOk() {
+    const s = +$("ok-s").value, m = minX();
+    x = Math.max(x, m);
+    const d = L - 2 * x, x0 = 10 - d / 2;
+    rog[0].x = x0 + d; rog[0].y = -x;
+    $("ok-x-v").textContent = ladna(x); $("ok-s-v").textContent = s + " m";
+    plac.rysuj(g => {
+      g.wielokat([[10 - s / 2, 0], [10 + s / 2, 0], [10 + s / 2, 0.6], [10 - s / 2, 0.6]], 4, { wypelnij: 0.4 });
+      g.tekst(10, 0.6, "wall " + s + " m", 4, { dy: -4, wyrownanie: "center" });
+      g.wielokat([[x0, 0], [x0, -x], [x0 + d, -x], [x0 + d, 0]], 1, { wypelnij: 0.18, zamknij: false, grubosc: 3 });
+      g.tekst(x0, -x / 2, "x", 1, { dx: -14, gruby: true });
+      g.tekst(10, -x, ladna(d), 1, { dy: 16, wyrownanie: "center", gruby: true });
+      g.tekst(10, -x / 2, "P = " + ladna(P(x)), 2, { wyrownanie: "center", rozmiar: 16, gruby: true, dy: 6 });
+      g.punkt(x0 + d, -x, "", 2);
+    });
+    wyk.rysuj(g => {
+      g.funkcja(P, 1, { przerywana: true, od: 0, do: 10 });
+      g.funkcja(P, 1, { od: m, do: 10 });
+      g.odcinek(m, 0, m, P(m), 3);
+      g.punkt(5, 50, "W", 3, { pusty: m > 5 });
+      g.odcinek(x, 0, x, P(x), 2);
+      g.punkt(x, P(x), "", 2);
+      g.tekst(10, 56, "P(x)", 1, { wyrownanie: "right", dy: 4 });
+    });
+    const best = Math.max(5, m);
+    tex("ok-wynik", `x=${ladnaTex(x)},\\ \\ 20-2x=${ladnaTex(d)},\\ \\ P=${ladnaTex(P(x))}` +
+      `\\qquad x\\in${s === 20 ? "(0" : "[" + ladnaTex(m)},10)\\Rightarrow P_{\\max}=P(${ladnaTex(best)})=${ladnaTex(P(best))}`);
+  }
+  $("ok-x").addEventListener("input", () => { if (stop) stop(); x = +$("ok-x").value; rysujOk(); });
+  $("ok-s").addEventListener("input", () => { if (stop) stop(); rysujOk(); });
+  $("ok-start").addEventListener("click", () => {
+    if (stop) stop();
+    const m = minX(), best = Math.max(5, m);
+    // sweep the whole domain, then return to the maximum
+    stop = animuj(3200, t => {
+      x = t < 0.7 ? m + (9.8 - m) * (t / 0.7) : 9.8 + (best - 9.8) * ((t - 0.7) / 0.3);
+      $("ok-x").value = x; rysujOk();
+    });
+  });
+  rysujOk();
+
+  // --- 3. The vertex in an interval ---
+  const pw = new Wykres($("pw-plot"), { xmin: -2, xmax: 7, ymin: -5, ymax: 7 });
+  const f1 = t => 0.5 * (t - 2) ** 2 - 3, f2 = t => -0.5 * (t - 2) ** 2 + 4;
+  const konce = pw.przeciagaj([
+    { x: 3, y: 0, ogranicz: p => ({ x: Math.min(Math.max(p.x, -1.8), 6.8), y: 0 }) },
+    { x: 5.5, y: 0, ogranicz: p => ({ x: Math.min(Math.max(p.x, -1.8), 6.8), y: 0 }) },
+  ], rysujPw);
+  function rysujPw() {
+    const f = $("pw-znak").checked ? f2 : f1;
+    const a = Math.min(konce[0].x, konce[1].x), b = Math.max(konce[0].x, konce[1].x);
+    const kand = [[a, f(a)], [b, f(b)]];
+    const wSrodku = a <= 2 && 2 <= b;
+    if (wSrodku) kand.push([2, f(2)]);
+    const mx = kand.reduce((u, v) => v[1] > u[1] ? v : u), mn = kand.reduce((u, v) => v[1] < u[1] ? v : u);
+    pw.rysuj(g => {
+      g.funkcja(f, 1, { przerywana: true });
+      g.obszar(f, () => 0, a, b, 1, 0.12);
+      g.funkcja(f, 1, { od: a, do: b });
+      g.odcinek(2, g.z.ymin, 2, g.z.ymax, 3);
+      g.odcinek(g.z.xmin, mx[1], g.z.xmax, mx[1], 2);
+      g.odcinek(g.z.xmin, mn[1], g.z.xmax, mn[1], 4);
+      g.punkt(mx[0], mx[1], "max", 2);
+      g.punkt(mn[0], mn[1], "min", 4);
+      g.punkt(a, 0, "α", 3); g.punkt(b, 0, "β", 3);
+    });
+    tex("pw-wynik", `p=2${wSrodku ? "\\in" : "\\notin"}[${ladnaTex(a)},${ladnaTex(b)}]:\\ \\ ` +
+      `f_{\\max}=${ladnaTex(mx[1])},\\ \\ f_{\\min}=${ladnaTex(mn[1])}`);
+  }
+  $("pw-znak").addEventListener("change", rysujPw);
+  rysujPw();
+});
+</script>
+</body>
+</html>

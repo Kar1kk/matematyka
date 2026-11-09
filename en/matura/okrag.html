@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Equation of a circle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Equation of a circle</h1>
+  <p class="lead">A circle is the set of all points at distance exactly $r$ from the center $S$. The equation of a circle is simply the distance formula $|SP|=r$, squared.</p>
+  <p class="wymagania">IX.4</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzor">1. The equation of a circle</h2>
+  <div class="wzor">
+    <div class="tytul">A circle with center $S=(a,b)$ and radius $r&gt;0$</div>
+    $$(x-a)^2+(y-b)^2=r^2$$
+    <dl><dt>origin</dt><dd>$|SP|=r\iff\sqrt{(x-a)^2+(y-b)^2}=r$, square both sides. It is on the formula sheet.</dd>
+        <dt>disk</dt><dd>$(x-a)^2+(y-b)^2\le r^2$ (circle + interior)</dd></dl>
+  </div>
+  <div class="uwaga">The signs in the brackets are "reversed": $(x+3)^2+(y-1)^2=5$ means $S=(-3,1)$, $r=\sqrt5$ (not $5$!). When the right-hand side is $0$, it is just the point $S$; when it is negative, the set is empty.</div>
+  <p>The expanded form $x^2+y^2-2ax-2by+c=0$ is <b>outside the requirements</b> of 2024, but it is on the CKE formula sheet (with the condition $a^2+b^2-c>0$, where the center is $(a,b)$), so you may use it (if it appears: complete the square).</p>
+
+  <h2 id="polozenie">2. A point and a circle, typical circles</h2>
+  <div class="wzor">
+    <div class="tytul">Position of a point $P=(x_0,y_0)$</div>
+    $$d=|SP|,\qquad d^2=(x_0-a)^2+(y_0-b)^2$$
+    <dl><dt>$d&lt;r$</dt><dd>inside the circle</dd><dt>$d=r$</dt><dd>on the circle</dd><dt>$d&gt;r$</dt><dd>outside</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>Circle</th><th>center and radius</th></tr>
+    <tr><td>with diameter $AB$</td><td>$S$ = midpoint of $AB$, $r=\frac12|AB|$</td></tr>
+    <tr><td>through the point $A$</td><td>$r=|SA|$</td></tr>
+    <tr><td>tangent to the $Ox$ axis</td><td>$r=|b|$</td></tr>
+    <tr><td>tangent to the $Oy$ axis</td><td>$r=|a|$</td></tr>
+  </table>
+
+  <h2 id="demo">3. Interactive: the equation live</h2>
+  <div class="demo">
+    <p class="opis">Drag the center $S$ and the point $A$ on the circle. Then ▶: the point $M$ goes around the circle, and the legs $|x-a|$, $|y-b|$ change, but their squares always add up to $r^2$.</p>
+    <canvas id="ok-plot"></canvas>
+    <div class="sterowanie"><button id="ok-start">▶ Go around the circle</button></div>
+    <div class="wynik" id="ok-wynik"></div>
+    <div class="wynik" id="ok-wynik2"></div>
+  </div>
+
+  <h2 id="demo-punkt">4. Interactive: where does the point lie?</h2>
+  <div class="demo">
+    <p class="opis">Drag $P$ (and change $r$). Compare $d^2=|SP|^2$ with $r^2$. On the circle with $r=5$ there are as many as 12 lattice points, try to find them.</p>
+    <canvas id="pp-plot"></canvas>
+    <div class="sterowanie">
+      <label>$r$ <input type="range" id="pp-r" min="1" max="6" step="1" value="5"> <span id="pp-r-v"></span></label>
+    </div>
+    <div class="wynik" id="pp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Find the equation of the circle with diameter $AB$, where $A=(-1,2)$, $B=(5,-6)$. Does the point $P=(5,2)$ lie on this circle?</p>
+    <ol>
+      <li>Center: $S=\left(\frac{-1+5}{2},\frac{2-6}{2}\right)=(2,-2)$.</li>
+      <li>$|AB|=\sqrt{6^2+8^2}=10$, so $r=5$.</li>
+      <li>Equation: $(x-2)^2+(y+2)^2=25$.</li>
+      <li>$P$: $(5-2)^2+(2+2)^2=9+16=25$ ✓.</li>
+    </ol>
+    <p class="odp">$(x-2)^2+(y+2)^2=25$, the point $P$ lies on the circle</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-4; 3; 2sqrt(3)" data-odp-opis="x_S; y_S; r"><span class="poziom">easy</span>
+      <div class="tresc">State the center and the radius of the circle $(x+4)^2+(y-3)^2=12$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a=-4$, $b=3$, $r=\sqrt{12}=2\sqrt3$. <b>$S=(-4,3)$, $r=2\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; -1; 5" data-odp-opis="x_S; y_S; r"><span class="poziom">easy</span>
+      <div class="tresc">Find the equation of the circle with center $S=(3,-1)$ passing through $A=(-1,2)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $r^2=|SA|^2=(-4)^2+3^2=25$. <b>$(x-3)^2+(y+1)^2=25$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">The circle: $(x-2)^2+(y+1)^2=20$. Determine the positions of the points $P=(1,1)$, $Q=(6,3)$, $R=(6,1)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P$: $1+4=5&lt;20$; $Q$: $16+16=32&gt;20$; $R$: $16+4=20$.
+        <b>$P$ inside, $Q$ outside, $R$ on the circle</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4; 3" data-odp-opis="r (tangent to Ox); r (tangent to Oy)"><span class="poziom">medium</span>
+      <div class="tresc">Find the equation of the circle with center $S=(-3,4)$ tangent to the $Ox$ axis, and then the one tangent to the $Oy$ axis.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The distance of $S$ from $Ox$ is $|4|=4$, from $Oy$ it is $|-3|=3$.
+        <b>$(x+3)^2+(y-4)^2=16$ and $(x+3)^2+(y-4)^2=9$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 3; sqrt(10)" data-odp-opis="x_S; y_S; r"><span class="poziom">exam-level</span>
+      <div class="tresc">The center of a circle lies on the line $y=x+1$, and the circle passes through $A=(1,0)$ and $B=(5,2)$. Find its equation.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $S=(t,t+1)$ and $|SA|^2=|SB|^2$: $(t-1)^2+(t+1)^2=(t-5)^2+(t-1)^2$, i.e. $(t+1)^2=(t-5)^2$, $2t+1=-10t+25$, $t=2$. $S=(2,3)$, $r^2=1+9=10$; check $B$: $9+1=10$ ✓.
+        <b>$(x-2)^2+(y-3)^2=10$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 4" data-odp-opis="values of a"><span class="poziom">exam-level</span>
+      <div class="tresc">For which $a$ does the point $P=(1,-2)$ lie on the circle $(x-a)^2+(y-2)^2=25$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(1-a)^2+16=25$, $(1-a)^2=9$, $1-a=\pm3$. <b>$a=-2$ or $a=4$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>The most common mistake: <b>$r$ instead of $r^2$</b>. On the right-hand side stands the square of the radius: $=12$ means $r=2\sqrt3$.</li>
+    <li>Signs: $(x+3)^2$ means $a=-3$. Write $S$ explicitly before you continue.</li>
+    <li>"The center lies on a line" → write $S$ with one parameter, e.g. $S=(t,t+1)$, and set up one equation.</li>
+    <li>Distinguish a <b>circle</b> (an equation, "$=$") from a <b>disk</b> (an inequality, "$\le$").</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function pierw(n) {
+    let k = 1, m = n;
+    for (let i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; }
+    return m === 1 ? `${k}` : m === 0 ? "0" : `${k === 1 ? "" : k}\\sqrt{${m}}`;
+  }
+  // (x-a)^2 z poprawnym znakiem; a = 0 → x^2
+  const kw = (zm, a) => a === 0 ? `${zm}^2` : `(${zm}${a > 0 ? "-" : "+"}${ladnaTex(Math.abs(a))})^2`;
+  const rownanie = (a, b, r2) => `${kw("x", a)}+${kw("y", b)}=${ladnaTex(r2)}`;
+
+  // --- 3. Równanie na żywo + obieganie ---
+  const w1 = new Wykres($("ok-plot"), { xmin: -7, xmax: 7, ymin: -6, ymax: 6, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-5, Math.min(5, p.y)) });
+  const pk = w1.przeciagaj([{ x: -1, y: 0, siatka: 1, ogranicz: ogr }, { x: 2, y: 4, siatka: 1, ogranicz: ogr }], () => { if (stop) stop(); kat = null; rysujOk(); });
+  let stop = null, kat = null; // kat: położenie M (radiany) w czasie animacji
+  function rysujOk() {
+    const [S, A] = pk, r2 = (A.x - S.x) ** 2 + (A.y - S.y) ** 2, r = Math.sqrt(r2);
+    const k0 = Math.atan2(A.y - S.y, A.x - S.x);
+    const M = kat === null ? A : { x: S.x + r * Math.cos(kat), y: S.y + r * Math.sin(kat) };
+    w1.rysuj(g => {
+      if (r2) g.okrag(S.x, S.y, r, 1, { wypelnij: 0.06 });
+      if (kat !== null) g.luk(S.x, S.y, r, k0, kat, 2, { grubosc: 4 });
+      g.odcinek(S.x, S.y, M.x, S.y, 3, false); g.odcinek(M.x, S.y, M.x, M.y, 3, false);
+      g.odcinek(S.x, S.y, M.x, M.y, 4, false);
+      g.tekst((S.x + M.x) / 2, S.y, "|x−a|", 3, { dy: M.y >= S.y ? 15 : -6, wyrownanie: "center" });
+      g.tekst(M.x, (S.y + M.y) / 2, "|y−b|", 3, { dx: M.x >= S.x ? 6 : -6, wyrownanie: M.x >= S.x ? "left" : "right" });
+      g.punkt(S.x, S.y, "S", 1);
+      if (kat !== null) { g.punkt(A.x, A.y, "A", 2, { pusty: true }); g.punkt(M.x, M.y, "M", 2); }
+      else g.punkt(A.x, A.y, "A", 2);
+    });
+    if (!r2) { tex("ok-wynik", "A=S\\;\\text{— move the point }A\\text{ away}"); tex("ok-wynik2", ""); return; }
+    tex("ok-wynik", `S=(${S.x},\\,${S.y}),\\ r=${pierw(r2)}:\\quad ${rownanie(S.x, S.y, r2)}`);
+    const u = Math.round((M.x - S.x) ** 2 * 100) / 100; // tak, by zaokrąglone składniki sumowały się do r²
+    tex("ok-wynik2", `${M === A ? "A" : "M"}=(${ladnaTex(M.x)},\\,${ladnaTex(M.y)})\\colon\\ ${ladnaTex(u)}+${ladnaTex(r2 - u)}=${ladnaTex(r2)}`);
+  }
+  $("ok-start").addEventListener("click", () => {
+    if (stop) stop();
+    const [S, A] = pk, k0 = Math.atan2(A.y - S.y, A.x - S.x);
+    stop = animuj(4000, t => { kat = k0 + 2 * Math.PI * t; rysujOk(); }, () => { kat = null; rysujOk(); });
+  });
+  rysujOk();
+
+  // --- 4. Położenie punktu ---
+  const S2 = { x: 1, y: 1 };
+  const w2 = new Wykres($("pp-plot"), { xmin: -7, xmax: 8, ymin: -6, ymax: 7, rowneSkale: true });
+  const pk2 = w2.przeciagaj([{ x: 4, y: -2, siatka: 1, ogranicz: p => ({ x: Math.max(-7, Math.min(8, p.x)), y: Math.max(-6, Math.min(7, p.y)) }) }], rysujPP);
+  function rysujPP() {
+    const r = +$("pp-r").value, P = pk2[0];
+    $("pp-r-v").textContent = r;
+    const d2 = (P.x - S2.x) ** 2 + (P.y - S2.y) ** 2;
+    const nr = d2 < r * r ? 3 : d2 === r * r ? 2 : 4;
+    w2.rysuj(g => {
+      g.okrag(S2.x, S2.y, r, 1, { wypelnij: 0.08 });
+      g.odcinek(S2.x, S2.y, P.x, P.y, nr, false);
+      g.punkt(S2.x, S2.y, "S", 1);
+      g.punkt(P.x, P.y, "P", nr, { r: 6 });
+    });
+    const [zn, opis] = d2 < r * r ? ["<", "inside"] : d2 === r * r ? ["=", "on the circle"] : [">", "outside"];
+    tex("pp-wynik", `(x-1)^2+(y-1)^2=${r * r}:\\quad d^2=(${P.x}-1)^2+(${P.y}-1)^2=${d2}\\ ${zn}\\ ${r * r}\\ \\Rightarrow\\ \\textbf{${opis}}`);
+  }
+  $("pp-r").addEventListener("input", rysujPP);
+  rysujPP();
+});
+</script>
+</body>
+</html>

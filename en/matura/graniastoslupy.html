@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prisms</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Prisms</h1>
+  <p class="lead">A prism is a base “pulled” upward. Almost every problem reduces to one right triangle: the height, a segment in the base (the projection) and the hypotenuse (the diagonal of the solid or of a face).</p>
+  <p class="wymagania">X.3, X.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="pojecia">1. Concepts and formulas</h2>
+  <div class="definicja"><b>A right prism</b> has lateral edges perpendicular to the bases (the lateral faces are rectangles). A <b>regular</b> prism is a right prism whose base is a regular polygon. A cuboid with a square base is a regular quadrilateral prism; a cube: all edges equal.</div>
+  <div class="wzor">
+    <div class="tytul">Right prism <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$P_b=O_b\cdot h,\qquad V=P_p\cdot h$$
+    $$P_c=2P_p+P_b$$
+    <dl><dt>$O_b$</dt><dd>perimeter of the base</dd><dt>$h$</dt><dd>height (= lateral edge)</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Diagonals (memorize)</div>
+    $$d^2=d_p^2+h^2$$
+    $$\text{cube: } d=a\sqrt3,\ \ d_{\text{face}}=a\sqrt2$$
+    <dl><dt>$d_p$</dt><dd>the projection of the diagonal $d$ onto the base (a diagonal of the base)</dd>
+        <dt>$\alpha$</dt><dd>the angle between the diagonal and the base: $\tan\alpha=\frac{h}{d_p}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Areas of regular bases</div>
+    $$P_{\triangle}=\frac{a^2\sqrt3}{4},\qquad P_{\text{hex}}=\frac{3a^2\sqrt3}{2}$$
+    <dl><dt>$P_\triangle$</dt><dd>equilateral triangle <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></dd>
+        <dt>$P_{\text{hex}}$</dt><dd>regular hexagon $=6$ equilateral triangles; the longest diagonal is $2a$, the shorter one $a\sqrt3$</dd></dl>
+  </div>
+  <div class="uwaga">A triangular prism has no space diagonals: every segment joining vertices lies in a face. The “diagonal” angle there refers to a diagonal of a lateral face.</div>
+
+  <h2 id="demo">2. Interactive: a regular prism</h2>
+  <div class="demo">
+    <p class="opis">Change $n$, $h$ and $a$, rotate the solid with your finger. Red: the longest diagonal, green triangle: the diagonal, its projection onto the base and the lateral edge. Below, the same triangle “taken out” of the solid.</p>
+    <canvas id="gr-plot"></canvas>
+    <div class="sterowanie">
+      <label>$n$ <input type="range" id="gr-n" min="3" max="8" step="1" value="4"> <span id="gr-n-v"></span></label>
+      <label>$h$ <input type="range" id="gr-h" min="0.5" max="4" step="0.1" value="2.5"></label>
+      <label>$a$ <input type="range" id="gr-a" min="1" max="3" step="0.1" value="2"></label>
+    </div>
+    <canvas id="gr-2d" style="height:150px"></canvas>
+    <div class="wynik" id="gr-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">3. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>The diagonal of a regular quadrilateral prism has length $10$ and makes an angle of $60^\circ$ with the plane of the base. Find the volume.</p>
+    <ol>
+      <li>The triangle: diagonal $d=10$, projection $d_p$, height $h$. $h=10\sin60^\circ=5\sqrt3$, $d_p=10\cos60^\circ=5$.</li>
+      <li>$d_p=a\sqrt2=5$, so $a=\frac{5\sqrt2}{2}$ and $P_p=a^2=\frac{25}{2}$.</li>
+      <li>$V=P_p\cdot h=\frac{25}{2}\cdot5\sqrt3$.</li>
+    </ol>
+    <p class="odp">$V=\frac{125\sqrt3}{2}$</p>
+  </div>
+
+  <h2 id="zadania">4. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="24sqrt(3); 72" data-odp-opis="V; P_c"><span class="poziom">easy</span>
+      <div class="tresc">The diagonal of a cube has length $6$. Find the volume and the total surface area of the cube.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a\sqrt3=6\Rightarrow a=2\sqrt3$. $V=(2\sqrt3)^3$, $P_c=6\cdot12$. <b>$V=24\sqrt3$, $P_c=72$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="72sqrt(3); 144+18sqrt(3)" data-odp-opis="V; P_c"><span class="poziom">easy</span>
+      <div class="tresc">A regular triangular prism has base edge $6$ and height $8$. Find $V$ and $P_c$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P_p=\frac{36\sqrt3}{4}=9\sqrt3$, $V=9\sqrt3\cdot8$, $P_b=3\cdot6\cdot8=144$. <b>$V=72\sqrt3$, $P_c=144+18\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="72; 60sqrt(3)" data-odp-opis="V; P_c"><span class="poziom">medium</span>
+      <div class="tresc">A regular hexagonal prism has base edge $2$, and its longest diagonal makes an angle of $60^\circ$ with the base. Find $V$ and $P_c$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The projection of the longest diagonal is the longest diagonal of the base: $2a=4$. $h=4\tan60^\circ=4\sqrt3$. $P_p=\frac{3\cdot4\sqrt3}{2}=6\sqrt3$, $V=6\sqrt3\cdot4\sqrt3=72$, $P_c=12\sqrt3+6\cdot2\cdot4\sqrt3$. <b>$V=72$, $P_c=60\sqrt3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4/5" data-odp-opis="cosine of the angle"><span class="poziom">exam-level</span>
+      <div class="tresc">In a regular quadrilateral prism $ABCDA'B'C'D'$ the base edge has length $2$ and the height is $4$. Find the cosine of the angle between the diagonals of the lateral faces $AB'$ and $AD'$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|AB'|=|AD'|=\sqrt{4+16}=\sqrt{20}$, $|B'D'|=2\sqrt2$. By the law of cosines in triangle $AB'D'$: $8=20+20-2\cdot20\cos\alpha$, $\cos\alpha=\frac{32}{40}$. <b>$\cos\alpha=\frac45$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">The diagonal of a regular quadrilateral prism has length $d$ and makes an angle $\alpha$ with the base. Find the volume in terms of $d$ and $\alpha$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $h=d\sin\alpha$, $d_p=d\cos\alpha=a\sqrt2$, so $P_p=a^2=\frac{d^2\cos^2\alpha}{2}$. <b>$V=\frac{d^3\sin\alpha\cos^2\alpha}{2}$</b> (for $d=10$, $\alpha=60^\circ$ this gives the result from the example).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">5. On the exam</h2>
+  <ul>
+    <li>Mark on the figure the <b>angle and the right triangle</b> in which you compute it; name the projection (“$AC$ is the projection of $AG$ onto the plane of the base”).</li>
+    <li>“Regular” gives two things at once: the solid is right and the base is regular. Do not assume this when the text says only “right”.</li>
+    <li>In a hexagon distinguish the diagonals: $2a$ (through the center) and $a\sqrt3$ (the shorter one).</li>
+    <li>Total surface area: do not forget <b>two</b> bases.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const s3 = new Scena3D($("gr-plot"), { zakres: 3.3, srodek: [0, 0, 1.4] });
+  const w2 = new Wykres($("gr-2d"), { xmin: -0.5, xmax: 8.3, ymin: -0.7, ymax: 4.6, rowneSkale: true, siatka: false, osie: false });
+  function rysuj() {
+    const n = +$("gr-n").value, h = +$("gr-h").value, a = +$("gr-a").value;
+    $("gr-n-v").textContent = n;
+    const R = a / (2 * Math.sin(Math.PI / n)), f0 = -Math.PI / 2 - Math.PI / n;
+    const W = [];
+    for (let z of [0, h]) for (let i = 0; i < n; i++) W.push([R * Math.cos(f0 + 2 * Math.PI * i / n), R * Math.sin(f0 + 2 * Math.PI * i / n), z]);
+    const SC = [[...Array(n).keys()], [...Array(n).keys()].map(i => i + n)];
+    for (let i = 0; i < n; i++) SC.push([i, (i + 1) % n, (i + 1) % n + n, i + n]);
+    const k = Math.floor(n / 2), P0 = W[0], Pk = W[k], Tk = W[k + n];
+    const Pp = n * a * a / (4 * Math.tan(Math.PI / n)), Pb = n * a * h, dp = 2 * R * Math.sin(k * Math.PI / n);
+    const d = Math.hypot(dp, h), al = Math.atan2(h, dp) * 180 / Math.PI;
+    s3.o.srodek = [0, 0, h / 2];
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.06 });
+      g.wielokat([P0, Pk, Tk], 3, { wypelnij: 0.25, bezObrysu: true });
+      g.odcinek(P0, Pk, 3, { grubosc: 2.5 });
+      g.odcinek(Pk, Tk, 3, { grubosc: 2.5 });
+      g.odcinek(P0, Tk, 2, { grubosc: 3 });
+      g.kat(Pk, P0, Tk, 0.3, 3, { prosty: true });
+      g.kat(P0, Pk, Tk, 0.5, 2, { wypelnij: 0.3 });
+      g.tekst(P0, "α", 2, { dx: 10, dy: -14, gruby: true });
+    });
+    // wysokość płótna dopasowana do trójkąta (skala x stała) – bez pustego pasa nad nim
+    const c2 = $("gr-2d");
+    w2.zakres({ ymax: h + 0.4 });
+    c2.style.height = Math.round(Math.min(220, Math.max(90, c2.clientWidth * (h + 0.4 + 0.7) / 8.8))) + "px";
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [dp, 0], [dp, h]], 3, { wypelnij: 0.15 });
+      g.odcinek(0, 0, dp, h, 2, false);
+      g.luk(0, 0, 0.7, 0, Math.atan2(h, dp), 2, { wypelnij: 0.3 });
+      g.wielokat([[dp - 0.3, 0], [dp - 0.3, 0.3], [dp, 0.3]], 3, { zamknij: false, grubosc: 1.5 });
+      g.tekst(dp / 2, 0, "dₚ = " + ladna(dp), 3, { dy: 16, wyrownanie: "center" });
+      g.tekst(dp, h / 2, "h = " + ladna(h), 3, { dx: 6 });
+      g.tekst(dp / 2, h / 2, "d = " + ladna(d), 2, { dx: -10, dy: -8, wyrownanie: "right" });
+      g.tekst(0.75, 0.1, "α", 2, { dy: -4, gruby: true });
+    });
+    const uw = n === 3 ? "\\ (\\text{face diagonal})" : "";
+    tex("gr-wynik", `P_c=${ladnaTex(2 * Pp + Pb)},\\ V=${ladnaTex(Pp * h)},\\ d=${ladnaTex(d)}${uw},\\ \\alpha=${ladnaTex(al, 1)}^\\circ`);
+  }
+  ["gr-n", "gr-h", "gr-a"].forEach(id => $(id).addEventListener("input", rysuj));
+  rysuj();
+});
+</script>
+</body>
+</html>

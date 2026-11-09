@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thales' theorem (intercept theorem) and its converse</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Thales' theorem (intercept theorem) and its converse</h1>
+  <p class="lead">Parallel lines cut the arms of an angle "proportionally": if the segments on one arm are in the ratio $2:3$, so they are on the other. The converse works the other way: equal ratios guarantee parallelism.</p>
+  <p class="wymagania">VIII.7, VIII.R.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="twierdzenie">1. Thales' theorem</h2>
+  <p>The lines $AB$ and $CD$ meet at the point $P$ ($A$, $B$ on one arm, $C$, $D$ on the other).</p>
+  <div class="twierdzenie"><b>Thales' theorem</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    If $AC\parallel BD$, then
+    $$\frac{|PA|}{|AB|}=\frac{|PC|}{|CD|}$$
+    Equivalently $\frac{|PA|}{|PB|}=\frac{|PC|}{|PD|}$. Also, for the parallel segments:
+    $$\frac{|AC|}{|BD|}=\frac{|PA|}{|PB|}$$
+    <details class="rozwin"><summary>Where this comes from (area proof, optional)</summary><div>
+      <p>The triangles $ACB$ and $ACD$ share the base $AC$, and $B$ and $D$ lie on a line parallel to $AC$ – so they have equal altitudes and <b>equal areas</b>. The triangles $PAC$ and $ACB$ share the altitude from $C$, so the ratio of their areas is the ratio of the bases. Likewise $PAC$ and $ACD$ (altitude from $A$):</p>
+      $$\frac{|PA|}{|AB|}=\frac{P_{PAC}}{P_{ACB}}=\frac{P_{PAC}}{P_{ACD}}=\frac{|PC|}{|CD|}$$
+      <p>The last formula, with $|AC|$, $|BD|$, follows from the similarity of the triangles $PAC$ and $PBD$ (AA). $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="uwaga">The parallel segments $|AC|$, $|BD|$ must <b>not</b> be compared with $|AB|$: the correct form is $\frac{|AC|}{|BD|}=\frac{|PA|}{|PB|}$ (whole segments from $P$), not $\frac{|PA|}{|AB|}$.</div>
+  <p>The theorem also works when $P$ lies between the parallels (the "bowtie": $A$ and $B$ on opposite sides of $P$) – then the triangles $PAC$ and $PBD$ are "flipped", but the proportions are the same.</p>
+
+  <h2 id="demo">2. Interactive: the proportions stay</h2>
+  <div class="demo">
+    <p class="opis">Drag $P$, $A$, $C$ and $B$ (along the line $PA$). The point $D$ is determined so that $BD\parallel AC$. Observe that the two ratios are always equal – also in the "bowtie", when you drag $B$ past $P$.</p>
+    <canvas id="ta-plot"></canvas>
+    <div class="wynik" id="ta-wynik"></div>
+  </div>
+
+  <h2 id="odwrotne">3. The converse</h2>
+  <div class="twierdzenie"><b>Converse of Thales' theorem</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    If $A$ lies inside the segment $PB$ and $C$ inside $PD$ (or both outside) and
+    $$\frac{|PA|}{|AB|}=\frac{|PC|}{|CD|},$$
+    then $AC\parallel BD$.
+    <details class="rozwin"><summary>Proof (optional)</summary><div>
+      <p>Draw through $B$ a line parallel to $AC$; it meets the line $PC$ at a point $D'$ on the same side as $D$. By Thales' theorem $\frac{|PC|}{|CD'|}=\frac{|PA|}{|AB|}=\frac{|PC|}{|CD|}$, so $|CD'|=|CD|$ and $D'=D$. Hence $BD\parallel AC$. $\blacksquare$</p>
+    </div></details>
+  </div>
+  <div class="uwaga">The condition on the position of the points is not decoration: equal lengths alone do not imply parallelism. Check it in the demo below.</div>
+  <div class="demo">
+    <p class="opis">$A$, $B$, $C$ are fixed, $\frac{|PA|}{|AB|}=\frac23$. Drag $D$ along the line $PC$. There are <b>two</b> positions where $\frac{|PC|}{|CD|}=\frac23$, but the lines are parallel in only one of them.</p>
+    <canvas id="to-plot" style="height:300px"></canvas>
+    <div class="wynik" id="to-wynik"></div>
+    <div class="wynik" id="to-opis"></div>
+  </div>
+
+  <h2 id="przyklad">4. Worked example</h2>
+  <div class="przyklad">
+    <p>The arms of an angle with vertex $P$ are cut by the parallel lines $AC$ and $BD$ ($A$, $B$ on one arm). $|PA|=4$, $|AB|=6$, $|PC|=5$, $|AC|=3$. Find $|CD|$ and $|BD|$.</p>
+    <ol>
+      <li>Thales: $\frac{4}{6}=\frac{5}{|CD|}$, so $|CD|=\frac{30}{4}=7.5$.</li>
+      <li>Parallel segments: $\frac{|AC|}{|BD|}=\frac{|PA|}{|PB|}=\frac{4}{10}$, so $|BD|=\frac{3\cdot10}{4}=7.5$.</li>
+    </ol>
+    <p class="odp">$|CD|=7.5$, $|BD|=7.5$</p>
+  </div>
+
+  <h2 id="zadania">5. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">The lines $AC$ and $BD$ are parallel, $|PA|=3$, $|PC|=4$, $|CD|=8$ (notation as above). Find $|AB|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{3}{|AB|}=\frac48$, so <b>$|AB|=6$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">A vertical pole of height $2$ m casts a shadow of length $1.5$ m. At the same moment the shadow of a tree is $9$ m long. How tall is the tree?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The sun's rays are parallel, and so are the pole and the tree: $\frac{h}{9}=\frac{2}{1.5}$. <b>$h=12$ m</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">The legs $AD$ and $BC$ of the trapezoid $ABCD$ ($AB\parallel CD$) are extended until they meet at the point $P$. $|AB|=15$, $|CD|=6$, $|AD|=6$. Find $|PD|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{|PD|}{|PA|}=\frac{|CD|}{|AB|}=\frac{6}{15}=\frac25$, and $|PA|=|PD|+6$. $5|PD|=2|PD|+12$. <b>$|PD|=4$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">The points $A\in PB$ and $C\in PD$ lie inside the segments. Is $AC\parallel BD$ when: a) $|PA|=4$, $|AB|=6$, $|PC|=6$, $|CD|=9$; b) $|PA|=4$, $|PB|=10$, $|PC|=5$, $|PD|=12$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) $\frac46=\frac69=\frac23$ and the points lie inside the segments – by the converse theorem, <b>yes</b>. b) $\frac{4}{10}=0.4\ne\frac{5}{12}$ – if the lines were parallel, Thales' theorem would give equal ratios, so <b>no</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">On the sides $AC$ and $BC$ of the triangle $ABC$ the points $D$ and $E$ are chosen: $|CD|=4$, $|DA|=6$, $|CE|=6$, $|EB|=9$. Show that $DE\parallel AB$, and find $|AB|$ if $|DE|=5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{|CD|}{|DA|}=\frac46=\frac23=\frac69=\frac{|CE|}{|EB|}$, and $D$, $E$ lie inside the sides, so by the converse of Thales' theorem $DE\parallel AB$. Then $\frac{|DE|}{|AB|}=\frac{|CD|}{|CA|}=\frac{4}{10}$. <b>$|AB|=12.5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that the segment joining the midpoints of two sides of a triangle is parallel to the third side and equal to half of it (the midsegment).</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $M$, $N$ – the midpoints of $CA$ and $CB$. $\frac{|CM|}{|MA|}=1=\frac{|CN|}{|NB|}$ and the points lie inside the sides, so by the converse of Thales' theorem $MN\parallel AB$. By Thales' theorem (parallel segments) $\frac{|MN|}{|AB|}=\frac{|CM|}{|CA|}=\frac12$. <b>Q.E.D.</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>Write <b>which</b> lines are parallel and why – only then the proportion.</li>
+    <li>The most common mistake: $\frac{|AC|}{|BD|}=\frac{|PA|}{|AB|}$. Compare parallel segments with the whole segments from the vertex $P$.</li>
+    <li>With the converse theorem, check and state the position of the points (both inside or both outside the segments).</li>
+    <li>Thales is a special case of the similarity of the triangles $PAC$ and $PBD$ – if you get lost, write out the similar triangles.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 2. Tales ---
+  const w1 = new Wykres($("ta-plot"), { xmin: -6, xmax: 6, ymin: -4, ymax: 4, rowneSkale: true });
+  const ogr = wPolu(5.6, 3.7);
+  const pt = w1.przeciagaj([
+    { x: -4.5, y: -0.5, ogranicz: ogr }, { x: -2, y: 1.5, ogranicz: ogr },
+    { x: 1, y: 3.5, ogranicz: p => ogr(rzut(p, pt[0], pt[1])) }, { x: -1.5, y: -1.5, ogranicz: ogr }], rysujTa);
+  function rysujTa() {
+    const [P, A, B, C] = pt;
+    const pa2 = (A.x - P.x) ** 2 + (A.y - P.y) ** 2;
+    const ok = pa2 > 0.09 && odl(P, C) > 0.3 && Math.abs((A.x - P.x) * (C.y - P.y) - (A.y - P.y) * (C.x - P.x)) > 0.05;
+    if (ok) { const Bn = rzut(B, P, A); B.x = Bn.x; B.y = Bn.y; }
+    const k = ok ? ((B.x - P.x) * (A.x - P.x) + (B.y - P.y) * (A.y - P.y)) / pa2 : 1;
+    const D = { x: P.x + k * (C.x - P.x), y: P.y + k * (C.y - P.y) };
+    w1.rysuj(g => {
+      if (ok) { g.prosta(P.x, P.y, A.x, A.y, 1, true); g.prosta(P.x, P.y, C.x, C.y, 1, true); }
+      g.odcinek(A.x, A.y, C.x, C.y, 2, false); g.odcinek(B.x, B.y, D.x, D.y, 2, false);
+      g.odcinek(P.x, P.y, A.x, A.y, 3, false); g.odcinek(P.x, P.y, C.x, C.y, 3, false);
+      g.odcinek(A.x, A.y, B.x, B.y, 4, false); g.odcinek(C.x, C.y, D.x, D.y, 4, false);
+      const S = { x: (P.x + A.x + B.x + C.x + D.x) / 5, y: (P.y + A.y + B.y + C.y + D.y) / 5 };
+      [[P, "P", 1], [A, "A", 2], [B, "B", 2], [C, "C", 2], [D, "D", 4]].forEach(([Q, s, nr]) => {
+        g.punkt(Q.x, Q.y, "", nr, s === "D" ? { pusty: true } : {});
+        etykieta(g, Q, S, s, nr);
+      });
+    });
+    if (!ok || odl(A, B) < 0.2 || odl(P, B) < 0.2) { tex("ta-wynik", "\\text{move the points apart}"); return; }
+    const pa = odl(P, A), ab = odl(A, B), pc = odl(P, C), cd = odl(C, D), f = ladnaTex;
+    tex("ta-wynik", `\\begin{aligned}\\tfrac{|PA|}{|AB|}&=\\tfrac{${f(pa)}}{${f(ab)}}=${f(pa / ab)}, & \\tfrac{|PC|}{|CD|}&=\\tfrac{${f(pc)}}{${f(cd)}}=${f(pc / cd)}\\\\` +
+      `\\tfrac{|AC|}{|BD|}&=${f(odl(A, C) / odl(B, D))}, & \\tfrac{|PA|}{|PB|}&=${f(pa / odl(P, B))}\\end{aligned}`);
+  }
+  rysujTa();
+
+  // --- 3. Twierdzenie odwrotne ---
+  const w2 = new Wykres($("to-plot"), { xmin: -7, xmax: 3, ymin: -3.5, ymax: 2.5, rowneSkale: true });
+  const P2 = { x: -5, y: -1 }, u1 = { x: 0.8, y: 0.6 }, u2 = { x: 0.96, y: -0.28 };
+  const pun = (u, s) => ({ x: P2.x + s * u.x, y: P2.y + s * u.y });
+  const A2 = pun(u1, 2), B2 = pun(u1, 5), C2 = pun(u2, 2.4);
+  let s = 4; // położenie D na prostej PC (odległość ze znakiem od P)
+  const pd = w2.przeciagaj([{ ...pun(u2, s), ogranicz: p => {
+    s = Math.max(-2, Math.min(8, Math.round(((p.x - P2.x) * u2.x + (p.y - P2.y) * u2.y) / 0.2) * 0.2));
+    return pun(u2, s);
+  } }], rysujTo);
+  function rysujTo() {
+    const D = pd[0];
+    const cd = Math.abs(s - 2.4), rown = Math.abs(s - 6) < 1e-6, rowneStos = cd > 1e-9 && Math.abs(2.4 / cd - 2 / 3) < 1e-6;
+    w2.rysuj(g => {
+      g.prosta(P2.x, P2.y, B2.x, B2.y, 1, true); g.prosta(P2.x, P2.y, C2.x, C2.y, 1, true);
+      g.odcinek(A2.x, A2.y, C2.x, C2.y, 2, false);
+      g.odcinek(B2.x, B2.y, D.x, D.y, rown ? 3 : 2, !rown);
+      [[P2, "P", 1, -12], [A2, "A", 2, -12], [B2, "B", 2, -12], [C2, "C", 2, 18], [D, "D", 4, 18]].forEach(([Q, t, nr, dy]) => {
+        g.punkt(Q.x, Q.y, "", nr); g.tekst(Q.x, Q.y, t, nr, { dy, wyrownanie: "center", gruby: true });
+      });
+    });
+    tex("to-wynik", `\\tfrac{|PA|}{|AB|}=\\tfrac{2}{3},\\quad \\tfrac{|PC|}{|CD|}=` + (cd > 1e-9 ? `\\tfrac{2.4}{${ladnaTex(cd)}}=${ladnaTex(2.4 / cd)}` : "\\text{---}"));
+    $("to-opis").textContent = rown ? "AC ∥ BD – the ratios are equal and C lies inside the segment PD, like A inside PB." :
+      rowneStos ? "The ratios are equal, but the lines are NOT parallel: P lies between C and D, so C is not inside the segment PD (while A is inside PB)." :
+      "The lines AC and BD are not parallel.";
+  }
+  rysujTo();
+});
+</script>
+</body>
+</html>

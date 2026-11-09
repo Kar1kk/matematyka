@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Similarity of figures</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Similarity of figures</h1>
+  <p class="lead">Similar figures are the same figure at a different scale: angles unchanged, all lengths multiplied by $k$. Area grows faster – by a factor of $k^2$, because you multiply two lengths at once.</p>
+  <p class="wymagania">VIII.8, VIII.9</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Similarity and the similarity criteria for triangles</h2>
+  <div class="definicja"><b>Definition</b> Figure $\mathcal B$ is similar to figure $\mathcal A$ with scale $k&gt;0$ if the distance between any two points of $\mathcal B$ is $k$ times the distance between the corresponding points of $\mathcal A$. We write $\triangle ABC\sim\triangle KLM$ – the <b>order of the letters</b> tells which vertices correspond to each other.</div>
+  <div class="twierdzenie"><b>Similarity criteria for triangles</b> <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>
+    <ul>
+      <li><b>SSS:</b> three pairs of proportional sides: $\frac{|KL|}{|AB|}=\frac{|LM|}{|BC|}=\frac{|MK|}{|CA|}$.</li>
+      <li><b>SAS:</b> two pairs of proportional sides and equal angles <b>between them</b>.</li>
+      <li><b>AA:</b> equal angles. Two pairs are enough – the third follows from the sum $180^\circ$.</li>
+    </ul>
+  </div>
+  <div class="uwaga">In the SAS criterion the angle must lie between those sides. Two proportional sides and an angle “next to them” are not enough.</div>
+  <p>The most common sources of similarity: <b>parallel lines</b> (corresponding/alternate angles – <a href="tales.html">Thales</a>), <b>a common angle + a right angle</b> (<a href="trojkaty.html">altitude in a right triangle</a>), inscribed angles subtending the same arc.</p>
+
+  <h2 id="pola">2. Perimeters and areas of similar figures</h2>
+  <div class="wzor"><div class="tytul">Similar figures with scale $k$</div>
+    $$\frac{\text{Perim}_{\mathcal B}}{\text{Perim}_{\mathcal A}}=k$$
+    $$\frac{P_{\mathcal B}}{P_{\mathcal A}}=k^2$$
+    <dl><dt>$k$</dt><dd>all “lengths” scale the same way: altitudes, medians, diagonals, radii $R$ and $r$</dd>
+        <dt>$k^2$</dt><dd>is in the tables (“Areas of similar figures”). For a triangle: $\frac12(ka)(kh)=k^2\cdot\frac12ah$</dd></dl>
+  </div>
+  <div class="uwaga">When you know the ratio of the areas, the scale is its <b>square root</b>: areas $1:4$ mean sides $1:2$, not $1:4$.</div>
+
+  <h2 id="demo">3. Interactive: scale $k$</h2>
+  <div class="demo">
+    <p class="opis">Move the $k$ slider and drag the vertices and the centre $S$. Triangle $A'B'C'$ is made by “stretching” every point away from $S$ by a factor of $k$. The perimeter grows $k$ times, the area $k^2$ times.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="po-k" min="0.25" max="3" step="0.25" value="2"> <span id="po-k-v"></span></label>
+    </div>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+  <div class="demo">
+    <p class="opis">Why $k^2$? A triangle enlarged $k$ times can be cut into $k^2$ copies of the original (red). Change $k$ and the shape of the triangle.</p>
+    <canvas id="pk-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <label>$k$ <input type="range" id="pk-k" min="1" max="6" step="1" value="3"> <span id="pk-k-v"></span></label>
+    </div>
+    <div class="wynik" id="pk-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Triangle $ABC$ has sides $4$, $6$, $8$ and area $P$. Triangle $KLM$ is similar to it, and its shortest side has length $6$. Find the remaining sides of $KLM$, its perimeter and its area (in terms of $P$).</p>
+    <ol>
+      <li>The shortest corresponds to the shortest: $k=\frac64=\frac32$.</li>
+      <li>Sides: $6\cdot\frac32=9$, $8\cdot\frac32=12$. Perimeter: $18\cdot\frac32=27$.</li>
+      <li>Area: $k^2P=\frac94P$.</li>
+    </ol>
+    <p class="odp">Sides $6$, $9$, $12$; perimeter $27$; area $\frac94P$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">The areas of two similar triangles are $12$ and $75$. Find the ratio of their perimeters (larger to smaller).</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $k^2=\frac{75}{12}=\frac{25}{4}$, so <b>$k=\frac52$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Are the triangles with sides a) $3, 4, 6$ and $4.5;\ 6;\ 9$; b) $6, 8, 12$ and $9, 12, 16$ similar?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Arrange the sides in increasing order and divide corresponding ones. a) $\frac{4.5}{3}=\frac64=\frac96=1.5$ – <b>yes</b> (SSS). b) $\frac96=\frac{12}{8}=1.5$, but $\frac{16}{12}=\frac43$ – <b>no</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 5" data-odp-opis="lengths DE; BE"><span class="poziom">medium</span>
+      <div class="tresc">In right triangle $ABC$ ($|\angle C|=90^\circ$) $|AC|=6$, $|BC|=8$. On the hypotenuse a point $D$ is chosen so that $|BD|=4$, and the line perpendicular to $AB$ at $D$ meets $BC$ at point $E$. Find $|DE|$ and $|BE|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|AB|=10$. $\triangle BDE\sim\triangle BCA$ (AA: common angle $B$ and right angles at $D$ and $C$), so $\frac{|BD|}{|BC|}=\frac{|DE|}{|CA|}=\frac{|BE|}{|BA|}$, that is $\frac48=\frac{|DE|}{6}=\frac{|BE|}{10}$. <b>$|DE|=3$, $|BE|=5$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="4sqrt(2)"><span class="poziom">medium</span>
+      <div class="tresc">A triangle has base $12$ and the altitude to it equals $8$. A line parallel to the base divides it into two figures of equal areas. At what distance from the vertex opposite the base does this line lie?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The cut-off triangle is similar to the whole one (parallel lines) and has half its area: $k^2=\frac12$, $k=\frac{\sqrt2}{2}$. The altitude also scales by $k$: $8\cdot\frac{\sqrt2}2$. <b>$4\sqrt2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">In triangle $ABC$: $|AB|=9$, $|AC|=12$, $|BC|=10$. A point $D$ is chosen on side $AC$ so that $|AD|=6.75$. Show that $\triangle ABD\sim\triangle ACB$, and find $|BD|$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{|AD|}{|AB|}=\frac{6.75}{9}=\frac34$ and $\frac{|AB|}{|AC|}=\frac{9}{12}=\frac34$, and angle $A$ is common and lies between these sides – the SAS criterion. The correspondence is $A\to A$, $B\to C$, $D\to B$, so $\frac{|BD|}{|CB|}=\frac34$. <b>$|BD|=7.5$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">The perimeters of two similar triangles are $18$ and $30$, and the area of the larger one is $75$. Find the area of the smaller one.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The scale (smaller to larger) is $k=\frac{18}{30}=\frac35$, so $P=75\cdot\frac{9}{25}$. <b>$P=27$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li>Write similarity with the <b>correct order of vertices</b> and the name of the criterion (e.g. “AA: common angle $B$ and right angles”). Without justifying the criterion you lose a point.</li>
+    <li>Establish the correspondence of sides from the angles: the side opposite equal angles corresponds. Do not match “by eye” from the drawing.</li>
+    <li>Areas $\to$ scale: square root. Scale $\to$ areas: square. A typical mistake is mixing up these directions.</li>
+    <li>Cutting off with a line parallel to a side always gives a triangle similar to the original.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- pomocniki geometryczne (punkty to obiekty {x, y}) ---
+  const st = 180 / Math.PI;
+  const sr = (P, Q) => ({ x: (P.x + Q.x) / 2, y: (P.y + Q.y) / 2 });
+  // kąt QPR w wierzchołku P (radiany, 0..π)
+  // łuk kąta QPR w wierzchołku P (mniejszy z dwóch kątów), promień r
+  const lukKata = (g, P, Q, R, r, nr) => {
+    let u = Math.atan2(Q.y - P.y, Q.x - P.x), v = Math.atan2(R.y - P.y, R.x - P.x), d = v - u;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    if (d < 0) { u = v; d = -d; }
+    g.luk(P.x, P.y, r, u, u + d, nr, { wypelnij: 0.18 });
+  };
+  // znacznik kąta prostego w P między ramionami PQ i PR (bok kwadracika s)
+  // rzut prostokątny punktu P na prostą AB
+  const rzut = (P, A, B) => {
+    const dx = B.x - A.x, dy = B.y - A.y, t = ((P.x - A.x) * dx + (P.y - A.y) * dy) / (dx * dx + dy * dy || 1);
+    return { x: A.x + t * dx, y: A.y + t * dy };
+  };
+  // punkt przecięcia prostych AB i CD (null, gdy równoległe)
+  const przeciecie = (A, B, C, D) => {
+    const d = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
+    if (Math.abs(d) < 1e-12) return null;
+    const t = ((C.x - A.x) * (D.y - C.y) - (C.y - A.y) * (D.x - C.x)) / d;
+    return { x: A.x + t * (B.x - A.x), y: A.y + t * (B.y - A.y) };
+  };
+  // podpis punktu P odsunięty od punktu S (np. środka figury)
+  // ograniczenia przeciągania: prostokąt [-X, X] x [-Y, Y]; okrąg o środku S i promieniu r
+  const wPolu = (X, Y) => p => ({ x: Math.max(-X, Math.min(X, p.x)), y: Math.max(-Y, Math.min(Y, p.y)) });
+  const naOkregu = (S, r) => p => {
+    const d = Math.hypot(p.x - S.x, p.y - S.y) || 1;
+    return { x: S.x + (p.x - S.x) / d * r, y: S.y + (p.y - S.y) / d * r };
+  };
+  const stopnie = rad => ladnaTex(rad * st, 1) + "^\\circ";
+
+  // --- 3a. Skala k ---
+  const w1 = new Wykres($("po-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 5, rowneSkale: true });
+  const ogr = wPolu(4, 3);
+  const pt = w1.przeciagaj([{ x: -2, y: -1.5, ogranicz: ogr }, { x: 0.5, y: -1, ogranicz: ogr }, { x: -1, y: 0.8, ogranicz: ogr }, { x: -4, y: -3, ogranicz: ogr }], rysujPo);
+  const obwod = T => odl(T[0], T[1]) + odl(T[1], T[2]) + odl(T[2], T[0]);
+  const pole = T => Math.abs((T[1].x - T[0].x) * (T[2].y - T[0].y) - (T[1].y - T[0].y) * (T[2].x - T[0].x)) / 2;
+  function rysujPo() {
+    const k = +$("po-k").value, [A, B, C, S] = pt;
+    $("po-k-v").textContent = ladna(k);
+    const T = [A, B, C], T2 = T.map(P => ({ x: S.x + k * (P.x - S.x), y: S.y + k * (P.y - S.y) }));
+    const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 }, G2 = { x: S.x + k * (G.x - S.x), y: S.y + k * (G.y - S.y) };
+    w1.rysuj(g => {
+      T2.forEach(P => g.odcinek(S.x, S.y, P.x, P.y, 3));
+      g.wielokat(T2.map(P => [P.x, P.y]), 4, { wypelnij: 0.15 });
+      g.wielokat(T.map(P => [P.x, P.y]), 1, { wypelnij: 0.25 });
+      ["A", "B", "C"].forEach((s, i) => {
+        g.punkt(T[i].x, T[i].y, "", 2); etykieta(g, T[i], G, s, 2);
+        g.punkt(T2[i].x, T2[i].y, "", 4, { r: 3.5 }); etykieta(g, T2[i], G2, s + "'", 4);
+      });
+      g.punkt(S.x, S.y, "S", 3);
+    });
+    const o = obwod(T), p = pole(T);
+    if (p < 1e-6) { tex("po-wynik", "\\text{move the vertices apart}"); return; }
+    tex("po-wynik", `\\begin{aligned}\\text{Perim}'&=${ladnaTex(obwod(T2))}=${ladnaTex(k)}\\cdot${ladnaTex(o)}\\\\P'&=${ladnaTex(pole(T2))}=${ladnaTex(k)}^2\\cdot${ladnaTex(p)}\\end{aligned}`);
+  }
+  $("po-k").addEventListener("input", rysujPo);
+  rysujPo();
+
+  // --- 3b. k^2 kopii ---
+  const w2 = new Wykres($("pk-plot"), { xmin: -4.5, xmax: 4.5, ymin: -3, ymax: 3.5, rowneSkale: true });
+  const ogr2 = wPolu(4.2, 3.2);
+  const pq = w2.przeciagaj([{ x: -3.5, y: -2.5, ogranicz: ogr2 }, { x: 3.5, y: -2.5, ogranicz: ogr2 }, { x: -0.5, y: 3, ogranicz: ogr2 }], rysujPk);
+  function rysujPk() {
+    const n = +$("pk-k").value, [A, B, C] = pq;
+    $("pk-k-v").textContent = n;
+    const V = (i, j) => [A.x + (i * (B.x - A.x) + j * (C.x - A.x)) / n, A.y + (i * (B.y - A.y) + j * (C.y - A.y)) / n];
+    let ile = 0;
+    w2.rysuj(g => {
+      for (let i = 0; i < n; i++) for (let j = 0; i + j < n; j++) {
+        g.wielokat([V(i, j), V(i + 1, j), V(i, j + 1)], i + j === 0 ? 2 : 1, { wypelnij: i + j === 0 ? 0.45 : 0.15, grubosc: 1 }); ile++;
+        if (i + j < n - 1) { g.wielokat([V(i + 1, j), V(i + 1, j + 1), V(i, j + 1)], 3, { wypelnij: 0.15, grubosc: 1 }); ile++; }
+      }
+      g.wielokat([[A.x, A.y], [B.x, B.y], [C.x, C.y]], 1, { grubosc: 2.5 });
+      const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+      [[A, "A"], [B, "B"], [C, "C"]].forEach(([P, s]) => { g.punkt(P.x, P.y, "", 2); etykieta(g, P, G, s, 2); });
+    });
+    tex("pk-wynik", `k=${n}:\\quad ${ile}\\ \\text{copies}=${n}^2,\\qquad P_{ABC}=${n * n}\\cdot P_{\\text{red}}`);
+  }
+  $("pk-k").addEventListener("input", rysujPk);
+  rysujPk();
+});
+</script>
+</body>
+</html>

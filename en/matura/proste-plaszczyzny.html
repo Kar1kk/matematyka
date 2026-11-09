@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lines and planes in space</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/bryly3d.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Lines and planes in space</h1>
+  <p class="lead">In a plane two lines either intersect or are parallel. In space there is a third possibility: <b>skew</b> lines, which pass by each other. They can even be perpendicular without having a common point.</p>
+  <p class="wymagania">X.1 (introduction to X.2, X.R.1)</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="proste">1. Two lines</h2>
+  <table class="tabela">
+    <tr><th>position</th><th>common points</th><th>common plane</th></tr>
+    <tr><td>intersecting</td><td>exactly 1</td><td>yes</td></tr>
+    <tr><td>parallel</td><td>0 (or they coincide)</td><td>yes</td></tr>
+    <tr><td><b>skew</b></td><td>0</td><td><b>no</b></td></tr>
+  </table>
+  <div class="definicja"><b>The angle between skew lines</b> Through any point of one line draw a line parallel to the other. The angle between these intersecting lines (from the interval $(0^\circ, 90^\circ]$) is the angle between the skew lines. When it equals $90^\circ$, the lines are <b>perpendicular</b>, even though they do not intersect.</div>
+  <div class="uwaga">“Perpendicular” in space does not mean “intersecting at a right angle”. The edges $AB$ and $CG$ of a cube are perpendicular and skew.</div>
+
+  <h2 id="plaszczyzny">2. A line and a plane, two planes</h2>
+  <div class="dwie">
+    <div><p><b>A line and a plane:</b></p><ul>
+      <li>the line <b>lies</b> in the plane (infinitely many common points),</li>
+      <li>the line is <b>parallel</b> to the plane (no common points),</li>
+      <li>the line <b>pierces</b> the plane (1 point), a special case: it is <b>perpendicular</b> to it.</li></ul></div>
+    <div><p><b>Two planes:</b> are parallel (or coincide) or intersect along a line.</p>
+      <p><b>A plane is determined by:</b> 3 non-collinear points, a line and a point outside it, two intersecting lines, two parallel lines.</p></div>
+  </div>
+  <div class="definicja"><b>A line perpendicular to a plane</b> is a line perpendicular to <b>every</b> line of that plane. It is enough to check two intersecting lines of the plane: this is a theorem from the <a href="trzy-prostopadle.html">topic on three perpendiculars</a>.</div>
+
+  <h2 id="demo">3. Interactive: positions in a cube</h2>
+  <div class="demo">
+    <p class="opis">Choose a line (red) and a second line or a plane (purple). Rotate the cube with a finger or the mouse. For skew lines the green dashed line is a parallel copy that shows the angle.</p>
+    <canvas id="pp-plot"></canvas>
+    <div class="sterowanie">
+      <label>line <select id="pp-a"></select></label>
+      <label>and <select id="pp-b"></select></label>
+      <button id="pp-los" class="wtorny">Random pair</button>
+    </div>
+    <div class="wynik" id="pp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>In the cube $ABCDEFGH$ (lower base $ABCD$, $E$ above $A$) find the angle between the lines $AC$ and $BG$.</p>
+    <ol>
+      <li>$AC$ lies in the lower base, $BG$ in the face $BCGF$; they are not parallel and have no common point, so they are <b>skew</b>.</li>
+      <li>Translate $BG$ parallel to the point $A$: $BG\parallel AH$ (diagonals of opposite faces).</li>
+      <li>Triangle $ACH$ has sides that are face diagonals, i.e. $a\sqrt2$: it is equilateral.</li>
+    </ol>
+    <p class="odp">The angle between $AC$ and $BG$ is $60^\circ$.</p>
+    <p>Set in the demo: line $AC$, and $BG$.</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Determine the relative position of the lines in the cube $ABCDEFGH$: a) $AB$ and $GH$, b) $AB$ and $CG$, c) $AB$ and $BF$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) $GH\parallel CD\parallel AB$: <b>parallel</b>. b) No common point, different directions: <b>skew, perpendicular</b>. c) Common point $B$: <b>intersecting, perpendicular</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">How many edges of a cube are skew to a given edge?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Of the $12$ edges: the edge itself ($1$), the parallel ones ($3$), the ones sharing a vertex with it ($4$, $2$ at each end). What remains is $12-1-3-4$. <b>4 edges</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Find the angle between the lines $AB$ and $CH$ in the cube $ABCDEFGH$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The lines are skew. $AB\parallel DC$, so the required angle is the angle $DCH$ in the face $CDHG$. $CH$ is a diagonal of the square, so it forms an angle of <b>$45^\circ$</b> with the side.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Determine the position relative to the plane $ABC$ of: a) the line $EG$, b) the line $AG$, c) the line $CG$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) $EG\parallel AC$, and $AC$ lies in $ABC$: <b>parallel</b>. b) $A$ lies in the plane, $G$ does not: <b>pierces at the point $A$</b> (not perpendicularly). c) $CG\perp AB$ and $CG\perp BC$: <b>perpendicular</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that in a regular tetrahedron $ABCD$ the edges $AB$ and $CD$ are perpendicular.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Let $M$ be the midpoint of $AB$. Triangles $ABC$ and $ABD$ are equilateral, so the medians $CM$ and $DM$ are altitudes: $CM\perp AB$, $DM\perp AB$. The line $AB$ is perpendicular to two intersecting lines $CM$, $DM$ of the plane $CDM$, so it is perpendicular to the whole plane $CDM$, and therefore to the line $CD$ lying in it. <b>$AB\perp CD$</b> (skew perpendicular lines).
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The angle between skew lines:</b> always translate one of them parallel (e.g. an edge to the opposite face) and compute the angle in a triangle.</li>
+    <li>The angle between lines has a measure in $(0^\circ,90^\circ]$. If the law of cosines gives an obtuse angle, the answer is $180^\circ$ minus that angle.</li>
+    <li>Justify the perpendicularity of a line to a plane with <b>two intersecting lines</b> of that plane, not one.</li>
+    <li>Drawing: hidden edges as dashed lines, vertex labels as in the statement of the task.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const P = { A: [0, 0, 0], B: [2, 0, 0], C: [2, 2, 0], D: [0, 2, 0], E: [0, 0, 2], F: [2, 0, 2], G: [2, 2, 2], H: [0, 2, 2] };
+  const W = Object.values(P), SC = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]];
+  const PROSTE = ["AB", "BC", "CD", "DA", "EF", "FG", "GH", "HE", "AE", "BF", "CG", "DH", "AC", "BD", "EG", "AF", "BG", "CH", "AH", "AG", "BH"];
+  const PLASZ = ["ABCD", "EFGH", "ABFE", "BCGF", "ACGE", "BDE"];
+  const opcja = (sel, t, v) => { const o = document.createElement("option"); o.value = v; o.textContent = t; sel.appendChild(o); };
+  PROSTE.forEach(s => { opcja($("pp-a"), s, s); opcja($("pp-b"), "line " + s, s); });
+  PLASZ.forEach(s => opcja($("pp-b"), "plane " + s, s));
+  $("pp-a").value = "AC"; $("pp-b").value = "BG";
+  const { odj, dod, wek, il, dl, razy } = V3;
+  const st = a => Math.acos(Math.min(1, Math.abs(a))) * 180 / Math.PI;
+  const s3 = new Scena3D($("pp-plot"), { zakres: 2.4, srodek: [1, 1, 1] });
+
+  function rysuj() {
+    const a = $("pp-a").value, b = $("pp-b").value;
+    const p1 = P[a[0]], d1 = odj(P[a[1]], p1);
+    let opis = "", rys = null, pkt = null, kopia = null;
+    if (b.length === 2) {
+      const q1 = P[b[0]], d2 = odj(P[b[1]], q1), x = wek(d1, d2), kat = st(il(d1, d2) / dl(d1) / dl(d2));
+      if (dl(x) < 1e-9) opis = dl(wek(odj(q1, p1), d1)) < 1e-9 ? "\\text{the same line}" : "\\text{parallel}";
+      else if (Math.abs(il(odj(q1, p1), x)) < 1e-9) {
+        opis = "\\text{intersecting}";
+        pkt = dod(p1, razy(d1, il(wek(odj(q1, p1), d2), x) / il(x, x)));
+      } else { opis = "\\text{skew}"; kopia = [p1, dod(p1, d2)]; }
+      if (dl(x) > 1e-9) opis += kat > 89.99 ? ",\\ \\text{perpendicular}" : `,\\ \\text{angle } ${ladnaTex(kat, 1)}^\\circ`;
+      rys = g => g.odcinek(V3.lerp(q1, P[b[1]], -0.3), V3.lerp(q1, P[b[1]], 1.3), 4, { grubosc: 3 });
+    } else {
+      const pts = b.split("").map(c => P[c]), n = wek(odj(pts[1], pts[0]), odj(pts[2], pts[0])), dn = il(d1, n);
+      if (Math.abs(dn) < 1e-9) opis = Math.abs(il(odj(p1, pts[0]), n)) < 1e-9 ? "\\text{the line lies in the plane}" : "\\text{the line is parallel to the plane}";
+      else {
+        const kat = 90 - st(dn / dl(d1) / dl(n));
+        pkt = dod(p1, razy(d1, il(odj(pts[0], p1), n) / dn));
+        opis = kat > 89.99 ? "\\text{the line is perpendicular to the plane}" : `\\text{the line pierces the plane at an angle } ${ladnaTex(kat, 1)}^\\circ`;
+      }
+      rys = g => g.wielokat(pts, 4, { wypelnij: 0.25, grubosc: 1.5 });
+    }
+    s3.rysuj(g => {
+      g.bryla(W, SC, 1, { wypelnij: 0.05 });
+      rys(g);
+      g.odcinek(V3.lerp(p1, P[a[1]], -0.3), V3.lerp(p1, P[a[1]], 1.3), 2, { grubosc: 3 });
+      if (kopia) { g.odcinek(kopia[0], kopia[1], 3, { przerywana: true, grubosc: 2 }); g.kat(p1, P[a[1]], kopia[1], 0.45, 3); }
+      if (pkt) g.punkt(pkt, "", 2, { r: 5 });
+      Object.keys(P).forEach((k, i) => g.tekst(W[i], k, "--muted", { dx: 5, dy: -5, gruby: true }));
+    });
+    tex("pp-wynik", `${a},\\ ${b}:\\ ${opis}`);
+  }
+  $("pp-a").addEventListener("change", rysuj); $("pp-b").addEventListener("change", rysuj);
+  $("pp-los").addEventListener("click", () => {
+    $("pp-a").value = PROSTE[Math.floor(Math.random() * PROSTE.length)];
+    const wsz = PROSTE.concat(PLASZ); $("pp-b").value = wsz[Math.floor(Math.random() * wsz.length)]; rysuj();
+  });
+  rysuj();
+});
+</script>
+</body>
+</html>

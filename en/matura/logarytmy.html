@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logarithms (with change of base)</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Logarithms (with change of base)</h1>
+  <p class="lead">$\log_a b$ answers the question: <b>how many times must you multiply $a$ by itself to get $b$</b>? $\log_2 8=3$, because $2\cdot2\cdot2=8$. A logarithm turns multiplication into addition — hence all the formulas.</p>
+  <p class="wymagania">I.1, I.9, I.R (change of base) · proof: properties of logarithms</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Definition</h2>
+  <div class="wzor">
+    <div class="tytul">Logarithm <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\log_a b=c\iff a^c=b$$
+    $$a^{\log_a b}=b$$
+    <dl><dt>conditions</dt><dd>$a&gt;0$, $a\ne1$, $b&gt;0$</dd>
+        <dt>$\lg b$</dt><dd>$=\log b=\log_{10}b$ <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></dd>
+        <dt>always</dt><dd>$\log_a1=0$, $\log_a a=1$, $\log_a a^c=c$</dd></dl>
+  </div>
+  <div class="uwaga">Where do the conditions come from? $a=1$: $1^c=1$ for every $c$, so “how many times” makes no sense. $a&lt;0$: $(-2)^{1/2}$ does not exist. $b\le0$: $a^c&gt;0$ always, so you cannot get $b\le0$.</div>
+
+  <h2 id="licznik">2. Interactive: a multiplication counter</h2>
+  <div class="demo">
+    <p class="opis">The vertical axis is logarithmic: each multiplication by $a$ is a step of the same height. The number of steps up to the level $b$ is $\log_a b$; the last, green step may be fractional. Choose $a&lt;1$ or $b&lt;1$: the steps go left or down.</p>
+    <canvas id="lm-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="lm-a" min="0" max="7" step="1" value="2"> <span id="lm-a-v"></span></label>
+      <label>$b$ <input type="range" id="lm-b" min="0" max="29" step="1" value="10"> <span id="lm-b-v"></span></label>
+      <button id="lm-start">▶ Multiply</button>
+    </div>
+    <div class="wynik" id="lm-wynik"></div>
+  </div>
+
+  <h2 id="wzory">3. Formulas and proof</h2>
+  <div class="wzor">
+    <div class="tytul">Operations <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\log_a(xy)=\log_a x+\log_a y$$
+    $$\log_a\frac xy=\log_a x-\log_a y$$
+    $$\log_a x^r=r\log_a x$$
+    <dl><dt>assumptions</dt><dd>$a&gt;0$, $a\ne1$, $x,y&gt;0$, $r\in\R$</dd></dl>
+  </div>
+  <div class="twierdzenie"><b>Theorem</b> The three formulas above are true.
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p>Let $u=\log_a x$ and $v=\log_a y$. By definition $a^u=x$, $a^v=y$. We use the laws of powers:</p>
+      $$xy=a^u a^v=a^{u+v}$$
+      $$\frac xy=\frac{a^u}{a^v}=a^{u-v}$$
+      $$x^r=(a^u)^r=a^{ru}$$
+      <p>By the definition of a logarithm (the exponent to which we raise $a$): $\log_a(xy)=u+v$, $\log_a\frac xy=u-v$, $\log_a x^r=ru$. These are exactly the three formulas. $\blacksquare$</p>
+    </div></details></div>
+  <div class="wzor">
+    <div class="tytul">Change of base, extended level <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\log_b c=\frac{\log_a c}{\log_a b},\qquad \log_a b=\frac{1}{\log_b a}$$
+    <dl><dt>assumptions</dt><dd>$a,b&gt;0$, $a,b\ne1$, $c&gt;0$</dd>
+        <dt>corollary</dt><dd>$\log_{a^k}b=\frac1k\log_a b$ — not on the formula sheet, derive it from the change of base</dd>
+        <dt>proof</dt><dd>on the page <a href="funkcja-wykladnicza-logarytmiczna.html">exponential and logarithmic functions</a> (graphs of $\log_a x$ are there too)</dd></dl>
+  </div>
+
+  <h2 id="linijka">4. Interactive: a logarithm turns multiplication into addition</h2>
+  <div class="demo">
+    <p class="opis">On a logarithmic axis the number $x$ lies at distance $\lg x$ from one. Drag $x$ and $y$: the segment $\lg y$ attached at the end of $\lg x$ lands exactly on $xy$. This is how the slide rule worked. For $y&lt;1$ the segment goes left (division).</p>
+    <canvas id="lo-plot" style="height:220px"></canvas>
+    <div class="wynik" id="lo-wynik"></div>
+  </div>
+
+  <h2 id="porownywanie">5. Computing and comparing</h2>
+  <ul>
+    <li><b>Common base:</b> $\log_{\sqrt2}8=c\iff (2^{1/2})^c=2^3\iff c=6$; $\;\log_{1/3}9=-2$.</li>
+    <li><b>Estimating with integers:</b> $4&lt;5&lt;8$, so $2&lt;\log_2 5&lt;3$; $\;3&lt;8&lt;9$, so $1&lt;\log_3 8&lt;2$. Hence $\log_2 5&gt;\log_3 8$.</li>
+    <li><b>The same base:</b> for $a&gt;1$ the larger number has the larger logarithm, for $0&lt;a&lt;1$ the other way round: $\log_{0.5}3&gt;\log_{0.5}5$.</li>
+  </ul>
+
+  <h2 id="przyklad">6. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Compute $\log_3 18-\log_3 2+\log_2\sqrt[3]{4}$.</p>
+    <ol>
+      <li>Difference of logarithms: $\log_3\frac{18}{2}=\log_3 9=2$.</li>
+      <li>$\sqrt[3]4=2^{2/3}$, so $\log_2 2^{2/3}=\frac23$.</li>
+    </ol>
+    <p class="odp">$2+\frac23=\frac83$</p>
+  </div>
+  <div class="przyklad">
+    <p>(R) Compute $\log_4 27\cdot\log_9 2$.</p>
+    <ol>
+      <li>$\log_4 27=\log_{2^2}3^3=\frac32\log_2 3$, $\;\log_9 2=\frac12\log_3 2$.</li>
+      <li>$\log_2 3\cdot\log_3 2=1$ (change of base).</li>
+    </ol>
+    <p class="odp">$\frac32\cdot\frac12=\frac34$</p>
+  </div>
+
+  <h2 id="zadania">7. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="1/2"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\log_2\frac18+\log_5\sqrt5+\log1000$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $-3+\frac12+3=$ <b>$\frac12$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (1; 2) u (2; 5)" data-odp-opis="set of x"><span class="poziom">easy</span>
+      <div class="tresc">For which $x$ does $\log_{x-1}(5-x)$ exist?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x-1&gt;0$, $x-1\ne1$, $5-x&gt;0$, i.e. $x&gt;1$, $x\ne2$, $x&lt;5$. <b>$x\in(1,2)\cup(2,5)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 25" data-odp-opis="a); b)"><span class="poziom">medium</span>
+      <div class="tresc">Compute: a) $\log_6 9+2\log_6 2$, b) $9^{\log_3 5}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        a) $\log_6 9+\log_6 4=\log_6 36=$ <b>$2$</b>. b) $9^{\log_3 5}=(3^{\log_3 5})^2=5^2=$ <b>$25$</b>.
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Which number is greater: $\log_3 10$ or $\log_4 15$?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $10&gt;9=3^2$, so $\log_3 10&gt;2$; $15&lt;16=4^2$, so $\log_4 15&lt;2$. <b>$\log_3 10&gt;\log_4 15$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">(R) It is known that $\log_2 3=a$. Express $\log_{12}18$ in terms of $a$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\log_{12}18=\frac{\log_2 18}{\log_2 12}=\frac{\log_2(2\cdot3^2)}{\log_2(2^2\cdot3)}=$ <b>$\frac{1+2a}{2+a}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">(R) Show that $\log_2 3\cdot\log_3 4\cdot\log_4 5\cdot\ldots\cdot\log_{31}32=5$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Change to base $2$: $\log_k(k+1)=\frac{\log_2(k+1)}{\log_2 k}$. The product cancels “telescopically”:
+        $$\frac{\log_2 3}{\log_2 2}\cdot\frac{\log_2 4}{\log_2 3}\cdots\frac{\log_2 32}{\log_2 31}$$
+        What remains is $\frac{\log_2 32}{\log_2 2}=$ <b>$5$</b>, which completes the proof.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">8. On the exam</h2>
+  <ul>
+    <li><b>Domain first:</b> the base $&gt;0$ and $\ne1$, the argument $&gt;0$. Missing assumptions = a lost point.</li>
+    <li><b>There is no formula</b> for $\log_a(x+y)$. $\;\log_a(x+y)\ne\log_a x+\log_a y$.</li>
+    <li><b>Trap:</b> $\log_a x^2=2\log_a|x|$, not $2\log_a x$, when $x$ may be negative.</li>
+    <li><b>Comparing:</b> estimate between consecutive integers; for a base in $(0,1)$ reverse the inequality.</li>
+    <li>The formulas for logarithms and change of base are on the formula sheet, but you must be able to reproduce the <b>proof</b> of the formula for the logarithm of a product.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 2. Licznik mnożeń ---
+  const A = [0.5, 1.5, 2, 3, 4, 5, 8, 10];
+  const B = [0.25, 0.5, 1, 2, 3, 4, 5, 8, 9, 10, 16, 20, 25, 27, 32, 50, 64, 81, 100, 125, 128, 243, 256, 500, 512, 625, 1000, 1024, 2048, 4096];
+  const w1 = new Wykres($("lm-plot"), { xmin: -1, xmax: 6, ymin: -1.3, ymax: 4, formatY: v => ladna(10 ** v, 3) });
+  let stopLm = null;
+  function klatkaLm(t) {
+    const a = A[+$("lm-a").value], b = B[+$("lm-b").value];
+    $("lm-a-v").textContent = ladna(a); $("lm-b-v").textContent = ladna(b);
+    const L = Math.log10(a), c = Math.log10(b) / L;
+    const cr = Math.abs(c - Math.round(c)) < 1e-9 ? Math.round(c) : c;
+    const s = cr < 0 ? -1 : 1, J = Math.floor(Math.abs(cr) + 1e-9);
+    const lo = Math.min(0, Math.floor(cr)) - 1, hi = Math.max(0, Math.ceil(cr)) + 1;
+    const xmin = Math.min(lo, hi - 7), xmax = Math.max(hi, lo + 7), szer = xmax - xmin;
+    w1.zakres({ xmin, xmax, krokX: szer > 24 ? 5 : szer > 12 ? 2 : 1 });
+    const postep = t * Math.abs(cr); // ile kroków już narysowanych
+    w1.rysuj(g => {
+      g.odcinek(g.z.xmin, Math.log10(b), g.z.xmax, Math.log10(b), 2, true);
+      g.tekst(g.z.xmin, Math.log10(b), "b = " + ladna(b), 2, { dx: 4, dy: -6, gruby: true });
+      g.funkcja(x => x * L, 3, { przerywana: true });
+      for (let j = 0; j < J && j < postep; j++) {
+        const x0 = s * j, y0 = s * j * L, x1 = s * (j + 1), y1 = s * (j + 1) * L;
+        g.odcinek(x0, y0, x1, y0, 1, false); g.odcinek(x1, y0, x1, y1, 1, false);
+        if (J <= 12) g.tekst((x0 + x1) / 2, y0, s > 0 ? "·" + ladna(a) : ":" + ladna(a), 1, { dy: L * s > 0 ? 14 : -6, wyrownanie: "center", rozmiar: 11 });
+      }
+      const ulamek = Math.abs(cr) - J;
+      if (ulamek > 1e-9 && postep > J) {
+        const x0 = s * J, y0 = s * J * L, x1 = x0 + s * ulamek * Math.min(1, postep - J), y1 = x1 * L;
+        g.odcinek(x0, y0, x1, y0, 3, false); g.odcinek(x1, y0, x1, y1, 3, false);
+      }
+      for (let j = 0; j <= J && j <= postep; j++) if (J <= 10) g.punkt(s * j, s * j * L, ladna(a ** (s * j), 3), 1, { r: 3.5 });
+      if (t >= 1) { g.odcinek(cr, 0, cr, Math.log10(b), 2, true); g.punkt(cr, 0, "c", 2); }
+    });
+    const cTex = Number.isInteger(cr) ? String(cr) : "\\approx" + ladnaTex(cr);
+    const kroki = Number.isInteger(cr) ? `\\text{steps: } ${Math.abs(cr)}` : `\\text{full steps: } ${J}\\text{, fraction: } ${ladnaTex(Math.abs(cr) - J)}`;
+    tex("lm-wynik", `c=\\log_{${ladnaTex(a)}} ${ladnaTex(b)}${Number.isInteger(cr) ? "=" : ""}${cTex}\\quad(${kroki})`);
+  }
+  $("lm-start").addEventListener("click", () => { if (stopLm) stopLm(); stopLm = animuj(2500, klatkaLm); });
+  ["lm-a", "lm-b"].forEach(id => $(id).addEventListener("input", () => { if (stopLm) stopLm(); klatkaLm(1); }));
+  klatkaLm(1);
+
+  // --- 4. Suwak logarytmiczny ---
+  const LADNE = [1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9];
+  const przyciagnij = (pmin, pmax) => p => {
+    const pos = Math.max(pmin, Math.min(pmax, p.x));
+    let best = 0, bd = Infinity;
+    for (let d = -1; d <= 2; d++) LADNE.forEach(k => { const q = Math.log10(k * 10 ** d); if (Math.abs(q - pos) < bd) { bd = Math.abs(q - pos); best = q; } });
+    return { x: best, y: 0 };
+  };
+  const w2 = new Wykres($("lo-plot"), { xmin: -1.2, xmax: 3.5, ymin: -0.8, ymax: 1.6, siatka: false, osie: false });
+  const pk = w2.przeciagaj([
+    { x: Math.log10(4), y: 0, ogranicz: p => przyciagnij(Math.max(-1, -1.1 - pk[1].x), 2)(p) },
+    { x: Math.log10(25), y: 0, ogranicz: p => przyciagnij(Math.max(-1, -1.1 - pk[0].x), 1.31)(p) },
+  ], rysujLo);
+  function rysujLo() {
+    const lx = pk[0].x, ly = pk[1].x;
+    const x = +(10 ** lx).toPrecision(2), y = +(10 ** ly).toPrecision(2), xy = +(x * y).toPrecision(4);
+    w2.rysuj(g => {
+      const OS = "--plot-axis";
+      g.odcinek(-1.2, 0, 3.5, 0, OS, false);
+      for (let d = -1; d <= 3; d++) for (let k = 1; k <= 9; k++) {
+        const q = Math.log10(k * 10 ** d);
+        if (q > 3.5) continue;
+        g.odcinek(q, 0, q, k === 1 ? 0.14 : 0.07, OS, false);
+        if (k === 1 || (k === 2 && d < 3) || (k === 5 && d < 2)) g.tekst(q, 0, ladna(k * 10 ** d), OS, { dy: 16, wyrownanie: "center", rozmiar: k === 1 ? 12 : 10 });
+      }
+      g.strzalka(0, 0.55, lx, 0.55, 1, "");
+      g.tekst(lx / 2, 0.55, "lg x", 1, { dy: -8, wyrownanie: "center", gruby: true });
+      g.strzalka(lx, 0.55, lx + ly, 0.55, 4, "");
+      g.tekst(lx + ly / 2, 0.55, "lg y", 4, { dy: 22, wyrownanie: "center", gruby: true });
+      g.odcinek(lx + ly, 0.55, lx + ly, 0, 2, true);
+      g.odcinek(0, 0, 0, 0.7, 3, false);
+      g.punkt(lx + ly, 0, "", 2);
+      g.tekst(lx + ly, 0.55, "xy = " + ladna(xy), 2, { dy: -24, wyrownanie: "center", gruby: true });
+      g.punkt(lx, 0, "", 1); g.punkt(ly, 0, "", 4);
+      g.tekst(lx, 0, "x", 1, { dy: -10, dx: -10, gruby: true }); g.tekst(ly, 0, "y", 4, { dy: -10, dx: -10, gruby: true });
+    });
+    tex("lo-wynik", `\\lg ${ladnaTex(x)}+\\lg ${ladnaTex(y)}\\approx${ladnaTex(lx, 3)}${znakTex(ly, 3)}=${ladnaTex(lx + ly, 3)}\\approx\\lg ${ladnaTex(xy)}`);
+  }
+  rysujLo();
+});
+</script>
+</body>
+</html>

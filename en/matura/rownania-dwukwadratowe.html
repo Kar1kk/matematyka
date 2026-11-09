@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Biquadratic equations and equations reducible to quadratics</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Biquadratic equations and equations reducible to quadratics</h1>
+  <p class="lead">$ax^4+bx^2+c=0$ is a quadratic equation in disguise: substitute $t=x^2$. Each $t&gt;0$ gives two solutions $x=\pm\sqrt t$, $t=0$ gives one, and $t&lt;0$ gives none.</p>
+  <p class="wymagania">III.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="metoda">1. The substitution method</h2>
+  <div class="wzor">
+    <div class="tytul">The biquadratic equation</div>
+    $$ax^4+bx^2+c=0,\quad a\neq0$$
+    $$t=x^2,\ t\ge0:\quad at^2+bt+c=0$$
+    <dl><dt>$t\ge0$</dt><dd>the substitution condition: a square is not negative</dd>
+        <dt>going back</dt><dd>for each admissible $t$: $x^2=t$</dd></dl>
+  </div>
+  <table class="tabela">
+    <tr><th>Roots in $t$</th><th>Solutions in $x$</th></tr>
+    <tr><td>two distinct positive</td><td>4</td></tr>
+    <tr><td>one positive, one negative</td><td>2</td></tr>
+    <tr><td>one positive double</td><td>2</td></tr>
+    <tr><td>$0$ and a positive one</td><td>3</td></tr>
+    <tr><td>$0$ and a negative one / double zero</td><td>1</td></tr>
+    <tr><td>both negative / none</td><td>0</td></tr>
+  </table>
+  <p><b>Other substitutions</b> (the same idea: a repeated “block”):</p>
+  <ul>
+    <li>$x^6-7x^3-8=0$: $t=x^3$ (here without the condition $t\ge0$, because each $t$ gives one $x=\sqrt[3]{t}$).</li>
+    <li>$(x^2+x)^2-8(x^2+x)+12=0$: $t=x^2+x$.</li>
+    <li>$(x-1)(x-2)(x-3)(x-4)=24$: group as $(x-1)(x-4)\cdot(x-2)(x-3)$ $=(x^2-5x+4)(x^2-5x+6)$, then $t=x^2-5x$.</li>
+  </ul>
+  <details class="rozwin"><summary>Finishing the last example</summary><div>
+    <p>$(t+4)(t+6)=24 \iff t^2+10t=0 \iff t=0$ or $t=-10$. $x^2-5x=0$ gives $x\in\{0,5\}$; $x^2-5x+10=0$ has $\Delta=-15&lt;0$. Answer: $x\in\{0,5\}$.</p>
+  </div></details>
+
+  <h2 id="demo">2. Interactive: the $t$ axis and the $x$ axis</h2>
+  <div class="demo">
+    <p class="opis">Left: the parabola $y=t^2+bt+c$; the region $t&lt;0$ is forbidden (shaded). Right: $y=x^4+bx^2+c$. Each green root $t&gt;0$ gives two roots $\pm\sqrt t$ on the right. Set $c=0$ and see the root $t=0$.</p>
+    <div class="dwie">
+      <canvas id="dk-t" style="height:300px"></canvas>
+      <canvas id="dk-x" style="height:300px"></canvas>
+    </div>
+    <div class="sterowanie">
+      <label>$b$ <input type="range" id="dk-b" min="-6" max="6" step="0.5" value="-5"> <span id="dk-b-v"></span></label>
+      <label>$c$ <input type="range" id="dk-c" min="-5" max="6" step="0.5" value="4"> <span id="dk-c-v"></span></label>
+    </div>
+    <div class="wynik" id="dk-wynik"></div>
+  </div>
+
+  <h2 id="zginanie">3. Animation: $t=x^2$ “bends” the axis</h2>
+  <div class="demo">
+    <p class="opis">We take the graph in the variable $t$ (parameters $b$, $c$ from the demo above). Every point with $t\ge0$ splits in two and travels to $x=\pm\sqrt t$. The part with $t&lt;0$ disappears: no $x$ reaches it. This is how the graph $y=x^4+bx^2+c$ arises.</p>
+    <canvas id="zg-plot"></canvas>
+    <div class="sterowanie">
+      <button id="zg-start">▶ Play</button>
+      <label>stage <input type="range" id="zg-l" min="0" max="1" step="0.01" value="0"></label>
+    </div>
+    <div class="wynik" id="zg-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Solve the equation $x^4-5x^2+4=0$.</p>
+    <ol>
+      <li>$t=x^2\ge0$: $t^2-5t+4=0$, $\Delta=9$, $t=1$ or $t=4$. Both positive.</li>
+      <li>$x^2=1$ gives $x=\pm1$; $\;x^2=4$ gives $x=\pm2$.</li>
+    </ol>
+    <p class="odp">$x\in\{-2,-1,1,2\}$</p>
+    <p>This is exactly the demo's starting setting ($b=-5$, $c=4$).</p>
+  </div>
+  <div class="przyklad">
+    <p>Solve the equation $x^4+3x^2-4=0$.</p>
+    <ol>
+      <li>$t^2+3t-4=0 \iff (t+4)(t-1)=0$, so $t=1$ or $t=-4$.</li>
+      <li>$t=-4&lt;0$ is rejected. $x^2=1$.</li>
+    </ol>
+    <p class="odp">$x\in\{-1,1\}$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="-3; -2; 2; 3" data-odp-opis="solutions x"><span class="poziom">easy</span>
+      <div class="tresc">Solve the equation $x^4-13x^2+36=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $t^2-13t+36=0$, $t=4$ or $t=9$. <b>$x\in\{-3,-2,2,3\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1; 1" data-odp-opis="solutions x"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $2x^4+x^2-3=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2t^2+t-3=0$, $\Delta=25$, $t=1$ or $t=-\frac32$ (rejected). <b>$x\in\{-1,1\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-1; 2" data-odp-opis="solutions x"><span class="poziom">medium</span>
+      <div class="tresc">Solve the equation $x^6-7x^3-8=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $t=x^3$: $t^2-7t-8=(t-8)(t+1)=0$. $x^3=8$ or $x^3=-1$. <b>$x\in\{-1,2\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: &lt;-3; -1&gt; u &lt;1; 3&gt;"><span class="poziom">medium</span>
+      <div class="tresc">Solve the inequality $x^4-10x^2+9\le0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $(x^2-1)(x^2-9)\le0 \iff 1\le x^2\le9 \iff 1\le|x|\le3$.
+        <b>$x\in[-3,-1]\cup[1,3]$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-3; -2; 1; 2" data-odp-opis="solutions x"><span class="poziom">exam-level</span>
+      <div class="tresc">Solve the equation $(x^2+x)^2-8(x^2+x)+12=0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $t=x^2+x$: $t^2-8t+12=0$, $t=2$ or $t=6$.
+        $x^2+x-2=0$: $x=1$, $x=-2$. $\;x^2+x-6=0$: $x=2$, $x=-3$.
+        <b>$x\in\{-3,-2,1,2\}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="przedzial: (2; oo)" data-odp-opis="set of m"><span class="poziom">exam-level</span>
+      <div class="tresc">For which $m$ does the equation $x^4-2(m+1)x^2+m+7=0$ have four distinct solutions?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        We need two distinct positive $t$ for $t^2-2(m+1)t+m+7=0$:
+        $\frac\Delta4=(m+3)(m-2)&gt;0$, $t_1t_2=m+7&gt;0$, $t_1+t_2=2(m+1)&gt;0$.
+        <b>$m\in(2,\infty)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>Write the condition $t\ge0$</b> with $t=x^2$ and explicitly reject negative $t$ (with the comment “contradiction”).</li>
+    <li><b>Do not stop at $t$:</b> the answer is in $x$. A common mistake is giving the value of $t$.</li>
+    <li>Translate a question about the <b>number of solutions</b> with a parameter into the signs of the roots in $t$ (the table above, Viète).</li>
+    <li>With $t=x^2+x$ and the like the condition on $t$ is not needed, but each $t$ gives a separate quadratic equation with its own $\Delta$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  function pierwT(b, c) { // pierwiastki t^2 + bt + c = 0 (rosnąco, podwójny raz)
+    const d = b * b - 4 * c;
+    if (d < -1e-9) return [];
+    if (Math.abs(d) <= 1e-9) return [-b / 2];
+    return [(-b - Math.sqrt(d)) / 2, (-b + Math.sqrt(d)) / 2];
+  }
+  const E = 1e-9;
+
+  // --- 2. Oś t i oś x ---
+  const wt = new Wykres($("dk-t"), { xmin: -6, xmax: 6, ymin: -6, ymax: 8, krokX: 2, krokY: 2 });
+  const wx = new Wykres($("dk-x"), { xmin: -3.5, xmax: 3.5, ymin: -6, ymax: 8, krokY: 2 });
+  function rysujDk() {
+    const b = +$("dk-b").value, c = +$("dk-c").value;
+    $("dk-b-v").textContent = ladna(b); $("dk-c-v").textContent = ladna(c);
+    const ts = pierwT(b, c), xs = [];
+    ts.forEach(t => { if (t > E) xs.push(-Math.sqrt(t), Math.sqrt(t)); else if (Math.abs(t) <= E) xs.push(0); });
+    xs.sort((u, v) => u - v);
+    wt.rysuj(g => {
+      g.wielokat([[g.z.xmin, g.z.ymin], [0, g.z.ymin], [0, g.z.ymax], [g.z.xmin, g.z.ymax]], 2, { wypelnij: 0.08, bezObrysu: true });
+      g.tekst(-3, g.z.ymax, "t < 0: forbidden", 2, { dy: 16, wyrownanie: "center" });
+      g.funkcja(t => t * t + b * t + c, 1);
+      ts.forEach(t => g.punkt(t, 0, "", t > E ? 3 : Math.abs(t) <= E ? 4 : 2, { pusty: t < -E }));
+      g.tekst(g.z.xmax, 0, "t", 4, { dx: -12, dy: -8, gruby: true });
+    });
+    wx.rysuj(g => {
+      g.funkcja(x => x ** 4 + b * x * x + c, 1);
+      xs.forEach(x => g.punkt(x, 0, "", Math.abs(x) <= E ? 4 : 3));
+      g.tekst(g.z.xmax, 0, "x", 4, { dx: -12, dy: -8, gruby: true });
+    });
+    const tOpis = ts.length ? ts.map(t => `t=${ladnaTex(t)}` + (t < -E ? "\\,(\\times)" : "")).join(",\\;") : "\\text{no } t";
+    tex("dk-wynik", `${tOpis}\\;\\Rightarrow\\;\\text{solutions in } x\\text{: } ${xs.length}`);
+    rysujZg();
+  }
+  ["dk-b", "dk-c"].forEach(id => $(id).addEventListener("input", rysujDk));
+
+  // --- 3. Zginanie osi ---
+  const wz = new Wykres($("zg-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 8 });
+  let stop = null;
+  function rysujZg() {
+    const b = +$("dk-b").value, c = +$("dk-c").value, l = +$("zg-l").value;
+    const g0 = t => t * t + b * t + c, mix = (u, v) => u + (v - u) * l;
+    const ts = pierwT(b, c);
+    wz.rysuj(g => {
+      g.funkcja(g0, l > 0 ? 3 : 1, { do: 0, przerywana: l > 0 });           // część t < 0
+      g.parametryczna(s => mix(s, Math.sqrt(s)), g0, 0, 36, 1, { kroki: 600 });  // prawa gałąź
+      if (l > 0) g.parametryczna(s => mix(s, -Math.sqrt(s)), g0, 0, 36, 4, { kroki: 600 }); // lewa
+      ts.forEach(t => {
+        if (t > E) { g.punkt(mix(t, Math.sqrt(t)), 0, "", 3); if (l > 0) g.punkt(mix(t, -Math.sqrt(t)), 0, "", 3); }
+        else g.punkt(Math.abs(t) <= E ? 0 : t, 0, "", Math.abs(t) <= E ? 4 : 2, { pusty: t < -E && l > 0 });
+      });
+    });
+    tex("zg-wynik", l < 0.01 ? "y=t^2" + znakTex(b) + "t" + znakTex(c) : l > 0.99 ? `y=x^4${znakTex(b)}x^2${znakTex(c)}` : `t\\;\\mapsto\\;x=\\pm\\sqrt t`);
+  }
+  $("zg-l").addEventListener("input", () => { if (stop) stop(); rysujZg(); });
+  $("zg-start").addEventListener("click", () => {
+    if (stop) stop();
+    stop = animuj(2500, t => { $("zg-l").value = t; rysujZg(); });
+  });
+  rysujDk();
+});
+</script>
+</body>
+</html>

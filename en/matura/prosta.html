@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distance between points, equation of a line</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Matematyka</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Distance between points, equation of a line</h1>
+  <p class="lead">The distance between two points is the hypotenuse of a triangle with legs $|\Delta x|$ and $|\Delta y|$: plain Pythagoras. A line is "one step right → $a$ steps up", anchored at the point $(0,b)$.</p>
+  <p class="wymagania">IX.2, IX.3</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Distance and the midpoint of a segment</h2>
+  <div class="wzor">
+    <div class="tytul">Distance between the points $A=(x_A,y_A)$, $B=(x_B,y_B)$</div>
+    $$|AB|=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}$$
+    <dl><dt>why</dt><dd>Pythagoras in the triangle with legs $|x_B-x_A|$ and $|y_B-y_A|$. It is on the formula sheet.</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Midpoint of the segment $AB$</div>
+    $$S=\left(\frac{x_A+x_B}{2},\ \frac{y_A+y_B}{2}\right)$$
+    <dl><dt>$S$</dt><dd>the average of the coordinates <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>. Conversely: $B=(2x_S-x_A,\ 2y_S-y_A)$.</dd></dl>
+  </div>
+
+  <h2 id="rownania">2. Equation of a line</h2>
+  <div class="wzor">
+    <div class="tytul">Slope-intercept form</div>
+    $$y=ax+b$$
+    <dl><dt>$a$</dt><dd>the slope: $a=\tan\alpha$, where $\alpha$ is the angle of inclination to the axis $Ox$; from two points $a=\frac{y_B-y_A}{x_B-x_A}$</dd>
+        <dt>$b$</dt><dd>the line meets the axis $Oy$ at $(0,b)$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">General form</div>
+    $$Ax+By+C=0,\quad A^2+B^2\neq0$$
+    <dl><dt>$B\neq0$</dt><dd>you can convert to slope-intercept form: $y=-\frac{A}{B}x-\frac{C}{B}$</dd>
+        <dt>$B=0$</dt><dd>a vertical line $x=-\frac{C}{A}$: it has <b>no</b> slope-intercept form</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Line through $P=(x_0,y_0)$ with a given $a$ / through $A$ and $B$</div>
+    $$y-y_0=a(x-x_0)$$
+    $$\begin{aligned}&(y-y_A)(x_B-x_A)=\\&=(y_B-y_A)(x-x_A)\end{aligned}$$
+    <dl><dt>note</dt><dd>the second formula <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span> also works for a vertical line</dd></dl>
+  </div>
+  <div class="uwaga">The quickest check: substitute both given points into the equation you got. You must get an identity.</div>
+
+  <h2 id="demo">3. Interactive: two points</h2>
+  <div class="demo">
+    <p class="opis">Drag $A$ and $B$. The green triangle is Pythagoras for $|AB|$, $S$ is the midpoint. Below: the equation of the line $AB$ in both forms.</p>
+    <canvas id="pr-plot"></canvas>
+    <div class="wynik" id="pr-wynik"></div>
+    <div class="wynik" id="pr-wynik2"></div>
+  </div>
+
+  <h2 id="kierunek">4. Interactive: what $a$ and $b$ mean</h2>
+  <div class="demo">
+    <p class="opis">Change $a$ and $b$. From the point $(0,b)$ you go $1$ to the right and $a$ up (the green-red step). The angle of inclination $\alpha$ satisfies $\tan\alpha=a$.</p>
+    <canvas id="kr-plot"></canvas>
+    <div class="sterowanie">
+      <label>$a$ <input type="range" id="kr-a" min="-3" max="3" step="0.25" value="0.5"> <span id="kr-a-v"></span></label>
+      <label>$b$ <input type="range" id="kr-b" min="-4" max="4" step="0.5" value="1"> <span id="kr-b-v"></span></label>
+    </div>
+    <div class="wynik" id="kr-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Given $A=(-2,1)$ and $B=(4,9)$. Find $|AB|$, the midpoint $S$ and the equation of the line $AB$.</p>
+    <ol>
+      <li>$\Delta x=6$, $\Delta y=8$, so $|AB|=\sqrt{36+64}=10$.</li>
+      <li>$S=\left(\frac{-2+4}{2},\frac{1+9}{2}\right)=(1,5)$.</li>
+      <li>$a=\frac{8}{6}=\frac43$. Substitute $A$: $1=\frac43\cdot(-2)+b$, so $b=\frac{11}{3}$.</li>
+      <li>Multiply by $3$: $3y=4x+11$.</li>
+      <li>Check $B$: $4\cdot4-3\cdot9+11=0$ ✓.</li>
+    </ol>
+    <p class="odp">$|AB|=10$, $S=(1,5)$, $y=\frac43x+\frac{11}{3}$, i.e. $4x-3y+11=0$</p>
+  </div>
+
+  <h2 id="zadania">6. Exercises</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="13; 7/2; 4" data-odp-opis="|AB|; x_S; y_S"><span class="poziom">easy</span>
+      <div class="tresc">Find the length of the segment with endpoints $A=(1,-2)$, $B=(6,10)$ and find its midpoint.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|AB|=\sqrt{5^2+12^2}=\sqrt{169}=13$, $S=\left(\frac72,4\right)$. <b>$|AB|=13$, $S=(3.5;\ 4)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="7; -6" data-odp-opis="x; y of the point B"><span class="poziom">easy</span>
+      <div class="tresc">The point $S=(2,-1)$ is the midpoint of the segment $AB$, $A=(-3,4)$. Find $B$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x_B=2\cdot2-(-3)=7$, $y_B=2\cdot(-1)-4=-6$. <b>$B=(7,-6)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-2; 3" data-odp-opis="a; b in y = ax + b"><span class="poziom">medium</span>
+      <div class="tresc">Find the equation of the line through $A=(-1,5)$ and $B=(3,-3)$ in slope-intercept and general form.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $a=\frac{-3-5}{3-(-1)}=-2$. From $A$: $5=2+b$, $b=3$. Check $B$: $-6+3=-3$ ✓. <b>$y=-2x+3$, i.e. $2x+y-3=0$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3" data-odp-opis="area of the triangle"><span class="poziom">medium</span>
+      <div class="tresc">The line $3x-2y+6=0$ cuts a triangle off the coordinate axes. Write it in slope-intercept form and find the area of this triangle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $2y=3x+6$, so $y=\frac32x+3$. Intersection with $Oy$: $(0,3)$; with $Ox$: $\frac32x+3=0$, $x=-2$. A right triangle with legs $2$ and $3$: $P=\frac12\cdot2\cdot3$. <b>$y=\frac32x+3$, area $3$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3; 0" data-odp-opis="x; y punktu P"><span class="poziom">exam-level</span>
+      <div class="tresc">On the axis $Ox$ find a point $P$ equidistant from $A=(1,4)$ and $B=(7,2)$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $P=(x,0)$. $|PA|^2=|PB|^2$: $(x-1)^2+16=(x-7)^2+4$, i.e. $-2x+17=-14x+53$, $x=3$. Check: $|PA|^2=4+16=20=16+4=|PB|^2$ ✓. <b>$P=(3,0)$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="10; 1; 2" data-odp-opis="area; x; y of the circumcenter"><span class="poziom">exam-level</span>
+      <div class="tresc">Show that the triangle with vertices $A=(-2,1)$, $B=(2,-1)$, $C=(4,3)$ is right and isosceles. Find its area and the center of its circumscribed circle.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $|AB|^2=16+4=20$, $|BC|^2=4+16=20$, $|AC|^2=36+4=40$. Since $|AB|^2+|BC|^2=|AC|^2$, by the converse of the Pythagorean theorem the angle at $B$ is right, and $|AB|=|BC|$. Area $\frac12\cdot20=10$. The center of the circle circumscribed on a right triangle is the midpoint of the hypotenuse $AC$.
+        <b>Area $10$, center of the circumscribed circle $(1,2)$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>A vertical line</b> $x=c$ has no slope-intercept form. When the points have equal $x$, do not divide by zero, just write $x=c$ at once.</li>
+    <li>In the answer give the equation in the form the problem asks for. The general form preferably with integer coefficients.</li>
+    <li>Simplify the root: $\sqrt{40}=2\sqrt{10}$. Do not round unless told to.</li>
+    <li>"Show that the triangle is right/isosceles" problems you do with squares of lengths: no roots and no mistakes.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nwd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  // ułamek p/q (całkowite) w TeX, skrócony
+  function ulamek(p, q) {
+    if (q < 0) { p = -p; q = -q; }
+    const g = nwd(p, q) || 1; p /= g; q /= g;
+    if (q === 1) return `${p}`;
+    return `${p < 0 ? "-" : ""}\\frac{${Math.abs(p)}}{${q}}`;
+  }
+  // √n (n całkowite ≥ 0) w najprostszej postaci
+  function pierw(n) {
+    let k = 1, m = n;
+    for (let i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; }
+    return m === 1 ? `${k}` : m === 0 ? "0" : `${k === 1 ? "" : k}\\sqrt{${m}}`;
+  }
+  // Ax+By+C=0, skrócone przez NWD, A > 0
+  function ogolna(A, B, C) {
+    const g = nwd(nwd(A, B), C) || 1; A /= g; B /= g; C /= g;
+    if (A < 0 || (A === 0 && B < 0)) { A = -A; B = -B; C = -C; }
+    let s = "";
+    const wyraz = (k, zm) => { if (!k) return; s += (k < 0 ? "-" : s ? "+" : "") + (zm && Math.abs(k) === 1 ? "" : Math.abs(k)) + zm; };
+    wyraz(A, "x"); wyraz(B, "y"); wyraz(C, "");
+    return s + "=0";
+  }
+  function kierunkowa(A, B, C) {
+    if (B === 0) return `x=${ulamek(-C, A)}`;
+    let s = "y=";
+    if (A !== 0) { const u = ulamek(-A, B); s += (u === "1" ? "" : u === "-1" ? "-" : u) + "x"; }
+    if (C !== 0 || A === 0) { const u = ulamek(-C, B); s += (A !== 0 && !u.startsWith("-") ? "+" : "") + u; }
+    return s;
+  }
+
+  // --- 3. Dwa punkty ---
+  const w1 = new Wykres($("pr-plot"), { xmin: -7, xmax: 7, ymin: -5, ymax: 7, rowneSkale: true });
+  const ogr = p => ({ x: Math.max(-6, Math.min(6, p.x)), y: Math.max(-4, Math.min(6, p.y)) });
+  const pkt = w1.przeciagaj([{ x: -3, y: -1, siatka: 1, ogranicz: ogr }, { x: 3, y: 3, siatka: 1, ogranicz: ogr }], rysujPr);
+  function rysujPr() {
+    const [P, Q] = pkt;
+    const dx = Q.x - P.x, dy = Q.y - P.y, sx = (P.x + Q.x) / 2, sy = (P.y + Q.y) / 2;
+    w1.rysuj(g => {
+      if (dx || dy) g.prosta(P.x, P.y, Q.x, Q.y, 1);
+      if (dx && dy) {
+        g.wielokat([[P.x, P.y], [Q.x, P.y], [Q.x, Q.y]], 3, { wypelnij: 0.12, przerywana: true });
+        g.tekst((P.x + Q.x) / 2, P.y, `|Δx| = ${Math.abs(dx)}`, 3, { dy: dy > 0 ? 16 : -8, wyrownanie: "center" });
+        g.tekst(Q.x, (P.y + Q.y) / 2, `|Δy| = ${Math.abs(dy)}`, 3, { dx: dx > 0 ? 6 : -6, wyrownanie: dx > 0 ? "left" : "right" });
+      }
+      g.odcinek(P.x, P.y, Q.x, Q.y, 2, false);
+      g.punkt(sx, sy, "S", 4);
+      g.punkt(P.x, P.y, "A"); g.punkt(Q.x, Q.y, "B");
+    });
+    const d2 = dx * dx + dy * dy;
+    if (!d2) { tex("pr-wynik", "A=B\\;\\text{— move the points apart}"); tex("pr-wynik2", ""); return; }
+    const d = pierw(d2), r = Math.round(Math.sqrt(d2)), naw = v => v < 0 ? `(${v})` : v;
+    const dTex = r * r === d2 ? `${r}` : `\\sqrt{${d2}}` + (d === `\\sqrt{${d2}}` ? "" : `=${d}`) + `\\approx${ladnaTex(Math.sqrt(d2))}`;
+    tex("pr-wynik", `|AB|=\\sqrt{${naw(dx)}^2+${naw(dy)}^2}=${dTex},\\quad S=(${ladnaTex(sx)},\\,${ladnaTex(sy)})`);
+    const A = dy, B = -dx, C = -(A * P.x + B * P.y);
+    tex("pr-wynik2", `AB:\\ ${kierunkowa(A, B, C)}${B === 0 ? "\\ (\\text{vertical})" : ""},\\quad ${ogolna(A, B, C)}`);
+  }
+  rysujPr();
+
+  // --- 4. Znaczenie a i b ---
+  const w2 = new Wykres($("kr-plot"), { xmin: -6, xmax: 6, ymin: -5, ymax: 5, rowneSkale: true });
+  function rysujKr() {
+    const a = +$("kr-a").value, b = +$("kr-b").value;
+    $("kr-a-v").textContent = ladna(a); $("kr-b-v").textContent = ladna(b);
+    const alfa = Math.atan(a) < 0 ? Math.PI + Math.atan(a) : Math.atan(a);
+    w2.rysuj(g => {
+      g.funkcja(x => a * x + b, 1);
+      if (a !== 0) {
+        const x0 = -b / a;
+        g.luk(x0, 0, 0.8, 0, alfa, 4, { wypelnij: 0.2 });
+        g.tekst(x0 + 1, 0, "α", 4, { dy: -6, gruby: true });
+      }
+      g.odcinek(0, b, 1, b, 3, false);
+      g.odcinek(1, b, 1, b + a, 2, false);
+      g.tekst(0.5, b, "1", 3, { dy: a >= 0 ? 15 : -6, wyrownanie: "center" });
+      if (a) g.tekst(1, b + a / 2, "a", 2, { dx: 6, gruby: true });
+      g.punkt(0, b, "(0, b)", 2);
+    });
+    const ax = a === 0 ? "" : a === 1 ? "x" : a === -1 ? "-x" : ladnaTex(a) + "x";
+    const bx = b === 0 ? (a === 0 ? "0" : "") : (a === 0 ? ladnaTex(b) : znakTex(b));
+    tex("kr-wynik", `y=${ax}${bx},\\quad \\tan\\alpha=a=${ladnaTex(a)},\\quad \\alpha\\approx${ladnaTex(alfa * 180 / Math.PI, 1)}^\\circ`);
+  }
+  ["kr-a", "kr-b"].forEach(id => $(id).addEventListener("input", rysujKr));
+  rysujKr();
+});
+</script>
+</body>
+</html>

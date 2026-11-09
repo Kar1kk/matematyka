@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word problems with systems of equations</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Word problems with systems of equations</h1>
+  <p class="lead">Two unknowns, two independent facts from the text, two equations. Each equation is a line, and the answer to the problem is their intersection point, as long as it makes sense in the real world.</p>
+  <p class="wymagania">IV.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="schemat">1. The template (always the same)</h2>
+  <ol>
+    <li><b>Name the unknowns</b> in words and with units: “$x$ — the price of a notebook in PLN”. Add the conditions ($x&gt;0$, digit $1\le a\le9$).</li>
+    <li><b>Write two equations</b>, each from a different sentence of the text.</li>
+    <li><b>Solve the system</b> (<a href="uklady-liniowe.html">substitution or opposite coefficients</a>).</li>
+    <li><b>Check against the text</b>, not against the equations: is the result positive, an integer, does it fit the sentences of the problem.</li>
+    <li><b>Answer</b> in a full sentence, to the question that was asked.</li>
+  </ol>
+
+  <h2 id="typy">2. Typical problems</h2>
+  <table class="tabela">
+    <tr><th>type</th><th>key setup</th></tr>
+    <tr><td>prices, items</td><td>$3x+2y=19$ (quantity $\cdot$ price)</td></tr>
+    <tr><td>percentages</td><td>a $20\%$ discount: $0.8x$; a $10\%$ increase: $1.1y$</td></tr>
+    <tr><td>concentrations</td><td>mass of substance $=\frac{p}{100}\cdot$ mass of solution</td></tr>
+    <tr><td>motion</td><td>$s=vt$; downstream $v+u$, upstream $v-u$</td></tr>
+    <tr><td>digits</td><td>the number $\overline{ab}=10a+b$, after swapping $10b+a$</td></tr>
+    <tr><td>age</td><td>in $n$ years: $m+n$ and $c+n$ (both increase!)</td></tr>
+  </table>
+  <div class="uwaga">In mixture problems write separate equations for the <b>mass of the solution</b> and the <b>mass of the substance</b>. Concentrations must not be added.</div>
+
+  <h2 id="demo-ruch">3. Interactive: two trains</h2>
+  <div class="demo">
+    <p class="opis">Train A leaves city A, train B leaves city B ($t_0$ h later) heading toward it. The graphs of distance from A against time are two lines, and their intersection is the meeting. Press play and watch the dots on the track (on the left).</p>
+    <canvas id="pc-plot"></canvas>
+    <div class="sterowanie">
+      <label>distance $d$ <input type="range" id="pc-d" min="100" max="500" step="10" value="330"> <span id="pc-d-v"></span> km</label>
+      <label>$v_A$ <input type="range" id="pc-va" min="30" max="150" step="10" value="60"> <span id="pc-va-v"></span> km/h</label>
+      <label>$v_B$ <input type="range" id="pc-vb" min="30" max="150" step="10" value="90"> <span id="pc-vb-v"></span> km/h</label>
+      <label>$t_0$ <input type="range" id="pc-t0" min="0" max="3" step="0.5" value="0.5"> <span id="pc-t0-v"></span> h</label>
+      <button id="pc-start">▶ Play</button>
+    </div>
+    <div class="wynik" id="pc-wynik"></div>
+  </div>
+
+  <h2 id="demo-mieszanina">4. Interactive: mixing solutions</h2>
+  <div class="demo">
+    <p class="opis">You want $M$ kg of a $p\%$ solution from a $p_1\%$ solution ($x$ kg) and a $p_2\%$ solution ($y$ kg). Blue line: the mass of the solution, purple: the mass of the substance. Set $p$ outside the interval $[p_1,p_2]$: the system has a solution, but the problem does not.</p>
+    <canvas id="mi-plot"></canvas>
+    <div class="sterowanie">
+      <label>$p_1$ <input type="range" id="mi-p1" min="0" max="100" step="5" value="10"> <span id="mi-p1-v"></span>%</label>
+      <label>$p_2$ <input type="range" id="mi-p2" min="0" max="100" step="5" value="40"> <span id="mi-p2-v"></span>%</label>
+      <label>$p$ <input type="range" id="mi-p" min="0" max="100" step="5" value="20"> <span id="mi-p-v"></span>%</label>
+      <label>$M$ <input type="range" id="mi-m" min="10" max="60" step="5" value="30"> <span id="mi-m-v"></span> kg</label>
+    </div>
+    <div class="wynik" id="mi-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Cities A and B are $330$ km apart. A train leaves A at $60$ km/h, and half an hour later a train leaves B toward it at $90$ km/h. How far from A will they meet?</p>
+    <ol>
+      <li>$x$ — the distance traveled by the train from A until the meeting, $y$ — the distance traveled by the train from B (km), $x,y&gt;0$.</li>
+      <li>Together they cover the whole route: $x+y=330$. The train from A travels $0.5$ h longer: $\frac{x}{60}=\frac{y}{90}+\frac12$.</li>
+      <li>Second equation times $180$: $3x=2y+90$. Substitute $y=330-x$: $5x=750$, $x=150$, $y=180$.</li>
+      <li>Check against the text: A travels $2.5$ h, B travels $2$ h, so it left $0.5$ h later ✓.</li>
+    </ol>
+    <p class="odp">The trains will meet $150$ km from A (the demo's starting settings from section 3).</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="5; 2" data-odp-opis="notebook; pen (PLN)"><span class="poziom">easy</span>
+      <div class="tresc">For $3$ notebooks and $2$ pens one pays $19$ PLN, and for $2$ notebooks and $5$ pens $20$ PLN. How much does a notebook cost, and how much a pen?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\begin{cases} 3x+2y=19\\ 2x+5y=20 \end{cases}$. Multiply the first by $2$, the second by $3$ and subtract: $11y=22$, $y=2$, $x=5$. <b>A notebook costs $5$ PLN, a pen $2$ PLN.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="47"><span class="poziom">medium</span>
+      <div class="tresc">The sum of the digits of a two-digit number is $11$. After swapping the digits we get a number greater by $27$. Find this number.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\overline{ab}$: $a+b=11$ and $10b+a-(10a+b)=27$, that is $b-a=3$. Hence $b=7$, $a=4$. Check: $74-47=27$ ✓. <b>$47$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="12; 48" data-odp-opis="daughter; mother"><span class="poziom">medium</span>
+      <div class="tresc">A mother is $4$ times as old as her daughter. In $6$ years she will be $3$ times as old as her. How old is each of them?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\begin{cases} m=4c\\ m+6=3(c+6) \end{cases}$. Substitute: $4c+6=3c+18$, $c=12$, $m=48$. In $6$ years: $54=3\cdot18$ ✓. <b>The daughter is $12$, the mother $48$.</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="20; 10" data-odp-opis="kg of 10% solution; kg of 40% solution"><span class="poziom">medium</span>
+      <div class="tresc">How many kilograms of a $10\%$ solution and how many of a $40\%$ solution must be mixed to obtain $30$ kg of a $20\%$ solution?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Mass of the solution: $x+y=30$. Mass of the substance: $0.1x+0.4y=0.2\cdot30=6$. Times $10$: $x+4y=60$, subtract the first: $3y=30$. <b>$20$ kg of the $10\%$ solution and $10$ kg of the $40\%$ solution</b> (the demo's starting settings from section 4).
+      </div></details></li>
+    <li class="zadanie" data-odp="15; 3" data-odp-opis="v; u (km/h)"><span class="poziom">exam-level</span>
+      <div class="tresc">A motorboat travels $36$ km downstream in $2$ h, and the same route upstream in $3$ h. Find the speed of the motorboat in still water and the speed of the current.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $v$ — the speed of the motorboat, $u$ — of the current (km/h): $2(v+u)=36$, $3(v-u)=36$, that is $v+u=18$, $v-u=12$. Add: $2v=30$. <b>$v=15$ km/h, $u=3$ km/h</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="130; 120" data-odp-opis="price of the first; of the second"><span class="poziom">exam-level</span>
+      <div class="tresc">Two goods cost $250$ PLN together. After the price of the first is reduced by $20\%$ and the price of the second is raised by $10\%$, they cost $236$ PLN together. What were the prices before the change?</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\begin{cases} x+y=250\\ 0.8x+1.1y=236 \end{cases}$. Substitute $y=250-x$: $0.8x+275-1.1x=236$, $0.3x=39$, $x=130$, $y=120$. Check: $104+132=236$ ✓. <b>$130$ PLN and $120$ PLN</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li><b>Defining the unknowns</b> (what they mean, in what units) is part of the solution. Without it a point for “setting up the system” is hard to get.</li>
+    <li><b>Units:</b> convert minutes to hours ($20$ min $=\frac13$ h) before substituting into $s=vt$.</li>
+    <li><b>Percentages:</b> $20\%$ of what? A $20\%$ discount followed by a $20\%$ increase does not return to the original price.</li>
+    <li><b>Check that it makes sense:</b> a negative mass, a non-integer number of people, a digit $10$ mean a mistake or that the problem has no solution.</li>
+    <li>Answer the <b>question in the text</b> (e.g. “how far from B” is $y$, not $x$).</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. Dwa pociągi ---
+  const w1 = new Wykres($("pc-plot"), { xmin: -0.9, xmax: 6, ymin: -30, ymax: 360, krokX: 1, krokY: 50 });
+  let stop = null;
+  function dane() {
+    const d = +$("pc-d").value, va = +$("pc-va").value, vb = +$("pc-vb").value, t0 = +$("pc-t0").value;
+    $("pc-d-v").textContent = ladna(d); $("pc-va-v").textContent = ladna(va);
+    $("pc-vb-v").textContent = ladna(vb); $("pc-t0-v").textContent = ladna(t0);
+    let ts = (d + vb * t0) / (va + vb);
+    let ss = va * ts;
+    if (d / va <= t0) { ts = d / va; ss = d; } // A dojeżdża do B, zanim B ruszy
+    const koniec = Math.max(d / va, t0 + d / vb);
+    return { d, va, vb, t0, ts, ss, koniec };
+  }
+  function klatkaPc(tNow) {
+    const p = dane();
+    const { d, va, vb, t0, ts, ss } = p;
+    const sA = t => Math.min(d, va * Math.max(0, t));
+    const sB = t => Math.max(0, d - vb * Math.max(0, t - t0));
+    const tmax = Math.max(4, Math.ceil(Math.max(ts, p.koniec) + 0.3));
+    w1.zakres({ xmin: -tmax * 0.15, xmax: tmax, krokX: tmax > 10 ? 2 : 1, ymin: -d * 0.09, ymax: d * 1.12, krokY: d > 250 ? 50 : 25 });
+    w1.rysuj(g => {
+      const xt = -tmax * 0.075; // tor
+      g.odcinek(xt, 0, xt, d, 3, false);
+      g.tekst(xt, 0, "A", 1, { dx: -14, dy: 5, gruby: true });
+      g.tekst(xt, d, "B", 4, { dx: -14, dy: 5, gruby: true });
+      g.funkcja(sA, 1, { od: 0, do: tmax });
+      g.funkcja(sB, 4, { od: 0, do: tmax });
+      g.tekst(tmax * 0.98, d * 1.04, "t [h]", 3, { wyrownanie: "right" });
+      const spotkani = tNow !== null && tNow >= ts;
+      if (tNow === null || spotkani) {
+        g.odcinek(ts, 0, ts, ss, 2);
+        g.odcinek(xt, ss, ts, ss, 2);
+        g.punkt(ts, ss, "meeting", 2);
+      }
+      if (tNow !== null) {
+        const tt = Math.min(tNow, ts);
+        g.odcinek(tNow, 0, tNow, d, 3);
+        g.punkt(tt, sA(tt), "", 1); g.punkt(tt, sB(tt), "", 4);
+        g.punkt(xt, sA(tt), "", 1); g.punkt(xt, sB(tt), "", 4);
+      }
+    });
+    tex("pc-wynik", "\\begin{cases} s=" + va + "t\\\\ s=" + d + "-" + vb + (t0 > 0 ? "(t-" + ladnaTex(t0) + ")" : "t") + "\\end{cases}\\Rightarrow t=" + ladnaTex(ts) + "\\text{ h},\\ s=" + ladnaTex(ss) + "\\text{ km}"
+      + (d / va <= t0 ? "\\ \\text{(A arrived before B set off)}" : ""));
+  }
+  $("pc-start").addEventListener("click", () => {
+    if (stop) stop();
+    const k = dane().koniec;
+    stop = animuj(4000, t => klatkaPc(t * k));
+  });
+  ["pc-d", "pc-va", "pc-vb", "pc-t0"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); klatkaPc(null); }));
+  klatkaPc(null);
+
+  // --- 4. Mieszanie roztworów ---
+  const w2 = new Wykres($("mi-plot"), { xmin: -8, xmax: 40, ymin: -8, ymax: 40, krokX: 5, krokY: 5, rowneSkale: true });
+  function rysujMi() {
+    const p1 = +$("mi-p1").value, p2 = +$("mi-p2").value, p = +$("mi-p").value, M = +$("mi-m").value;
+    $("mi-p1-v").textContent = ladna(p1); $("mi-p2-v").textContent = ladna(p2);
+    $("mi-p-v").textContent = ladna(p); $("mi-m-v").textContent = ladna(M);
+    let x = null, y = null, opis = "";
+    if (p1 !== p2) {
+      x = M * (p2 - p) / (p2 - p1); y = M * (p - p1) / (p2 - p1);
+      if (x < 0 || y < 0) opis = "\\text{negative mass: the problem has no solution}";
+      else opis = "x=" + ladnaTex(x) + "\\text{ kg},\\ y=" + ladnaTex(y) + "\\text{ kg}";
+    } else {
+      opis = p === p1 ? "\\text{the lines coincide: any } x+y=" + M : "\\text{parallel lines: inconsistent system}";
+    }
+    w2.zakres({ xmin: -M * 0.3, xmax: M * 1.4, ymin: -M * 0.3, ymax: M * 1.4, krokX: M > 30 ? 10 : 5, krokY: M > 30 ? 10 : 5 });
+    w2.rysuj(g => {
+      g.prosta(0, M, M, 0, 1);
+      const c = p * M; // p1·x + p2·y = p·M (w procentach)
+      if (p1 !== 0 || p2 !== 0) {
+        if (Math.abs(p2) >= Math.abs(p1)) g.prosta(0, c / p2, 1, (c - p1) / p2, 4);
+        else g.prosta(c / p1, 0, (c - p2) / p1, 1, 4);
+      }
+      g.tekst(g.z.xmax, 0, "x", 3, { dx: -12, dy: -6 });
+      g.tekst(0, g.z.ymax, "y", 3, { dx: 6, dy: 14 });
+      if (x !== null) g.punkt(x, y, x < 0 || y < 0 ? "meaningless" : "(x, y)", 2, { pusty: x < 0 || y < 0 });
+    });
+    tex("mi-wynik", "\\begin{cases} x+y=" + M + "\\\\ " + ladnaTex(p1 / 100) + "x+" + ladnaTex(p2 / 100) + "y=" + ladnaTex(p * M / 100) + "\\end{cases}\\Rightarrow " + opis);
+  }
+  ["mi-p1", "mi-p2", "mi-p", "mi-m"].forEach(id => $(id).addEventListener("input", rysujMi));
+  rysujMi();
+});
+</script>
+</body>
+</html>

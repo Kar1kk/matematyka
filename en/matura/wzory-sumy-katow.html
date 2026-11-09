@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sum and difference formulas, double angle</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Sum and difference formulas, double angle</h1>
+  <p class="lead">$\sin(\alpha+\beta)\neq\sin\alpha+\sin\beta$. The true formula follows from a simple observation: a chord of a circle depends only on the angle between the radii, so rotating both points does not change it. The rest (double angle, tangent) is just substitution.</p>
+  <p class="wymagania">VII.R.5</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="wzory">1. Formulas</h2>
+  <div class="twierdzenie"><b>Theorem</b> For any $\alpha,\beta\in\R$ <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span>:
+    $$\sin(\alpha\pm\beta)=\sin\alpha\cos\beta\pm\cos\alpha\sin\beta$$
+    $$\cos(\alpha\pm\beta)=\cos\alpha\cos\beta\mp\sin\alpha\sin\beta$$
+    <details class="rozwin"><summary>Proof (required on the exam)</summary><div>
+      <p><b>1. A chord in two ways.</b> On the unit circle take $A=(\cos\alpha,\sin\alpha)$ and $B=(\cos\beta,\sin\beta)$. From the distance formula and the Pythagorean identity:</p>
+      $$|AB|^2=(\cos\alpha-\cos\beta)^2$$
+      $$+\,(\sin\alpha-\sin\beta)^2$$
+      $$=2-2(\cos\alpha\cos\beta+\sin\alpha\sin\beta)$$
+      <p><b>2. Rotation.</b> Rotate both points about $O$ by the angle $-\beta$. You get $A'=(\cos(\alpha-\beta),\sin(\alpha-\beta))$ and $B'=(1,0)$. A rotation preserves distances, so $|A'B'|=|AB|$, and</p>
+      $$|A'B'|^2=(\cos(\alpha-\beta)-1)^2$$
+      $$+\,\sin^2(\alpha-\beta)=2-2\cos(\alpha-\beta)$$
+      <p><b>3. Compare</b> the two results:</p>
+      $$\cos(\alpha-\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta$$
+      <p><b>4. The sum.</b> Put $-\beta$ in place of $\beta$; $\cos(-\beta)=\cos\beta$, $\sin(-\beta)=-\sin\beta$: $\;\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta$.</p>
+      <p><b>5. Sine.</b> From $\sin x=\cos\left(\frac\pi2-x\right)$ and the formula from step 3:</p>
+      $$\sin(\alpha+\beta)=\cos\left(\left(\tfrac\pi2-\alpha\right)-\beta\right)$$
+      $$=\cos\left(\tfrac\pi2-\alpha\right)\cos\beta$$
+      $$+\,\sin\left(\tfrac\pi2-\alpha\right)\sin\beta$$
+      $$=\sin\alpha\cos\beta+\cos\alpha\sin\beta$$
+      <p><b>6.</b> $\sin(\alpha-\beta)$: again $\beta\to-\beta$. $\blacksquare$</p>
+    </div></details></div>
+
+  <div class="wzor">
+    <div class="tytul">Tangent of a sum and difference <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\tan(\alpha\pm\beta)=\frac{\tan\alpha\pm\tan\beta}{1\mp\tan\alpha\tan\beta}$$
+    <dl><dt>where from</dt><dd>$\frac{\sin(\alpha+\beta)}{\cos(\alpha+\beta)}$, divide the numerator and denominator by $\cos\alpha\cos\beta$</dd>
+        <dt>assumptions</dt><dd>$\tan\alpha$, $\tan\beta$, $\tan(\alpha\pm\beta)$ exist</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">Double angle ($\beta=\alpha$)</div>
+    $$\sin2\alpha=2\sin\alpha\cos\alpha$$
+    $$\begin{aligned}\cos2\alpha&amp;=\cos^2\alpha-\sin^2\alpha\\&amp;=2\cos^2\alpha-1\\&amp;=1-2\sin^2\alpha\end{aligned}$$
+    $$\tan2\alpha=\frac{2\tan\alpha}{1-\tan^2\alpha}$$
+    <dl><dt>3 forms of $\cos2\alpha$</dt><dd>from the Pythagorean identity; choose the one in which a single function remains (important in equations)</dd>
+        <dt>power reduction</dt><dd>$\cos^2\alpha=\frac{1+\cos2\alpha}{2}$, $\;\sin^2\alpha=\frac{1-\cos2\alpha}{2}$</dd></dl>
+  </div>
+  <div class="uwaga">Reduction formulas are a special case: $\cos(\pi+\alpha)=\cos\pi\cos\alpha-\sin\pi\sin\alpha=-\cos\alpha$.</div>
+
+  <h2 id="dowod-demo">2. Interactive: the proof on a circle</h2>
+  <div class="demo">
+    <p class="opis">Set $\alpha$ and $\beta$, then “▶ Rotate by −β”. The chord $AB$ (red) rotates together with the points and does not change length. After the rotation $B'=(1,0)$, and $A'$ has coordinates $(\cos(\alpha-\beta),\sin(\alpha-\beta))$.</p>
+    <canvas id="dw-plot"></canvas>
+    <div class="sterowanie">
+      <label>$\alpha$ <input type="range" id="dw-a" min="0" max="360" step="5" value="120"> <span id="dw-a-v"></span></label>
+      <label>$\beta$ <input type="range" id="dw-b" min="0" max="360" step="5" value="40"> <span id="dw-b-v"></span></label>
+      <button id="dw-start">▶ Rotate by −β</button>
+    </div>
+    <div class="wynik" id="dw-wynik"></div>
+  </div>
+
+  <h2 id="obraz">3. Interactive: $\sin(\alpha+\beta)$ as a sum of two heights</h2>
+  <div class="demo">
+    <p class="opis">The segment $OQ$ has length $1$ and angle $\alpha+\beta$, so its height is $\sin(\alpha+\beta)$. Split it into $OP=\cos\beta$ (at the angle $\alpha$) and $PQ=\sin\beta$ (perpendicular). The height of $P$ is $\sin\alpha\cos\beta$ (red), and $PQ$ adds $\cos\alpha\sin\beta$ vertically (green).</p>
+    <canvas id="ob-plot"></canvas>
+    <div class="sterowanie">
+      <label>$\alpha$ <input type="range" id="ob-a" min="5" max="60" step="1" value="30"> <span id="ob-a-v"></span></label>
+      <label>$\beta$ <input type="range" id="ob-b" min="5" max="50" step="1" value="35"> <span id="ob-b-v"></span></label>
+    </div>
+    <div class="wynik" id="ob-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>Compute $\sin75^\circ$ and $\tan15^\circ$.</p>
+    <ol>
+      <li>$\sin(45^\circ+30^\circ)=\frac{\sqrt2}2\cdot\frac{\sqrt3}2+\frac{\sqrt2}2\cdot\frac12=\frac{\sqrt6+\sqrt2}{4}$.</li>
+      <li>$\tan(45^\circ-30^\circ)=\dfrac{1-\frac{\sqrt3}3}{1+\frac{\sqrt3}3}=\dfrac{3-\sqrt3}{3+\sqrt3}$.</li>
+      <li>Rationalize: $\dfrac{(3-\sqrt3)^2}{9-3}=\dfrac{12-6\sqrt3}{6}=2-\sqrt3$.</li>
+    </ol>
+    <p class="odp">$\sin75^\circ=\frac{\sqrt6+\sqrt2}{4},\quad \tan15^\circ=2-\sqrt3$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie" data-odp="(sqrt(2)-sqrt(6))/4"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\cos105^\circ$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\cos(60^\circ+45^\circ)=\frac12\cdot\frac{\sqrt2}2-\frac{\sqrt3}2\cdot\frac{\sqrt2}2$. <b>$\frac{\sqrt2-\sqrt6}{4}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-24/25; 7/25" data-odp-opis="sin 2α; cos 2α"><span class="poziom">medium</span>
+      <div class="tresc">$\sin\alpha=\frac35$ and $\alpha\in\left(\frac\pi2,\pi\right)$. Compute $\sin2\alpha$ and $\cos2\alpha$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Second quadrant: $\cos\alpha=-\frac45$. $\sin2\alpha=2\cdot\frac35\cdot\left(-\frac45\right)$, $\cos2\alpha=1-2\cdot\frac{9}{25}$. <b>$\sin2\alpha=-\frac{24}{25}$, $\cos2\alpha=\frac{7}{25}$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="3pi/4" data-odp-opis="α + β in radians"><span class="poziom">medium</span>
+      <div class="tresc">The angles $\alpha,\beta$ are acute, $\tan\alpha=2$, $\tan\beta=3$. Compute $\alpha+\beta$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\tan(\alpha+\beta)=\frac{2+3}{1-6}=-1$, and $\alpha+\beta\in(0,\pi)$. The only angle in this interval with tangent $-1$: <b>$\alpha+\beta=\frac{3\pi}{4}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">It is known that $\tan x=\frac12$. Compute $\cos2x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\cos2x=\frac{\cos^2x-\sin^2x}{\cos^2x+\sin^2x}$; divide the numerator and denominator by $\cos^2x$: $\frac{1-\tan^2x}{1+\tan^2x}=\frac{3/4}{5/4}$. <b>$\frac35$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that $\dfrac{\sin3\alpha}{\sin\alpha}-\dfrac{\cos3\alpha}{\cos\alpha}=2$ for $\sin\alpha\cos\alpha\neq0$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Common denominator: $\frac{\sin3\alpha\cos\alpha-\cos3\alpha\sin\alpha}{\sin\alpha\cos\alpha}=\frac{\sin(3\alpha-\alpha)}{\sin\alpha\cos\alpha}=\frac{2\sin\alpha\cos\alpha}{\sin\alpha\cos\alpha}$. <b>$=2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Prove that if $\alpha+\beta=\frac\pi4$ (and $\tan\alpha$, $\tan\beta$ exist), then $(1+\tan\alpha)(1+\tan\beta)=2$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $1=\tan\frac\pi4=\frac{\tan\alpha+\tan\beta}{1-\tan\alpha\tan\beta}$, so $\tan\alpha+\tan\beta=1-\tan\alpha\tan\beta$. Hence $(1+\tan\alpha)(1+\tan\beta)=1+\tan\alpha+\tan\beta+\tan\alpha\tan\beta$ <b>$=2$</b>.
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The proof of the formula for $\cos(\alpha-\beta)$</b> can be a task in itself. Remember three steps: the chord from coordinates, rotation by $-\beta$, comparison.</li>
+    <li>Recognize the formulas “backwards”: $\sin3\alpha\cos\alpha-\cos3\alpha\sin\alpha=\sin2\alpha$, $\;2\sin x\cos x=\sin2x$, $\;\cos^2x-\sin^2x=\cos2x$.</li>
+    <li>When finding an angle from a tangent, determine the interval in which the angle lies (e.g. $\alpha+\beta\in(0,\pi)$), otherwise the answer is not unique.</li>
+    <li>Determine the sign of $\cos\alpha$ from the quadrant – before using the formula for $\sin2\alpha$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const st = Math.PI / 180;
+  const pt = k => [Math.cos(k), Math.sin(k)];
+
+  // --- 2. Dowód: obrót cięciwy ---
+  const w1 = new Wykres($("dw-plot"), { xmin: -1.45, xmax: 1.45, ymin: -1.3, ymax: 1.3, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let stop = null;
+  function rysujDw(t) {
+    const a = +$("dw-a").value * st, b = +$("dw-b").value * st;
+    $("dw-a-v").textContent = $("dw-a").value + "°"; $("dw-b-v").textContent = $("dw-b").value + "°";
+    const ka = a - t * b, kb = b - t * b, A = pt(ka), B = pt(kb);
+    w1.rysuj(g => {
+      g.okrag(0, 0, 1, 3);
+      if (t > 0) { const A0 = pt(a), B0 = pt(b); g.odcinek(...A0, ...B0, 2); g.punkt(...A0, "A", "--plot-axis", { r: 3 }); g.punkt(...B0, "B", "--plot-axis", { r: 3 }); }
+      g.wielokat([[0, 0], A, B], 1, { wypelnij: 0.12, bezObrysu: true });
+      g.odcinek(0, 0, ...A, 1, false); g.odcinek(0, 0, ...B, 1, false);
+      g.luk(0, 0, 0.3, kb, ka, 4, { wypelnij: 0.15 });
+      g.odcinek(...A, ...B, 2, false);
+      g.punkt(...A, t > 0 ? "A′" : "A", 2); g.punkt(...B, t > 0 ? "B′" : "B", 2);
+    });
+    const AB = 2 - 2 * (Math.cos(a) * Math.cos(b) + Math.sin(a) * Math.sin(b)), AB2 = 2 - 2 * Math.cos(a - b);
+    tex("dw-wynik", t < 1
+      ? `|AB|^2=2-2(\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta)\\approx${ladnaTex(AB, 3)}`
+      : `|A'B'|^2=2-2\\cos(\\alpha-\\beta)\\approx${ladnaTex(AB2, 3)}=|AB|^2`);
+  }
+  ["dw-a", "dw-b"].forEach(id => $(id).addEventListener("input", () => { if (stop) stop(); rysujDw(0); }));
+  $("dw-start").addEventListener("click", () => { if (stop) stop(); stop = animuj(2000, rysujDw); });
+  rysujDw(0);
+
+  // --- 3. sin(α+β) jako suma wysokości ---
+  const w2 = new Wykres($("ob-plot"), { xmin: -0.25, xmax: 1.5, ymin: -0.15, ymax: 1.15, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  function rysujOb() {
+    const da = +$("ob-a").value, db = +$("ob-b").value, a = da * st, b = db * st;
+    $("ob-a-v").textContent = da + "°"; $("ob-b-v").textContent = db + "°";
+    const P = [Math.cos(b) * Math.cos(a), Math.cos(b) * Math.sin(a)];
+    const Q = [P[0] - Math.sin(b) * Math.sin(a), P[1] + Math.sin(b) * Math.cos(a)];
+    const X = 1.3; // słupek z sumą
+    w2.rysuj(g => {
+      g.luk(0, 0, 1, 0, Math.PI / 2, 3, { przerywana: true, grubosc: 1.5 });
+      g.wielokat([[0, 0], P, Q], 1, { wypelnij: 0.12 });
+      g.wielokat([[0, 0], [P[0], 0], P], 2, { wypelnij: 0.08, bezObrysu: true });
+      g.luk(0, 0, 0.2, 0, a, 2); g.luk(0, 0, 0.3, a, a + b, 4);
+      g.tekst(0.22, 0.03, "α", 2, { gruby: true }); g.tekst(0.3 * Math.cos(a + b / 2), 0.3 * Math.sin(a + b / 2), "β", 4, { dx: 4, gruby: true });
+      g.odcinek(P[0], 0, ...P, 2, false);
+      g.odcinek(...P, P[0], Q[1], 3, false);
+      g.odcinek(P[0], Q[1], ...Q, 3);
+      g.odcinek(...Q, X, Q[1], "--plot-axis"); g.odcinek(...P, X, P[1], "--plot-axis");
+      g.odcinek(X, 0, X, P[1], 2, false); g.odcinek(X, P[1], X, Q[1], 3, false);
+      g.tekst(X, P[1] / 2, "sin α cos β", 2, { dx: -6, wyrownanie: "right", rozmiar: 12 });
+      g.tekst(X, (P[1] + Q[1]) / 2, "cos α sin β", 3, { dx: -6, wyrownanie: "right", rozmiar: 12 });
+      g.tekst(Q[0] / 2, Q[1] / 2, "1", 1, { dx: -12, gruby: true });
+      g.punkt(...P, "P", 1, { r: 4 }); g.punkt(...Q, "Q", 2);
+    });
+    const s1 = Math.sin(a) * Math.cos(b), s2 = Math.cos(a) * Math.sin(b);
+    tex("ob-wynik", `\\sin(${da + db}^\\circ)\\approx${ladnaTex(s1, 3)}+${ladnaTex(s2, 3)}=${ladnaTex(s1 + s2, 3)}`);
+  }
+  ["ob-a", "ob-b"].forEach(id => $(id).addEventListener("input", rysujOb));
+  rysujOb();
+});
+</script>
+</body>
+</html>

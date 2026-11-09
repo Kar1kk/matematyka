@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trigonometric functions of angles 0°–180°, the Pythagorean identity</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Trigonometric functions of angles 0°–180°, the Pythagorean identity</h1>
+  <p class="lead">The arm of the angle meets the semicircle of radius $1$ at the point $P=(x,y)$. Then simply $\cos\alpha=x$, $\sin\alpha=y$. For an obtuse angle $P$ is to the left of the $Oy$ axis, so the cosine and tangent are negative.</p>
+  <p class="wymagania">VII.1, VII.2</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicje">1. Definition and values</h2>
+  <div class="definicja"><b>Definition</b> The angle $\alpha\in[0^\circ,180^\circ]$ has its vertex at $O=(0,0)$ and its first arm on the positive $Ox$ half-axis. If $P=(x,y)\neq O$ lies on the second arm and $r=|OP|=\sqrt{x^2+y^2}$, then
+    $$\sin\alpha=\frac{y}{r},\quad \cos\alpha=\frac{x}{r}$$
+    $$\tan\alpha=\frac{y}{x}\quad(\alpha\neq 90^\circ)$$
+    For an acute angle this is the same definition as in a right triangle. When $r=1$: $\;P=(\cos\alpha,\sin\alpha)$.</div>
+  <table class="tabela">
+    <tr><th>$\alpha$</th><th>$0^\circ$</th><th>$30^\circ$</th><th>$45^\circ$</th><th>$60^\circ$</th><th>$90^\circ$</th><th>$120^\circ$</th><th>$135^\circ$</th><th>$150^\circ$</th><th>$180^\circ$</th></tr>
+    <tr><td>$\sin$</td><td>$0$</td><td>$\frac12$</td><td>$\frac{\sqrt2}2$</td><td>$\frac{\sqrt3}2$</td><td>$1$</td><td>$\frac{\sqrt3}2$</td><td>$\frac{\sqrt2}2$</td><td>$\frac12$</td><td>$0$</td></tr>
+    <tr><td>$\cos$</td><td>$1$</td><td>$\frac{\sqrt3}2$</td><td>$\frac{\sqrt2}2$</td><td>$\frac12$</td><td>$0$</td><td>$-\frac12$</td><td>$-\frac{\sqrt2}2$</td><td>$-\frac{\sqrt3}2$</td><td>$-1$</td></tr>
+    <tr><td>$\tan$</td><td>$0$</td><td>$\frac{\sqrt3}3$</td><td>$1$</td><td>$\sqrt3$</td><td>—</td><td>$-\sqrt3$</td><td>$-1$</td><td>$-\frac{\sqrt3}3$</td><td>$0$</td></tr>
+  </table>
+  <p>The tables give values for $0^\circ$–$90^\circ$. You read the obtuse angles off by symmetry (formulas below). Signs: $\sin\alpha\ge0$ always; $\cos\alpha$ and $\tan\alpha$ are negative for $\alpha\in(90^\circ,180^\circ)$.</p>
+
+  <h2 id="tozsamosci">2. Identities</h2>
+  <div class="wzor">
+    <div class="tytul">The Pythagorean identity and the tangent <span class="cke" title="This formula is on the CKE formula sheet (“Wybrane wzory matematyczne”)">on CKE sheet</span></div>
+    $$\sin^2\alpha+\cos^2\alpha=1$$
+    $$\tan\alpha=\frac{\sin\alpha}{\cos\alpha}$$
+    <dl><dt>proof</dt><dd>$\frac{y^2}{r^2}+\frac{x^2}{r^2}=\frac{x^2+y^2}{r^2}=1$; $\;\frac{y/r}{x/r}=\frac{y}{x}$</dd></dl>
+  </div>
+  <div class="wzor">
+    <div class="tytul">An angle and its supplement to $180^\circ$</div>
+    $$\sin(180^\circ-\alpha)=\sin\alpha$$
+    $$\cos(180^\circ-\alpha)=-\cos\alpha$$
+    $$\tan(180^\circ-\alpha)=-\tan\alpha$$
+    <dl><dt>why</dt><dd>the points $(x,y)$ and $(-x,y)$ are symmetric about the $Oy$ axis: the same height, the opposite $x$-coordinate</dd></dl>
+  </div>
+  <div class="uwaga">From $\sin\alpha$ alone you cannot read off the angle: $\sin\alpha=\frac12$ gives $\alpha=30^\circ$ <b>or</b> $150^\circ$. The cosine decides uniquely (each value in $(-1,1)$ corresponds to exactly one angle in $(0^\circ,180^\circ)$).</div>
+
+  <h2 id="demo">3. Interactive</h2>
+  <div class="demo">
+    <p class="opis">Drag the point $P$ along the semicircle (it snaps to multiples of $15^\circ$). The red segment is $\sin\alpha$, the green one $\cos\alpha$, the purple one on the line $x=1$ is $\tan\alpha$. The gray point $P'$ corresponds to the angle $180^\circ-\alpha$: the same height.</p>
+    <canvas id="po-plot"></canvas>
+    <div class="wynik" id="po-wynik"></div>
+  </div>
+
+  <div class="demo">
+    <p class="opis">Where the values for $30^\circ$, $45^\circ$, $60^\circ$ come from: a square cut by a diagonal and an equilateral triangle cut by an altitude.</p>
+    <canvas id="sp-plot" style="height:300px"></canvas>
+    <div class="sterowanie">
+      <button id="sp-45">▶ 45°: half a square</button>
+      <button id="sp-30">▶ 30° and 60°: half a triangle</button>
+    </div>
+    <div class="wynik" id="sp-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">4. Step-by-step example</h2>
+  <div class="przyklad">
+    <p>The angle $\alpha\in(90^\circ,180^\circ)$ and $\tan\alpha=-2$. Find $\sin\alpha$ and $\cos\alpha$.</p>
+    <ol>
+      <li>$\sin\alpha=-2\cos\alpha$. Substitute into the identity: $4\cos^2\alpha+\cos^2\alpha=1$, so $\cos^2\alpha=\frac15$.</li>
+      <li>The angle is obtuse, so $\cos\alpha&lt;0$: $\cos\alpha=-\frac{1}{\sqrt5}=-\frac{\sqrt5}{5}$.</li>
+      <li>$\sin\alpha=-2\cos\alpha=\frac{2\sqrt5}{5}$ (positive, consistent).</li>
+    </ol>
+    <p class="odp">$\sin\alpha=\frac{2\sqrt5}{5},\ \cos\alpha=-\frac{\sqrt5}{5}$</p>
+  </div>
+
+  <h2 id="zadania">5. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\sin120^\circ\cdot\cos150^\circ+\tan135^\circ$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{\sqrt3}{2}\cdot\left(-\frac{\sqrt3}{2}\right)+(-1)=-\frac34-1$. <b>$-\frac74$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="-4/5; 3/5" data-odp-opis="cos α; sin α"><span class="poziom">medium</span>
+      <div class="tresc">The angle $\alpha$ is obtuse and $\tan\alpha=-\frac34$. Find $\sin\alpha$ and $\cos\alpha$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\sin\alpha=-\frac34\cos\alpha$, so $\frac{9}{16}\cos^2\alpha+\cos^2\alpha=1$, $\cos^2\alpha=\frac{16}{25}$. The angle is obtuse: <b>$\cos\alpha=-\frac45$, $\sin\alpha=\frac35$</b>.
+      </div></details></li>
+    <li class="zadanie" data-odp="12/25"><span class="poziom">medium</span>
+      <div class="tresc">It is known that $\sin\alpha+\cos\alpha=\frac75$. Find $\sin\alpha\cdot\cos\alpha$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Square it: $\sin^2\alpha+2\sin\alpha\cos\alpha+\cos^2\alpha=\frac{49}{25}$, i.e. $1+2\sin\alpha\cos\alpha=\frac{49}{25}$. <b>$\sin\alpha\cos\alpha=\frac{12}{25}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Show that for every acute angle $\alpha$: $\;\tan\alpha+\frac{1}{\tan\alpha}=\frac{1}{\sin\alpha\cos\alpha}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $L=\frac{\sin\alpha}{\cos\alpha}+\frac{\cos\alpha}{\sin\alpha}=\frac{\sin^2\alpha+\cos^2\alpha}{\sin\alpha\cos\alpha}=\frac{1}{\sin\alpha\cos\alpha}=R$. <b>The identity holds</b> (the denominators are nonzero because the angle is acute).
+      </div></details></li>
+    <li class="zadanie" data-odp="3/8; sqrt(7)/2" data-odp-opis="sin α·cos α; sin α + cos α"><span class="poziom">exam-level</span>
+      <div class="tresc">The angle $\alpha\in(0^\circ,180^\circ)$ satisfies $\sin\alpha-\cos\alpha=\frac12$. Find $\sin\alpha\cos\alpha$ and $\sin\alpha+\cos\alpha$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Square: $1-2\sin\alpha\cos\alpha=\frac14$, so $\sin\alpha\cos\alpha=\frac38$.
+        Then $(\sin\alpha+\cos\alpha)^2=1+2\cdot\frac38=\frac74$. The product is positive and $\sin\alpha&gt;0$, so $\cos\alpha&gt;0$ and the sum is positive.
+        <b>$\sin\alpha\cos\alpha=\frac38$, $\;\sin\alpha+\cos\alpha=\frac{\sqrt7}{2}$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">6. On the exam</h2>
+  <ul>
+    <li><b>The sign from the square root:</b> after using the identity always write why you choose $+$ or $-$ (acute / obtuse angle). Without it you lose a point.</li>
+    <li>Reduce an obtuse angle to an acute one: $\cos135^\circ=-\cos45^\circ$, $\sin150^\circ=\sin30^\circ$.</li>
+    <li>A typical trick: given $\sin\alpha\pm\cos\alpha$ → square it and use the identity, you get $\sin\alpha\cos\alpha$.</li>
+    <li>In a triangle an angle found from a sine can have two values ($\alpha$ and $180^\circ-\alpha$). Check whether both fit the angle sum.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DOK = { // dokładne wartości [sin, cos, tg]
+    0: ["0", "1", "0"], 30: ["\\frac12", "\\frac{\\sqrt3}2", "\\frac{\\sqrt3}3"], 45: ["\\frac{\\sqrt2}2", "\\frac{\\sqrt2}2", "1"],
+    60: ["\\frac{\\sqrt3}2", "\\frac12", "\\sqrt3"], 90: ["1", "0", "\\text{does not exist}"],
+    120: ["\\frac{\\sqrt3}2", "-\\frac12", "-\\sqrt3"], 135: ["\\frac{\\sqrt2}2", "-\\frac{\\sqrt2}2", "-1"],
+    150: ["\\frac12", "-\\frac{\\sqrt3}2", "-\\frac{\\sqrt3}3"], 180: ["0", "-1", "0"],
+  };
+
+  // --- 3a. Półokrąg jednostkowy ---
+  const w1 = new Wykres($("po-plot"), { xmin: -1.4, xmax: 1.6, ymin: -0.7, ymax: 1.4, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let deg = 60;
+  const pk = w1.przeciagaj([{ x: 0.5, y: Math.sqrt(3) / 2, ogranicz: p => {
+    let d = Math.atan2(Math.max(p.y, 0), p.x) * 180 / Math.PI;
+    d = Math.min(180, Math.max(0, Math.round(d)));
+    if (Math.abs(d - Math.round(d / 15) * 15) <= 2) d = Math.round(d / 15) * 15;
+    deg = d; const r = d * Math.PI / 180;
+    return { x: Math.cos(r), y: Math.sin(r) };
+  } }], rysujPo);
+  function rysujPo() {
+    const P = pk[0], x = P.x, y = P.y, r = deg * Math.PI / 180;
+    w1.rysuj(g => {
+      g.luk(0, 0, 1, 0, Math.PI, 3, { grubosc: 2 });
+      g.odcinek(1, g.z.ymin, 1, g.z.ymax, 3);
+      if (deg !== 90) {
+        const tn = Math.tan(r);
+        g.prosta(0, 0, x, y, 4, true);
+        g.odcinek(1, 0, 1, tn, 4, false);
+        g.punkt(1, Math.max(g.z.ymin, Math.min(g.z.ymax, tn)), "", 4, { r: 4 });
+      }
+      g.odcinek(-x, y, 0, 0, "--plot-axis"); g.odcinek(-x, y, x, y, "--plot-axis");
+      g.punkt(-x, y, "P′", "--plot-axis", { r: 4 });
+      g.odcinek(0, 0, x, 0, 3, false); g.odcinek(x, 0, x, y, 2, false);
+      g.odcinek(0, 0, x, y, 1, false);
+      g.luk(0, 0, 0.25, 0, r, 1, { wypelnij: 0.2 });
+      g.punkt(x, y, "P");
+    });
+    const d = DOK[deg], f = v => ladnaTex(v, 3);
+    const zn = deg !== 90 ? f(Math.tan(r)) : "\\text{—}";
+    const s = d ? `\\sin\\alpha=${d[0]},\\ \\cos\\alpha=${d[1]},\\ \\tan\\alpha=${d[2]}` : `\\sin\\alpha\\approx${f(y)},\\ \\cos\\alpha\\approx${f(x)},\\ \\tan\\alpha\\approx${zn}`;
+    tex("po-wynik", `\\alpha=${deg}^\\circ:\\ ${s};\\quad \\sin(${180 - deg}^\\circ)=\\sin(${deg}^\\circ)`);
+  }
+  rysujPo();
+
+  // --- 3b. Trójkąty szczególne ---
+  const w2 = new Wykres($("sp-plot"), { xmin: -0.4, xmax: 2.4, ymin: -0.3, ymax: 1.9, krokX: 0.5, krokY: 0.5, rowneSkale: true });
+  let stop = null;
+  const s3 = Math.sqrt(3);
+  function kw(t) {
+    const t1 = Math.min(1, t / 0.35), t2 = Math.min(1, Math.max(0, (t - 0.35) / 0.35)), t3 = Math.max(0, (t - 0.7) / 0.3);
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [1, 0], [1, 1], [0, 1]].map(([a, b]) => [a * t1, b * t1]), 1, { wypelnij: 0.08 });
+      if (t2 > 0) g.odcinek(0, 0, t2, t2, 2, false);
+      if (t3 > 0) {
+        g.wielokat([[0, 0], [1, 0], [1, 1]], 2, { wypelnij: 0.25 * t3 });
+        g.luk(0, 0, 0.25, 0, Math.PI / 4, 2);
+        g.tekst(0.3, 0.08, "45°", 2, { gruby: true });
+        g.tekst(0.5, 0, "1", 1, { dy: 16, gruby: true }); g.tekst(1, 0.5, "1", 1, { dx: 6, gruby: true });
+        g.tekst(0.5, 0.5, "√2", 2, { dx: -24, dy: -4, gruby: true });
+      }
+    });
+    tex("sp-wynik", t3 > 0.5 ? "\\sin45^\\circ=\\cos45^\\circ=\\tfrac{1}{\\sqrt2}=\\tfrac{\\sqrt2}{2},\\ \\tan45^\\circ=\\tfrac11=1" : "\\text{a square with side 1, diagonal }\\sqrt{1^2+1^2}=\\sqrt2");
+  }
+  function tr(t) {
+    const t1 = Math.min(1, t / 0.35), t2 = Math.min(1, Math.max(0, (t - 0.35) / 0.35)), t3 = Math.max(0, (t - 0.7) / 0.3);
+    w2.rysuj(g => {
+      g.wielokat([[0, 0], [2, 0], [1, s3]].map(([a, b]) => [a * t1, b * t1]), 1, { wypelnij: 0.08 });
+      if (t2 > 0) g.odcinek(1, s3, 1, s3 * (1 - t2), 2, false);
+      if (t3 > 0) {
+        g.wielokat([[0, 0], [1, 0], [1, s3]], 2, { wypelnij: 0.25 * t3 });
+        g.luk(0, 0, 0.25, 0, Math.PI / 3, 2); g.luk(1, s3, 0.35, -Math.PI / 2 - Math.PI / 6, -Math.PI / 2, 2);
+        g.tekst(0.28, 0.1, "60°", 2, { gruby: true }); g.tekst(0.86, s3 - 0.55, "30°", 2, { gruby: true });
+        g.tekst(0.5, 0, "1", 1, { dy: 16, gruby: true }); g.tekst(1, s3 / 2, "√3", 2, { dx: 6, gruby: true });
+        g.tekst(0.5, s3 / 2, "2", 1, { dx: -16, gruby: true });
+      }
+    });
+    tex("sp-wynik", t3 > 0.5 ? "\\sin30^\\circ=\\cos60^\\circ=\\tfrac12,\\ \\sin60^\\circ=\\cos30^\\circ=\\tfrac{\\sqrt3}2,\\ \\tan60^\\circ=\\sqrt3" : "\\text{an equilateral triangle with side 2, altitude }\\sqrt{2^2-1^2}=\\sqrt3");
+  }
+  $("sp-45").addEventListener("click", () => { if (stop) stop(); stop = animuj(2200, kw); });
+  $("sp-30").addEventListener("click", () => { if (stop) stop(); stop = animuj(2200, tr); });
+  tr(1);
+});
+</script>
+</body>
+</html>

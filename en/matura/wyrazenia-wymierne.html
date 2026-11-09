@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rational expressions</title>
+<link rel="stylesheet" href="../../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../../assets/style.css">
+<script defer src="../../assets/katex/katex.min.js"></script>
+<script defer src="../../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../assets/dzialy.js"></script>
+<script defer src="../../assets/wykres.js"></script>
+<script defer src="../../assets/site.js"></script>
+<style>
+  .wm-krok { opacity: 0; transform: translateX(12px); transition: opacity .5s, transform .5s;
+    margin: 6px 0; min-height: 2.6em; font-size: 16px; }
+  .wm-krok.widac { opacity: 1; transform: none; }
+  .wm-krok .co { display: block; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="../index.html">∑ Mathematics</a>
+  <nav></nav>
+  <button id="motyw" title="Change theme">◐</button>
+</div></header>
+
+<main>
+  <h1>Rational expressions</h1>
+  <p class="lead">Fractions with polynomials in place of numbers. The arithmetic is the same as for ordinary fractions. The only new thing is the domain: the denominator cannot be zero, and canceling does not change that.</p>
+  <p class="wymagania">II.4, II.R.6</p>
+  <div class="spis" data-auto></div>
+
+  <h2 id="definicja">1. Domain and canceling</h2>
+  <div class="definicja"><b>Definition</b> A rational expression is a quotient $\dfrac{P(x)}{Q(x)}$ of polynomials, with $Q$ nonzero. Its <b>domain</b> is all $x$ for which $Q(x)\neq0$.</div>
+  <p><b>Canceling</b>: factor the numerator and denominator and cancel the <b>common factors</b>. Find the domain <b>before</b> canceling:
+    $$\frac{x^2-4}{x^2-2x}=\frac{(x-2)(x+2)}{x(x-2)}=\frac{x+2}{x}$$
+    for $x\in\R\setminus\{0,2\}$. Without the note “$x\ne2$” the equality is false: for $x=2$ the left side does not exist, while the right side equals $2$. On the graph this is a “hole” (demo below).</p>
+  <div class="uwaga">You cancel factors, not terms: $\frac{x+2}{x}\neq 2$, and $\frac{x^2+1}{x}\neq x+1$.</div>
+
+  <h2 id="dzialania">2. Operations</h2>
+  <div class="dwie">
+    <div class="wzor"><div class="tytul">Multiplication</div> $$\frac{A}{B}\cdot\frac{C}{D}=\frac{AC}{BD}$$</div>
+    <div class="wzor"><div class="tytul">Division</div> $$\frac{A}{B}:\frac{C}{D}=\frac{A}{B}\cdot\frac{D}{C}$$
+      <dl><dt>condition</dt><dd>$B\ne0$, $D\ne0$ <b>and</b> $C\ne0$</dd></dl></div>
+  </div>
+  <div class="wzor"><div class="tytul">Addition (common denominator)</div>
+    $$\frac{A}{B}+\frac{C}{D}=\frac{AD+CB}{BD}$$
+    <dl><dt>better</dt><dd>factor the denominators and take the <b>least</b> common denominator (each factor to the highest power in which it occurs). The product $BD$ often gives an unnecessarily large numerator.</dd></dl></div>
+  <p>Before multiplying, first factor and cancel “crosswise”, then multiply. When subtracting, put the numerator of the subtrahend in parentheses. The identity $b-a=-(a-b)$ is handy, e.g. $\frac{1}{2-x}=-\frac{1}{x-2}$. Equations and inequalities with such expressions: <a href="rownania-wymierne.html">Rational equations and inequalities</a>.</p>
+
+  <h2 id="dziura">3. Interactive: the hole left by canceling</h2>
+  <div class="demo">
+    <p class="opis">The graph of the expression before and after canceling looks the same, <b>except at points outside the domain</b> (open circles). “▶ Cancel” draws the graph of the simplified expression and “patches” the holes. Drag the red point onto a hole and see $\frac00$.</p>
+    <canvas id="dz-plot"></canvas>
+    <div class="sterowanie">
+      <label>expression <select id="dz-wybor">
+        <option value="0">(x² − 4)/(x − 2)</option>
+        <option value="1">(x² − 1)/(x² + x)</option>
+        <option value="2">(x³ − x)/(x² − x)</option>
+        <option value="3">(x + 3)/(x² + 3x)</option>
+        <option value="4">(x² − x − 6)/(x² − 9)</option>
+      </select></label>
+      <button id="dz-start">▶ Cancel</button>
+    </div>
+    <div class="wynik" id="dz-wynik"></div>
+    <div class="wynik" id="dz-wartosc"></div>
+  </div>
+
+  <h2 id="wspolny">4. Interactive: common denominator step by step</h2>
+  <div class="demo">
+    <p class="opis">Examples from the core curriculum. “Step →” shows the next stage. In orange: the factor by which we <b>expand</b> the fraction to get a common denominator.</p>
+    <div class="sterowanie">
+      <label>example <select id="wm-wybor">
+        <option value="0">1/(x+1) − 1/x</option>
+        <option value="1">1/x + 1/x² + 1/x³</option>
+        <option value="2">(x+1)/(x+2) + (x−1)/(x+1)</option>
+        <option value="3">2/(x²−1) − 1/(x²−x)</option>
+      </select></label>
+      <button id="wm-krok">Step →</button>
+      <button id="wm-start" class="wtorny">▶ Play</button>
+    </div>
+    <div class="wm-krok" id="wm-k0"></div>
+    <div class="wm-krok" id="wm-k1"></div>
+    <div class="wm-krok" id="wm-k2"></div>
+    <div class="wm-krok" id="wm-k3"></div>
+    <div class="wm-krok" id="wm-k4"></div>
+    <div class="wynik" id="wm-wynik"></div>
+  </div>
+
+  <h2 id="przyklad">5. Worked example</h2>
+  <div class="przyklad">
+    <p>Perform the division and state for which $x$ the result holds:
+      $$\frac{x^2-9}{x^2+3x}:\frac{x-3}{x^2}$$</p>
+    <ol>
+      <li>Domain: the denominators $x^2+3x=x(x+3)\ne0$ and $x^2\ne0$, and in addition the divisor $\frac{x-3}{x^2}\ne0$, that is $x\ne3$. So $x\notin\{-3,0,3\}$.</li>
+      <li>Change to multiplication by the reciprocal and factor:
+        $$\frac{(x-3)(x+3)}{x(x+3)}\cdot\frac{x^2}{x-3}$$</li>
+      <li>Cancel $(x-3)$, $(x+3)$ and $x$.</li>
+    </ol>
+    <p class="odp">$x$ for $x\in\R\setminus\{-3,0,3\}$</p>
+    <p>The condition $x\ne3$ is easy to lose: it comes from the <b>numerator</b> of the divisor.</p>
+  </div>
+
+  <h2 id="zadania">6. Tasks</h2>
+  <ol class="zadania">
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Simplify the expression $\dfrac{x^2-6x+9}{x^2-9}$ and state the assumptions.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{(x-3)^2}{(x-3)(x+3)}$. <b>$\frac{x-3}{x+3}$ for $x\ne\pm3$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">easy</span>
+      <div class="tresc">Compute $\dfrac{x^2-4}{3x}\cdot\dfrac{6x^2}{x+2}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $\frac{(x-2)(x+2)}{3x}\cdot\frac{6x^2}{x+2}$, cancel $(x+2)$ and $3x$. <b>$2x(x-2)$ for $x\notin\{-2,0\}$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Compute $\dfrac{1}{x-2}-\dfrac{4}{x^2-4}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Common denominator $(x-2)(x+2)$: $\frac{x+2-4}{(x-2)(x+2)}=\frac{x-2}{(x-2)(x+2)}$. <b>$\frac{1}{x+2}$ for $x\ne\pm2$</b>
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">medium</span>
+      <div class="tresc">Prove that for $x\ne\pm1$ the value of the expression $\dfrac{x}{x-1}-\dfrac{1}{x+1}-\dfrac{2}{x^2-1}$ does not depend on $x$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        Common denominator $(x-1)(x+1)$:
+        $$\frac{x(x+1)-(x-1)-2}{(x-1)(x+1)}=\frac{x^2-1}{x^2-1}$$
+        <b>The expression equals $1$.</b> $\blacksquare$
+      </div></details></li>
+    <li class="zadanie"><span class="poziom">exam-level</span>
+      <div class="tresc">Simplify $\dfrac{x^3-8}{x^2-4}:\dfrac{x^2+2x+4}{x^2+4x+4}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        $x^2+2x+4&gt;0$ always ($\Delta&lt;0$), so the divisor adds no new exclusions; $x^2-4\ne0$ and $(x+2)^2\ne0$ give $x\ne\pm2$.
+        $$\frac{(x-2)(x^2+2x+4)}{(x-2)(x+2)}\cdot\frac{(x+2)^2}{x^2+2x+4}$$
+        <b>$x+2$ for $x\ne\pm2$</b>
+      </div></details></li>
+    <li class="zadanie" data-odp="2; 3" data-odp-opis="A; B"><span class="poziom">exam-level</span>
+      <div class="tresc">Find the numbers $A$, $B$ for which $\dfrac{5x+1}{(x-1)(x+2)}=\dfrac{A}{x-1}+\dfrac{B}{x+2}$ for all $x\notin\{-2,1\}$.</div>
+      <details class="rozwin"><summary>Solution</summary><div>
+        The right side over a common denominator: $\frac{A(x+2)+B(x-1)}{(x-1)(x+2)}$. The numerators are equal polynomials: $(A+B)x+(2A-B)=5x+1$ (<a href="wielomiany-dzialania.html#rownosc">comparing coefficients</a>), so $A+B=5$, $2A-B=1$.
+        <b>$A=2$, $B=3$</b>
+      </div></details></li>
+  </ol>
+
+  <h2 id="matura">7. On the exam</h2>
+  <ul>
+    <li>Write the <b>assumptions</b> at the start, from the denominators <b>before</b> canceling. When dividing, add the zeros of the divisor's numerator. Missing assumptions are a typical lost point.</li>
+    <li>Least common denominator: first factor the denominators ($x^2-1$, $x^2-x$, …).</li>
+    <li>At the end, check whether the result can be canceled further (factor the numerator).</li>
+    <li>A minus in front of a fraction applies to the <b>whole</b> numerator: $-\frac{x+1}{\ldots}$ is $\frac{-x-1}{\ldots}$.</li>
+  </ul>
+</main>
+
+<footer>Mathematics · Polish matura, extended level</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // --- 3. The hole left by canceling ---
+  const WYR = [
+    { f: x => (x * x - 4) / (x - 2), g: x => x + 2, dziury: [2], asym: [],
+      t: "\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2", D: "\\R\\setminus\\{2\\}" },
+    { f: x => (x * x - 1) / (x * x + x), g: x => (x - 1) / x, dziury: [-1], asym: [0],
+      t: "\\frac{x^2-1}{x^2+x}=\\frac{(x-1)(x+1)}{x(x+1)}=\\frac{x-1}{x}", D: "\\R\\setminus\\{-1,0\\}" },
+    { f: x => (x ** 3 - x) / (x * x - x), g: x => x + 1, dziury: [0, 1], asym: [],
+      t: "\\frac{x^3-x}{x^2-x}=\\frac{x(x-1)(x+1)}{x(x-1)}=x+1", D: "\\R\\setminus\\{0,1\\}" },
+    { f: x => (x + 3) / (x * x + 3 * x), g: x => 1 / x, dziury: [-3], asym: [0],
+      t: "\\frac{x+3}{x^2+3x}=\\frac{x+3}{x(x+3)}=\\frac1x", D: "\\R\\setminus\\{-3,0\\}" },
+    { f: x => (x * x - x - 6) / (x * x - 9), g: x => (x + 2) / (x + 3), dziury: [3], asym: [-3],
+      t: "\\frac{x^2-x-6}{x^2-9}=\\frac{(x-3)(x+2)}{(x-3)(x+3)}=\\frac{x+2}{x+3}", D: "\\R\\setminus\\{-3,3\\}" },
+  ];
+  const w1 = new Wykres($("dz-plot"), { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+  let latka = 0, stop1 = null;
+  const pkt = w1.przeciagaj([{ x: 1, y: 0, ogranicz: p => ({ x: Math.max(-5.9, Math.min(5.9, Math.round(p.x * 10) / 10)), y: 0 }) }], () => rysuj1());
+  function rysuj1() {
+    const W = WYR[+$("dz-wybor").value], x0 = pkt[0].x;
+    const pozaD = W.dziury.concat(W.asym).some(d => Math.abs(d - x0) < 1e-9);
+    w1.rysuj(g => {
+      W.asym.forEach(a => g.odcinek(a, g.z.ymin, a, g.z.ymax, 4, true));
+      if (latka > 0) g.funkcja(W.g, 3, { grubosc: 6 });
+      g.funkcja(W.f, 1);
+      W.dziury.forEach(d => {
+        g.punkt(d, W.g(d), "", latka > 0.99 ? 3 : 1, { pusty: latka < 0.99, r: 5 + 3 * Math.sin(Math.PI * latka) });
+      });
+      const y0 = pozaD ? 0 : W.f(x0);
+      g.odcinek(x0, 0, x0, Math.max(g.z.ymin, Math.min(g.z.ymax, y0)), 2, true);
+      g.punkt(x0, Math.max(g.z.ymin, Math.min(g.z.ymax, y0)), "", 2);
+    });
+    tex("dz-wynik", `${W.t},\\quad x\\in ${W.D}`);
+    let opis = "";
+    if (W.dziury.some(d => Math.abs(d - x0) < 1e-9)) opis = `x_0=${ladnaTex(x0)}:\\ \\text{the expression gives } \\tfrac00 \\text{ — outside the domain, while the simplified one gives } ${ladnaTex(W.g(x0))}`;
+    else if (pozaD) opis = `x_0=${ladnaTex(x0)}:\\ \\text{denominator } 0 \\text{ — outside the domain (asymptote)}`;
+    else opis = `x_0=${ladnaTex(x0)}:\\ \\text{before and after canceling } ${ladnaTex(W.f(x0))}`;
+    tex("dz-wartosc", opis);
+  }
+  $("dz-wybor").addEventListener("change", () => { if (stop1) stop1(); latka = 0; rysuj1(); });
+  $("dz-start").addEventListener("click", () => {
+    if (stop1) stop1();
+    stop1 = animuj(1200, t => { latka = t; rysuj1(); });
+  });
+  rysuj1();
+
+  // --- 4. Common denominator ---
+  const K = s => `\\color{#e8590c}{${s}}`;
+  const PRZ = [
+    [
+      ["expression, domain: $x\\ne-1$, $x\\ne0$", "\\frac{1}{x+1}-\\frac{1}{x}"],
+      ["denominators $x+1$ and $x$, common: $x(x+1)$", "\\text{common denominator: } x(x+1)"],
+      ["expand each fraction by the missing factor", `\\frac{1\\cdot${K("x")}}{(x+1)\\cdot${K("x")}}-\\frac{1\\cdot${K("(x+1)")}}{x\\cdot${K("(x+1)")}}`],
+      ["subtract the numerators (parentheses!)", "=\\frac{x-(x+1)}{x(x+1)}"],
+      ["simplify", "=\\frac{-1}{x(x+1)}=-\\frac{1}{x^2+x}"],
+    ],
+    [
+      ["expression, domain: $x\\ne0$", "\\frac1x+\\frac{1}{x^2}+\\frac{1}{x^3}"],
+      ["the highest power of $x$ is the common denominator", "\\text{common denominator: } x^3"],
+      ["expand", `\\frac{1\\cdot${K("x^2")}}{x\\cdot${K("x^2")}}+\\frac{1\\cdot${K("x")}}{x^2\\cdot${K("x")}}+\\frac{1}{x^3}`],
+      ["add the numerators", "=\\frac{x^2+x+1}{x^3}"],
+      ["$x^2+x+1$ has $\\Delta<0$, so nothing cancels", "=\\frac{x^2+x+1}{x^3}"],
+    ],
+    [
+      ["expression, domain: $x\\ne-2$, $x\\ne-1$", "\\frac{x+1}{x+2}+\\frac{x-1}{x+1}"],
+      ["the denominators have no common factors", "\\text{common denominator: } (x+2)(x+1)"],
+      ["expand", `\\frac{(x+1)${K("(x+1)")}}{(x+2)${K("(x+1)")}}+\\frac{(x-1)${K("(x+2)")}}{(x+1)${K("(x+2)")}}`],
+      ["multiply out the numerators", "=\\frac{x^2+2x+1+x^2+x-2}{(x+1)(x+2)}"],
+      ["combine terms; the numerator has $\\Delta=17$, it does not cancel with the denominator", "=\\frac{2x^2+3x-1}{(x+1)(x+2)}"],
+    ],
+    [
+      ["expression", "\\frac{2}{x^2-1}-\\frac{1}{x^2-x}"],
+      ["factor the denominators: domain $x\\notin\\{-1,0,1\\}$", "=\\frac{2}{(x-1)(x+1)}-\\frac{1}{x(x-1)}"],
+      ["common: $x(x-1)(x+1)$; expand", `\\frac{2\\cdot${K("x")}}{(x-1)(x+1)${K("x")}}-\\frac{1\\cdot${K("(x+1)")}}{x(x-1)${K("(x+1)")}}`],
+      ["subtract the numerators", "=\\frac{2x-(x+1)}{x(x-1)(x+1)}=\\frac{x-1}{x(x-1)(x+1)}"],
+      ["cancel $(x-1)$; the assumption $x\\ne1$ stays", "=\\frac{1}{x(x+1)}"],
+    ],
+  ];
+  let ile = 0, stop2 = null;
+  function rysuj2() {
+    const P = PRZ[+$("wm-wybor").value];
+    P.forEach(([co, wz], i) => {
+      const el = $(`wm-k${i}`);
+      el.innerHTML = "";
+      const opis = document.createElement("span"); opis.className = "co";
+      const wzor = document.createElement("span");
+      el.appendChild(opis); el.appendChild(wzor);
+      // the description may contain $...$: render the pieces
+      co.split("$").forEach((kaw, j) => {
+        const s = document.createElement("span");
+        if (j % 2) katex.render(kaw, s, { throwOnError: false }); else s.textContent = kaw;
+        opis.appendChild(s);
+      });
+      katex.render(wz, wzor, { throwOnError: false, displayMode: false });
+      el.classList.toggle("widac", i < ile);
+    });
+    tex("wm-wynik", ile >= P.length ? "\\text{done}" : `\\text{step } ${ile}/${P.length}`);
+  }
+  $("wm-wybor").addEventListener("change", () => { if (stop2) stop2(); ile = 1; rysuj2(); });
+  $("wm-krok").addEventListener("click", () => {
+    if (stop2) stop2();
+    const n = PRZ[+$("wm-wybor").value].length;
+    ile = ile >= n ? 1 : ile + 1;
+    rysuj2();
+  });
+  $("wm-start").addEventListener("click", () => {
+    if (stop2) stop2();
+    const n = PRZ[+$("wm-wybor").value].length;
+    ile = 1; rysuj2();
+    stop2 = animuj(900 * n, t => { const k = Math.min(n, 1 + Math.floor(t * n)); if (k !== ile) { ile = k; rysuj2(); } });
+  });
+  ile = 1; rysuj2();
+});
+</script>
+</body>
+</html>
