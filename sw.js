@@ -2,7 +2,7 @@
 // Strategia: przy instalacji pobiera wszystkie strony i zasoby; potem „najpierw sieć,
 // pamięć bez internetu” — online zawsze najnowsza wersja.
 // Przy większej zmianie struktury podbij WERSJA (stara pamięć zostanie usunięta).
-const WERSJA = "v11";
+const WERSJA = "v12";
 const PAMIEC = "matematyka-" + WERSJA;
 
 importScripts("assets/dzialy.js"); // DZIALY_MATURA → lista stron tematów

@@ -543,8 +543,17 @@ function sprawdzSie(plik) {
     // Rozwiązanie otwarte przed poprawną odpowiedzią: wpisany potem wynik nie liczy się jako samodzielny
     let podejrzane = false;
     rozw.addEventListener("toggle", () => { if (rozw.open && pamiec.get(klucz(i)) !== "1") podejrzane = true; });
-    const PO_PODGLADZIE = T("✓ Dobrze, ale po obejrzeniu rozwiązania — nie zaliczam. Zadanie trafia do poprawy: wróć do niego za kilka dni.",
-      "✓ Correct, but after viewing the solution — not counted. The task goes to your redo list: come back in a few days.");
+    // Poprawny wynik przy otwartym wcześniej rozwiązaniu: aplikacja nie zgaduje, tylko pyta, czy zadanie było zrobione samodzielnie
+    const poPodgladzie = kom => {
+      kom.innerHTML = `${T("✓ Wynik się zgadza. Rozwiązanie było już otwarte — zrobiłeś zadanie sam?", "✓ The answer is right. The solution was already open — did you solve it yourself?")}
+        <button type="button" data-sam="1">${T("Tak, sam", "Yes, myself")}</button> <button type="button" data-sam="0">${T("Nie, z rozwiązaniem", "No, with the solution")}</button>`;
+      kom.querySelectorAll("button").forEach(p => p.onclick = () => {
+        const sam = p.dataset.sam === "1";
+        if (sam) podejrzane = false;
+        kom.textContent = sam ? T("✓ Dobrze!", "✓ Correct!") : T("Zadanie trafia do poprawy — wróć do niego za kilka dni.", "The task goes to your redo list — come back to it in a few days.");
+        ocena(sam);
+      });
+    };
 
     const kluczOdp = li.dataset.odp;
     if (kluczOdp) {
@@ -563,8 +572,9 @@ function sprawdzSie(plik) {
         if (typeof ocenOdpowiedz !== "function") { kom.textContent = T("Moduł oceny jeszcze się wczytuje…", "The checker is still loading…"); return; }
         const r = ocenOdpowiedz(inp.value, kluczOdp);
         if (r.blad) { kom.textContent = r.komunikat + T(" (zob. „jak wpisać?”)", " (see “how to type?”)"); return; }
-        kom.textContent = r.ok ? (podejrzane ? PO_PODGLADZIE : T("✓ Dobrze!", "✓ Correct!")) : T("✗ Nie. ", "✗ No. ") + (r.komunikat || T("Spróbuj jeszcze raz, weź podpowiedź albo otwórz rozwiązanie.", "Try again, take a hint or open the solution."));
-        ocena(r.ok && !podejrzane);
+        if (r.ok && podejrzane) { poPodgladzie(kom); return; }
+        kom.textContent = r.ok ? T("✓ Dobrze!", "✓ Correct!") : T("✗ Nie. ", "✗ No. ") + (r.komunikat || T("Spróbuj jeszcze raz, weź podpowiedź albo otwórz rozwiązanie.", "Try again, take a hint or open the solution."));
+        ocena(r.ok);
       };
       pasek.querySelector("button").onclick = sprawdz;
       inp.addEventListener("keydown", e => { if (e.key === "Enter") sprawdz(); });
@@ -577,8 +587,9 @@ function sprawdzSie(plik) {
         const odp = liczbaZOdpowiedzi(inp.value);
         if (isNaN(odp)) { kom.textContent = T("Wpisz liczbę, np. 2,5 albo 5/2.", "Enter a number, e.g. 2.5 or 5/2."); return; }
         const ok = zgodne(odp, wynik);
-        kom.textContent = ok ? (podejrzane ? PO_PODGLADZIE : T("✓ Dobrze!", "✓ Correct!")) : T("✗ Nie — spróbuj jeszcze raz, weź podpowiedź albo otwórz rozwiązanie.", "✗ No — try again, take a hint or open the solution.");
-        ocena(ok && !podejrzane);
+        if (ok && podejrzane) { poPodgladzie(kom); return; }
+        kom.textContent = ok ? T("✓ Dobrze!", "✓ Correct!") : T("✗ Nie — spróbuj jeszcze raz, weź podpowiedź albo otwórz rozwiązanie.", "✗ No — try again, take a hint or open the solution.");
+        ocena(ok);
       };
       pasek.querySelector("button").onclick = sprawdz;
       inp.addEventListener("keydown", e => { if (e.key === "Enter") sprawdz(); });
